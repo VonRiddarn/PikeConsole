@@ -74,4 +74,25 @@ public static class PikeLogger
 				includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
 			));
 	}
+
+	public static void Log()
+	{
+		// Connect to the LogInternal with some default params.
+		// IncludePath def false
+	}
+	public static void LogSuccess()
+	{
+		// Connect to the LogInternal with some default params.
+		// IncludePath def false
+	}
+	public static void LogWarning()
+	{
+		// Connect to the LogInternal with some default params.
+		// IncludePath def true
+	}
+	public static void LogError()
+	{
+		// Connect to the LogInternal with some default params.
+		// IncludePath def true
+	}
 }
