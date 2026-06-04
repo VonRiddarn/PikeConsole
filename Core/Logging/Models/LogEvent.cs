@@ -14,6 +14,9 @@ public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string mes
 	/// The "severity" or "category" of the log. (EG: LogLevel.Info | LogLevel.Error)
 	/// </summary>
 	public readonly LogLevel LogLevel = logLevel;
+	/// <summary>
+	/// The log message in string format.
+	/// </summary>
 	public readonly string Message = message;
 
 	/// <summary>
