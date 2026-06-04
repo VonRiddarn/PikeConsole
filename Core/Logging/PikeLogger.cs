@@ -1,5 +1,6 @@
 // using System;
 using System;
+using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Core.Logging.Models;
 
 namespace FractalPike.PikeConsole.Core.Logging;
@@ -26,4 +27,51 @@ public static class PikeLogger
 	/// are handled by a separate wrapper.
 	/// </remarks>
 	public static event Action<LogEvent> LogEmitted;
+
+	public static bool UseRuntime { get; set; } = true;
+	public static bool IsDebugEnvironment => Godot.OS.IsDebugBuild(); // TODO: Centralize environment / system information later. Can also be used with the commands
+
+	/// <summary>
+	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static bool IsTargetEnabled(LogTarget target)
+	{
+		bool debugActive = (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
+		bool runtimeActive = UseRuntime && (target & LogTarget.Runtime) != 0;
+		return debugActive || runtimeActive;
+	}
+
+	// TODO: Create QOL overrides, like LogInfo, LogError, LogSuccess...
+
+	public static void Log(
+	LogTarget logTarget,
+	[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+	LogLevel logLevel = LogLevel.Info,
+	bool forceLog = false,
+	string domain = "",
+	bool includePath = false,
+	[CallerFilePath] string filePath = "",
+	[CallerLineNumber] int lineNumber = 0,
+	[CallerMemberName] string memberName = "")
+	{
+		// Early return pattern. We are not logging in this environment.
+		if (!IsTargetEnabled(logTarget)) return;
+
+		// Build the message from the interpolationhandler.
+		string message = handler.ToStringAndClear();
+
+		// Route the message to the sinks.
+		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
+			Godot.GD.Print(message);
+		if ((logTarget & LogTarget.Runtime) != 0 && UseRuntime)
+			LogEmitted?.Invoke(new LogEvent(
+				HashCode.Combine(filePath, lineNumber, memberName),
+				logLevel,
+				message,
+				forceLog,
+				domain,
+				includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
+			));
+	}
 }
