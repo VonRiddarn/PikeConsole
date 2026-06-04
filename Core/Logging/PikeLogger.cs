@@ -44,7 +44,7 @@ public static class PikeLogger
 
 	// TODO: Create QOL overrides, like LogInfo, LogError, LogSuccess...
 
-	public static void Log(
+	static void LogInternal(
 	LogTarget logTarget,
 	[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
 	LogLevel logLevel = LogLevel.Info,
