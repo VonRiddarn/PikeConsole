@@ -8,11 +8,12 @@ public ref struct LogInterpolatedStringHandler
 	DefaultInterpolatedStringHandler _handler;
 	public bool IsEnabled { get; }
 
-	public LogInterpolatedStringHandler(int literalLength, int formattedCount, LogTarget target)
+	public LogInterpolatedStringHandler(int literalLength, int formattedCount, LogTarget target, out bool isEnabled)
 	{
-		IsEnabled = PikeLogger.IsTargetEnabled(target);
+		isEnabled = PikeLogger.IsTargetEnabled(target);
+		IsEnabled = isEnabled;
 
-		if (IsEnabled)
+		if (isEnabled)
 		{
 			_handler = new DefaultInterpolatedStringHandler(literalLength, formattedCount);
 		}
