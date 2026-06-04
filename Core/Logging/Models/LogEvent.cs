@@ -3,7 +3,7 @@ namespace FractalPike.PikeConsole.Core.Logging.Models;
 /// <summary>
 /// A struct used for outwards communications from the PikeLogger.
 /// </summary>
-public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string message, bool forceLog, string domain)
+public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string message, bool forceLog, string domain, string sourcePath = "")
 {
 	/// <summary>
 	/// Unique key built using the callers filepath and linenumber. Used by listeners for throttling.
@@ -34,4 +34,9 @@ public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string mes
 	/// will allocate heap memory. This shouldn't become a bottleneck, but worth mentioning.
 	/// </remarks>
 	public readonly string Domain = domain;
+
+	/// <summary>
+	/// The caller path in plaintext. Empty if "includePath" was not checked in the PikeLogger.
+	/// </summary>
+	public readonly string SourcePath = sourcePath;
 }
