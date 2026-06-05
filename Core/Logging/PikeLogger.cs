@@ -42,12 +42,10 @@ public static class PikeLogger
 		return debugActive || runtimeActive;
 	}
 
-	// TODO: Create QOL overrides, like LogInfo, LogError, LogSuccess...
-
 	static void LogInternal(
 	LogTarget logTarget,
 	[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
-	LogLevel logLevel = LogLevel.Info,
+	LogLevel logLevel,
 	bool forceLog = false,
 	string domain = "",
 	bool includePath = false,
@@ -92,24 +90,118 @@ public static class PikeLogger
 			));
 	}
 
-	public static void Log()
+	// Public API - outward facing wrapper methods.
+	// And here goes documentation hell...
+
+	/// <summary>
+	/// Logs information to the console with close to zero allocation when not running on the targeted environment.
+	/// </summary>
+	/// <remarks>
+	/// Important note: All logs going through PikeLogger MUST be interpolated strings. Even if they are literals.
+	/// This is an opinionated design choice in place that makes it harder to accidentally allocate memory.
+	/// </remarks>
+	/// <param name="logTarget">The target environment</param>
+	/// <param name="handler">Log message as interpolated string. Only built if this is the target environment.</param>
+	/// <param name="forceLog">Flag that listeners can use to bypass log throttle.</param>
+	/// <param name="domain">Optional domain parameter used for filtering. (EG: "FractalPike.Entities.AI")</param>
+	/// <param name="includePath">If true the caller path is interpolated and added to LogEvent.SourcePath</param>
+	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	public static void Log(
+		LogTarget logTarget,
+		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		bool forceLog = false,
+		string domain = "",
+		bool includePath = false,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
-		// Connect to the LogInternal with some default params.
-		// IncludePath def false
+		LogInternal(logTarget, ref handler, LogLevel.Info, forceLog, domain, includePath, filePath, lineNumber, memberName);
 	}
-	public static void LogSuccess()
+
+	/// <summary>
+	/// Logs a success message to the console with close to zero allocation when not running on the targeted environment.
+	/// </summary>
+	/// <remarks>
+	/// Important note: All logs going through PikeLogger MUST be interpolated strings. Even if they are literals.
+	/// This is an opinionated design choice in place that makes it harder to accidentally allocate memory.
+	/// </remarks>
+	/// <param name="logTarget">The target environment</param>
+	/// <param name="handler">Log message as interpolated string. Only built if this is the target environment.</param>
+	/// <param name="forceLog">Flag that listeners can use to bypass log throttle.</param>
+	/// <param name="domain">Optional domain parameter used for filtering. (EG: "FractalPike.Entities.AI")</param>
+	/// <param name="includePath">If true the caller path is interpolated and added to LogEvent.SourcePath</param>
+	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	public static void LogSuccess(
+		LogTarget logTarget,
+		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		bool forceLog = false,
+		string domain = "",
+		bool includePath = false,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
-		// Connect to the LogInternal with some default params.
-		// IncludePath def false
+		LogInternal(logTarget, ref handler, LogLevel.Success, forceLog, domain, includePath, filePath, lineNumber, memberName);
 	}
-	public static void LogWarning()
+
+	/// <summary>
+	/// Logs a warning to the console with close to zero allocation when not running on the targeted environment.
+	/// </summary>
+	/// <remarks>
+	/// Important note: All logs going through PikeLogger MUST be interpolated strings. Even if they are literals.
+	/// This is an opinionated design choice in place that makes it harder to accidentally allocate memory.
+	/// </remarks>
+	/// <param name="logTarget">The target environment</param>
+	/// <param name="handler">Log message as interpolated string. Only built if this is the target environment.</param>
+	/// <param name="forceLog">Flag that listeners can use to bypass log throttle.</param>
+	/// <param name="domain">Optional domain parameter used for filtering. (EG: "FractalPike.Entities.AI")</param>
+	/// <param name="includePath">If true the caller path is interpolated and added to LogEvent.SourcePath</param>
+	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	public static void LogWarning(
+		LogTarget logTarget,
+		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		bool forceLog = false,
+		string domain = "",
+		bool includePath = true,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
-		// Connect to the LogInternal with some default params.
-		// IncludePath def true
+		LogInternal(logTarget, ref handler, LogLevel.Warning, forceLog, domain, includePath, filePath, lineNumber, memberName);
 	}
-	public static void LogError()
+
+	/// <summary>
+	/// Logs an error to the console with close to zero allocation when not running on the targeted environment.
+	/// </summary>
+	/// <remarks>
+	/// Important note: All logs going through PikeLogger MUST be interpolated strings. Even if they are literals.
+	/// This is an opinionated design choice in place that makes it harder to accidentally allocate memory.
+	/// </remarks>
+	/// <param name="logTarget">The target environment</param>
+	/// <param name="handler">Log message as interpolated string. Only built if this is the target environment.</param>
+	/// <param name="forceLog">Flag that listeners can use to bypass log throttle.</param>
+	/// <param name="domain">Optional domain parameter used for filtering. (EG: "FractalPike.Entities.AI")</param>
+	/// <param name="includePath">If true the caller path is interpolated and added to LogEvent.SourcePath</param>
+	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	public static void LogError(
+		LogTarget logTarget,
+		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		bool forceLog = false,
+		string domain = "",
+		bool includePath = true,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
-		// Connect to the LogInternal with some default params.
-		// IncludePath def true
+		LogInternal(logTarget, ref handler, LogLevel.Error, forceLog, domain, includePath, filePath, lineNumber, memberName);
 	}
 }
