@@ -74,21 +74,23 @@ public static class PikeLogger
 		string message = handler.ToStringAndClear();
 
 #if TOOLS
-		// Route the message to the sinks.
 		// ----- GODOT EDITOR -----
 		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
 		{
 			switch (logLevel)
 			{
+				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
 				case LogLevel.Info:
+					Godot.GD.PrintRich($"[u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					break;
 				case LogLevel.Success:
-					Godot.GD.Print(message);
+					Godot.GD.PrintRich($"[color=#B2FF73][b]SUCCESS[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 				case LogLevel.Warning:
-					Godot.GD.PushWarning(message);
+					Godot.GD.PrintRich($"[color=#FFC973][b]WARNING[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 				case LogLevel.Error:
-					Godot.GD.PushError(message);
+					Godot.GD.PrintRich($"[color=#FF7373][b]ERROR[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 			}
 		}
