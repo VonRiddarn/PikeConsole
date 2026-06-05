@@ -1,4 +1,4 @@
-namespace FractalPike.PikeConsole.Core.Logging.Models;
+namespace FractalPike.PikeConsole.Core.Logging;
 
 /// <summary>
 /// A struct used for outwards communications from the PikeLogger.

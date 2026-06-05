@@ -1,7 +1,6 @@
 // using System;
 using System;
 using System.Runtime.CompilerServices;
-using FractalPike.PikeConsole.Core.Logging.Models;
 
 namespace FractalPike.PikeConsole.Core.Logging;
 

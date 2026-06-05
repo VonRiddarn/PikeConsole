@@ -1,6 +1,6 @@
 using System.Runtime.CompilerServices;
-using FractalPike.PikeConsole.Core.Logging;
-using FractalPike.PikeConsole.Core.Logging.Models;
+
+namespace FractalPike.PikeConsole.Core.Logging;
 
 [InterpolatedStringHandler]
 public ref struct LogInterpolatedStringHandler

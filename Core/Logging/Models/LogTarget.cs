@@ -1,6 +1,6 @@
 using System;
 
-namespace FractalPike.PikeConsole.Core.Logging.Models;
+namespace FractalPike.PikeConsole.Core.Logging;
 
 [Flags]
 public enum LogTarget
