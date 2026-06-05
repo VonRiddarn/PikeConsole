@@ -80,6 +80,7 @@ public static class PikeLogger
 			switch (logLevel)
 			{
 				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
+				// Meaning, we do not allocate a member variable, nor do we interpolate more than once.
 				case LogLevel.Info:
 					Godot.GD.PrintRich($"[u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
