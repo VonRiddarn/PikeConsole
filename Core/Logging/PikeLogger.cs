@@ -62,8 +62,25 @@ public static class PikeLogger
 		string message = handler.ToStringAndClear();
 
 		// Route the message to the sinks.
+		// ----- GODOT -----
 		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
-			Godot.GD.Print(message);
+		{
+			switch (logLevel)
+			{
+				case LogLevel.Info:
+				case LogLevel.Success:
+					Godot.GD.Print(message);
+					break;
+				case LogLevel.Warning:
+					Godot.GD.PushWarning(message);
+					break;
+				case LogLevel.Error:
+					Godot.GD.PushError(message);
+					break;
+			}
+		}
+
+		// ----- EVENT LISTENERS (RUNTIME) -----
 		if ((logTarget & LogTarget.Runtime) != 0 && UseRuntime)
 			LogEmitted?.Invoke(new LogEvent(
 				HashCode.Combine(filePath, lineNumber, memberName),
