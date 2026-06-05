@@ -44,15 +44,6 @@ public static class PikeLogger
 	public static bool UseRuntime { get; set; } = true;
 	public static bool IsDebugEnvironment => Godot.OS.IsDebugBuild(); // TODO: Centralize environment / system information later. Can also be used with the commands
 
-	/*
-	 * TODO:
-		Build a GDExtention that hooks into the native output stream, or wraps the caller method for it.
-		Use the custom method to cross the interop bridge and include the correct file to open.
-		Note: 
-			Crossing the interop bridge is unavoidable if we want logs in the Godot console.
-			This is okay however as the brige is ONLY crossed in the debug environment, not in runtime builds.
-	*/
-
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
 	/// </summary>
