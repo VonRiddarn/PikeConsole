@@ -2,6 +2,23 @@
 
 Proprietary Godot CVar and Command console system for Fractal Pike.
 
+## Privacy notice!
+
+This Logger uses compile-time directory baking to display certain paths in logs.  
+This results in super fast, interned strings - but it bakes your folder structure into the game!  
+If you care about not leaking your file system structure, edit your `.csproj` with the `<PathMap>` element:
+
+```xml
+<Project Sdk="Godot.NET.Sdk/4.6.3">
+  <PropertyGroup>
+	. . .
+	<PathMap>$(MSBuildProjectDirectory)=/MyGame</PathMap> // Add this
+  </PropertyGroup>
+</Project>
+```
+
+This replaces your project origin `\users\vonriddarn\Godot\Projects\MyProject` (example) with the new defined filepath `/MyGame/` (example).
+
 ## IDE Warnings
 
 Due to the namespace configuration some IDEs will complain about not including the addons folder.  
