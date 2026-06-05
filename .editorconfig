@@ -1,0 +1,3 @@
+[*.cs]
+# Tell the IDE to expect the namespace to be FractalPike.PikeConsole regardless of the folder
+dotnet_diagnostic.IDE0130.severity = none

@@ -19,27 +19,6 @@ If you care about not leaking your file system structure, edit your `.csproj` wi
 
 This replaces your project origin `\users\vonriddarn\Godot\Projects\MyProject` (example) with the new defined filepath `/MyGame/` (example).
 
-## IDE Warnings
-
-Due to the namespace configuration some IDEs will complain about not including the addons folder.  
-Since we are using Domain Driven Design it is safe to just disable the warning for this project.  
-`.csproj`
-
-```xml
-<Project Sdk="Godot.NET.Sdk/4.6.3">
-  <PropertyGroup>
-	. . .
-	<NoWarn>$(NoWarn);IDE0130</NoWarn> // Add this!
-  </PropertyGroup>
-</Project>
-```
-
-You can also disable it throug `.editorconfig`
-
-```cfg
-dotnet_diagnostic.IDE0130.severity = none
-```
-
 ## Solving library collisions
 
 Many utilities use standarized names. Therefore there is a slight collision chance with other libraries.  
