@@ -44,6 +44,10 @@ public static class PikeLogger
 	public static bool UseRuntime { get; set; } = true;
 	public static bool IsDebugEnvironment => Godot.OS.IsDebugBuild(); // TODO: Centralize environment / system information later. Can also be used with the commands
 
+	const string GREEN = "#B2FF73";
+	const string YELLOW = "#FFC973";
+	const string RED = "#FF7373";
+
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
 	/// </summary>
@@ -85,13 +89,13 @@ public static class PikeLogger
 					Godot.GD.PrintRich($"[u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color=#B2FF73][b]SUCCESS[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={GREEN}][b]SUCCESS[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 				case LogLevel.Warning:
-					Godot.GD.PrintRich($"[color=#FFC973][b]WARNING[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={YELLOW}][b]WARNING[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 				case LogLevel.Error:
-					Godot.GD.PrintRich($"[color=#FF7373][b]ERROR[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={RED}][b]ERROR[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
 					break;
 			}
 		}
