@@ -82,8 +82,9 @@ public static class PikeLogger
 		// Build the message from the interpolationhandler.
 		string message = handler.ToStringAndClear();
 
+#if TOOLS
 		// Route the message to the sinks.
-		// ----- GODOT -----
+		// ----- GODOT EDITOR -----
 		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
 		{
 			switch (logLevel)
@@ -100,17 +101,17 @@ public static class PikeLogger
 					break;
 			}
 		}
+#endif
 
-		// ----- EVENT LISTENERS (RUNTIME) -----
-		if ((logTarget & LogTarget.Runtime) != 0 && UseRuntime)
-			LogEmitted?.Invoke(new LogEvent(
-				HashCode.Combine(filePath, lineNumber, memberName),
-				logLevel,
-				message,
-				forceLog,
-				domain,
-				includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
-			));
+		// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
+		LogEmitted?.Invoke(new LogEvent(
+			HashCode.Combine(filePath, lineNumber, memberName),
+			logLevel,
+			message,
+			forceLog,
+			domain,
+			includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
+		));
 	}
 
 	// Public API - outward facing wrapper methods.
