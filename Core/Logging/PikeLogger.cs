@@ -80,6 +80,7 @@ public static class PikeLogger
 			filePath = filePath.Replace('\\', '/');
 
 			// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
+			// NOTE: We could implement ReadOnlySpan<char> here to only allocate once, but it would make it less readable and only save a few nanoseconds.
 			if (!string.IsNullOrEmpty(PikeConsoleConfig.PATH_MAP_ALIAS) && filePath.StartsWith(PikeConsoleConfig.PATH_MAP_ALIAS))
 				filePath = filePath.Replace(PikeConsoleConfig.PATH_MAP_ALIAS, "res:/");
 			else // If we have no PathMap alias force-inverse the path into local. Note: This crosses the interop bridge. 
