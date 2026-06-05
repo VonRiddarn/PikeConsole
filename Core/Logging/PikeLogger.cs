@@ -76,10 +76,9 @@ public static class PikeLogger
 		// ----- GODOT EDITOR -----
 		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
 		{
+			// Fix backslashes for windows systems.
+			filePath = filePath.Replace('\\', '/');
 
-#if OS_WINDOWS
-			filepath = filePath.Replace('\\', '/');
-#endif
 			// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
 			if (!string.IsNullOrEmpty(PikeConsoleConfig.PATH_MAP_ALIAS) && filePath.StartsWith(PikeConsoleConfig.PATH_MAP_ALIAS))
 				filePath = filePath.Replace(PikeConsoleConfig.PATH_MAP_ALIAS, "res:/");
