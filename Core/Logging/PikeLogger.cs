@@ -1,5 +1,6 @@
 // using System;
 using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 
 namespace FractalPike.PikeConsole.Core.Logging;
@@ -54,16 +55,17 @@ public static class PikeLogger
 		return debugActive || runtimeActive;
 	}
 
+	[StackTraceHidden]
 	static void LogInternal(
-	LogTarget logTarget,
-	[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
-	LogLevel logLevel,
-	bool forceLog = false,
-	string domain = "",
-	bool includePath = false,
-	[CallerFilePath] string filePath = "",
-	[CallerLineNumber] int lineNumber = 0,
-	[CallerMemberName] string memberName = "")
+		LogTarget logTarget,
+		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		LogLevel logLevel,
+		bool forceLog = false,
+		string domain = "",
+		bool includePath = false,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
 		// Early return pattern. We are not logging in this environment.
 		if (!IsTargetEnabled(logTarget)) return;
@@ -120,6 +122,7 @@ public static class PikeLogger
 	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	[StackTraceHidden]
 	public static void Log(
 		LogTarget logTarget,
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
@@ -148,6 +151,7 @@ public static class PikeLogger
 	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	[StackTraceHidden]
 	public static void LogSuccess(
 		LogTarget logTarget,
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
@@ -176,6 +180,7 @@ public static class PikeLogger
 	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	[StackTraceHidden]
 	public static void LogWarning(
 		LogTarget logTarget,
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
@@ -204,6 +209,7 @@ public static class PikeLogger
 	/// <param name="filePath">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="lineNumber">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
+	[StackTraceHidden]
 	public static void LogError(
 		LogTarget logTarget,
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
