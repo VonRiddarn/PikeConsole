@@ -39,7 +39,7 @@ public static class PikeLogger
 	/// only serves to centralize and route developer made logs. Engine logs 
 	/// are handled by a separate wrapper.
 	/// </remarks>
-	public static event Action<LogEvent> LogEmitted;
+	public static event Action<LogEvent> LogEmitted; // TODO: Consume using thread safe queue!!
 
 	public static bool UseRuntime { get; set; } = true;
 	public static bool IsDebugEnvironment => Godot.OS.IsDebugBuild(); // TODO: Centralize environment / system information later. Can also be used with the commands
