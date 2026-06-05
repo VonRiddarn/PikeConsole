@@ -41,12 +41,7 @@ public static class PikeLogger
 	/// </remarks>
 	public static event Action<LogEvent> LogEmitted; // TODO: Consume using thread safe queue!!
 
-	public static bool UseRuntime { get; set; } = true;
 	public static bool IsDebugEnvironment => Godot.OS.IsDebugBuild(); // TODO: Centralize environment / system information later. Can also be used with the commands
-
-	const string GREEN = "#B2FF73";
-	const string YELLOW = "#FFC973";
-	const string RED = "#FF7373";
 
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
@@ -55,7 +50,7 @@ public static class PikeLogger
 	public static bool IsTargetEnabled(LogTarget target)
 	{
 		bool debugActive = (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
-		bool runtimeActive = UseRuntime && (target & LogTarget.Runtime) != 0;
+		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Runtime) != 0;
 		return debugActive || runtimeActive;
 	}
 
@@ -81,21 +76,36 @@ public static class PikeLogger
 		// ----- GODOT EDITOR -----
 		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
 		{
+
+#if OS_WINDOWS
+			filepath = filePath.Replace('\\', '/');
+#endif
+			// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
+			if (!string.IsNullOrEmpty(PikeConsoleConfig.PATH_MAP_ALIAS) && filePath.StartsWith(PikeConsoleConfig.PATH_MAP_ALIAS))
+				filePath = filePath.Replace(PikeConsoleConfig.PATH_MAP_ALIAS, "res:/");
+			else // If we have no PathMap alias force-inverse the path into local. Note: This crosses the interop bridge. 
+				filePath = Godot.ProjectSettings.LocalizePath(filePath);
+
+			// If we do not have two leading slashes, add the extra so Godot can parse the link correctly.
+			if (filePath.StartsWith("res:/") && !filePath.StartsWith("res://"))
+				filePath = filePath.Replace("res:/", "res://");
+
+			// Log the message
 			switch (logLevel)
 			{
 				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
 				// Meaning, we do not allocate a member variable, nor do we interpolate more than once.
 				case LogLevel.Info:
-					Godot.GD.PrintRich($"[u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_INFO}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}[/color]");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color={GREEN}][b]SUCCESS[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_SUCCESS}][b]SUCCESS[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 				case LogLevel.Warning:
-					Godot.GD.PrintRich($"[color={YELLOW}][b]WARNING[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_WARNING}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 				case LogLevel.Error:
-					Godot.GD.PrintRich($"[color={RED}][b]ERROR[/b]: [u]{filePath}:{lineNumber}:{memberName}[/u] - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_ERROR}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 			}
 		}
