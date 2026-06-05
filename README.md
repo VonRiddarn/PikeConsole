@@ -12,12 +12,23 @@ If you care about not leaking your file system structure, edit your `.csproj` wi
 <Project Sdk="Godot.NET.Sdk/4.6.3">
   <PropertyGroup>
 	. . .
-	<PathMap>$(MSBuildProjectDirectory)=/MyGame</PathMap> // Add this
+	<PathMap>$(MSBuildProjectDirectory)=/PikeConsole</PathMap> // Add this
   </PropertyGroup>
 </Project>
 ```
 
-This replaces your project origin `\users\vonriddarn\Godot\Projects\MyProject` (example) with the new defined filepath `/MyGame/` (example).
+This replaces your project origin `\users\vonriddarn\Godot\Projects\MyProject` (example) with the new defined filepath `/PikeConsole` (example).
+
+### Important note if you edit your PathMap!
+
+If you update the PathMap to something else, like `/PikeConsole` or whatever, you MUST update `PikeConsole/PikeConsoleConfig.cs` to include this alias!  
+Like so:
+
+```csharp
+	public const string PATH_MAP_ALIAS = "/PikeConsole";
+```
+
+If you fail to do this, your log paths will **no longer be clickable**.
 
 ## Solving library collisions
 
