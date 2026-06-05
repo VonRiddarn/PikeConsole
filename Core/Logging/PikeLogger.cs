@@ -14,6 +14,19 @@ namespace FractalPike.PikeConsole.Core.Logging;
 	Note: 
 	All log calls use [CallerFilePath] and [CallerLineNumber] to allow for easier throttling and debugging by other systems.
 	To my understanding this is compiler magic and not reflection, so it should be good. Do not spam logs in the hot path anyway.
+
+	Q: Why are there no method overrides for string literals? 
+	A:
+		Because a literal can be a silent killer if not used correctly. 
+		Using a literal with pure quotations will compile fine and not introduce overhead.
+		However, a lot of people use string concatenation in stead of a literal, which cannot be caught
+		and be turned into a no-op. 
+
+		Safe, free: "Hello world"
+		Unsafe, potentially expensive: "Hello " + GetPlanet()
+
+		Thus, I made the decision of only allowing interpolated strings with a custom string builder.
+		This prevents accidental allocation and computation.
 */
 
 public static class PikeLogger
