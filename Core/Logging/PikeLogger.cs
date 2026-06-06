@@ -109,10 +109,10 @@ public static class PikeLogger
 				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
 				// Meaning, we do not allocate a member variable, nor do we interpolate more than once.
 				case LogLevel.Info:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_INFO}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}[/color]");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_INFO}]{message}[/color]");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_SUCCESS}][b]SUCCESS[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_SUCCESS}]{message}");
 					break;
 				case LogLevel.Warning:
 					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_WARNING}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
