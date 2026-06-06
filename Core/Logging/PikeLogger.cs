@@ -41,7 +41,10 @@ public static class PikeLogger
 	/// </remarks>
 	public static event Action<LogEvent> LogEmitted; // TODO: Consume using thread safe queue!!
 
-	public static bool IsDebugEnvironment => Godot.OS.IsDebugBuild(); // TODO: Centralize environment / system information later. Can also be used with the commands
+	static bool? _isDebugEnvironment = null;
+
+	// TODO: Centralize environment / system information later. Can also be used with the commands
+	public static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
 
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
