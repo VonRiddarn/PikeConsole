@@ -14,6 +14,9 @@ Proprietary Godot CVar and Command console system for Fractal Pike.
 -   - Raw allocation
 -   - Allocation + Interop bridge cross (Most realistic)
 -   - Killswitch on / off scenarios
+- Curated list of popular extensions
+-   - Links to repos with extensions for CVars
+-   - Links to forked repos with different design philosophy
 
 _NOTE TO SELF: Make sure to add the benchmarks AFTER the UI subscriber console is added._
 _This makes the benchmark more honest in terms of what plug-and-play users can expect._  
