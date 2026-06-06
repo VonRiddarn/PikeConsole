@@ -77,6 +77,12 @@ Commands use a minimal-overhead, beginner friendly context based command-set arc
 Sets are registered by adding a CommandSet node to the object and inheriting from the root class.  
 Commands are managed at runtime and update at O(1) complexity with no reflection!
 
+### Command aliases
+
+Commands can be registered at runtime through the alias registry.  
+An alias is a Signature tied to an undefined statement that will parse and run.  
+**Recursion protection**: Alias stacking is allowed, and the statement executor actively breaks out of recursive aliases.
+
 ### Clickable source paths (Godot editor)
 
 When using `PikeLogger.LogWarning(...)` or `PikeLogger.Error(...)` the log is automatically prefixed with a clickable link.  
