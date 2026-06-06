@@ -48,9 +48,11 @@ Logs can be routed to `Debug`, `Runtime` or `All`.
 All logs sent from log event are sent as references and consumed using the `in`keyword.  
 Meaning a near infinite number of subscribers can exist on the `LogEmitted` event with minimal overhead.
 
-#### AOT (Ahead of time) compilation
+#### Reflectionless design
 
-The system does not make use of reflection to register commands or resources.
+The system minimizes reflection and does not use assembly scanning to register commands or CVars.  
+This does not mean the system is completely reflection free. It just means that when reflection is used,
+it is done with care and the results are propperly cached. EG: CVars use `typeof(T).Name` to statically perform meta caching.
 
 ##### No alloc, no-op logger
 
