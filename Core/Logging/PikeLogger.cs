@@ -32,14 +32,19 @@ namespace FractalPike.PikeConsole.Core.Logging;
 public static class PikeLogger
 {
 	/// <summary>
-	/// Universal log emitter event. The in-game console subscribes to this event.
+	/// <para>Universal log emitter event. The in-game console subscribes to this event.</para>
+	/// <para>Godot engine logs are NOT routed through this logger. This logger 
+	/// only serves to centralize and route developer made logs. Engine logs 
+	/// are handled by a separate wrapper.</para>
 	/// </summary>
 	/// <remarks>
-	/// Godot engine logs are NOT routed through this logger. This logger 
-	/// only serves to centralize and route developer made logs. Engine logs 
-	/// are handled by a separate wrapper.
+	/// NOTE:<br/>
+	/// The struct is sent as a reference. To consume it you must use the <c>in</c> keyword!
+	/// <code>
+	/// void OnLogEmitted(in LogEvent logEvent)
+	/// </code>
 	/// </remarks>
-	public static event Action<LogEvent> LogEmitted; // TODO: Consume using thread safe queue!!
+	public static event LogEventHandler LogEmitted; // TODO: Consume using thread safe queue!!
 
 	static bool? _isDebugEnvironment = null;
 
