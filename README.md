@@ -2,6 +2,78 @@
 
 Proprietary Godot CVar and Command console system for Fractal Pike.
 
+## TODO:
+
+- Refine readme
+-   - Check spelling and formatting
+-   - Add quickstart guide
+-   - Add eaxamples at each context
+- Map out system using diagrams
+- Add branding folder
+- Add benchmarks
+-   - Raw allocation
+-   - Allocation + Interop bridge cross (Most realistic)
+-   - Killswitch on / off scenarios
+
+_NOTE TO SELF: Make sure to add the benchmarks AFTER the UI subscriber console is added._
+_This makes the benchmark more honest in terms of what plug-and-play users can expect._  
+_For powerusers, add 2 tables comparing Synthetic (raw logger, no UI or listener) vs End-to-end (logger + UI overhead)._
+
+## Features
+
+### Runtime console
+
+A runtime console accessible through a keyboard shortcut **Default: `en:semicolon` `se:ö`**
+
+### Routed logs
+
+Logs can be routed to `Debug`, `Runtime` or `All`.
+
+#### High efficiency architecture
+
+##### Log as struct references
+
+All logs sent from log event are sent as references and consumed using the `in`keyword.  
+Meaning a near infinite number of subscribers can exist on the `LogEmitted` event with minimal overhead.
+
+#### AOT (Ahead of time) compilation
+
+The system does not make use of reflection to register commands or resources.
+
+##### No alloc, no-op logger
+
+The system is structured to be included in runtime builds.  
+Therefore if logs are called on non-target systems they are non-alloc and no-op.
+
+##### Killswitch
+
+Should the player not wish to see logs, or want to save the small overhead of the console there exists a runtime killswitch.
+
+#### Domain filtering
+
+Logs can be tagged with a domain for easy filtering in subscribing systems.
+
+### CVars (Console variables)
+
+CVars can be created with a simple right-click menu inside the Godot editor.  
+Once a CVar is created they are loaded at runtime (without reflection!) and can be accessed at O(1) complexity.
+
+### Commands
+
+Commands use a minimal-overhead, beginner friendly context based command-set architecture API.  
+Sets are registered by adding a CommandSet node to the object and inheriting from the root class.  
+Commands are managed at runtime and update at O(1) complexity with no reflection!
+
+### Clickable source paths (Godot editor)
+
+When using `PikeLogger.LogWarning(...)` or `PikeLogger.Error(...)` the log is automatically prefixed with a clickable link.  
+Clicking this will open up the callers file and line in your default IDE (engine settings).
+
+## Requrements
+
+- **Godot 4.6 or later**
+- **C# 10.0 or later**
+
 ## Privacy notice!
 
 This Logger uses compile-time directory baking to display certain paths in logs.  
