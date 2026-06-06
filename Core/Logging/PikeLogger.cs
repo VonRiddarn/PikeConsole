@@ -112,7 +112,7 @@ public static class PikeLogger
 					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_INFO}]{message}[/color]");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_SUCCESS}]{message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_SUCCESS}]{message}[/color]");
 					break;
 				case LogLevel.Warning:
 					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_WARNING}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
