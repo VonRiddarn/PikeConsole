@@ -1,4 +1,4 @@
-namespace FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
 /// <remarks>Since commands are context based an alias can be registered in a 
 /// window where the command is not yet, or no longer, registered.
