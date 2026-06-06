@@ -27,6 +27,14 @@ namespace FractalPike.PikeConsole.Core.Logging;
 
 		Thus, I made the decision of only allowing interpolated strings with a custom string builder.
 		This prevents accidental allocation and computation.
+
+	Q: Is this thread safe? 
+	A:
+		Not as of now, no.
+		To make it thread safe we would add a cuncurrent queue that we consume logs from on the main thread.
+		That means we need an in-engine persistant consumer. It's doable and not too complicated, but out of scope for now.
+	Sum:
+		If you do your logging on the main thread this implementation is 100% safe.
 */
 
 public static class PikeLogger
@@ -44,7 +52,7 @@ public static class PikeLogger
 	/// void OnLogEmitted(in LogEvent logEvent)
 	/// </code>
 	/// </remarks>
-	public static event LogEventHandler LogEmitted; // TODO: Consume using thread safe queue!!
+	public static event LogEventHandler LogEmitted;
 
 	static bool? _isDebugEnvironment = null;
 
