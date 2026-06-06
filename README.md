@@ -21,6 +21,15 @@ _For powerusers, add 2 tables comparing Synthetic (raw logger, no UI or listener
 
 ## Features
 
+Some are added prematurely as they are being ported from the old Unity framework.
+
+### Planned
+
+**ArgParser API utility**  
+Something that helps parse arguments into types. Maybe a generic method if possible?  
+**Command shorthand creation**  
+Improve the command shorthand when porting to Godot.
+
 ### Runtime console
 
 A runtime console accessible through a keyboard shortcut **Default: `en:semicolon` `se:ö`**
