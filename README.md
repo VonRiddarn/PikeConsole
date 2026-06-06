@@ -66,7 +66,7 @@ Logs can be tagged with a domain for easy filtering in subscribing systems.
 
 CVars can be created with a simple right-click menu inside the Godot editor.  
 Once a CVar is created they are loaded at runtime (without reflection!) and can be accessed at O(1) complexity.  
-CVars are extendable and allows users to inherit and write their own custom CVar overrides.
+CVars are extensible and allows users to inherit and write their own custom CVar overrides.
 
 ### Commands
 
