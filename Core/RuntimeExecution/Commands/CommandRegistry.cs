@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -31,24 +32,19 @@ public static class CommandRegistry
 		throw new NotImplementedException();
 	}
 
+
 	/// <summary>
 	/// Register commands to the registry in bulk.
 	/// Used internally by the CommandSet class.
 	/// </summary>
 	/// <param name="commands">IEnumerable of commands. Fast path expects an array.</param>
 	/// <returns>An array of <c>Response&lt; RegisterCommandResponseStatus &gt;[]</c></returns>
-	public static Response<RegisterCommandResponseStatus>[] Register(IEnumerable<IRuntimeExecutable> commands)
+	public static Response<RegisterCommandResponseStatus>[] Register(ImmutableArray<Command> commands)
 	{
-		// Due to the opinionated design in CommandSet we are passing an array 9/10 times.
-		// Fast path the array or spread it to store state.
-		var commandList = commands as IRuntimeExecutable[] ?? [.. commands];
-		int count = commandList.Length;
+		var responses = new Response<RegisterCommandResponseStatus>[commands.Length];
 
-		// Allocate an array of responses that is exactly the size of commands to process.
-		var responses = new Response<RegisterCommandResponseStatus>[count];
-
-		for (int i = 0; i < count; i++)
-			responses[i] = Register(commandList[i]);
+		for (int i = 0; i < commands.Length; i++)
+			responses[i] = Register(commands[i]);
 
 		return responses;
 	}
