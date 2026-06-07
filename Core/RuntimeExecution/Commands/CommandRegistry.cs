@@ -52,7 +52,7 @@ public static class CommandRegistry
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void UnRegister(IRuntimeExecutable command)
+	public static void Unregister(IRuntimeExecutable command)
 	{
 		_commands.Remove(command.Signature);
 	}
@@ -62,10 +62,10 @@ public static class CommandRegistry
 	/// Used internally by the CommandSet class.
 	/// </summary>
 	/// <param name="commands">IEnumerable of commands. Fast path expects an array.</param>
-	public static void UnRegister(IEnumerable<IRuntimeExecutable> commands)
+	public static void Unregister(IEnumerable<IRuntimeExecutable> commands)
 	{
 		foreach (IRuntimeExecutable command in commands)
-			UnRegister(command);
+			Unregister(command);
 	}
 
 	/// <summary>
