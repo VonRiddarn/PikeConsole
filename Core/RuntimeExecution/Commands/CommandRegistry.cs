@@ -23,9 +23,11 @@ public static class CommandRegistry
 	{
 		// TODO: Add registration when CVars are ported.
 		// They are needed for type-checking the response.
-		// BIG REFACTOR FROM UNTIY FRAMEWORK!!
-		// THE REGISTRY WILL LOG FAILURES. This makes the registry self diagnostic.
-		// LogTarget.All - This will allow players to report bugs from a compiled release.
+		// NEW PLAN: 
+		// THE REGISTRY WILL IN FACT, NOT LOG RESPONSES.
+		// If the registry logs the responses we will have a harder time locating the caller.
+		// Instead, the registry will return a detailed message that the one trying to register can use....
+		// Like, how a "Response" is supposed to be used. smh
 		throw new NotImplementedException();
 	}
 
