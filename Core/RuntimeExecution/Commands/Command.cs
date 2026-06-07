@@ -52,6 +52,7 @@ public sealed class Command : IRuntimeExecutable
 
 	public Response<ExecutionResponseStatus> Execute(string[] args)
 	{
+		// TODO: Add try.catch so we can send back exceptions.
 		throw new System.NotImplementedException();
 	}
 
