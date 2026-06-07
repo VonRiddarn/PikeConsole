@@ -37,7 +37,6 @@ public static class CommandRegistry
 	/// <returns>An array of <c>Response&lt; RegisterCommandResponseStatus &gt;[]</c></returns>
 	public static Response<RegisterCommandResponseStatus>[] Register(IEnumerable<IRuntimeExecutable> commands)
 	{
-		// TODO: Add Try-catch here and send back exception
 		// Due to the opinionated design in CommandSet we are passing an array 9/10 times.
 		// Fast path the array or spread it to store state.
 		var commandList = commands as IRuntimeExecutable[] ?? [.. commands];
