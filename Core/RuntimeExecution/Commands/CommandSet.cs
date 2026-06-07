@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
@@ -10,7 +11,7 @@ public abstract partial class CommandSet : Node
 	/// All commands within this CommandSet.
 	/// Initialized only once at runtime.
 	/// </summary>
-	public Command[] Commands { get; private set; } = [];
+	public ImmutableArray<Command> Commands { get; private set; }
 
 	// ----- ----- GODOT API WRAPPER ----- -----
 	// Wrapper virtual API for Godot methods.
@@ -50,7 +51,7 @@ public abstract partial class CommandSet : Node
 
 	public sealed override void _Ready()
 	{
-		CommandRegistry.Register(Commands);
+		RegisterCommandsInternal();
 		OnReady();
 	}
 
@@ -111,7 +112,7 @@ public abstract partial class CommandSet : Node
 	{
 		try
 		{
-			Commands = InstantiateCommands() ?? [];
+			Commands = ImmutableArray.Create(InstantiateCommands() ?? []);
 		}
 		catch (Exception ex)
 		{
@@ -121,5 +122,30 @@ public abstract partial class CommandSet : Node
 
 		if (Commands.Length <= 0)
 			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from {filePath}:{lineNumber} [Node: {this}]. Make sure InstantiateCommands return a valid array!");
+	}
+
+	void RegisterCommandsInternal()
+	{
+		Response<RegisterCommandResponseStatus>[] responses = CommandRegistry.Register(Commands);
+
+		// Self diagnose by checking all commands.
+		foreach (Response<RegisterCommandResponseStatus> response in responses)
+		{
+			switch (response.Status)
+			{
+				case RegisterCommandResponseStatus.Success:
+					break;
+				case RegisterCommandResponseStatus.ReplacedAlias:
+					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true);
+					break;
+				case RegisterCommandResponseStatus.AlreadyExists:
+					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true);
+					break;
+				// Unexpected error.
+				default:
+					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true);
+					break;
+			}
+		}
 	}
 }
