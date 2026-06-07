@@ -14,7 +14,7 @@ public interface IRuntimeExecutable
 	/// <summary>The long description for this executable. Go wild.</summary>
 	public string LongDesc { get; }
 
-	/// <summary>Usage example of this executable, EG: "em_find [enemy id | enemy type]" or "ph_gravity [integer]"</summary>
+	/// <summary>Usage example of this executable, EG: "em_find [enemy id | enemy type]" or "env_gc [no args]"</summary>
 	public string Usage { get; }
 
 	/// <summary>If set to true CheatMode must be active to run this executable.</summary>
