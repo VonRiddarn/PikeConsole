@@ -20,6 +20,9 @@ public interface IRuntimeExecutable
 	/// <summary>If set to true CheatMode must be active to run this executable.</summary>
 	public bool IsCheat { get; }
 
+	// public bool IsLocal { get; } -- Placing this here as a reminder if we want to tackle multiplayer someday.
+	// If (!IsLocal && !Rcon.TryPermissions(Role.Admin)) -- Or something like that.
+
 	/// <summary>Runs the executable and returns a response object.</summary>
 	public Response<ExecutionResponseStatus> Execute(string[] args);
 

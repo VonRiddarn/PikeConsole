@@ -11,7 +11,6 @@ public sealed class Command : IRuntimeExecutable
 	public string ShortDesc { get; }
 	public string LongDesc { get; }
 	public string Usage { get; }
-	public bool IsLocal { get; }
 	public bool IsCheat { get; }
 
 	readonly Func<string[], Response<ExecutionResponseStatus>> _action;
