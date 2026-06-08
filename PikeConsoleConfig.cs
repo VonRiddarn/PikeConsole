@@ -12,6 +12,11 @@ public static class PikeConsoleConfig
 	public const string COLOR_WARNING = "#FFC973";
 	public const string COLOR_ERROR = "#FF7373";
 
+	/// <summary>
+	/// If set to true, warnings about commands not containing propper documentation such as "usage" and "shortDesc" are supressed.
+	/// </summary>
+	public const bool SUPPRESS_DOCUMENTATION_WARNINGS = false;
+
 	// RUNTIME SETTINGS
 	/// <summary>
 	/// If enabled logs are emitted from the PikeLogger as usual. Disabling this acts as a runtime killswitch, making the logger no-op.

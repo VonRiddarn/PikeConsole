@@ -15,6 +15,11 @@ public sealed class Command : IRuntimeExecutable
 
 	readonly Func<string[], Response<ExecutionResponseStatus>> _action;
 
+	// Centralized fallback management. 
+	// Keeping this static prevents per-object allocation.
+	static int _nextFallbackIndex = 0;
+	static Response<ExecutionResponseStatus> FallbackAction(string[] args) => new(ExecutionResponseStatus.Failed, "No action registered!");
+
 	public Command(
 		string commandSignature,
 		string shortDesc,
@@ -36,15 +41,25 @@ public sealed class Command : IRuntimeExecutable
 
 		var (filePath, lineNumber) = customStackTrace;
 
-		// Self diagnose errors to console...
+		// Self diagnose errors to console and apply safe fallbacks...
 		if (string.IsNullOrWhiteSpace(Signature))
-			PikeLogger.LogError(LogTarget.All, $"FATAL RISK DETECTED: A command has been created without a signature!", filePath: filePath, lineNumber: lineNumber, forceLog: true);
-		if (action == null)
+		{
+			Signature = $"FALLBACK_SIGNATURE_{_nextFallbackIndex++}";
+			PikeLogger.LogError(LogTarget.All, $"FATAL RISK DETECTED: A command has been created without a signature! Emergency-fallback: {Signature}", filePath: filePath, lineNumber: lineNumber, forceLog: true);
+		}
+		if (_action == null)
+		{
 			PikeLogger.LogError(LogTarget.All, $"Command \"{Signature}\" is being registered with no callback! This is safe due to fallbacks, but very bad!", filePath: filePath, lineNumber: lineNumber, forceLog: true);
-		if (string.IsNullOrWhiteSpace(shortDesc))
-			PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no short description. This is safe but unadviced.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
-		if (string.IsNullOrWhiteSpace(usage))
-			PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no usage instructions. This is safe but unadviced.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
+			_action = FallbackAction;
+		}
+
+		if (!PikeConsoleConfig.SUPPRESS_DOCUMENTATION_WARNINGS)
+		{
+			if (string.IsNullOrWhiteSpace(shortDesc))
+				PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no short description. This is safe but unadvised.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
+			if (string.IsNullOrWhiteSpace(usage))
+				PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no usage instructions. This is safe but unadvised.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
+		}
 	}
 
 
