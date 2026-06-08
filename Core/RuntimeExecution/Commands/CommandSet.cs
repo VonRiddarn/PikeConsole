@@ -43,7 +43,7 @@ public abstract partial class CommandSet : Node
 	// overrides them without calling base..().
 	public sealed override void _EnterTree()
 	{
-		if (Commands.Length <= 0)
+		if (Commands.IsDefault || Commands.IsEmpty)
 			InitializeCommandsInternal();
 
 		OnEnterTree();
