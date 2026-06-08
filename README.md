@@ -6,6 +6,7 @@
 - **Context based, zero reflection commands**: Declarative command sets that are easy to use without file-bloat. Natively mapped to the SceneTrees lifecycle.
 - **No-code CVar registry**: Configuration variables created using native Godot resources and fetched at runtime. Decentralized data with O(1) lookup.
 - **Pit of success**: Self diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat, just an intuitive API.
+- **Fail fast, fail safe**: When bad data is passed, the system flags the error and falls back on a safe default to prevent runtime crashes.
 
 The framework is built with **runtime optimization**, **extensibility** and **ease of use** in mind.  
 Thus, the console works great out of the box, but is open enough for any average C# developer to extend its features!
