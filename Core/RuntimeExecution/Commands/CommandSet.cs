@@ -100,6 +100,42 @@ public abstract partial class CommandSet : Node
 		return new Command(signature, shortDesc, longDesc, usage, isCheat, action, new CustomStackTrace(filePath, lineNumber));
 	}
 
+	/// <summary>
+	/// Shorthand for creating undocumented commands.
+	/// This will automatically inject a custom stack trace to the caller CommandSet 
+	/// (compile time, no overhead) to the created command.
+	/// </summary>
+	/// <remarks>
+	/// NOTE: It is recommended to use the documented version of this shorthand instead.
+	/// If you absolutely do not care for documentation, use this override and set <c>PikeConsoleConfig.SUPPRESS_DOCUMENTATION_WARNINGS</c> to true.
+	/// </remarks>
+	/// <param name="signature">
+	/// Command signature to run this executable, EG: "r_cleardecals" or "env_gc"<br/>
+	/// A signature has no set naming rules, but it is convention to name it after scope separated using underscores.
+	/// </param>
+	/// <param name="isCheat">If set to true CheatMode must be active to run this command.</param>
+	/// <param name="action">
+	/// The method to run when this command is called. Example of a simple echo command:
+	/// <code>
+	/// (args) => {
+	///     PikeLogger.Log(LogTarget.Runtime, $"{string.Join(' ', args)}");
+	///     return new Response&lt;ExecutionResponseStatus&gt;(ExecutionResponseStatus.Success);
+	/// }
+	/// </code>
+	/// </param>
+	/// <param name="filePath">COMPILER INJECTED ARGUMENT, DO NOT SET.</param>
+	/// <param name="lineNumber">COMPILER INJECTED ARGUMENT, DO NOT SET.</param>
+	/// <returns>A command with an automatic compile-time custom stacktrace.</returns>
+	protected Command Command(
+		string signature,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)
+	{
+		return new Command(signature, null, null, null, isCheat, action, new CustomStackTrace(filePath, lineNumber));
+	}
+
 
 	// ----- ----- INTERNAL API ----- -----
 
