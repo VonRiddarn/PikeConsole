@@ -1,0 +1,21 @@
+TODO: Document CVars
+
+Should touch:
+
+- What are CVars
+- Create CVars
+-   - Note about the persistent flag
+-   - For persistent settings only - player facing
+-   - Saved to `user://pike_console/user_settings.cfg`
+- Consume CVars
+-   - Subscription to ValueChanged (passes the old and new value) used for EG: Health, Speed...
+-   - Subscription to Changed (passes nothing) used for EG: Crosshair (collection of CVars using the same subscription method)
+-   - PREVENT MEMORY LEAKS - UNSUBSCRIBE!
+- How to create custom CVar types
+- See how CVars can be saved and written to file: link to `docs/file-system.md` (Cvars in the filesystem)
+-   - Players can save all current persistent CVars (make a custom user profile) with command `create_profile [name] [force?]`
+-   -   - This creates a file: `user://pike_console/config/profile_name` (collions are denied and self diagnosed with feedback "file already exists" or "rewrote file name")
+-   -   - Useful for: Creating a settings profile on a shared PC. EG: 1 has sensitivity 1 the other sensitivity 5.
+-   - Players can save all non-default CVars with command `write_config [name] [force?]`
+-   -   - This creates a file: `user://pike_console/config/name` (collions are denied and self diagnosed with feedback "file already exists" or "rewrote file name")
+-   -   - Useful for: QA testing and reducing runtime boilerplate without having to edit the raw cfg files

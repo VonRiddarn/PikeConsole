@@ -1,6 +1,14 @@
-# PikeConsole
+# PikeConsole - The high performance C# runtime developer console for Godot 4.
 
-Proprietary Godot CVar and Command console system for Fractal Pike.
+**PikeConsole** is a _plug-and-play_ runtime execution framework that provides you with QOL features such as:
+
+- **Zero alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch!
+- **Context based, zero reflection commands**: Declarative command sets that are easy to use without file-bloat. Natively mapped to the SceneTrees lifecycle.
+- **No-code CVar registry**: Configuration variables created using native Godot resources and fetched at runtime. Decentralized data with O(1) lookup.
+- **Pit of success**: Self diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat, just an intuitive API.
+
+The framework is built with **runtime optimization**, **extensibility** and **ease of use** in mind.  
+Thus, the console works great out of the box, but is open enough for any average C# developer to extend its features!
 
 ## TODO:
 
@@ -18,9 +26,10 @@ Proprietary Godot CVar and Command console system for Fractal Pike.
 -   - Links to repos with extensions for CVars
 -   - Links to forked repos with different design philosophy
 
-_NOTE TO SELF: Make sure to add the benchmarks AFTER the UI subscriber console is added._
-_This makes the benchmark more honest in terms of what plug-and-play users can expect._  
-_For powerusers, add 2 tables comparing Synthetic (raw logger, no UI or listener) vs End-to-end (logger + UI overhead)._
+## Getting started
+
+To quickly get into PikeConsole and all of its features you can use the quick start guide (link to `docs/getting-started.md`)  
+Or browse the documentation folder (link to `docs/`)
 
 ## Features
 
