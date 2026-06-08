@@ -11,7 +11,7 @@ Also, always link to deeper docs when applicable!!
 -   -   - Drag and drop
 -   -   - Pull PackagedScene into scene tree
 -   -   - Console is now active (semicolon)!
--   -   - First commands
+-   -   - First commands (early dopamine!)
 -   -   -   - `echo Hello world`
 -   -   -   - `count argument counter that "takes quotations into" consideration`
 -   -   -   - `echo Hello; echo World`
