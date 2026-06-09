@@ -184,13 +184,13 @@ func inject_setting(setting: Dictionary) -> void:
 # Register input writes the input to disk (runs only once).
 # Returns a dirty flag for checking if any new settings were actually added.
 func register_input(input: Dictionary) -> bool:
-	var action_name: String = KB_TOGGLE_CONSOLE["name"]
+	var action_name: String = input["name"]
 	var path: String = "input/" + action_name
 	
 	if ProjectSettings.has_setting(path):
 		return false
 	
-	var default_key: int = KB_TOGGLE_CONSOLE["default_key"]
+	var default_key: int = input["default_key"]
 	var key_event := InputEventKey.new()
 	key_event.physical_keycode = default_key
 
@@ -207,9 +207,9 @@ func register_input(input: Dictionary) -> bool:
 func inject_input(input: Dictionary) -> void:
 	# Sadly we redo a lot of allocations.
 	# The perfectionist in me screams, but this happens once. At startup.
-	var action_name: String = KB_TOGGLE_CONSOLE["name"]
+	var action_name: String = input["name"]
 	var path: String = "input/" + action_name
-	var default_key: int = KB_TOGGLE_CONSOLE["default_key"]
+	var default_key: int = input["default_key"]
 
 	var key_event := InputEventKey.new()
 	key_event.physical_keycode = default_key
