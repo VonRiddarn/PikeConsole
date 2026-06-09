@@ -1,4 +1,5 @@
 namespace FractalPike.PikeConsole.Core;
+
 // ----- ----- Logger ----- -----
 public static class PikeConsoleConfig
 {
