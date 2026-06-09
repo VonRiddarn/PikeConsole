@@ -102,13 +102,13 @@ const KB_TOGGLE_CONSOLE: Dictionary[String, Variant] = {
 # 		INITIALIZATION
 # ----- ----- ----- ----- -----
 func _enter_tree() -> void:
-	initialize_project_Settings()
+	initialize_project_settings()
 	initialize_input_map()
 
 # ----- ----- ----- ----- -----
 # 	INITIALIZATION HELPERS
 # ----- ----- ----- ----- -----
-func initialize_project_Settings() -> void: 
+func initialize_project_settings() -> void: 
 	var settings: Array[Dictionary] = [
 		SETTING_PATHMAP,
 		SETTING_CVAR_DIRECTORY,
@@ -146,12 +146,12 @@ func pike_log(message) -> void: print(ADDON_PRINT_PREFIX + message)
 
 # Register setting writes the setting to disk (runs only once).
 # Returns a dirty flag for checking if any new settings were actually added.
-func register_setting(setting: Dictionary):
+func register_setting(setting: Dictionary) -> bool:
 	var path: String = setting["path"]
 	
 	# Early return so that we don't keep saving to the project.godot file!
 	if ProjectSettings.has_setting(path):
-		return false;
+		return false
 	
 	var default_value: Variant = setting["default_value"]
 	
@@ -201,7 +201,7 @@ func register_input(input: Dictionary) -> bool:
 
 	ProjectSettings.set_setting(path, action_data)
 	
-	return true;
+	return true
 
 # Inject setting injects the input map if needed (runs every time).
 func inject_input(input: Dictionary) -> void:
