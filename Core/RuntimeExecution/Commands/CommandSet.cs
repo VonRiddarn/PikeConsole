@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
+using FractalPike.PikeConsole.Core;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
@@ -19,6 +20,9 @@ public abstract partial class CommandSet : Node
 	protected virtual void OnEnterTree() { }
 	protected virtual void OnReady() { }
 	protected virtual void OnExitTree() { }
+
+	// ----- ----- PIKECONSOLE API WRAPPER ----- -----
+	protected virtual void OnCheatModeChanged(bool newState) { }
 
 	/// <summary>
 	/// Obligatory registration method that must return an array of Commands.
@@ -46,6 +50,7 @@ public abstract partial class CommandSet : Node
 		if (Commands.IsDefault || Commands.IsEmpty)
 			InitializeCommandsInternal();
 
+		PikeConsoleConfig.CheatModeChanged += OnCheatModeChangedInternal;
 		OnEnterTree();
 	}
 
@@ -58,6 +63,7 @@ public abstract partial class CommandSet : Node
 	public sealed override void _ExitTree()
 	{
 		CommandRegistry.Unregister(Commands);
+		PikeConsoleConfig.CheatModeChanged -= OnCheatModeChangedInternal;
 		OnExitTree();
 	}
 
@@ -138,6 +144,11 @@ public abstract partial class CommandSet : Node
 
 
 	// ----- ----- INTERNAL API ----- -----
+
+	void OnCheatModeChangedInternal(bool b)
+	{
+		OnCheatModeChanged(b);
+	}
 
 	// We inject the filepath and linenumber so that we can reference the actual child that messed up instead of this base class.
 	// This class is self-diagnostic by design. This ensures we fail fast and catch collisions early.

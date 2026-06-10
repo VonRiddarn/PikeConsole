@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace FractalPike.PikeConsole.Core;
@@ -58,6 +59,29 @@ public static class PikeConsoleConfig
 	/// </summary>
 	/// <value>State (on / off) for the runtime console logger.</value>
 	public static bool EnableRuntimeLogging { get; set; } = true;
+
+	private static bool _cheatMode = false;
+
+
+	public static event Action<bool>? CheatModeChanged;
+
+	/// <summary>
+	/// The state variable for cheatmode.
+	/// </summary>
+	/// <remarks>
+	/// This should rarely be consumed directly. Check out the <c>PikeConsoleConfig.CheatModeChanged</c> event instead!
+	/// </remarks>
+	public static bool CheatMode
+	{
+		get => _cheatMode;
+		set
+		{
+			if (_cheatMode == value) return;
+
+			_cheatMode = value;
+			CheatModeChanged?.Invoke(_cheatMode);
+		}
+	}
 
 
 	public static string TestSettings() => $@"
