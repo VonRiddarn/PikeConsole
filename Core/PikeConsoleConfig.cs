@@ -6,9 +6,10 @@ namespace FractalPike.PikeConsole.Core;
 // ----- ----- Logger ----- -----
 public static class PikeConsoleConfig
 {
+
 	// META
 	// MUST match the <PathMap> value in your .csproj exactly!
-	public const string PATH_MAP_ALIAS = "";
+	public const string PATH_MAP = "";
 
 	// EDITOR
 	public const string COLOR_INFO = "#ebebeb";
