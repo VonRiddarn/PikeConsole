@@ -102,8 +102,8 @@ public static class PikeLogger
 
 			// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
 			// NOTE: We could implement ReadOnlySpan<char> here to only allocate once, but it would make it less readable and only save a few nanoseconds.
-			if (!string.IsNullOrEmpty(PikeConsoleConfig.PATH_MAP) && filePath.StartsWith(PikeConsoleConfig.PATH_MAP))
-				filePath = filePath.Replace(PikeConsoleConfig.PATH_MAP, "res:/");
+			if (!string.IsNullOrEmpty(PikeConsoleConfig.PathMap) && filePath.StartsWith(PikeConsoleConfig.PathMap))
+				filePath = filePath.Replace(PikeConsoleConfig.PathMap, "res:/");
 			else // If we have no PathMap alias force-inverse the path into local. Note: This crosses the interop bridge. 
 				filePath = Godot.ProjectSettings.LocalizePath(filePath);
 
@@ -117,16 +117,16 @@ public static class PikeLogger
 				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
 				// Meaning, we do not allocate a member variable, nor do we interpolate more than once.
 				case LogLevel.Info:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_INFO}]{message}[/color]");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_SUCCESS}]{message}[/color]");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
 					break;
 				case LogLevel.Warning:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_WARNING}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 				case LogLevel.Error:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.COLOR_ERROR}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					Godot.GD.PrintRich($"[color={PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 			}
 		}
