@@ -62,13 +62,21 @@ public sealed class Command : IRuntimeExecutable
 		}
 	}
 
-
-	// TODO: CONTINUE WITH THIS!!!
-
 	public Response<ExecutionResponseStatus> Execute(string[] args)
 	{
-		// TODO: Add try.catch so we can send back exceptions.
-		throw new System.NotImplementedException();
+		// Note: Actions can still return their own exception error messages.
+		// We just wrap it so that if the API consumer does not catch their own error, we do it here.
+		try
+		{
+			if (IsCheat && !PikeConsoleConfig.CheatMode)
+				return new(ExecutionResponseStatus.DeniedCheat, $"{Signature} is cheat protected!");
+
+			return _action.Invoke(args);
+		}
+		catch (Exception e)
+		{
+			return new(ExecutionResponseStatus.Error, $"Uncaught exception caused by \"{Signature}\": {e.Message}");
+		}
 	}
 
 	public string GetHelp()
