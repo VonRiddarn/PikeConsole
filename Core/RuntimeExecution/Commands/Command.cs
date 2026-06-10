@@ -45,7 +45,7 @@ public sealed class Command : IRuntimeExecutable
 		if (string.IsNullOrWhiteSpace(Signature))
 		{
 			Signature = $"FALLBACK_SIGNATURE_{_nextFallbackIndex++}";
-			PikeLogger.LogError(LogTarget.All, $"FATAL RISK DETECTED: A command has been created without a signature! Emergency-fallback: {Signature}", filePath: filePath, lineNumber: lineNumber, forceLog: true);
+			PikeLogger.LogError(LogTarget.All, $"A command has been created without a signature! Emergency-fallback: {Signature}", filePath: filePath, lineNumber: lineNumber, forceLog: true);
 		}
 		if (_action == null)
 		{
