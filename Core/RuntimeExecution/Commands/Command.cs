@@ -53,7 +53,7 @@ public sealed class Command : IRuntimeExecutable
 			_action = FallbackAction;
 		}
 
-		if (!PikeConsoleConfig.SupressDocumentationWarnings)
+		if (!PikeConsoleConfig.SuppressDocumentationWarnings)
 		{
 			if (string.IsNullOrWhiteSpace(shortDesc))
 				PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no short description. This is safe but unadvised.", filePath: filePath, lineNumber: lineNumber, forceLog: true);

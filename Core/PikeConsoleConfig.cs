@@ -33,12 +33,12 @@ public static class PikeConsoleConfig
 	/// </summary>
 	public static int MaxUiLogs => _maxUiLogs ??= ProjectSettings.GetSetting($"{SETTINGS_RUNTIME}/max_ui_logs", 500).AsInt32();
 
-	static bool? _supressDocumentationWarnings = null;
+	static bool? _suppressDocumentationWarnings = null;
 	/// <summary>
 	/// If set to true, warnings about commands not containing propper documentation such as "usage" and "shortDesc" are supressed.
 	/// </summary>
-	public static bool SupressDocumentationWarnings =>
-		_supressDocumentationWarnings ??= ProjectSettings.GetSetting($"{SETTINGS_EDITOR}/suppress_documentation_warnings", false).AsBool();
+	public static bool SuppressDocumentationWarnings =>
+		_suppressDocumentationWarnings ??= ProjectSettings.GetSetting($"{SETTINGS_EDITOR}/suppress_documentation_warnings", false).AsBool();
 
 	// EDITOR
 	static Color? _infoColor = null;
@@ -88,7 +88,7 @@ public static class PikeConsoleConfig
 PathMap: {PathMap}
 CvarDirectory: {CvarDirectory}
 MaxUiLogs: {MaxUiLogs}
-SupressDocumentationWarnings: {SupressDocumentationWarnings}
+SupressDocumentationWarnings: {SuppressDocumentationWarnings}
 InfoColor: {InfoColor.ToHtml(false)}
 SuccessColor: {SuccessColor.ToHtml(false)}
 WarningColor: {WarningColor.ToHtml(false)}
