@@ -65,6 +65,11 @@ public static class PikeConsoleConfig
 
 	public static event Action<bool>? CheatModeChanged;
 
+	// TOOD: CHEATMODE IS NOT A CVAR!!! NOTE TO SELF
+	// BIG UPGRADE FROM THE UNITY FRAMEWORK.
+	// We will not force inject cheats as a CVar. It makes no sense to add such a fragile wrapper.
+	// Instead, we will register it as a COMMAND in the GlobalCommandSet. And that command will just affect this static variable.
+
 	/// <summary>
 	/// The state variable for cheatmode.
 	/// </summary>
