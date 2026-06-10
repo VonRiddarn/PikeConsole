@@ -9,7 +9,7 @@ Should touch:
 -   - Saved to `user://pike_console/user_settings.cfg`
 - Consume CVars
 -   - Subscription to ValueChanged (passes the old and new value) used for EG: Health, Speed...
--   - Subscription to Changed (passes nothing) used for EG: Crosshair (collection of CVars using the same subscription method)
+-   - Subscription to ValueInvalidated (passes nothing) used for EG: Crosshair (collection of CVars using the same subscription method)
 -   - PREVENT MEMORY LEAKS - UNSUBSCRIBE!
 - How to create custom CVar types
 - See how CVars can be saved and written to file: link to `docs/file-system.md` (Cvars in the filesystem)
