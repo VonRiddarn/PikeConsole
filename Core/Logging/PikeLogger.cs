@@ -117,16 +117,16 @@ public static class PikeLogger
 				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
 				// Meaning, we do not allocate a member variable, nor do we interpolate more than once.
 				case LogLevel.Info:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
+					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
+					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
 					break;
 				case LogLevel.Warning:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 				case LogLevel.Error:
-					Godot.GD.PrintRich($"[color={PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 					break;
 			}
 		}
