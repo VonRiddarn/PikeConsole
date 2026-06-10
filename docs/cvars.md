@@ -3,7 +3,11 @@ TODO: Document CVars
 Should touch:
 
 - What are CVars
+-   - Cvars are global, self-contained data
+-   - CVars are also COMMANDS... kinda
+-   -   - How CVars register as commands on startup when the CVar crawler parses `res://cvars`
 - Create CVars
+-   - Basic creation (right click flow)
 -   - Note about the persistent flag
 -   - For persistent settings only - player facing
 -   - Saved to `user://pike_console/user_settings.cfg`
