@@ -25,7 +25,7 @@ public static class PikeConsoleConfig
 	public static string PathMap => _pathMap ??= ProjectSettings.GetSetting($"{SETTINGS_ROOT}/pathmap", "").AsString();
 
 	static string? _cvarDirectory = null;
-	public static string CvarDirectory => _cvarDirectory ??= ProjectSettings.GetSetting($"{SETTINGS_ROOT}/cvar_directory", "res://cvars").AsString();
+	public static string CvarDirectory => _cvarDirectory ??= ProjectSettings.GetSetting($"{SETTINGS_ROOT}/cvar_directory_relative", "res://cvars").AsString();
 
 	static int? _maxUiLogs = null;
 	/// <summary>

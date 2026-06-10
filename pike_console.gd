@@ -40,9 +40,9 @@ const SETTING_PATHMAP: Dictionary[String, Variant] = {
 	"hint": PROPERTY_HINT_NONE, 
 	"hint_string": ""
 }
-const SETTING_CVAR_DIRECTORY: Dictionary[String, Variant] = {
-	"path": PATH_SETTINGS_ROOT + "cvar_directory", 
-	"default_value": "res://cvars", 
+const SETTING_CVAR_DIRECTORY_RELATIVE: Dictionary[String, Variant] = {
+	"path": PATH_SETTINGS_ROOT + "cvar_directory_relative", 
+	"default_value": "cvars", 
 	"type": TYPE_STRING, 
 	"hint": PROPERTY_HINT_DIR, 
 	"hint_string": ""
@@ -112,7 +112,7 @@ func _enter_tree() -> void:
 func initialize_project_settings() -> void: 
 	var settings: Array[Dictionary] = [
 		SETTING_PATHMAP,
-		SETTING_CVAR_DIRECTORY,
+		SETTING_CVAR_DIRECTORY_RELATIVE,
 		SETTING_MAX_UI_LOGS,
 		SETTING_SUPRESS_DOCUMENTATION_WARNINGS,
 		SETTING_COLOR_INFO,
@@ -141,8 +141,8 @@ func initialize_input_map() -> void:
 	
 func initialize_cvar_directory() -> void:
 	# Cache for single-point accessors to the dictionary
-	var dir_path = SETTING_CVAR_DIRECTORY["default_value"]
-	var path = SETTING_CVAR_DIRECTORY["path"]
+	var dir_path = "res://" + SETTING_CVAR_DIRECTORY_RELATIVE["default_value"]
+	var path = SETTING_CVAR_DIRECTORY_RELATIVE["path"]
 	
 	# Respect the users custom path - UX baby!
 	if ProjectSettings.has_setting(path):
