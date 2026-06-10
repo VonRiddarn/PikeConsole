@@ -19,3 +19,7 @@ Should touch:
 -   - Players can save all non-default CVars with command `write_config [name] [force?]`
 -   -   - This creates a file: `user://pike_console/config/name` (collions are denied and self diagnosed with feedback "file already exists" or "rewrote file name")
 -   -   - Useful for: QA testing and reducing runtime boilerplate without having to edit the raw cfg files
+
+NOTE TO SELF:  
+Might be a good idea to explain that CVars are resources that automatically create commands at startup.  
+Maybe a catchy memorable phrase like "CVars are COMMANDS... kinda." or something.
