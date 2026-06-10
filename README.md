@@ -5,7 +5,7 @@
 - **Zero alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch!
 - **Context based, zero reflection commands**: Declarative command sets that are easy to use without file-bloat. Natively mapped to the SceneTrees lifecycle.
 - **AOT-safe compilation**: The system is built with AOT compilation in mind, meaning there is no compile-time reflection based stripping that will ruin your day.
-- **No-code CVar registry**: Configuration variables created using native Godot resources and fetched at runtime. Decentralized data with O(1) lookup.
+- **No-code CVar registry**: Configuration variables created using native Godot resources and fetched at runtime. Self-contained data with O(1) lookup.
 - **Pit of success**: Self diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat, just an intuitive API.
 - **Fail fast, fail safe**: When bad data is passed, the system flags the error and falls back on a safe default to prevent runtime crashes.
 
