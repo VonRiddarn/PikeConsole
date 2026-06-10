@@ -65,7 +65,7 @@ The system minimizes reflection and does not use assembly scanning to register c
 This does not mean the system is completely reflection free. It just means that when reflection is used,
 it is done with care and the results are propperly cached. EG: CVars use `typeof(T).Name` to statically perform meta caching.
 
-##### No alloc, no-op logger
+##### Non alloc, no-op logger
 
 The system is structured to be included in runtime builds.  
 Therefore if logs are called on non-target systems they are non-alloc and no-op.
