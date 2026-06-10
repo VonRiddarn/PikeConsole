@@ -142,7 +142,7 @@ func initialize_input_map() -> void:
 func initialize_cvar_directory() -> void:
 	# Cache for single-point accessors to the dictionary
 	var dir_path = SETTING_CVAR_DIRECTORY["default_value"]
-	var path = SETTING_CVAR_DIRECTORY["path"];
+	var path = SETTING_CVAR_DIRECTORY["path"]
 	
 	# Respect the users custom path - UX baby!
 	if ProjectSettings.has_setting(path):
@@ -152,7 +152,7 @@ func initialize_cvar_directory() -> void:
 	# Note: we could just do "var dir = DirAccess.open(dir_path)" and it would work with less cycles
 	# That would however always print an error on first launch which can be misinterpreted as the addon not working
 	if not DirAccess.dir_exists_absolute(dir_path):
-		var err = DirAccess.make_dir_recursive_absolute(dir_path);
+		var err = DirAccess.make_dir_recursive_absolute(dir_path)
 		if err == OK:
 			pike_log("Created CVar directory at: " + dir_path)
 		else:
