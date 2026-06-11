@@ -182,6 +182,7 @@ public abstract partial class CommandSet : Node
 			switch (response.Status)
 			{
 				case RegisterExecutableResponseStatus.Success:
+					PikeLogger.Log(LogTarget.Editor, $"{response.Message}");
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:
 					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true);

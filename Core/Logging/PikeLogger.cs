@@ -55,6 +55,7 @@ public static class PikeLogger
 	public static event LogEventHandler LogEmitted;
 
 	static bool? _isDebugEnvironment = null;
+	static bool? _isEditor = null;
 
 	// TODO: Centralize environment / system information later. Can also be used with the commands
 	/// <summary>
@@ -63,6 +64,7 @@ public static class PikeLogger
 	/// </summary>
 	/// <returns>True for debug environments, false for strictly runtime environments.</returns>
 	public static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
+	public static bool IsEditor => _isEditor ??= Godot.Engine.IsEditorHint();
 
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
@@ -71,8 +73,9 @@ public static class PikeLogger
 	public static bool IsTargetEnabled(LogTarget target)
 	{
 		bool debugActive = (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
-		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Runtime) != 0;
-		return debugActive || runtimeActive;
+		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor;
+		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Release) != 0;
+		return debugActive || runtimeActive || editorActive;
 	}
 
 	[StackTraceHidden]
@@ -95,7 +98,7 @@ public static class PikeLogger
 
 #if TOOLS
 		// ----- GODOT EDITOR -----
-		if ((logTarget & LogTarget.Debug) != 0 && IsDebugEnvironment)
+		if ((logTarget & LogTarget.Editor) != 0 && IsDebugEnvironment)
 		{
 			// Fix backslashes for windows systems.
 			filePath = filePath.Replace('\\', '/');
@@ -130,6 +133,12 @@ public static class PikeLogger
 					break;
 			}
 		}
+
+		// Still inside the preprocessor directives, we make an early return.
+		// The editor simply checks if it was the only target, and early returns if it was.
+		// This makes it so that we don't have to leave nasty extra checks in a compiled version.
+		if ((logTarget & LogTarget.Release) == 0 && (logTarget & LogTarget.Debug) == 0)
+			return;
 #endif
 
 		// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
@@ -141,6 +150,7 @@ public static class PikeLogger
 			domain,
 			includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
 		));
+
 	}
 
 	// Public API - outward facing wrapper methods.
