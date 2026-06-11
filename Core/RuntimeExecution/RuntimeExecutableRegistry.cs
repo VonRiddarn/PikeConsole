@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -9,18 +8,18 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
 public static class RuntimeExecutableRegistry
 {
-	public static IReadOnlyDictionary<string, IRuntimeExecutable> Commands => _commands;
-	static readonly Dictionary<string, IRuntimeExecutable> _commands = new(StringComparer.OrdinalIgnoreCase);
+	public static IReadOnlyDictionary<string, IRuntimeExecutable> Executables => _executables;
+	static readonly Dictionary<string, IRuntimeExecutable> _executables = new(StringComparer.OrdinalIgnoreCase);
 
 	/// <summary>
-	/// Protective and pragmatic wrapper for <c>_commands.TryGetValue(signature, out command)</c>
+	/// Protective and pragmatic wrapper for <c>_executables.TryGetValue(signature, out executable)</c>
 	/// </summary>
-	public static bool TryGetCommand(string signature, out IRuntimeExecutable? command)
+	public static bool TryGetExecutable(string signature, out IRuntimeExecutable? executable)
 	{
-		return _commands.TryGetValue(signature, out command);
+		return _executables.TryGetValue(signature, out executable);
 	}
 
-	public static Response<RegisterExecutableResponseStatus> Register(IRuntimeExecutable command)
+	public static Response<RegisterExecutableResponseStatus> Register(IRuntimeExecutable executable)
 	{
 		// TODO: Add registration when CVars are ported.
 		// They are needed for type-checking the response.
@@ -34,44 +33,42 @@ public static class RuntimeExecutableRegistry
 
 
 	/// <summary>
-	/// Register commands to the registry in bulk.
+	/// Register executables to the registry in bulk.
 	/// Used internally by the CommandSet class.
 	/// </summary>
-	/// <param name="commands">IEnumerable of commands. Fast path expects an array.</param>
-	/// <returns>An array of <c>Response&lt; RegisterCommandResponseStatus &gt;[]</c></returns>
-	public static Response<RegisterExecutableResponseStatus>[] Register(ImmutableArray<Command> commands)
+	/// <returns>An array of <c>Response&lt; RegisterExecutableResponseStatus &gt;[]</c></returns>
+	public static Response<RegisterExecutableResponseStatus>[] Register(IRuntimeExecutable[] executables)
 	{
-		var responses = new Response<RegisterExecutableResponseStatus>[commands.Length];
+		var responses = new Response<RegisterExecutableResponseStatus>[executables.Length];
 
-		for (int i = 0; i < commands.Length; i++)
-			responses[i] = Register(commands[i]);
+		for (int i = 0; i < executables.Length; i++)
+			responses[i] = Register(executables[i]);
 
 		return responses;
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static void Unregister(IRuntimeExecutable command)
+	public static void Unregister(IRuntimeExecutable executable)
 	{
-		_commands.Remove(command.Signature);
+		_executables.Remove(executable.Signature);
 	}
 
 	/// <summary>
-	/// Unregister commands from the registry in bulk.
+	/// Unregister executable from the registry in bulk.
 	/// Used internally by the CommandSet class.
 	/// </summary>
-	/// <param name="commands">IEnumerable of commands. Fast path expects an array.</param>
-	public static void Unregister(IEnumerable<IRuntimeExecutable> commands)
+	public static void Unregister(IRuntimeExecutable[] executables)
 	{
-		foreach (IRuntimeExecutable command in commands)
-			Unregister(command);
+		foreach (IRuntimeExecutable executable in executables)
+			Unregister(executable);
 	}
 
 	/// <summary>
 	/// LINQ "SQL-style" lookup.
-	/// Gets all commands containing the term with an optional type filter.
+	/// Gets all executables containing the term with an optional type filter.
 	/// </summary>
 	/// <remarks>For games with very large sets (thousands) of commands / CVars this might cause some overhead.
-	/// Though command querying is not part of the hot-path, so this should cover most usecases.</remarks>
+	/// Though executable querying is not part of the hot-path, so this should cover most usecases.</remarks>
 	/// <param name="term">The search term to pass.</param>
 	/// <param name="filterType">The type to filter by, EG: <code>typeof(CVar&lt; int &gt;)</code></param>
 	/// <param name="rankByPrefix">Place the results in order, prioritizing those who start with the term.</param>
@@ -83,7 +80,7 @@ public static class RuntimeExecutableRegistry
 		Type? filterType = null,
 		bool rankByPrefix = false)
 	{
-		var query = _commands.Values.AsEnumerable();
+		var query = _executables.Values.AsEnumerable();
 
 		if (!string.IsNullOrWhiteSpace(term))
 		{

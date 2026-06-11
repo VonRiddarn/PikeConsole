@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Core;
 using FractalPike.PikeConsole.Core.Logging;
@@ -62,7 +63,7 @@ public abstract partial class CommandSet : Node
 
 	public sealed override void _ExitTree()
 	{
-		RuntimeExecutableRegistry.Unregister(Commands);
+		RuntimeExecutableRegistry.Unregister([.. Commands]);
 		PikeConsoleConfig.CheatModeChanged -= OnCheatModeChangedInternal;
 		OnExitTree();
 	}
@@ -173,7 +174,7 @@ public abstract partial class CommandSet : Node
 
 	void RegisterCommandsInternal()
 	{
-		Response<RegisterExecutableResponseStatus>[] responses = RuntimeExecutableRegistry.Register(Commands);
+		Response<RegisterExecutableResponseStatus>[] responses = RuntimeExecutableRegistry.Register([.. Commands]);
 
 		// Self diagnose by checking all commands.
 		foreach (Response<RegisterExecutableResponseStatus> response in responses)
