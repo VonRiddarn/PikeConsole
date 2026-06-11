@@ -26,6 +26,7 @@ const ADDON_PRINT_PREFIX = "[Godot Addon] PikeConsole: "
 # Predefined path structure for easier visual scope...
 const PATH_ADDON_ROOT: String = "res://addons/PikeConsole"
 const PATH_SETTINGS_ROOT: String = "fractal_pike/pike_console/"
+const PATH_SETTINGS_CONFIG: String = PATH_SETTINGS_ROOT + "config/"
 const PATH_SETTINGS_RUNTIME: String = PATH_SETTINGS_ROOT + "runtime/"
 const PATH_SETTINGS_EDITOR: String = PATH_SETTINGS_ROOT + "editor/"
 
@@ -41,11 +42,25 @@ const SETTING_PATHMAP: Dictionary[String, Variant] = {
 	"hint_string": ""
 }
 const SETTING_CVAR_DIRECTORY_RELATIVE: Dictionary[String, Variant] = {
-	"path": PATH_SETTINGS_ROOT + "cvar_directory_relative", 
-	"default_value": "cvars", 
+	"path": PATH_SETTINGS_ROOT + "cvar_directory", 
+	"default_value": "res://cvars", 
 	"type": TYPE_STRING, 
 	"hint": PROPERTY_HINT_DIR, 
 	"hint_string": ""
+}
+const SETTING_CONFIG_DIRECTORY: Dictionary[String, Variant] = {
+	"path": PATH_SETTINGS_CONFIG + "config_directory", 
+	"default_value": "user://cfg", 
+	"type": TYPE_STRING, 
+	"hint": PROPERTY_HINT_DIR, 
+	"hint_string": ""
+}
+const SETTING_USE_USER_CONFIGS: Dictionary[String, Variant] = {
+"path": PATH_SETTINGS_CONFIG + "use_user_configs", 
+"default_value": false, 
+"type": TYPE_BOOL, 
+"hint": PROPERTY_HINT_NONE, 
+"hint_string": ""
 }
 const SETTING_MAX_UI_LOGS: Dictionary[String, Variant] = {
 	"path": PATH_SETTINGS_RUNTIME + "max_ui_logs", 
@@ -104,7 +119,9 @@ const KB_TOGGLE_CONSOLE: Dictionary[String, Variant] = {
 func _enter_tree() -> void:
 	initialize_project_settings()
 	initialize_input_map()
-	initialize_cvar_directory()
+	initialize_directory(ProjectSettings.get_setting(SETTING_CVAR_DIRECTORY_RELATIVE["path"]), "CVar")
+	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]), "config")
+	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]) + "/users", "user config")
 
 # ----- ----- ----- ----- -----
 # 	INITIALIZATION HELPERS
@@ -113,6 +130,8 @@ func initialize_project_settings() -> void:
 	var settings: Array[Dictionary] = [
 		SETTING_PATHMAP,
 		SETTING_CVAR_DIRECTORY_RELATIVE,
+		SETTING_CONFIG_DIRECTORY,
+		SETTING_USE_USER_CONFIGS,
 		SETTING_MAX_UI_LOGS,
 		SETTING_SUPRESS_DOCUMENTATION_WARNINGS,
 		SETTING_COLOR_INFO,
@@ -138,25 +157,17 @@ func initialize_input_map() -> void:
 	if dirty:
 		ProjectSettings.save() 
 		pike_log("New keybinds added to project.godot.")
-	
-func initialize_cvar_directory() -> void:
-	# Cache for single-point accessors to the dictionary
-	var dir_path = "res://" + SETTING_CVAR_DIRECTORY_RELATIVE["default_value"]
-	var path = SETTING_CVAR_DIRECTORY_RELATIVE["path"]
-	
-	# Respect the users custom path - UX baby!
-	if ProjectSettings.has_setting(path):
-		dir_path = ProjectSettings.get_setting(path)
-	
+
+func initialize_directory(dir_path: String, dir_log_name: String) -> void:
 	# Check if the folder exists without throwing an error.
 	# Note: we could just do "var dir = DirAccess.open(dir_path)" and it would work with less cycles
 	# That would however always print an error on first launch which can be misinterpreted as the addon not working
 	if not DirAccess.dir_exists_absolute(dir_path):
 		var err = DirAccess.make_dir_recursive_absolute(dir_path)
 		if err == OK:
-			pike_log("Created CVar directory at: " + dir_path)
+			pike_log("Created %s directory at: %s" % [dir_log_name, dir_path])
 		else:
-			push_error("PikeConsole: Failed to create CVar directory! Error code: " + str(err))
+			push_error("PikeConsole: Failed to create %s directory! Error code: %s" % [dir_log_name, str(err)])
 
 # ----- ----- ----- ----- -----
 # 		GENERIC HELPERS
@@ -243,5 +254,6 @@ func inject_input(input: Dictionary) -> void:
 	if not InputMap.has_action(action_name):
 		InputMap.add_action(action_name)
 		pike_log("'" + action_name + "' has been added to the input map. Check out Project settings > Input map")
-	
+	else:
+		InputMap.action_erase_events(action_name)
 	InputMap.action_add_event(action_name, key_event)
