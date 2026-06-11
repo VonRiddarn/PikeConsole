@@ -55,7 +55,6 @@ public static class PikeLogger
 	public static event LogEventHandler LogEmitted;
 
 	static bool? _isDebugEnvironment = null;
-	static bool? _isEditor = null;
 
 	// TODO: Centralize environment / system information later. Can also be used with the commands
 	/// <summary>
@@ -64,7 +63,19 @@ public static class PikeLogger
 	/// </summary>
 	/// <returns>True for debug environments, false for strictly runtime environments.</returns>
 	public static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
-	public static bool IsEditor => _isEditor ??= Godot.Engine.IsEditorHint();
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	static bool IsEditor()
+	{
+		// This might look crazy, idk... But this helps us avoid race conditions AND INTEROP OVERHEAD with "Godot.Engine.IsEditorHint()"
+		// If we are playtesting in the editor, this is true. When building the game to PC, MAC, Linux - whatever, it is stripped.
+#if TOOLS
+		return true;
+#else
+    	return false;
+#endif
+	}
+
 
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
@@ -73,7 +84,7 @@ public static class PikeLogger
 	public static bool IsTargetEnabled(LogTarget target)
 	{
 		bool debugActive = (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
-		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor;
+		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor();
 		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Release) != 0;
 		return debugActive || runtimeActive || editorActive;
 	}

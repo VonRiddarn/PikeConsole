@@ -12,7 +12,7 @@ public enum LogTarget
 	/// </summary>
 	Release = 2,
 	/// <summary>
-	/// "Editor" means the editor output dock.
+	/// "Editor" means the editor output dock during playtesting using the play button.
 	/// If you want to show logs in the UI when in editor, use Debug.
 	/// </summary>
 	Editor = 4,
