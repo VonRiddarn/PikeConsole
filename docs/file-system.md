@@ -22,3 +22,8 @@ Should touch:
 -   - Players can save all non-default CVars with command `write_config [name] [force?]`
 -   -   - This creates a file: `user://pike_console/config/name` (collions are denied and self diagnosed with feedback "file already exists" or "rewrote file name")
 -   -   - Useful for: QA testing and reducing runtime boilerplate without having to edit the raw cfg files
+
+NOTE TO SELF: Make sure to show the CFG system in action and why we use the `StatementExecutor` instead of Godots own `ConfigFile` system.
+
+A good example is how the `StatementExecutor` will not crash when new settings are added or old removed.
+It will print "Unknown command" and move on.
