@@ -44,6 +44,10 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	public abstract string DisplayType { get; }
 	public abstract string LongDesc { get; }
 
+	// Used for checking state during save
+	public bool IsModified => EqualityComparer<T>.Default.Equals(ValueEditor, DefaultValueEditor);
+	public virtual string FormattedValue => ValueEditor?.ToString() ?? "null";
+
 	// Current value getter / setter
 	public T Value
 	{
