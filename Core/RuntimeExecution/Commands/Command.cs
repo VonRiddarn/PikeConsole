@@ -1,5 +1,4 @@
 using System;
-using FractalPike.PikeConsole.Core.Extensions;
 using FractalPike.PikeConsole.Core.Logging;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
@@ -32,7 +31,7 @@ public sealed class Command : IRuntimeExecutable
 		CustomStackTrace customStackTrace)
 	{
 		DisplayType = "Command";
-		Signature = commandSignature.ToSignature();
+		Signature = ConsoleFormatter.ToSignature(commandSignature);
 		ShortDesc = string.IsNullOrWhiteSpace(shortDesc) ? "No description available." : shortDesc;
 		LongDesc = string.IsNullOrWhiteSpace(longDesc) ? "No long description available." : longDesc;
 		Usage = string.IsNullOrWhiteSpace(usage) ? "No usage instructions available." : usage;
@@ -79,9 +78,5 @@ public sealed class Command : IRuntimeExecutable
 		}
 	}
 
-	public string GetHelp()
-	{
-		// TODO: Create a utility to standarize help messages...
-		throw new System.NotImplementedException();
-	}
+	public string GetHelp() => ConsoleFormatter.FormatHelp(this);
 }

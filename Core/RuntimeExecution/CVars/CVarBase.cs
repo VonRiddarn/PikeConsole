@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using FractalPike.PikeConsole.Core.Extensions;
 using FractalPike.PikeConsole.Core.Logging;
 using Godot;
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
@@ -84,7 +83,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		ValueEditor = DefaultValueEditor;
 		// Note: This causes interop overhead at startup. That's okay and unavoidable.
 		// The resource filename IS the command name. Convenience vs customization and all that.
-		Signature = ResourcePath.GetFile().GetBaseName().ToSignature();
+		Signature = ConsoleFormatter.ToSignature(ResourcePath.GetFile().GetBaseName());
 
 		if (IsCheat)
 			PikeConsoleConfig.CheatModeChanged += OnCheatModeChanged;
@@ -130,8 +129,12 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	public void ResetValue()
 	{
+		var modified = IsModified;
+
 		Value = DefaultValueEditor;
-		// TODO: Add RemoveFromConfig() (once config and file system is in place)
+
+		if (modified && Persist)
+			PersistentCVarRegistry.Update(this);
 	}
 
 	// ----- ----- Note to future self: 
@@ -193,11 +196,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		};
 	}
 
-	public string GetHelp()
-	{
-		// TODO: Create a utility to standarize help messages...
-		throw new System.NotImplementedException();
-	}
+	public string GetHelp() => ConsoleFormatter.FormatHelp(this);
 
 	// Generic helpers
 	/// <summary>
@@ -208,14 +207,5 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// <remarks>
 	/// <returns>Value as string</returns>
 	public virtual string DisplayValue(T value) => value?.ToString() ?? "null";
-
-	void RemoveFromConfig()
-	{
-		if (Persist)
-		{
-			// TODO: Add config manager
-			// ConfigManager.RemoveValue(Signature);
-		}
-	}
 
 }
