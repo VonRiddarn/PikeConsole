@@ -67,8 +67,8 @@ public static class PikeLogger
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static bool IsEditor()
 	{
-		// This might look crazy, idk... But this helps us avoid race conditions AND INTEROP OVERHEAD with "Godot.Engine.IsEditorHint()"
-		// If we are playtesting in the editor, this is true. When building the game to PC, MAC, Linux - whatever, it is stripped.
+		// This helps us avoid race conditions AND INTEROP OVERHEAD with "Godot.Engine.IsEditorHint()"
+		// If we are playtesting in the editor, this is true. When building the game it is stripped.
 #if TOOLS
 		return true;
 #else
