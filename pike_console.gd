@@ -41,7 +41,7 @@ const SETTING_PATHMAP: Dictionary[String, Variant] = {
 	"hint": PROPERTY_HINT_NONE, 
 	"hint_string": ""
 }
-const SETTING_CVAR_DIRECTORY_RELATIVE: Dictionary[String, Variant] = {
+const SETTING_CVAR_DIRECTORY: Dictionary[String, Variant] = {
 	"path": PATH_SETTINGS_ROOT + "cvar_directory", 
 	"default_value": "res://cvars", 
 	"type": TYPE_STRING, 
@@ -119,7 +119,7 @@ const KB_TOGGLE_CONSOLE: Dictionary[String, Variant] = {
 func _enter_tree() -> void:
 	initialize_project_settings()
 	initialize_input_map()
-	initialize_directory(ProjectSettings.get_setting(SETTING_CVAR_DIRECTORY_RELATIVE["path"]), "CVar")
+	initialize_directory(ProjectSettings.get_setting(SETTING_CVAR_DIRECTORY["path"]), "CVar")
 	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]), "config")
 	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]) + "/users", "user config")
 
@@ -129,7 +129,7 @@ func _enter_tree() -> void:
 func initialize_project_settings() -> void: 
 	var settings: Array[Dictionary] = [
 		SETTING_PATHMAP,
-		SETTING_CVAR_DIRECTORY_RELATIVE,
+		SETTING_CVAR_DIRECTORY,
 		SETTING_CONFIG_DIRECTORY,
 		SETTING_USE_USER_CONFIGS,
 		SETTING_MAX_UI_LOGS,
