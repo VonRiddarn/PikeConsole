@@ -2,10 +2,11 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 // This manages the client_settings.cfg file and nothing else.
 // It is not a generic config manager. It is the players saved prefered settings.
 // This will run on startup, which is how all persistent CVar values are re-added, EG: r_viewdistance 5
-public static class PlayerConfigManager
+public static class UserConfigManager
 {
 	private static readonly Dictionary<string, string> _activeConfig = [];
 
