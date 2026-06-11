@@ -34,6 +34,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	[Export] public bool Persist { get; private set; } = false;
 	[Export] public bool IsCheat { get; private set; } = false;
 
+	// Used after the command to register it to the persistent registry without triggering a save.
+	// Useful when running startup scripts etc.
+	public const string RAM_ONLY_TAG = "ram_only";
 
 	// Set automatic
 	public string Signature { get; private set; } = string.Empty;
@@ -85,6 +88,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		if (IsCheat)
 			PikeConsoleConfig.CheatModeChanged += OnCheatModeChanged;
+
+		if (Persist)
+			PersistentCVarRegistry.Write(Signature, this);
 
 		var response = RuntimeExecutableRegistry.Register(this);
 
@@ -151,13 +157,15 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		if (IsCheat && !PikeConsoleConfig.CheatMode)
 			return new(ExecutionResponseStatus.DeniedCheat, null);
 
-		bool isNosave = args.Length >= 2 && args[^1].Equals("nosave", StringComparison.OrdinalIgnoreCase);
+		bool ramOnly = args.Length >= 2 && args[^1].Equals(RAM_ONLY_TAG, StringComparison.OrdinalIgnoreCase);
 
 		Response<CvarSetResponseStatus> response;
 
 		try
 		{
-			response = SetValue(isNosave ? args[..^1] : args);
+			// If we have the RAM_ONLY flag, slice that argument from the parameters.
+			// SetValue will never have to deal with it.
+			response = SetValue(ramOnly ? args[..^1] : args);
 		}
 		catch (Exception e)
 		{
@@ -170,17 +178,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		if (response.Status == CvarSetResponseStatus.Success)
 		{
-			if (Persist)
-			{
-				SaveToMemory();
-				if (!isNosave)
-				{
-					// TODO: Add ConfigManager.SaveToDiskDebounce() (once config and file system is in place)
-					// REQUIREMENTS: ConfigManager
-					// ConfigManager.SaveToDiskDebounce writes the entire current config to disk. 
-					// It uses debounce so that aliases and other fast acting scripts doesn't spam it.
-				}
-			}
+			if (Persist && !ramOnly)
+				PersistentCVarRegistry.Update(this);
+
 			string msg = response.Message ?? $"{Signature} set to {Value}";
 			return new(ExecutionResponseStatus.Success, msg);
 		}
@@ -208,19 +208,6 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// <remarks>
 	/// <returns>Value as string</returns>
 	public virtual string DisplayValue(T value) => value?.ToString() ?? "null";
-
-	/// <summary>
-	/// Save this CVar to RAM.
-	/// </summary>
-	void SaveToMemory()
-	{
-		// IN MANAGER ... (string signature, T value, string comment = null)
-		// ConfigManager.SaveValue<T>(Signature, ValueEditor, DisplayType)
-		// This should save to config without having to override the logic. 
-		// The saving is opinionated and will look like: 
-		// m_sensitivity 1.5 // Float
-		// Signature ValueEditor.ToString() // DisplayType
-	}
 
 	void RemoveFromConfig()
 	{
