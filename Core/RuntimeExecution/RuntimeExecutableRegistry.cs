@@ -21,14 +21,20 @@ public static class RuntimeExecutableRegistry
 
 	public static Response<RegisterExecutableResponseStatus> Register(IRuntimeExecutable executable)
 	{
-		// TODO: Add registration when CVars are ported.
-		// They are needed for type-checking the response.
-		// NEW PLAN: 
-		// THE REGISTRY WILL IN FACT, NOT LOG RESPONSES.
-		// If the registry logs the responses we will have a harder time locating the caller.
-		// Instead, the registry will return a detailed message that the one trying to register can use....
-		// Like, how a "Response" is supposed to be used. smh
-		throw new NotImplementedException();
+		// Cache in stack since we reuse it like 4 times.
+		string signature = executable.Signature;
+
+		if (_executables.TryGetValue(signature, out var rte))
+		{
+			string rteType = rte is ICVar ? "cvar" : "command";
+			return new(RegisterExecutableResponseStatus.AlreadyExists, $"A {rteType} already exists for signature \"{signature}\"");
+		}
+
+		// TODO: Check alias registry, if signature exists, delete it
+		// Return new(RegisterExecutableResponseStatus.ReplacedAlias, $"...");
+
+		_executables[signature] = executable;
+		return new(RegisterExecutableResponseStatus.Success, $"Registered command: \"{signature}\"");
 	}
 
 
