@@ -86,7 +86,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		if (IsCheat)
 			PikeConsoleConfig.CheatModeChanged += OnCheatModeChanged;
 
-		var response = CommandRegistry.Register(this);
+		var response = RuntimeExecutableRegistry.Register(this);
 
 		switch (response.Status)
 		{

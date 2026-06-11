@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 #nullable enable
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
-public static class CommandRegistry
+public static class RuntimeExecutableRegistry
 {
 	public static IReadOnlyDictionary<string, IRuntimeExecutable> Commands => _commands;
 	static readonly Dictionary<string, IRuntimeExecutable> _commands = new(StringComparer.OrdinalIgnoreCase);
