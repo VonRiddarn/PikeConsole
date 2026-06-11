@@ -90,12 +90,12 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		switch (response.Status)
 		{
-			case RegisterCommandResponseStatus.Success:
+			case RegisterExecutableResponseStatus.Success:
 				break;
-			case RegisterCommandResponseStatus.AlreadyExists:
+			case RegisterExecutableResponseStatus.AlreadyExists:
 				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} couldn't register as a command or CVar of this name already exists!");
 				break;
-			case RegisterCommandResponseStatus.ReplacedAlias:
+			case RegisterExecutableResponseStatus.ReplacedAlias:
 				PikeLogger.LogWarning(LogTarget.All, $"CVar {Signature} was registered, but replaced an alias with th same signature.");
 				break;
 			default:

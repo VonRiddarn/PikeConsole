@@ -20,7 +20,7 @@ public static class RuntimeExecutableRegistry
 		return _commands.TryGetValue(signature, out command);
 	}
 
-	public static Response<RegisterCommandResponseStatus> Register(IRuntimeExecutable command)
+	public static Response<RegisterExecutableResponseStatus> Register(IRuntimeExecutable command)
 	{
 		// TODO: Add registration when CVars are ported.
 		// They are needed for type-checking the response.
@@ -39,9 +39,9 @@ public static class RuntimeExecutableRegistry
 	/// </summary>
 	/// <param name="commands">IEnumerable of commands. Fast path expects an array.</param>
 	/// <returns>An array of <c>Response&lt; RegisterCommandResponseStatus &gt;[]</c></returns>
-	public static Response<RegisterCommandResponseStatus>[] Register(ImmutableArray<Command> commands)
+	public static Response<RegisterExecutableResponseStatus>[] Register(ImmutableArray<Command> commands)
 	{
-		var responses = new Response<RegisterCommandResponseStatus>[commands.Length];
+		var responses = new Response<RegisterExecutableResponseStatus>[commands.Length];
 
 		for (int i = 0; i < commands.Length; i++)
 			responses[i] = Register(commands[i]);

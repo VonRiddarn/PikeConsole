@@ -173,19 +173,19 @@ public abstract partial class CommandSet : Node
 
 	void RegisterCommandsInternal()
 	{
-		Response<RegisterCommandResponseStatus>[] responses = RuntimeExecutableRegistry.Register(Commands);
+		Response<RegisterExecutableResponseStatus>[] responses = RuntimeExecutableRegistry.Register(Commands);
 
 		// Self diagnose by checking all commands.
-		foreach (Response<RegisterCommandResponseStatus> response in responses)
+		foreach (Response<RegisterExecutableResponseStatus> response in responses)
 		{
 			switch (response.Status)
 			{
-				case RegisterCommandResponseStatus.Success:
+				case RegisterExecutableResponseStatus.Success:
 					break;
-				case RegisterCommandResponseStatus.ReplacedAlias:
+				case RegisterExecutableResponseStatus.ReplacedAlias:
 					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true);
 					break;
-				case RegisterCommandResponseStatus.AlreadyExists:
+				case RegisterExecutableResponseStatus.AlreadyExists:
 					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true);
 					break;
 				// Unexpected error.

@@ -3,7 +3,7 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 /// <remarks>Since commands are context based an alias can be registered in a 
 /// window where the command is not yet, or no longer, registered.
 /// <b>Commands will automatically force-remove any alias currently registered with the same signature.</b></remarks>
-public enum RegisterCommandResponseStatus
+public enum RegisterExecutableResponseStatus
 {
 	/// <summary>Default fallback.</summary>
 	None = 0,
