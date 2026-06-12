@@ -14,7 +14,6 @@ public static class AliasRegistry
 	public static bool TryGetAlias(string signature, out string aliasStatement) => _aliases.TryGetValue(signature, out aliasStatement);
 	public static void Clear() => _aliases.Clear();
 
-
 	public static Response<RegisterAliasResponseStatus> Register(string signature, string input, bool replace = true)
 	{
 		if (RuntimeExecutableRegistry.TryGetExecutable(signature, out IRuntimeExecutable rte))
