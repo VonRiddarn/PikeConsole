@@ -7,6 +7,8 @@ using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
 
+#nullable enable
+
 public abstract partial class CommandSet : Node
 {
 	/// <summary>
@@ -24,6 +26,11 @@ public abstract partial class CommandSet : Node
 
 	// ----- ----- PIKECONSOLE API WRAPPER ----- -----
 	protected virtual void OnCheatModeChanged(bool newState) { }
+
+	// ----- ----- SELF DIAGNOSTIC DEPENDENCIES ----- -----
+	string? _derrivedScriptFile = null;
+	/// <summary>Used to log the name of the the file that caused an error. This is needed as we can't use compiler magic.</summary>
+	string DerrivedScriptFile => _derrivedScriptFile ??= GetScript().As<Script>()?.ResourcePath.GetFile() ?? "Unknown Script";
 
 	/// <summary>
 	/// Obligatory registration method that must return an array of Commands.
@@ -153,10 +160,7 @@ public abstract partial class CommandSet : Node
 
 	// We inject the filepath and linenumber so that we can reference the actual child that messed up instead of this base class.
 	// This class is self-diagnostic by design. This ensures we fail fast and catch collisions early.
-	void InitializeCommandsInternal(
-		[CallerFilePath] string filePath = "", // DOES NOT WORK!!!
-		[CallerLineNumber] int lineNumber = 0 // TODO FIIIIIXXX!!!
-	)
+	void InitializeCommandsInternal()
 	{
 		// TODO: Add scriptpath lazy init from godot and use it to say the CommandSet childs name before the response.
 		// This wil get around the filepath leading to the root CommandSet...
@@ -167,11 +171,11 @@ public abstract partial class CommandSet : Node
 		catch (Exception ex)
 		{
 			Commands = [];
-			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands in {filePath}:{lineNumber} [ Node: {this}] - {ex}");
+			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands in {DerrivedScriptFile} [ Node: {this}] - {ex}", forceLog: true);
 		}
 
 		if (Commands.Length <= 0)
-			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from {filePath}:{lineNumber} [Node: {this}]. Make sure InstantiateCommands return a valid array!");
+			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from {DerrivedScriptFile} [Node: {this}]. Make sure InstantiateCommands return a valid array!", forceLog: true);
 	}
 
 	void RegisterCommandsInternal()
@@ -186,17 +190,17 @@ public abstract partial class CommandSet : Node
 				// TODO: Add scriptpath lazy init from godot and use it to say the CommandSet childs name before the response.
 				// This wil get around the filepath leading to the root CommandSet...
 				case RegisterExecutableResponseStatus.Success:
-					PikeLogger.Log(LogTarget.Editor, $"{response.Message}");
+					PikeLogger.Log(LogTarget.Editor, $"{DerrivedScriptFile}: {response.Message}");
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:
-					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true);
+					PikeLogger.LogWarning(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
 					break;
 				case RegisterExecutableResponseStatus.AlreadyExists:
-					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true);
+					PikeLogger.LogError(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
 					break;
 				// Unexpected error.
 				default:
-					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true);
+					PikeLogger.LogError(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
 					break;
 			}
 		}
