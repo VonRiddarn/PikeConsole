@@ -12,7 +12,7 @@ Should touch:
 -   - For persistent settings only - player facing
 -   - Saved to `user://pike_console/user_settings.cfg`
 - Consume CVars
--   - Subscription to ValueChanged (passes the old and new value) used for EG: Health, Speed...
+-   - Subscription to ValueChanged (new value) used for EG: Health, Speed...
 -   - Subscription to ValueInvalidated (passes nothing) used for EG: Crosshair (collection of CVars using the same subscription method)
 -   - PREVENT MEMORY LEAKS - UNSUBSCRIBE!
 - How to create custom CVar types
