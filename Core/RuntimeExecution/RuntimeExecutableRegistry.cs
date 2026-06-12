@@ -87,33 +87,28 @@ public static class RuntimeExecutableRegistry
 	/// <param name="emptyMeansAll">If term is empty, return all matching the other parameters.</param>
 	/// <returns>An array of IRuntimeExecutable[] (The results)</returns>
 	public static IRuntimeExecutable[] Search(
-		string term,
-		SearchMode mode = SearchMode.Contains,
-		Type? filterType = null,
-		bool rankByPrefix = false)
+			string term,
+			SearchMode mode = SearchMode.Contains,
+			Type? filterType = null,
+			bool rankByPrefix = false)
 	{
-		var query = _executables.Values.AsEnumerable();
+		var filtered = filterType != null
+			? _executables.Values.Where(filterType.IsInstanceOfType)
+			: _executables.Values;
 
-		if (!string.IsNullOrWhiteSpace(term))
+		if (string.IsNullOrWhiteSpace(term))
+			return [.. filtered.OrderBy(c => c.Signature)];
+
+		var comp = StringComparison.OrdinalIgnoreCase;
+		filtered = mode switch
 		{
-			query = mode switch
-			{
-				SearchMode.Contains => query.Where(c => c.Signature.Contains(term, StringComparison.OrdinalIgnoreCase)),
-				SearchMode.StartsWith => query.Where(c => c.Signature.StartsWith(term, StringComparison.OrdinalIgnoreCase)),
-				SearchMode.Exact => query.Where(c => c.Signature.Equals(term, StringComparison.OrdinalIgnoreCase)),
-				_ => query
-			};
-		}
+			SearchMode.StartsWith => filtered.Where(c => c.Signature.StartsWith(term, comp)),
+			SearchMode.Exact => filtered.Where(c => c.Signature.Equals(term, comp)),
+			_ => filtered.Where(c => c.Signature.Contains(term, comp))
+		};
 
-		if (filterType != null)
-			query = query.Where(filterType.IsInstanceOfType);
-
-		if (rankByPrefix && mode != SearchMode.StartsWith)
-			query = query.OrderBy(c => c.Signature.StartsWith(term, StringComparison.OrdinalIgnoreCase) ? 0 : 1)
-						 .ThenBy(c => c.Signature);
-		else
-			query = query.OrderBy(c => c.Signature);
-
-		return [.. query];
+		return rankByPrefix && mode != SearchMode.StartsWith
+			? [.. filtered.OrderBy(c => c.Signature.StartsWith(term, comp) ? 0 : 1).ThenBy(c => c.Signature)]
+			: [.. filtered.OrderBy(c => c.Signature)];
 	}
 }
