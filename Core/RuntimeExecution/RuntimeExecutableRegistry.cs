@@ -69,6 +69,8 @@ public static class RuntimeExecutableRegistry
 			Unregister(executable);
 	}
 
+	// TODO: TEST RUNTIME EXECUTABLE SEARCH : REMOVE THIS TODO WHEN TESTED!!!!
+
 	/// <summary>
 	/// LINQ "SQL-style" lookup.
 	/// Gets all executables containing the term with an optional type filter.
