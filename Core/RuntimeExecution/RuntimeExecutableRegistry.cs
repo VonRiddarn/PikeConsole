@@ -30,8 +30,12 @@ public static class RuntimeExecutableRegistry
 			return new(RegisterExecutableResponseStatus.AlreadyExists, $"A {rteType} already exists for signature \"{signature}\"");
 		}
 
-		// TODO: Check alias registry, if signature exists, delete it
-		// Return new(RegisterExecutableResponseStatus.ReplacedAlias, $"...");
+		if (AliasRegistry.TryGetAlias(signature, out string _))
+		{
+			string type = executable is ICVar ? "cvar" : "command";
+			AliasRegistry.Unregister(signature);
+			return new(RegisterExecutableResponseStatus.ReplacedAlias, $"Alias \"{signature}\" has been overridden by a {type} with the same signature!");
+		}
 
 		_executables[signature] = executable;
 		return new(RegisterExecutableResponseStatus.Success, $"Registered command: \"{signature}\"");
