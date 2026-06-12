@@ -154,10 +154,12 @@ public abstract partial class CommandSet : Node
 	// We inject the filepath and linenumber so that we can reference the actual child that messed up instead of this base class.
 	// This class is self-diagnostic by design. This ensures we fail fast and catch collisions early.
 	void InitializeCommandsInternal(
-		[CallerFilePath] string filePath = "",
-		[CallerLineNumber] int lineNumber = 0
+		[CallerFilePath] string filePath = "", // DOES NOT WORK!!!
+		[CallerLineNumber] int lineNumber = 0 // TODO FIIIIIXXX!!!
 	)
 	{
+		// TODO: Add scriptpath lazy init from godot and use it to say the CommandSet childs name before the response.
+		// This wil get around the filepath leading to the root CommandSet...
 		try
 		{
 			Commands = ImmutableArray.Create(InstantiateCommands() ?? []);
@@ -181,6 +183,8 @@ public abstract partial class CommandSet : Node
 		{
 			switch (response.Status)
 			{
+				// TODO: Add scriptpath lazy init from godot and use it to say the CommandSet childs name before the response.
+				// This wil get around the filepath leading to the root CommandSet...
 				case RegisterExecutableResponseStatus.Success:
 					PikeLogger.Log(LogTarget.Editor, $"{response.Message}");
 					break;
