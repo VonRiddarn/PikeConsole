@@ -7,9 +7,14 @@ namespace FractalPike.PikeConsole.Core;
 // TODO: Use the settings from the godot editor and lazy-initialize them in here.
 // Note: Some settings will be CVars in the future.
 
-// ----- ----- Logger ----- -----
 public static class PikeConsoleConfig
 {
+	// TODO: Turn this into an Project Setting. LOW PRIORITY!
+	/// <summary>
+	/// Write to the editor each time a command is registered, EG: "TestCommandSet.cs: Registered command: "hello_world"
+	/// </summary>
+	public static bool EditorLogCommandRegistered = false;
+
 	// Shorthands for DRY code
 	// Since this is interop stuff that is being set from "pike_console.gd" everything MUST MATCH!!
 	// If there are import errors, check the definitions at: res://addons/PikeConsole/pike_console.gd -- This is the init script.

@@ -187,10 +187,12 @@ public abstract partial class CommandSet : Node
 		{
 			switch (response.Status)
 			{
-				// TODO: Add scriptpath lazy init from godot and use it to say the CommandSet childs name before the response.
-				// This wil get around the filepath leading to the root CommandSet...
 				case RegisterExecutableResponseStatus.Success:
-					PikeLogger.Log(LogTarget.Editor, $"{DerrivedScriptFile}: {response.Message}");
+#if TOOLS
+					// Stripped in build so we don't even have to make the conditional check.
+					if (PikeConsoleConfig.EditorLogCommandRegistered)
+						PikeLogger.Log(LogTarget.Editor, $"{DerrivedScriptFile}: {response.Message}");
+#endif
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:
 					PikeLogger.LogWarning(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
