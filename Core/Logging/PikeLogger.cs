@@ -128,19 +128,32 @@ public static class PikeLogger
 			// Log the message
 			switch (logLevel)
 			{
-				// Code is non-DRY by design. Keeping manual interpolated strings here skips a dive in the callstack.
-				// Meaning, we do not allocate a member variable, nor do we interpolate more than once.
+				// Code is non-DRY by design. We're keeping allocations and callstack dives low to keep a low profile on the editor playtest-environment.
+				// Since the logic is static this is all the repetition we need, and this will all be stripped in compiled builds anyway.
+				// It's ugly, but it's also a fair trade to keep a low footprint.
 				case LogLevel.Info:
-					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
+					if (includePath)
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					else
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
 					break;
 				case LogLevel.Success:
-					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
+					if (includePath)
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					else
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
 					break;
 				case LogLevel.Warning:
-					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					if (includePath)
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					else
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: {message}");
 					break;
 				case LogLevel.Error:
-					Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					if (includePath)
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+					else
+						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: {message}");
 					break;
 			}
 		}
