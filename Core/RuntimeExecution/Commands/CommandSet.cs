@@ -9,17 +9,6 @@ using Godot;
 
 #nullable enable
 
-/* 
- 	Q: Why use DerivedScriptPath?
-	A:
-		Because if a child node deriving from CommandSet triggers an error,
-		the compiler attributes will point to the root CommandSet.cs file (this file)
-		instead of the child that actually messed up.
-
-		Using DerivedScriptPath makes the diagnostics more accurate,
-		and since it is lazy-initialized it uses no processing power in a healthy system.
-*/
-
 
 public abstract partial class CommandSet : Node
 {
@@ -40,8 +29,18 @@ public abstract partial class CommandSet : Node
 	protected virtual void OnCheatModeChanged(bool newState) { }
 
 	// ----- ----- SELF DIAGNOSTIC DEPENDENCIES ----- -----
+
+	/* 
+		Q: Why use DerivedScriptPath?
+		A:
+			Because if a child node deriving from CommandSet triggers an error,
+			the compiler attributes will point to the root CommandSet.cs file (this file)
+			instead of the child that actually messed up.
+
+			Using DerivedScriptPath makes the diagnostics more accurate,
+			and since it is lazy-initialized it uses no processing power in a healthy system.
+	*/
 	string? _derivedScriptPath = null;
-	/// <summary>Used to log the name of the the file that caused an error. This is needed as regular compiler magic will lead us back here (CommandSet.cs).</summary>
 	string DerivedScriptPath => _derivedScriptPath ??= GetScript().As<Script>()?.ResourcePath ?? "Unknown Script";
 
 	/// <summary>
