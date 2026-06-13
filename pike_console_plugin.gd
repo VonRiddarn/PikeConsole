@@ -19,11 +19,10 @@ extends EditorPlugin
 # ----- ----- ----- ----- -----
 # 			AUTOLOAD
 # ----- ----- ----- ----- -----
-# Bootstrapper to ensure we subscribe to engine errors and warnings.
-const AUTOLOAD_NAME = "PikeConsoleBootstrapper"
-# I don't like how fragile this is, but addons belong in the addon folder.
-# Breaking this would be a user error...
-const AUTOLOAD_PATH = "res://addons/FractalPike.PikeConsole/Core/PluginBootstrapper.cs"
+const AUTOLOAD_NAME = "PikeConsole"
+const AUTOLOAD_PATH = "res://addons/FractalPike.PikeConsole/Core/Autoloading/pike_console_autoloader.tscn"
+# Basically: We use the autoloader scene tree to bridge engine logs, scan for CVars and initialize default commands.
+# The actual UI is not auto-injected as there is a high chance users want to customize it or make their own.
 
 # ----- ----- ----- ----- -----
 # 			META

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://dx4bwtrbok1yg"]
+
+[node name="PikeConsole" type="Node" unique_id=1879456131]
+
+[node name="EngineLoggerBridgeManager" type="Node" parent="." unique_id=1141242866]
+
+[node name="CommandSets" type="Node" parent="." unique_id=322416938]
+
+[node name="ConsoleCommandSet" type="Node" parent="CommandSets" unique_id=1722424151]
+
+[node name="GlobalGenericCommandSet" type="Node" parent="CommandSets" unique_id=845579108]
+
+[node name="AliasCommandSet" type="Node" parent="CommandSets" unique_id=508363395]
+
+[node name="ConfigCommandSet" type="Node" parent="CommandSets" unique_id=1256457458]
