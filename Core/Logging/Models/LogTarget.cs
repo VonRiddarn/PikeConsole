@@ -18,22 +18,19 @@ namespace FractalPike.PikeConsole.Core.Logging;
 			Output:	-
 */
 
+/// <summary>
+/// Debug = QA | Runtime = End user | Editor = Developer
+/// </summary>
 [Flags]
 public enum LogTarget
 {
+	/// <summary>Blocked from RELEASE builds.</summary>
 	Debug = 1,
-	/// <summary>
-	/// Note: Debug builds will also have access to the runtime logs.
-	/// This is expected, as debug builds are also runtime builds.
-	/// </summary>
-	/// <remarks>
-	/// If you want to block debug logs from the release runtime, use the "Debug" flag!
-	/// </remarks>
+	/// <summary>Shows in RELEASE and DEBUG builds.</summary>
+	/// <remarks>Anything you want to show the end-user is tagged with this!</remarks>
 	Runtime = 2,
-	/// <summary>
-	/// "Editor" means the editor output dock during playtesting using the play button.
-	/// If you want to show logs in the UI when in editor, use Debug.
-	/// </summary>
+	/// <summary>Only shows up in the editor output window.</summary>
+	/// <remarks>Blocked AND stripped from builds.</remarks>
 	Editor = 4,
 	All = Debug | Runtime | Editor
 };
