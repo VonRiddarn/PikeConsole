@@ -25,13 +25,10 @@ public partial class EngineLoggerBridge : Logger
 		int errorType,
 		Godot.Collections.Array<ScriptBacktrace> scriptBacktraces)
 	{
-		// Since PikeLogger is NOT threadsafe we make sure to bottleneck it to avoid race conditions.
-		lock (_lock)
-		{
-			if (errorType == ENGINE_WARNING_TYPE)
-				PikeLogger.LogWarning(LogTarget.All, $"{rationale ?? code ?? "Unknown engine warning!"}");
-			else
-				PikeLogger.LogError(LogTarget.All, $"{rationale ?? code ?? "Unknown engine error!"}");
-		}
+		// TODO: Add nullorempty checks for rationale and code. I accidentally used javascript logic...
+		if (errorType == ENGINE_WARNING_TYPE)
+			PikeLogger.LogWarning(LogTarget.All, $"[GODOT ENGINE] {rationale ?? code ?? "Unknown engine warning!"}");
+		else
+			PikeLogger.LogError(LogTarget.All, $"[GODOT ENGINE] {rationale ?? code ?? "Unknown engine error!"}");
 	}
 }
