@@ -21,3 +21,20 @@ public enum LogTarget
 	Editor = 4,
 	All = Debug | Runtime | Editor
 };
+
+
+/*  
+	In plain text:
+
+		Playtesting in editor:
+			UI: 	Debug, Runtime
+			Output:	Editor
+		
+		Compiled DEBUG build:
+			UI:		Debug, Runtime
+			Output:	-
+		
+		Compiled RELEASE build (final game):
+			UI:		Runtime
+			Output:	-
+*/
