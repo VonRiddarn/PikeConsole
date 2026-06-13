@@ -63,6 +63,18 @@ ArgumentParser.TryParseManyFloat([args[1], args[3], args[4]], out float[] pos, o
 Maybe do something like "But since all TryParseMany variabts already expects a ReadOnlySpan<string>, we can just write it in the method argument.  
 This makes the note educating AND useful.
 
+Also:  
+Add `using static` pro tip to reduce boilerplate:
+
+```csharp
+// Tedious
+ArgumentParser.TryParseManyFloat(arr, out float[] pos, out string err);
+
+// Nice
+using static FractalPike.PikeConsole.Core.RuntimeExecution.ArgumentParser;
+TryParseManyFloat(arr, out float[] pos, out string err);
+```
+
 ## Getting started
 
 To quickly get into PikeConsole and all of its features you can use the quick start guide (link to `docs/getting-started.md`)  
