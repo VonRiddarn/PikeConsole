@@ -29,7 +29,7 @@ public abstract partial class CommandSet : Node
 
 	// ----- ----- SELF DIAGNOSTIC DEPENDENCIES ----- -----
 	string? _derrivedScriptFile = null;
-	/// <summary>Used to log the name of the the file that caused an error. This is needed as we can't use compiler magic.</summary>
+	/// <summary>Used to log the name of the the file that caused an error. This is needed as regular compiler magic will lead us back here (CommandSet.cs).</summary>
 	string DerrivedScriptFile => _derrivedScriptFile ??= GetScript().As<Script>()?.ResourcePath.GetFile() ?? "Unknown Script";
 
 	/// <summary>
