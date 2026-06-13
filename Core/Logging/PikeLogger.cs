@@ -1,4 +1,3 @@
-// using System;
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -15,38 +14,25 @@ namespace FractalPike.PikeConsole.Core.Logging;
 	All log calls use [CallerFilePath] and [CallerLineNumber] to allow for easier throttling and debugging by other systems.
 	To my understanding this is compiler magic and not reflection, so it should be good. Do not spam logs in the hot path anyway.
 
-	Q: Why are there no method overrides for string literals? 
-	A:
-		Because a literal can be a silent killer if not used correctly. 
-		Using a literal with pure quotations will compile fine and not introduce overhead.
-		However, a lot of people use string concatenation in stead of a literal, which cannot be caught
-		and be turned into a no-op. 
 
-		Safe, free: "Hello world"
-		Unsafe, potentially expensive: "Hello " + GetPlanet()
+	VERY IMPORTANT NOTE!!!
+	
+		PikeLogger is strictly a logging utility. 
+		It should NEVER, EVER, manage or trigger a GD.PushError or GD.PushWarning.
+		Since the "EngineLoggerBridge" routes logs through PikeLogger that would cause infinite recursion.
+		"EngineLoggerBridge" does not subscribe to messages, so prints are fine.
 
-		Thus, I made the decision of only allowing interpolated strings with a custom string builder.
-		This prevents accidental allocation and computation.
-
-	Q: Is this thread safe? 
-	A:
-		Not as of now, no.
-		To make it thread safe we would add a cuncurrent queue that we consume logs from on the main thread.
-		That means we need an in-engine persistant consumer. It's doable and not too complicated, but out of scope for now.
-	Sum:
-		If you do your logging on the main thread this implementation is 100% safe.
 */
 
 public static class PikeLogger
 {
 	/// <summary>
 	/// <para>Universal log emitter event. The in-game console subscribes to this event.</para>
-	/// <para>Godot engine logs are NOT routed through this logger. This logger 
-	/// only serves to centralize and route developer made logs. Engine logs 
-	/// are handled by a separate wrapper.</para>
+	/// <para>Note: Since this logger routes errors and warnings from the Godot engine there is a chance 
+	/// this event is emitted from another thread. The consumer MUST threrefore be thread safe,
+	/// either with "Callable.From" or using a thread safe queue that is consumed on the main thread.</para>
 	/// </summary>
 	/// <remarks>
-	/// NOTE:<br/>
 	/// The struct is sent as a reference. To consume it you must use the <c>in</c> keyword!
 	/// <code>
 	/// void OnLogEmitted(in LogEvent logEvent)
