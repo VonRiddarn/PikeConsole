@@ -9,6 +9,18 @@ using Godot;
 
 #nullable enable
 
+/* 
+ 	Q: Why use DerrivedScriptPath?
+	A:
+		Because if a child node derriving from CommandSet triggers an error,
+		the compiler attributes will point to the root CommandSet.cs file (this file)
+		instead of the child that actually messed up.
+
+		Using DerrivedScriptPath makes the diagnostics more accurate,
+		and since it is lazy-initialized it uses no processing power in a healthy system.
+*/
+
+
 public abstract partial class CommandSet : Node
 {
 	/// <summary>
