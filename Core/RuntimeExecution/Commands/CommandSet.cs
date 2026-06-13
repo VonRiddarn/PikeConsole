@@ -10,13 +10,13 @@ using Godot;
 #nullable enable
 
 /* 
- 	Q: Why use DerrivedScriptPath?
+ 	Q: Why use DerivedScriptPath?
 	A:
-		Because if a child node derriving from CommandSet triggers an error,
+		Because if a child node deriving from CommandSet triggers an error,
 		the compiler attributes will point to the root CommandSet.cs file (this file)
 		instead of the child that actually messed up.
 
-		Using DerrivedScriptPath makes the diagnostics more accurate,
+		Using DerivedScriptPath makes the diagnostics more accurate,
 		and since it is lazy-initialized it uses no processing power in a healthy system.
 */
 
@@ -40,9 +40,9 @@ public abstract partial class CommandSet : Node
 	protected virtual void OnCheatModeChanged(bool newState) { }
 
 	// ----- ----- SELF DIAGNOSTIC DEPENDENCIES ----- -----
-	string? _derrivedScriptPath = null;
+	string? _derivedScriptPath = null;
 	/// <summary>Used to log the name of the the file that caused an error. This is needed as regular compiler magic will lead us back here (CommandSet.cs).</summary>
-	string DerrivedScriptPath => _derrivedScriptPath ??= GetScript().As<Script>()?.ResourcePath ?? "Unknown Script";
+	string DerivedScriptPath => _derivedScriptPath ??= GetScript().As<Script>()?.ResourcePath ?? "Unknown Script";
 
 	/// <summary>
 	/// Obligatory registration method that must return an array of Commands.
@@ -183,11 +183,11 @@ public abstract partial class CommandSet : Node
 		catch (Exception ex)
 		{
 			Commands = [];
-			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands Node: [({Name}){this}] - {ex}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
+			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands Node: [({Name}){this}] - {ex}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 		}
 
 		if (Commands.Length <= 0)
-			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from Node [({Name}){this}]. Make sure InstantiateCommands return a valid array!", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
+			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from Node [({Name}){this}]. Make sure InstantiateCommands return a valid array!", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 	}
 
 	void RegisterCommandsInternal()
@@ -203,18 +203,18 @@ public abstract partial class CommandSet : Node
 #if TOOLS
 					// Stripped in build so we don't even have to make the conditional check.
 					if (PikeConsoleConfig.EditorLogCommandRegistered)
-						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1); // Lowkey unnecessary
+						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1); // Lowkey unnecessary
 #endif
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:
-					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
+					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 					break;
 				case RegisterExecutableResponseStatus.AlreadyExists:
-					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
+					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 					break;
 				// Unexpected error.
 				default:
-					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
+					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 					break;
 			}
 		}
