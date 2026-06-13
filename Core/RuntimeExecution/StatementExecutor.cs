@@ -52,17 +52,17 @@ public static class StatementExecutor
 				{
 					// Using fallthrough cases so that we can map certain statuses to different log severities.
 					case ExecutionResponseStatus.Success:
-						PikeLogger.LogSuccess(LogTarget.AnyRuntime, $"{response.Message}", forceLog: true);
+						PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true);
 						break;
 					case ExecutionResponseStatus.InvalidArgs:
 					case ExecutionResponseStatus.Failed:
 					case ExecutionResponseStatus.DeniedPermission:
 					case ExecutionResponseStatus.DeniedCheat:
-						PikeLogger.LogError(LogTarget.AnyRuntime, $"{response.Message}", forceLog: true, includePath: false);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false);
 						break;
 					default:
 					case ExecutionResponseStatus.Error:
-						PikeLogger.LogError(LogTarget.AnyRuntime, $"{response.Message}", forceLog: true, includePath: true);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true);
 						break;
 				}
 			}

@@ -85,7 +85,7 @@ public static class PikeLogger
 	{
 		bool debugActive = (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
 		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor();
-		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Release) != 0;
+		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Runtime) != 0;
 		return debugActive || runtimeActive || editorActive;
 	}
 
@@ -161,7 +161,7 @@ public static class PikeLogger
 		// Still inside the preprocessor directives, we make an early return.
 		// The editor simply checks if it was the only target, and early returns if it was.
 		// This makes it so that we don't have to leave nasty extra checks in a compiled version.
-		if ((logTarget & LogTarget.Release) == 0 && (logTarget & LogTarget.Debug) == 0)
+		if ((logTarget & LogTarget.Runtime) == 0 && (logTarget & LogTarget.Debug) == 0)
 			return;
 #endif
 
