@@ -12,6 +12,16 @@
 The framework is built with **runtime optimization**, **extensibility** and **ease of use** in mind.  
 Thus, the console works great out of the box, but is open enough for any average C# developer to extend its features!
 
+## IMPORTANT NOTES TO SELF
+
+**Config will be moved to PikeConsole/Config**  
+Some configs come from static files, some come from CVars.  
+Maybe separate scripts from CVars for better DX...
+
+**Move repo-specific files into `PikeConsole/Repo`**  
+This makes the root folder cleaner and separates github stuff from game stuff.  
+Which makes it easier for someone to just remove bloat from their local machine.
+
 ## TODO:
 
 Use **MKDOCS** to create a github page for the documentation.  
