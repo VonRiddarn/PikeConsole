@@ -3,8 +3,9 @@
 **PikeConsole** is a _plug-and-play_ runtime execution framework that provides you with QOL features such as:
 
 - **Zero alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch!
-- **Context based, zero reflection commands**: Declarative command sets that are easy to use without file-bloat. Natively mapped to the SceneTrees lifecycle.
 - **AOT-safe compilation**: The system is built with AOT compilation in mind, meaning there is no compile-time reflection based stripping that will ruin your day.
+- **Thread safe out of the box**: The backend Logger system turnstiles log events and the runtime UI consumes them in fast, thread safe batches.
+- **Context based, zero reflection commands**: Declarative command sets that are easy to use without file-bloat. Natively mapped to the SceneTrees lifecycle.
 - **No-code CVar registry**: Configuration variables created using native Godot resources and fetched at runtime. Self-contained data with O(1) lookup.
 - **Pit of success**: Self diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat, just an intuitive API.
 - **Fail fast, fail safe**: When bad data is passed, the system flags the error and falls back on a safe default to prevent runtime crashes.
@@ -183,7 +184,7 @@ Clicking this will open up the callers file and line in your default IDE (engine
 ## Requrements
 
 - **Godot 4.6 or later**
-- **C# 10.0 or later**
+- **C# 12.0 (.NET 8) or later**
 
 ## Privacy notice!
 
