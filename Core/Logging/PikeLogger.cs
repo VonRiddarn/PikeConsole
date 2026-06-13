@@ -312,21 +312,4 @@ public static class PikeLogger
 	{
 		LogInternal(logTarget, ref handler, LogLevel.Error, forceLog, domain, includePath, filePath, lineNumber, memberName);
 	}
-
-	/// <summary>
-	/// Shorthand used by EngineLoggerBridge
-	/// </summary>
-	[StackTraceHidden]
-	public static void LogEngineInternal(
-		LogTarget logTarget,
-		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
-		bool forceLog = false,
-		string domain = "",
-		bool includePath = true,
-		[CallerFilePath] string filePath = "",
-		[CallerLineNumber] int lineNumber = 0,
-		[CallerMemberName] string memberName = "")
-	{
-		LogInternal(logTarget, ref handler, LogLevel.Error, forceLog, domain, includePath, filePath, lineNumber, memberName);
-	}
 }
