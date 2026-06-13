@@ -31,10 +31,10 @@ This comes with out of the box styling features so there is no need to create an
 
 ```
 !!! note
-    This is a standard blue note bubble.
+	This is a standard blue note bubble.
 
 !!! warning "Watch Out!"
-    This is an orange warning bubble. Don't use .Substring() here!
+	This is an orange warning bubble. Don't use .Substring() here!
 
 !!! danger "Critical Error"
     This is a red danger bubble. If you pass null, the game crashes.
@@ -43,7 +43,7 @@ This comes with out of the box styling features so there is no need to create an
     This is a green success bubble for when you use an Inline Array.
 
 ??? info "Click here to see something cool"
-    We're no strangers to love...
+	We're no strangers to love...
 ```
 
 - Refine readme
@@ -67,7 +67,7 @@ The parser uses ReadOnlySpan, so we need slice pointers to use it propper.
 ```csharp
 // Do this
 if (!ArgumentParser.TryParseManyFloat(args.AsSpan(0, 3), out float[] posArray, out string err))
-    return new Response(Failed, err);
+	return new Response(Failed, err);
 ```
 
 Also, INLINE ARRAYS!  
