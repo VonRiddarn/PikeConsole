@@ -28,9 +28,9 @@ public abstract partial class CommandSet : Node
 	protected virtual void OnCheatModeChanged(bool newState) { }
 
 	// ----- ----- SELF DIAGNOSTIC DEPENDENCIES ----- -----
-	string? _derrivedScriptFile = null;
+	string? _derrivedScriptPath = null;
 	/// <summary>Used to log the name of the the file that caused an error. This is needed as regular compiler magic will lead us back here (CommandSet.cs).</summary>
-	string DerrivedScriptFile => _derrivedScriptFile ??= GetScript().As<Script>()?.ResourcePath.GetFile() ?? "Unknown Script";
+	string DerrivedScriptPath => _derrivedScriptPath ??= GetScript().As<Script>()?.ResourcePath ?? "Unknown Script";
 
 	/// <summary>
 	/// Obligatory registration method that must return an array of Commands.
@@ -171,11 +171,11 @@ public abstract partial class CommandSet : Node
 		catch (Exception ex)
 		{
 			Commands = [];
-			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands in {DerrivedScriptFile} [ Node: {this}] - {ex}", forceLog: true);
+			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands Node: [({Name}){this}] - {ex}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
 		}
 
 		if (Commands.Length <= 0)
-			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from {DerrivedScriptFile} [Node: {this}]. Make sure InstantiateCommands return a valid array!", forceLog: true);
+			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from Node [({Name}){this}]. Make sure InstantiateCommands return a valid array!", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
 	}
 
 	void RegisterCommandsInternal()
@@ -191,18 +191,18 @@ public abstract partial class CommandSet : Node
 #if TOOLS
 					// Stripped in build so we don't even have to make the conditional check.
 					if (PikeConsoleConfig.EditorLogCommandRegistered)
-						PikeLogger.Log(LogTarget.Editor, $"{DerrivedScriptFile}: {response.Message}");
+						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1); // Lowkey unnecessary
 #endif
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:
-					PikeLogger.LogWarning(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
+					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
 					break;
 				case RegisterExecutableResponseStatus.AlreadyExists:
-					PikeLogger.LogError(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
+					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
 					break;
 				// Unexpected error.
 				default:
-					PikeLogger.LogError(LogTarget.All, $"{DerrivedScriptFile}: {response.Message}", forceLog: true);
+					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerrivedScriptPath, lineNumber: -1);
 					break;
 			}
 		}
