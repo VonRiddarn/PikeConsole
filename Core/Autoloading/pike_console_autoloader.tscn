@@ -4,6 +4,8 @@
 
 [node name="EngineLoggerBridgeManager" type="Node" parent="." unique_id=1141242866]
 
+[node name="CVarInitializer" type="Node" parent="." unique_id=1203019227]
+
 [node name="CommandSets" type="Node" parent="." unique_id=322416938]
 
 [node name="ConsoleCommandSet" type="Node" parent="CommandSets" unique_id=1722424151]
