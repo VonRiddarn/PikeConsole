@@ -17,6 +17,15 @@ extends EditorPlugin
 
 
 # ----- ----- ----- ----- -----
+# 			AUTOLOAD
+# ----- ----- ----- ----- -----
+# Bootstrapper to ensure we subscribe to engine errors and warnings.
+const AUTOLOAD_NAME = "PikeConsoleBootstrapper"
+# I don't like how fragile this is, but addons belong in the addon folder.
+# Breaking this would be a user error...
+const AUTOLOAD_PATH = "res://addons/FractalPike.PikeConsole/Core/PluginBootstrapper.cs"
+
+# ----- ----- ----- ----- -----
 # 			META
 # ----- ----- ----- ----- -----
 # The prefix the addon uses during setup.
@@ -122,6 +131,12 @@ func _enter_tree() -> void:
 	initialize_directory(ProjectSettings.get_setting(SETTING_CVAR_DIRECTORY["path"]), "CVar")
 	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]), "config")
 	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]) + "/users", "user config")
+	add_autoload_singleton(AUTOLOAD_NAME, AUTOLOAD_PATH)
+	pike_log("%s autoload has been injected to the project settings." % [AUTOLOAD_NAME])
+
+func _exit_tree() -> void:
+	remove_autoload_singleton(AUTOLOAD_NAME)
+	pike_log("%s autoload has been removed from the project settings." % [AUTOLOAD_NAME])
 
 # ----- ----- ----- ----- -----
 # 	INITIALIZATION HELPERS
