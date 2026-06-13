@@ -22,10 +22,19 @@ namespace FractalPike.PikeConsole.Core.Logging;
 		Since the "EngineLoggerBridge" routes logs through PikeLogger that would cause infinite recursion.
 		"EngineLoggerBridge" does not subscribe to messages, so prints are fine.
 
+	IS THIS THREAD SAFE?
+
+		Yes. PikeLogger is safe to call from any thread.
+		The default consumer (UI) extracts the logs using a thread safe queue.
+		If you want to override the default consumer or add your own you MUST assume LogEmitted is called from any thread.
+		It is connected to the Engine which is inherently multi-threaded.
 */
 
 public static class PikeLogger
 {
+
+	private static readonly object _syncRoot = new();
+
 	/// <summary>
 	/// <para>Universal log emitter event. The in-game console subscribes to this event.</para>
 	/// <para>Note: Since this logger routes errors and warnings from the Godot engine there is a chance 
@@ -93,74 +102,82 @@ public static class PikeLogger
 		// Build the message from the interpolationhandler.
 		string message = handler.ToStringAndClear();
 
-#if TOOLS
-		// ----- GODOT EDITOR -----
-		if ((logTarget & LogTarget.Editor) != 0 && IsDebugEnvironment)
+		// Locks the rest of the execution so that only one thread can run the method at a time.
+		// Note: We still need to consume the events in a thread safe manner!
+		lock (_syncRoot)
 		{
-			// Fix backslashes for windows systems.
-			filePath = filePath.Replace('\\', '/');
 
-			// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
-			// NOTE: We could implement ReadOnlySpan<char> here to only allocate once, but it would make it less readable and only save a few nanoseconds.
-			if (!string.IsNullOrEmpty(PikeConsoleConfig.PathMap) && filePath.StartsWith(PikeConsoleConfig.PathMap))
-				filePath = filePath.Replace(PikeConsoleConfig.PathMap, "res:/");
-			else // If we have no PathMap alias force-inverse the path into local. Note: This crosses the interop bridge. 
-				filePath = Godot.ProjectSettings.LocalizePath(filePath);
 
-			// If we do not have two leading slashes, add the extra so Godot can parse the link correctly.
-			if (filePath.StartsWith("res:/") && !filePath.StartsWith("res://"))
-				filePath = filePath.Replace("res:/", "res://");
 
-			// Log the message
-			switch (logLevel)
+#if TOOLS
+			// ----- GODOT EDITOR -----
+			if ((logTarget & LogTarget.Editor) != 0 && IsDebugEnvironment)
 			{
-				// Code is non-DRY by design. We're keeping allocations and callstack dives low to keep a low profile on the editor playtest-environment.
-				// Since the logic is static this is all the repetition we need, and this will all be stripped in compiled builds anyway.
-				// It's ugly, but it's also a fair trade to keep a low footprint.
-				case LogLevel.Info:
-					if (includePath)
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
-					else
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
-					break;
-				case LogLevel.Success:
-					if (includePath)
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
-					else
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
-					break;
-				case LogLevel.Warning:
-					if (includePath)
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
-					else
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: {message}");
-					break;
-				case LogLevel.Error:
-					if (includePath)
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
-					else
-						Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: {message}");
-					break;
-			}
-		}
+				// Fix backslashes for windows systems.
+				filePath = filePath.Replace('\\', '/');
 
-		// Still inside the preprocessor directives, we make an early return.
-		// The editor simply checks if it was the only target, and early returns if it was.
-		// This makes it so that we don't have to leave nasty extra checks in a compiled version.
-		if ((logTarget & LogTarget.Runtime) == 0 && (logTarget & LogTarget.Debug) == 0)
-			return;
+				// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
+				// NOTE: We could implement ReadOnlySpan<char> here to only allocate once, but it would make it less readable and only save a few nanoseconds.
+				if (!string.IsNullOrEmpty(PikeConsoleConfig.PathMap) && filePath.StartsWith(PikeConsoleConfig.PathMap))
+					filePath = filePath.Replace(PikeConsoleConfig.PathMap, "res:/");
+				else // If we have no PathMap alias force-inverse the path into local. Note: This crosses the interop bridge. 
+					filePath = Godot.ProjectSettings.LocalizePath(filePath);
+
+				// If we do not have two leading slashes, add the extra so Godot can parse the link correctly.
+				if (filePath.StartsWith("res:/") && !filePath.StartsWith("res://"))
+					filePath = filePath.Replace("res:/", "res://");
+
+				// Log the message
+				switch (logLevel)
+				{
+					// Code is non-DRY by design. We're keeping allocations and callstack dives low to keep a low profile on the editor playtest-environment.
+					// Since the logic is static this is all the repetition we need, and this will all be stripped in compiled builds anyway.
+					// It's ugly, but it's also a fair trade to keep a low footprint.
+					case LogLevel.Info:
+						if (includePath)
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+						else
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
+						break;
+					case LogLevel.Success:
+						if (includePath)
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+						else
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
+						break;
+					case LogLevel.Warning:
+						if (includePath)
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+						else
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: {message}");
+						break;
+					case LogLevel.Error:
+						if (includePath)
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+						else
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: {message}");
+						break;
+				}
+			}
+
+			// Still inside the preprocessor directives, we make an early return.
+			// The editor simply checks if it was the only target, and early returns if it was.
+			// This makes it so that we don't have to leave nasty extra checks in a compiled version.
+			if ((logTarget & LogTarget.Runtime) == 0 && (logTarget & LogTarget.Debug) == 0)
+				return;
 #endif
 
-		// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
-		LogEmitted?.Invoke(new LogEvent(
-			HashCode.Combine(filePath, lineNumber, memberName),
-			logLevel,
-			message,
-			forceLog,
-			domain,
-			includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
-		));
+			// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
+			LogEmitted?.Invoke(new LogEvent(
+				HashCode.Combine(filePath, lineNumber, memberName),
+				logLevel,
+				message,
+				forceLog,
+				domain,
+				includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
+			));
 
+		}
 	}
 
 	// Public API - outward facing wrapper methods.
