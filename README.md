@@ -28,6 +28,41 @@ Thus, the console works great out of the box, but is open enough for any average
 -   - Links to repos with extensions for CVars
 -   - Links to forked repos with different design philosophy
 
+NOTE TO SELF:  
+Document the best practices for passing the args to the parser.  
+The parser uses ReadOnlySpan, so we need slice pointers to use it propper.
+
+```csharp
+// Do this
+if (!ArgumentParser.TryParseManyFloat(args.AsSpan(0, 3), out float[] posArray, out string err))
+    return new Response(Failed, err);
+```
+
+Also, INLINE ARRAYS!  
+This is for when we want to parse stuff that is notin order!  
+Maybe framing it like "Zero-Allocation non-continous arrays" or something.  
+Also make a note: "This is a pro-tip, not a rule. I still struggle with it myself ngl."
+
+```csharp
+// BAD! This allocates an array on the heap!
+string[] arr = new string[] { args[1], args[3], args[4] };
+ArgumentParser.TryParseManyFloat(arr, out float[] pos, out string err);
+
+// GOOD! This internally automatically uses a lightweight struct
+// Note: This woks because TryParseManyFloat takes a ReadOnlySpan<string> as first parameter.
+// This is a new C# feature.
+ReadOnlySpan<string> arr = [args[1], args[3], args[4]]
+ArgumentParser.TryParseManyFloat(arr, out float[] pos, out string err);
+
+// BEST AND SIMPLEST TO USE!
+// We don't actually need to store the inline array in a variable.
+ArgumentParser.TryParseManyFloat([args[1], args[3], args[4]], out float[] pos, out string err);
+
+```
+
+Maybe do something like "But since all TryParseMany variabts already expects a ReadOnlySpan<string>, we can just write it in the method argument.  
+This makes the note educating AND useful.
+
 ## Getting started
 
 To quickly get into PikeConsole and all of its features you can use the quick start guide (link to `docs/getting-started.md`)  

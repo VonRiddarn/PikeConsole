@@ -1,7 +1,90 @@
+using System;
+
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 public static class ArgumentParser
 {
-	// TODO: Implement helper methods for parsing different data types
-	// IE: float, int, string, Vector2, Vector3 etc...
-	// Maybe use a generic?
+	public static bool ValidateCount(string[] args, int count) => args.Length == count;
+	public static bool ValidateCount(string[] args, int min, int max) => args.Length <= max && args.Length >= min;
+
+	// ----- ----- CUSTOM PARSING ----- -----
+	// CVar 
+	// TODO: Add bools
+	// TODO: Add enums
+	// 
+	// Godot
+	// TODO: Add Vector2 [x, y] ["x y"]
+	// TODO: Add Vector3
+	// TODO: Add Color [r,g,b,a] [r,g,b] [c] (NOTE TO SELF: "c": Color.FromString() allows hex, plaintext etc)
+
+	// ----- ----- NATIVE SHORTHANDS ----- -----
+
+	// Ngl, quite proud of this little router / wrapper!
+	// It just allows us to bulk parse any type that has a standard parse fucntion (or we can pass our own).
+	// This can get usefull when parsing custom object types, like Vectors: ParseMany...["12", "0", "14"]
+
+	public delegate bool TryParseDelegate<T>(string input, out T result);
+
+	// Delegate passthroughs for floats and doubles so that localization doesn't break anything, EG: 10.5 vs 10,5
+	static readonly TryParseDelegate<float> invariantFloatParser = (string s, out float f) =>
+		float.TryParse(s, System.Globalization.CultureInfo.InvariantCulture, out f);
+
+	static readonly TryParseDelegate<double> invariantDoubleParser = (string s, out double d) =>
+		double.TryParse(s, System.Globalization.CultureInfo.InvariantCulture, out d);
+
+
+	/// <summary>
+	/// Use this instead of "TryParseMany" for floats. It automatically applies culture invarience to floating point numbers. <br />
+	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
+	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
+	/// </summary>
+	public static bool TryParseManyFloat(ReadOnlySpan<string> args, out float[] floats, out string error) =>
+	TryParseMany(invariantFloatParser, args, out floats, out error);
+	/// <summary>
+	/// Use this instead of "TryParseMany" for doubles. It automatically applies culture invarience to floating point numbers. <br />
+	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
+	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
+	/// </summary>
+	public static bool TryParseManyDouble(ReadOnlySpan<string> args, out double[] doubles, out string error) =>
+		TryParseMany(invariantDoubleParser, args, out doubles, out error);
+
+	/// <summary>
+	/// Takes a parser method, such as "int.TryParse" and automatically maps it to parse all arguments in an array. <br />
+	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
+	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
+	/// </summary>
+	/// <remarks>
+	/// Floats and doubles use their own TryParseMany methods due to decimal invariants!
+	/// Using this method for numbers containing decimals may lead to weird bugs.
+	/// </remarks>
+	/// <param name="parser">Parser method to use, EG: int.TryParse</param>
+	/// <param name="args"></param>
+	/// <param name="values"></param>
+	/// <param name="error"></param>
+	/// <typeparam name="T"></typeparam>
+	/// <returns>Success: true and fills "values" || Fail: false and fills "error"</returns>
+	public static bool TryParseMany<T>(TryParseDelegate<T> parser, ReadOnlySpan<string> args, out T[] values, out string error)
+	{
+		if (args.Length <= 0)
+		{
+			values = [];
+			error = "Argument list is empty!";
+			return false;
+		}
+
+		values = new T[args.Length];
+
+		for (int i = 0; i < args.Length; i++)
+		{
+			// If any parse fails, we abort and return false.
+			if (!parser(args[i], out values[i]))
+			{
+				values = [];
+				error = $"Failed to parse {args[i]} at index ({i}).";
+				return false;
+			}
+		}
+
+		error = null;
+		return true;
+	}
 }
