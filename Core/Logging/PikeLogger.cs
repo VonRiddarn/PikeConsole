@@ -157,6 +157,18 @@ public static class PikeLogger
 						else
 							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: {message}");
 						break;
+					case LogLevel.Engine_Warning:
+						if (includePath)
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b][ENGINE] WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+						else
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b][ENGINE] WARNING[/b]: {message}");
+						break;
+					case LogLevel.Engine_Error:
+						if (includePath)
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b][ENGINE] ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+						else
+							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b][ENGINE] ERROR[/b]: {message}");
+						break;
 				}
 			}
 
@@ -192,6 +204,7 @@ public static class PikeLogger
 	/// </remarks>
 	/// <param name="logTarget">The target environment</param>
 	/// <param name="handler">Log message as interpolated string. Only built if this is the target environment.</param>
+	/// <param name="logLevel">The severity of the log. (exposed for edge-case manual overrides)</param>
 	/// <param name="forceLog">Flag that listeners can use to bypass log throttle.</param>
 	/// <param name="domain">Optional domain parameter used for filtering. (EG: "FractalPike.Entities.AI")</param>
 	/// <param name="includePath">If true the caller path is interpolated and added to LogEvent.SourcePath</param>
@@ -202,6 +215,7 @@ public static class PikeLogger
 	public static void Log(
 		LogTarget logTarget,
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		LogLevel logLevel = LogLevel.Info,
 		bool forceLog = false,
 		string domain = "",
 		bool includePath = false,
@@ -209,7 +223,7 @@ public static class PikeLogger
 		[CallerLineNumber] int lineNumber = 0,
 		[CallerMemberName] string memberName = "")
 	{
-		LogInternal(logTarget, ref handler, LogLevel.Info, forceLog, domain, includePath, filePath, lineNumber, memberName);
+		LogInternal(logTarget, ref handler, logLevel, forceLog, domain, includePath, filePath, lineNumber, memberName);
 	}
 
 	/// <summary>
@@ -287,6 +301,23 @@ public static class PikeLogger
 	/// <param name="memberName">COMPILER MANAGED VARIABLE, DO NOT TOUCH</param>
 	[StackTraceHidden]
 	public static void LogError(
+		LogTarget logTarget,
+		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
+		bool forceLog = false,
+		string domain = "",
+		bool includePath = true,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
+	{
+		LogInternal(logTarget, ref handler, LogLevel.Error, forceLog, domain, includePath, filePath, lineNumber, memberName);
+	}
+
+	/// <summary>
+	/// Shorthand used by EngineLoggerBridge
+	/// </summary>
+	[StackTraceHidden]
+	public static void LogEngineInternal(
 		LogTarget logTarget,
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
 		bool forceLog = false,

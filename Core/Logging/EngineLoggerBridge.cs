@@ -9,8 +9,6 @@ public partial class EngineLoggerBridge : Logger
 	// I'm just hardcoding a const so it's readable
 	const int ENGINE_WARNING_TYPE = 1;
 
-	const string LOG_PREFIX = "GODOT ENGINE";
-
 	// NOTE: We currently only care about actual errors and warnings, not messages about them.
 	// IF we define _LogMessage we WILL receive interop mashalling from Godot, even if we early return.
 	// By not defining the method Godot skips marshalling at the engine level!
@@ -29,16 +27,20 @@ public partial class EngineLoggerBridge : Logger
 		string message = string.IsNullOrEmpty(rationale) ? code : rationale;
 
 		if (errorType == ENGINE_WARNING_TYPE)
-			PikeLogger.LogWarning(LogTarget.All, $"{LOG_PREFIX}: {(string.IsNullOrWhiteSpace(message) ? "Unknown engine warning!" : message)}",
+			PikeLogger.Log(LogTarget.All, $"{(string.IsNullOrWhiteSpace(message) ? "Unknown engine warning!" : message)}",
+			logLevel: LogLevel.Engine_Warning,
 			domain: "Godot.Warnings",
 			forceLog: true,
 			filePath: file,
-			lineNumber: line);
+			lineNumber: line,
+			includePath: true);
 		else
-			PikeLogger.LogError(LogTarget.All, $"{LOG_PREFIX}: {(string.IsNullOrWhiteSpace(message) ? "Unknown engine error!" : message)}",
+			PikeLogger.Log(LogTarget.All, $"{(string.IsNullOrWhiteSpace(message) ? "Unknown engine error!" : message)}",
+			logLevel: LogLevel.Engine_Error,
 			domain: "Godot.Errors",
 			forceLog: true,
 			filePath: file,
-			lineNumber: line);
+			lineNumber: line,
+			includePath: true);
 	}
 }

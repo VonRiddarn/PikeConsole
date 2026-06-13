@@ -6,4 +6,6 @@ public enum LogLevel
 	Success,
 	Warning,
 	Error,
+	Engine_Warning,
+	Engine_Error,
 }
