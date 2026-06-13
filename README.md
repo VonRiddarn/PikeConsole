@@ -14,6 +14,28 @@ Thus, the console works great out of the box, but is open enough for any average
 
 ## TODO:
 
+Use **MKDOCS** to create a github page for the documentation.  
+NOTE TO SELF: Most open source projects use the "Material" theme.
+
+This comes with out of the box styling features so there is no need to create an entire website from scratch.
+
+```
+!!! note
+    This is a standard blue note bubble.
+
+!!! warning "Watch Out!"
+    This is an orange warning bubble. Don't use .Substring() here!
+
+!!! danger "Critical Error"
+    This is a red danger bubble. If you pass null, the game crashes.
+
+!!! success "Performance Boost"
+    This is a green success bubble for when you use an Inline Array.
+
+??? info "Click here to see something cool"
+    We're no strangers to love...
+```
+
 - Refine readme
 -   - Check spelling and formatting
 -   - Add quickstart guide
