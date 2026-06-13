@@ -74,11 +74,14 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	public abstract Response<CvarSetResponseStatus> SetValue(string[] args);
 
 	/// <summary>
-	/// InitializeInternal is called by the CVar crawler when the resource is loaded into memory.
+	/// Initialize is called by the CVar crawler when the resource is loaded into memory.
 	/// It is self diagnostic and will log errors or warnings regarding registering to the command registry.
 	/// </summary>
-	/// <remarks>DO NOT CALL THIS METHOD. IT IS PUBLIC ONLY SO THE CRAWLER CAN FIND IT!</remarks>
-	public void InitializeInternal()
+	/// <remarks>
+	/// If your CVar is in the designated CVar folder you DO NOT call this method, it is called automatically! <br />
+	/// Only call this method if you have made a custom sub-system for CVars or are using them internally somewhere.
+	/// </remarks>
+	public void Initialize()
 	{
 		ValueEditor = DefaultValueEditor;
 		// Note: This causes interop overhead at startup. That's okay and unavoidable.
