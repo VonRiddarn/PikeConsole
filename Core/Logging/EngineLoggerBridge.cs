@@ -29,9 +29,9 @@ public partial class EngineLoggerBridge : Logger
 		lock (_lock)
 		{
 			if (errorType == ENGINE_WARNING_TYPE)
-				PikeLogger.LogWarning(LogTarget.Runtime, $"{rationale ?? code ?? "Unknown engine warning!"}");
+				PikeLogger.LogWarning(LogTarget.All, $"{rationale ?? code ?? "Unknown engine warning!"}");
 			else
-				PikeLogger.LogError(LogTarget.Runtime, $"{rationale ?? code ?? "Unknown engine error!"}");
+				PikeLogger.LogError(LogTarget.All, $"{rationale ?? code ?? "Unknown engine error!"}");
 		}
 	}
 }
