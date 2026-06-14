@@ -10,15 +10,14 @@ public static class ArgumentParser
 	// CVar 
 	public static bool TryParseBool(ReadOnlySpan<char> input, out bool value)
 	{
-		// Pattern matching magic. 
-		// Note: We lose the generous assign logic that we had in Unity, like "tRuE" or "-23132".
-		// This is both faster and more mature though and not really a drawback.
-		if (input is "1" or "true" or "True" or "TRUE")
+		// Note: In the Unity version we tried parsing to int. That's a complete waste.
+		// There's no need to "check if the number is a number" as we don't even use it for math.
+		if (input is "1" || input.Equals("true", StringComparison.OrdinalIgnoreCase))
 		{
 			value = true;
 			return true;
 		}
-		if (input is "0" or "false" or "False" or "FALSE")
+		if (input is "0" || input.Equals("false", StringComparison.OrdinalIgnoreCase))
 		{
 			value = false;
 			return true;
