@@ -9,6 +9,8 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Internal;
 
 public abstract partial class CVarBase<T> : Resource, ICVar
 {
+	const string NOT_ASSIGNED = "n/a";
+
 	/// <summary>
 	/// Used for subscribing to the CVar value. If the value changes, this event fires and sends the new value.
 	/// </summary>
@@ -54,7 +56,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	// Used for checking state during save
 	public bool IsModified => !EqualityComparer<T>.Default.Equals(ValueEditor, DefaultValueEditor);
-	public string FormattedValue => DisplayValue(ValueEditor);
+	public string FormattedValue => DisplayValue(ValueEditor) ?? NOT_ASSIGNED;
 
 	// Current value getter / setter
 	public T Value
@@ -161,8 +163,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		// Early return with success message for the current value.
 		if (args.Length < 1 || string.IsNullOrWhiteSpace(args[0]))
 		{
-			string currentValue = ValueEditor != null ? DisplayValue(ValueEditor) : "null";
-			string defaultValue = DefaultValueEditor != null ? DisplayValue(DefaultValueEditor) : "null";
+			string currentValue = ValueEditor != null ? DisplayValue(ValueEditor) : NOT_ASSIGNED;
+			string defaultValue = DefaultValueEditor != null ? DisplayValue(DefaultValueEditor) : NOT_ASSIGNED;
 
 			return new(ExecutionResponseStatus.Success, $"Current value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}");
 		}
@@ -217,6 +219,6 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// Overriding the "ToString" property for the value is not adviced as that could ruin parsing.
 	/// <remarks>
 	/// <returns>Value as string</returns>
-	public virtual string DisplayValue(T value) => value?.ToString() ?? "null";
+	public virtual string DisplayValue(T value) => value?.ToString() ?? NOT_ASSIGNED;
 
 }
