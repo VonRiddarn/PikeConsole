@@ -3,8 +3,28 @@ using System;
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 public static class ArgumentParser
 {
-	public static bool ValidateCount(ReadOnlySpan<string> args, int count) => args.Length == count;
-	public static bool ValidateCount(ReadOnlySpan<string> args, int min, int max) => args.Length <= max && args.Length >= min;
+	public static bool ValidateCount(ReadOnlySpan<string> args, int count, out string error)
+	=> ValidateCount(args, count, count, out error);
+
+	public static bool ValidateCount(ReadOnlySpan<string> args, int min, int max, out string error)
+	{
+		int n = args.Length;
+		error = null;
+
+		if (n > max)
+		{
+			error = "Too many arguments.";
+			return false;
+		}
+
+		if (n < min)
+		{
+			error = "Not enough arguments.";
+			return false;
+		}
+
+		return true;
+	}
 
 	// ----- ----- CUSTOM PARSING ----- -----
 	// CVar 
