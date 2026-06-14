@@ -47,6 +47,11 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	public abstract string DisplayType { get; }
 	public virtual string LongDesc { get; } = "";
 
+	/// <summary>
+	/// Called at the end of initialize. This can be used by children to protect data or create special caches.
+	/// </summary>
+	protected virtual void InitializeInternal() { }
+
 	// Used for checking state during save
 	public bool IsModified => !EqualityComparer<T>.Default.Equals(ValueEditor, DefaultValueEditor);
 	public virtual string FormattedValue => ValueEditor?.ToString() ?? "null";
@@ -111,6 +116,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} didn't get a valid response from the command registry.");
 				break;
 		}
+
+		InitializeInternal();
 	}
 
 	// 99% of the time, resources live from start to end and this wont be needed.
