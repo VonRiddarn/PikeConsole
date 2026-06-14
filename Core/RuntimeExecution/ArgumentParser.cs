@@ -3,12 +3,31 @@ using System;
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 public static class ArgumentParser
 {
-	public static bool ValidateCount(string[] args, int count) => args.Length == count;
-	public static bool ValidateCount(string[] args, int min, int max) => args.Length <= max && args.Length >= min;
+	public static bool ValidateCount(ReadOnlySpan<string> args, int count) => args.Length == count;
+	public static bool ValidateCount(ReadOnlySpan<string> args, int min, int max) => args.Length <= max && args.Length >= min;
 
 	// ----- ----- CUSTOM PARSING ----- -----
 	// CVar 
-	// TODO: Add bools
+	public static bool TryParseBool(ReadOnlySpan<char> input, out bool value)
+	{
+		// Pattern matching magic. 
+		// Note: We lose the generous assign logic that we had in Unity, like "tRuE" or "-23132".
+		// This is both faster and more mature though and not really a drawback.
+		if (input is "1" or "true" or "True" or "TRUE")
+		{
+			value = true;
+			return true;
+		}
+		if (input is "0" or "false" or "False" or "FALSE")
+		{
+			value = false;
+			return true;
+		}
+
+		value = false;
+		return false;
+	}
+
 	// TODO: Add enums
 	// 
 	// Godot
@@ -37,15 +56,15 @@ public static class ArgumentParser
 	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
 	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
 	/// </summary>
-	public static bool TryParseManyFloat(ReadOnlySpan<string> args, out float[] floats, out string error) =>
-	TryParseMany(invariantFloatParser, args, out floats, out error);
+	public static bool TryParseManyFloat(ReadOnlySpan<string> args, out float[] values, out string error) =>
+	TryParseMany(invariantFloatParser, args, out values, out error);
 	/// <summary>
 	/// Use this instead of "TryParseMany" for doubles. It automatically applies culture invarience to floating point numbers. <br />
 	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
 	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
 	/// </summary>
-	public static bool TryParseManyDouble(ReadOnlySpan<string> args, out double[] doubles, out string error) =>
-		TryParseMany(invariantDoubleParser, args, out doubles, out error);
+	public static bool TryParseManyDouble(ReadOnlySpan<string> args, out double[] values, out string error) =>
+		TryParseMany(invariantDoubleParser, args, out values, out error);
 
 	/// <summary>
 	/// Takes a parser method, such as "int.TryParse" and automatically maps it to parse all arguments in an array. <br />
