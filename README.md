@@ -23,6 +23,12 @@ Maybe separate scripts from CVars for better DX...
 This makes the root folder cleaner and separates github stuff from game stuff.  
 Which makes it easier for someone to just remove bloat from their local machine.
 
+**Create a library called PikeVars**  
+We are NOT porting the "InspectorVariables" from Unity into this project!  
+Instead, separate the concerns and decouple them.  
+Leave an explicit note that says **DO NOT USE CVARS FOR GAMEPLAY**!  
+_if you want a system that handles just like CVars but is lightweight and gameplay appropriate, check out (link: PikeVariables)_
+
 ## TODO:
 
 Use **MKDOCS** to create a github page for the documentation.  
