@@ -22,8 +22,10 @@ public partial class CVarBool : CVarBase<bool>
 		if (!ArgumentParser.TryParseBool(args[0], out bool value))
 			return new(CvarSetResponseStatus.Failed, $"Could not parse {args[0]} into type bool.");
 
-		Value = value;
-		return new(CvarSetResponseStatus.Success, null);
+		if (Value == value)
+			return new(CvarSetResponseStatus.NoChange, null);
 
+		Value = value;
+		return new(CvarSetResponseStatus.Success, $"Set {Signature} to {Value}.");
 	}
 }
