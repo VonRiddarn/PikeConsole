@@ -12,6 +12,10 @@ public partial class EngineLoggerBridgeManager : Node
 	{
 		// CVar.ChangedValue += OnNewInteropValue;
 		ActivateInteropLogger();
+		GD.Print("Does not trigger log bridge.");
+		GD.PrintErr("Does not trigger log bridge.");
+
+		// Triggers log bridge!
 		GD.PushWarning("What's going on?");
 		GD.PushError("OH NO! THE HUMANITY!");
 	}
