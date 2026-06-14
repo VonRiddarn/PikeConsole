@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CVarBool" format=3 uid="uid://b0xmibmu4rln3"]
+
+[ext_resource type="Script" uid="uid://j1th6vqhii2n" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarBool.cs" id="1_0l7er"]
+
+[resource]
+script = ExtResource("1_0l7er")
+_defaultValue = true
+_value = true
+Persist = true
+Description = "Killswitch for routing logs to the UI. Disabling this makes the logger fully no-op in release builds which could save on performance."
+metadata/_custom_type_script = "uid://j1th6vqhii2n"
