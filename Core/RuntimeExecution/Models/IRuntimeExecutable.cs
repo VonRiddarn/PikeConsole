@@ -2,7 +2,7 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
 public interface IRuntimeExecutable
 {
-	/// <summary>The user-facing name of this type. EG: "Boolean"</summary>
+	/// <summary>The user-facing name of this type. EG: "CVar_Boolean"</summary>
 	public string DisplayType { get; }
 	/// <summary>Command signature to run this executable, EG: "r_cleardecals" or "env_gc"</summary>
 	/// <remarks>A signature has no set naming rules, but it is convention to name it after scope separated using underscores.</remarks>
