@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using Godot;
 

@@ -18,6 +18,7 @@ public partial class EngineLoggerBridgeManager : Node
 		// Triggers log bridge!
 		GD.PushWarning("What's going on?");
 		GD.PushError("OH NO! THE HUMANITY!");
+		PikeLogger.Log(LogTarget.All, $"TEst");
 	}
 
 	public override void _ExitTree()
