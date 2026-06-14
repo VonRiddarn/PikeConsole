@@ -54,7 +54,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	// Used for checking state during save
 	public bool IsModified => !EqualityComparer<T>.Default.Equals(ValueEditor, DefaultValueEditor);
-	public virtual string FormattedValue => ValueEditor?.ToString() ?? "null";
+	public string FormattedValue => DisplayValue(ValueEditor);
 
 	// Current value getter / setter
 	public T Value
