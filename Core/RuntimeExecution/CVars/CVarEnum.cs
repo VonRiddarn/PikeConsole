@@ -12,9 +12,11 @@ public partial class CVarEnum : CVarBase<int>
 	public override string DisplayType => "CVar_Enum";
 
 	[Export]
-	protected override int DefaultValueEditor { get; set; }
+	protected override int _defaultValue { get; set; }
 	[Export]
-	protected override int ValueEditor { get; set; }
+	protected override int _value { get; set; }
+
+	protected override string DescriptionInternal => _cachedHelpLst;
 
 	string[] _options = [];
 	string _cachedHelpLst = "";
@@ -32,22 +34,22 @@ public partial class CVarEnum : CVarBase<int>
 		if (_options.Length == 0)
 		{
 			PikeLogger.LogWarning(LogTarget.All, $"CVarEnum '{Signature}' has no options defined.");
-			DefaultValueEditor = 0;
-			ValueEditor = 0;
+			_defaultValue = 0;
+			_value = 0;
 			_cachedHelpLst = "OPTIONS:\n\tNone defined.";
 			return;
 		}
 
-		if (!IsInRange(DefaultValueEditor))
+		if (!IsInRange(_defaultValue))
 		{
-			PikeLogger.LogWarning(LogTarget.All, $"DefaultValueEditor is out of range for the options array ({_options.Length}[{DefaultValueEditor}]).");
-			DefaultValueEditor = Mathf.Clamp(DefaultValueEditor, 0, _options.Length - 1);
+			PikeLogger.LogWarning(LogTarget.All, $"DefaultValueEditor is out of range for the options array ({_options.Length}[{_defaultValue}]).");
+			_defaultValue = Mathf.Clamp(_defaultValue, 0, _options.Length - 1);
 		}
 
-		if (!IsInRange(ValueEditor))
+		if (!IsInRange(_value))
 		{
-			PikeLogger.LogWarning(LogTarget.All, $"ValueEditor is out of range for the options array ({_options.Length}[{ValueEditor}]). Clamping.");
-			ValueEditor = Mathf.Clamp(ValueEditor, 0, _options.Length - 1);
+			PikeLogger.LogWarning(LogTarget.All, $"ValueEditor is out of range for the options array ({_options.Length}[{_value}]). Clamping.");
+			_value = Mathf.Clamp(_value, 0, _options.Length - 1);
 		}
 
 		// Upgrade from Unity framework!!
@@ -79,8 +81,6 @@ public partial class CVarEnum : CVarBase<int>
 	// ----- ----- ----- -----
 
 	bool IsInRange(int index) => index >= 0 && index < _options.Length;
-
-	public override string LongDesc => _cachedHelpLst;
 
 	public override string DisplayValue(int value) => $"{value} ({_options[value]})";
 

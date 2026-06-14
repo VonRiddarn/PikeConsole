@@ -26,15 +26,18 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	// Stupid Godot ruining my DRY code...
 	/// <summary>A property that exists solely for serializing the value to the editor.</summary>
 	/// <remarks>A hack we must use to make Godot compile, sadly.</remarks>
-	protected abstract T DefaultValueEditor { get; set; }
+	protected abstract T _defaultValue { get; set; }
 
 	/// <summary>A property that exists solely for serializing the value to the editor.</summary>
 	/// <remarks>A hack we must use to make Godot compile, sadly.</remarks>
-	protected abstract T ValueEditor { get; set; }
+	protected abstract T _value { get; set; }
 
 	[ExportGroup("CVar")]
 	[Export] public bool Persist { get; private set; } = false;
 	[Export] public bool IsCheat { get; private set; } = false;
+	/// <summary>Used to apply description within the editor. Appended to the LongDesc property.</summary>
+	/// <remarks>Use property <c>LongDesc</c> for the most accurate long description.</remarks>
+	[Export(PropertyHint.MultilineText)] public string Description { get; set; } = "";
 
 	// Used after the command to register it to the persistent registry without triggering a save.
 	// Useful when running startup scripts etc.
@@ -47,7 +50,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	// Set in child
 	public abstract string DisplayType { get; }
-	public virtual string LongDesc { get; } = "";
+	public string LongDesc => $"{Description}\n{DescriptionInternal}";
+	protected virtual string DescriptionInternal { get; } = "";
 
 	/// <summary>
 	/// Called at the end of initialize. This can be used by children to protect data or create special caches.
@@ -55,18 +59,18 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	protected virtual void InitializeInternal() { }
 
 	// Used for checking state during save
-	public bool IsModified => !EqualityComparer<T>.Default.Equals(ValueEditor, DefaultValueEditor);
-	public string FormattedValue => DisplayValue(ValueEditor) ?? NOT_ASSIGNED;
+	public bool IsModified => !EqualityComparer<T>.Default.Equals(_value, _defaultValue);
+	public string FormattedValue => DisplayValue(_value) ?? NOT_ASSIGNED;
 
 	// Current value getter / setter
 	public T Value
 	{
-		get => ValueEditor;
+		get => _value;
 		set
 		{
-			if (!EqualityComparer<T>.Default.Equals(ValueEditor, value))
+			if (!EqualityComparer<T>.Default.Equals(_value, value))
 			{
-				ValueEditor = value;
+				_value = value;
 				ValueChanged?.Invoke(value);
 				ValueInvalidated?.Invoke();
 			}
@@ -91,7 +95,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// </remarks>
 	public void Initialize()
 	{
-		ValueEditor = DefaultValueEditor;
+		_value = _defaultValue;
 		// Note: This causes interop overhead at startup. That's okay and unavoidable.
 		// The resource filename IS the command name. Convenience vs customization and all that.
 		Signature = ConsoleFormatter.ToSignature(ResourcePath.GetFile().GetBaseName());
@@ -136,7 +140,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	{
 		if (!cheatMode)
 		{
-			Value = DefaultValueEditor;
+			Value = _defaultValue;
 		}
 	}
 
@@ -144,7 +148,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	{
 		var modified = IsModified;
 
-		Value = DefaultValueEditor;
+		Value = _defaultValue;
 
 		if (modified && Persist)
 			PersistentCVarRegistry.Update(this);
@@ -163,8 +167,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		// Early return with success message for the current value.
 		if (args.Length < 1 || string.IsNullOrWhiteSpace(args[0]))
 		{
-			string currentValue = ValueEditor != null ? DisplayValue(ValueEditor) : NOT_ASSIGNED;
-			string defaultValue = DefaultValueEditor != null ? DisplayValue(DefaultValueEditor) : NOT_ASSIGNED;
+			string currentValue = _value != null ? DisplayValue(_value) : NOT_ASSIGNED;
+			string defaultValue = _defaultValue != null ? DisplayValue(_defaultValue) : NOT_ASSIGNED;
 
 			return new(ExecutionResponseStatus.Success, $"Current value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}");
 		}

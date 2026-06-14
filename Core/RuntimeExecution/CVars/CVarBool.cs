@@ -9,10 +9,10 @@ public partial class CVarBool : CVarBase<bool>
 	public override string DisplayType => "CVar_Bool";
 
 	[Export]
-	protected override bool DefaultValueEditor { get; set; }
+	protected override bool _defaultValue { get; set; }
 
 	[Export]
-	protected override bool ValueEditor { get; set; }
+	protected override bool _value { get; set; }
 
 	public override Response<CvarSetResponseStatus> SetValue(string[] args)
 	{
