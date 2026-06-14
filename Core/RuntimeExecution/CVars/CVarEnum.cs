@@ -1,0 +1,87 @@
+using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Internal;
+using Godot;
+using System;
+using System.Text;
+
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
+
+[GlobalClass]
+public partial class CVarEnum : CVarBase<int>
+{
+	public override string DisplayType => "CVar_Enum";
+
+	[Export]
+	protected override int DefaultValueEditor { get; set; }
+	[Export]
+	protected override int ValueEditor { get; set; }
+
+	string[] _options = [];
+	string _cachedHelpLst = "";
+
+	[Export]
+	public string[] Options { get; set; }
+
+	protected override void InitializeInternal()
+	{
+		// Since we have to expose the property to the editor we also expose it to other systems.
+		// On startup, cache the enum definitions to protect them from runtime modification.
+		_options = Options ?? [];
+
+		// Early return if the options array is empty (Bad)
+		if (_options.Length == 0)
+		{
+			PikeLogger.LogWarning(LogTarget.All, $"CVarEnum '{Signature}' has no options defined.");
+			DefaultValueEditor = 0;
+			ValueEditor = 0;
+			_cachedHelpLst = "OPTIONS:\n\tNone defined.";
+			return;
+		}
+
+		if (!IsInRange(DefaultValueEditor))
+		{
+			PikeLogger.LogWarning(LogTarget.All, $"DefaultValueEditor is out of range for the options array ({_options.Length}[{DefaultValueEditor}]).");
+			DefaultValueEditor = Mathf.Clamp(DefaultValueEditor, 0, _options.Length - 1);
+		}
+
+		if (!IsInRange(ValueEditor))
+		{
+			PikeLogger.LogWarning(LogTarget.All, $"ValueEditor is out of range for the options array ({_options.Length}[{ValueEditor}]). Clamping.");
+			ValueEditor = Mathf.Clamp(ValueEditor, 0, _options.Length - 1);
+		}
+
+		// Upgrade from Unity framework!!
+		// Cache the options rather than building them at runtime.
+		StringBuilder sb = new("OPTIONS:\n");
+		for (int i = 0; i < _options.Length; i++)
+			sb.Append($"\t{i} = {_options[i]}\n");
+
+		_cachedHelpLst = sb.ToString();
+	}
+
+	public override Response<CvarSetResponseStatus> SetValue(string[] args)
+	{
+		if (!ArgumentParser.ValidateCount(args, 1, out string error))
+			return new(CvarSetResponseStatus.InvalidArgs, error);
+
+		if (!ArgumentParser.TryParseEnum(args[0], _options, out int index, out error))
+			return new(CvarSetResponseStatus.Failed, error);
+
+		if (Value == index)
+			return new(CvarSetResponseStatus.NoChange, null);
+
+		Value = index;
+		return new(CvarSetResponseStatus.Success, null);
+	}
+
+	// ----- ----- ----- -----
+	//	HELPERS AND OVERRIDES
+	// ----- ----- ----- -----
+
+	bool IsInRange(int index) => index >= 0 && index < _options.Length;
+
+	public override string LongDesc => _cachedHelpLst;
+
+	public override string DisplayValue(int value) => $"{value} ({_options[value]})";
+
+}
