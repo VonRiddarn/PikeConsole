@@ -27,7 +27,38 @@ public static class ArgumentParser
 		return false;
 	}
 
-	// TODO: Add enums
+	public static bool TryParseEnum(ReadOnlySpan<char> input, ReadOnlySpan<string> options, out int index, out string error)
+	{
+		error = null;
+		index = -1;
+
+		// Try parsing int first as that is the fastest path. Hopecore.
+		if (int.TryParse(input, out int idx))
+		{
+			if (idx >= 0 && idx < options.Length)
+			{
+				index = idx;
+				return true;
+			}
+
+			error = "Index out of range.";
+			return false;
+		}
+
+		// Fallback on matching the strings.
+		for (int i = 0; i < options.Length; i++)
+		{
+			if (input.Equals(options[i], StringComparison.OrdinalIgnoreCase))
+			{
+				index = i;
+				return true;
+			}
+		}
+
+		error = $"No match for {input.ToString()}.";
+		return false;
+	}
+
 	// 
 	// Godot
 	// TODO: Add Vector2 [x, y] ["x y"]
