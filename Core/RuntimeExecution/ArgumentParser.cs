@@ -55,7 +55,7 @@ public static class ArgumentParser
 			}
 		}
 
-		error = $"No match for {input.ToString()}.";
+		error = $"No match for {input}.";
 		return false;
 	}
 
