@@ -1,4 +1,4 @@
-namespace FractalPike.PikeConsole.Core.RuntimeExecution;
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 
 public enum RegisterAliasResponseStatus
 {

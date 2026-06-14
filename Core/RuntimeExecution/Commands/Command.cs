@@ -1,7 +1,7 @@
 using System;
 using FractalPike.PikeConsole.Core.Logging;
 
-namespace FractalPike.PikeConsole.Core.RuntimeExecution;
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 
 public sealed class Command : IRuntimeExecutable
 {

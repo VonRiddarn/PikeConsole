@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace FractalPike.PikeConsole.Core.RuntimeExecution;
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 public static class AliasRegistry
 {
 	static readonly Dictionary<string, string> _aliases = new(StringComparer.OrdinalIgnoreCase);

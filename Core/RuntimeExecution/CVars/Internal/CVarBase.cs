@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using FractalPike.PikeConsole.Core.Logging;
 using Godot;
-namespace FractalPike.PikeConsole.Core.RuntimeExecution;
+
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Internal;
 
 #nullable enable
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 

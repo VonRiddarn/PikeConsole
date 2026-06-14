@@ -1,14 +1,12 @@
 using System;
 using System.Collections.Immutable;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using FractalPike.PikeConsole.Core;
 using FractalPike.PikeConsole.Core.Logging;
-using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
 
 #nullable enable
 
+namespace FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 
 public abstract partial class CommandSet : Node
 {
