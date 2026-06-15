@@ -8,7 +8,7 @@
 
 **PikeConsole** is a _plug-and-play_ runtime execution framework that gives you a production-ready, professional-grade debug and command environment.  
 You do not have to lift a finger.  
-Just install / activate the addon and you get it all:
+Just install / activate the addon and you get:
 
 - **Zero-alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch to protect performance!
 - **AOT-safe compilation**: The system is built natively for ahead-of-time compilation which is a MUST if you're porting to console / mobile.
@@ -17,8 +17,8 @@ Just install / activate the addon and you get it all:
 - **No-code CVar registry**: Console variables based on native Godot resources allows for self-contained data with O(1) lookup!  
   _(And the console variables are fetched automatically at runtime without reflection!)_
 - **Clickable logs**: Links in the editor output window that takes you to the caller!
-- **Pit of success**: The API is a self-diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat.
-- **Fail fast, fail safe**: When bad data is passed, the system flags the error and falls back on a safe default to prevent runtime crashes.
+- **The pit of success**: The API is a self-diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat.
+- **A Fail fast, fail safe net**: When bad data is passed, the system flags the error and falls back on a safe default to prevent runtime crashes.
 - **Smart stripping**: The framework is intended to ship with the released version of the game. To prevent file-bloat the system automatically strips itself of editor-related code!
 
 The framework is built with **runtime optimization**, **extensibility** and **ease of use** in mind.  
