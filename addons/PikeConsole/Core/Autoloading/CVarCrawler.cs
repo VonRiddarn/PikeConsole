@@ -1,4 +1,4 @@
-using FractalPike.PikeConsole.Autoloading;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
@@ -19,7 +19,7 @@ public partial class CVarCrawler : Node
 {
 	public override void _EnterTree() => CrawlForCVars(PikeConsoleConfig.CvarDirectory);
 
-	private void CrawlForCVars(string currentPath)
+	void CrawlForCVars(string currentPath)
 	{
 		using DirAccess dir = DirAccess.Open(currentPath);
 
@@ -55,7 +55,7 @@ public partial class CVarCrawler : Node
 			{
 				string fullPath = $"{currentPath}/{cleanFileName}";
 
-				// Load the resource using the clean path (Godot handles the remap internally)
+				// Load the resource using the clean path (Godot automatically handles the remap)
 				Resource loadedResource = ResourceLoader.Load(fullPath);
 
 				// BIG CHANGE FROM UNITY FRAMEWORK!
@@ -68,4 +68,41 @@ public partial class CVarCrawler : Node
 			}
 		}
 	}
+
+	// ----- ----- ----- ----- -----
+	//		STATIC HELPERS
+	// ----- ----- ----- ----- -----
+
+	public static bool TryGetCVar(string directory, string signature, out ICVar cvar)
+	{
+		string fullPath = $"{directory}/{signature}.tres";
+
+		// Fallback that checks for a .res instead if the .tres doesn't exist.
+		if (!ResourceLoader.Exists(fullPath))
+		{
+			fullPath = $"{directory}/{signature}.res";
+
+			// We found no file at all.
+			if (!ResourceLoader.Exists(fullPath))
+			{
+				PikeLogger.LogWarning(LogTarget.All, $"Could not find CVar \"{signature}\" in directory: {directory}.");
+				cvar = null;
+				return false;
+			}
+		}
+
+		// Success
+		if (ResourceLoader.Load(fullPath) is ICVar cvarResource)
+		{
+			cvar = cvarResource;
+			return true;
+		}
+
+		// We have the file, but it failed to morph into a ICVar.
+		// Basically, it's the wrong filetype.
+		PikeLogger.LogError(LogTarget.All, $"File \"{signature}\" was found in {directory}, but it is not a CVar!");
+		cvar = null;
+		return false;
+	}
+
 }
