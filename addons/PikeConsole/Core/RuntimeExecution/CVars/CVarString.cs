@@ -11,7 +11,7 @@ public partial class CVarString : CVarBase<string>
 	[Export] protected override string _defaultValue { get; set; }
 	[Export] protected override string _value { get; set; }
 
-	public override Response<CvarSetResponseStatus> SetValue(string[] args)
+	public override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
 	{
 		if (args.Length == 1)
 		{

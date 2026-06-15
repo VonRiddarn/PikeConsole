@@ -1,3 +1,4 @@
+using System;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Internal;
 using Godot;
 
@@ -14,7 +15,7 @@ public partial class CVarBool : CVarBase<bool>
 	[Export]
 	protected override bool _value { get; set; }
 
-	public override Response<CvarSetResponseStatus> SetValue(string[] args)
+	public override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
 	{
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
 			return new(CvarSetResponseStatus.InvalidArgs, error);

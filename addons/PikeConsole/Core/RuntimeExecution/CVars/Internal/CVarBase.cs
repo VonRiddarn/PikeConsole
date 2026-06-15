@@ -84,7 +84,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// </summary>
 	/// <param name="args">Arguments passed by the runtime console</param>
 	/// <returns>A response status with an optional message.</returns>
-	public abstract Response<CvarSetResponseStatus> SetValue(string[] args);
+	public abstract Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args);
 
 	/// <summary>
 	/// Initialize is called by the CVar crawler when the resource is loaded into memory.
@@ -186,7 +186,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		{
 			// If we have the RAM_ONLY flag, slice that argument from the parameters.
 			// SetValue will never have to deal with it.
-			response = SetValue(ramOnly ? args[..^1] : args);
+			// Updated Using a ReadOnlySpan to make this non-alloc!
+			response = SetValue(ramOnly ? args.AsSpan(0, args.Length - 1) : args.AsSpan());
 		}
 		catch (Exception e)
 		{

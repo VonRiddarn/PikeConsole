@@ -21,7 +21,7 @@ public partial class CVarDouble : CVarBase<double>
 	[Export] bool _useMax = false;
 	[Export] double _maxValue = 0;
 
-	public override Response<CvarSetResponseStatus> SetValue(string[] args)
+	public override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
 	{
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
 			return new(CvarSetResponseStatus.InvalidArgs, error);
