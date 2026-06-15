@@ -23,7 +23,14 @@ Maybe separate scripts from CVars for better DX...
 This makes the root folder cleaner and separates github stuff from game stuff.  
 Which makes it easier for someone to just remove bloat from their local machine.
 
-**Create a library called PikeVars**  
+**Make sure to mention the ExecutionSource enum**  
+This new feature allows the game system to use the console to run code.  
+It was originally made in preparation for my decoupled, source like event system.  
+Maybe use the event system as an example on why this is useful:  
+`ent_fire appartment_room_1 player_entered`  
+System can call it ez. Player (like QA) requires `cheatmode 1` to run it.
+
+**Create a library called PikeVars** -- This is done, just link it.  
 We are NOT porting the "InspectorVariables" from Unity into this project!  
 Instead, separate the concerns and decouple them.  
 Leave an explicit note that says **DO NOT USE CVARS FOR GAMEPLAY**!  
