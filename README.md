@@ -190,5 +190,6 @@ The official `logo.png` placed at the root of this repository, as well as all fi
 [Timmy "VonRiddarn" Öhman](https://github.com/VonRiddarn) / [Fractal Pike Entertainment](https://www.fractalpike.com/).  
 All rights reserved.
 
+**_Please note:_**  
 _This disclaimer is just here to protect my company branding and mascot._  
 _If you use my logo just to give credit, and do not say or imply that we are affiliated: I truly, utterly, do not mind ❤️._
