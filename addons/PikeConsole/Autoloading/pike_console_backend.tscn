@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dx4bwtrbok1yg"]
 
 [ext_resource type="Script" uid="uid://cxhq248g21ptu" path="res://addons/PikeConsole/Core/Logging/EngineLoggerBridgeManager.cs" id="1_f8hgk"]
-[ext_resource type="Script" uid="uid://nb3ptdy1fmnd" path="res://addons/PikeConsole/Core/Autoloading/CVarCrawler.cs" id="2_hj4c2"]
+[ext_resource type="Script" uid="uid://nb3ptdy1fmnd" path="res://addons/PikeConsole/Autoloading/CVarCrawler.cs" id="2_hj4c2"]
 
 [node name="PikeConsoleBackend" type="Node" unique_id=1879456131]
 
