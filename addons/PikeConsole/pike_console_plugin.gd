@@ -29,7 +29,7 @@ const AUTOLOAD_PATH = "res://addons/PikeConsole/Core/pike_console_backend.tscn"
 # ----- ----- ----- ----- -----
 # The prefix the addon uses during setup.
 # Doesn't affect the "real" framework, just the addon initialization.
-const ADDON_PRINT_PREFIX = "[Godot Addon] PikeConsole: "
+const ADDON_PRINT_PREFIX = "[PikeConsole] "
 
 # Predefined path structure for easier visual scope...
 const PATH_ADDON_ROOT: String = "res://addons/PikeConsole"
