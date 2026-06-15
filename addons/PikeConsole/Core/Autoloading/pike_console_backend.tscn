@@ -20,3 +20,5 @@ script = ExtResource("2_hj4c2")
 [node name="AliasCommandSet" type="Node" parent="CommandSets" unique_id=508363395]
 
 [node name="ConfigCommandSet" type="Node" parent="CommandSets" unique_id=1256457458]
+
+[node name="CfgLoader" type="Node" parent="." unique_id=1424947716]
