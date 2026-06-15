@@ -101,9 +101,6 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		// The resource filename IS the command name. Convenience vs customization and all that.
 		Signature = ConsoleFormatter.ToSignature(ResourcePath.GetFile().GetBaseName());
 
-		if (IsCheat)
-			PikeConsoleConfig.CheatModeChanged += OnCheatModeChanged;
-
 		if (Persist)
 			PersistentCVarRegistry.Write(Signature, this);
 
@@ -127,24 +124,6 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		InitializeInternal();
 	}
 
-	// 99% of the time, resources live from start to end and this wont be needed.
-	// Its added for good hygiene and memory leak prevention during exceptional circumstances
-	protected override void Dispose(bool disposing)
-	{
-		if (disposing && IsCheat)
-			PikeConsoleConfig.CheatModeChanged -= OnCheatModeChanged;
-
-		base.Dispose(disposing);
-	}
-
-	private void OnCheatModeChanged(bool cheatMode)
-	{
-		if (!cheatMode)
-		{
-			Value = _defaultValue;
-		}
-	}
-
 	public void ResetValue()
 	{
 		var modified = IsModified;
@@ -162,7 +141,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	// 
 	// Also, remember that if no message is returned, there will be no log!
 	// ----- -----
-	public Response<ExecutionResponseStatus> Execute(string[] args)
+	public Response<ExecutionResponseStatus> Execute(ExecutionSource executionSource, string[] args)
 	{
 		// No arguments mean we want to check the value.
 		// Early return with success message for the current value.
@@ -174,8 +153,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			return new(ExecutionResponseStatus.Success, $"Current value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}");
 		}
 
-		// If we are in cheat mode, 
-		if (IsCheat && !PikeConsoleConfig.CheatMode)
+		// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
+		// The system passes this check though, so we can still pass map specific overrides and cool stuff.
+		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode)
 			return new(ExecutionResponseStatus.DeniedCheat, null);
 
 		bool ramOnly = args.Length >= 2 && args[^1].Equals(RAM_ONLY_TAG, StringComparison.OrdinalIgnoreCase);

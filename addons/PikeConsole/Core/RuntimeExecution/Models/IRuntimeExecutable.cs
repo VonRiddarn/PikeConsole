@@ -24,7 +24,7 @@ public interface IRuntimeExecutable
 	// If (!IsLocal && !Rcon.TryPermissions(Role.Admin)) -- Or something like that.
 
 	/// <summary>Runs the executable and returns a response object.</summary>
-	public Response<ExecutionResponseStatus> Execute(string[] args);
+	public Response<ExecutionResponseStatus> Execute(ExecutionSource source, string[] args);
 
 	/// <summary>Returns a formatted summary of this object and all its properties.</summary>
 	public string GetHelp();

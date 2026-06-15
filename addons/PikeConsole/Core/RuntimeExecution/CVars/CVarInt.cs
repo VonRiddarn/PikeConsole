@@ -1,3 +1,4 @@
+using System;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Internal;
 using Godot;
 

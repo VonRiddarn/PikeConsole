@@ -62,14 +62,16 @@ public sealed class Command : IRuntimeExecutable
 		}
 	}
 
-	public Response<ExecutionResponseStatus> Execute(string[] args)
+	public Response<ExecutionResponseStatus> Execute(ExecutionSource executionSource, string[] args)
 	{
 		// Note: Actions can still return their own exception error messages.
 		// We just wrap it so that if the API consumer does not catch their own error, we do it here.
 		try
 		{
-			if (IsCheat && !PikeConsoleConfig.CheatMode)
-				return new(ExecutionResponseStatus.DeniedCheat, $"{Signature} is cheat protected!");
+			// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
+			// The system passes this check though, so we can still pass map specific overrides and cool stuff.
+			if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode)
+				return new(ExecutionResponseStatus.DeniedCheat, null);
 
 			return _action.Invoke(args);
 		}

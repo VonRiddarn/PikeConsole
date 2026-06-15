@@ -18,13 +18,13 @@ public static class StatementExecutor
 	/// </summary>
 	/// <param name="signature">The command or alias to execute.</param>
 	/// <param name="args">Arguments to pass with to the command or alias.</param>
-	public static void Execute(string signature, string[] args)
+	public static void Execute(ExecutionSource executionSource, string signature, string[] args)
 	{
 		// We use a private internal method so recursion tracking is hidden from the public API
-		ExecuteInternal(signature, args, null);
+		ExecuteInternal(executionSource, signature, args, null);
 	}
 
-	static void ExecuteInternal(string signature, string[] args, Stack<string> callStack)
+	static void ExecuteInternal(ExecutionSource executionSource, string signature, string[] args, Stack<string> callStack)
 	{
 		if (callStack != null)
 		{
@@ -44,7 +44,7 @@ public static class StatementExecutor
 		// ----- ----- COMMAND EXECUTION ----- -----
 		if (RuntimeExecutableRegistry.TryGetExecutable(signature, out IRuntimeExecutable executable))
 		{
-			Response<ExecutionResponseStatus> response = executable.Execute(args);
+			Response<ExecutionResponseStatus> response = executable.Execute(executionSource, args);
 
 			// Log messages if the command actually returned one
 			if (!string.IsNullOrWhiteSpace(response.Message))
@@ -56,14 +56,20 @@ public static class StatementExecutor
 						PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true);
 						break;
 					case ExecutionResponseStatus.InvalidArgs:
+						PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message ?? $"Invalid arguments passed for {signature}."}", forceLog: true);
+						break;
 					case ExecutionResponseStatus.Failed:
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message ?? $"{signature} failed silently. Please log reason of failure in Message."}", forceLog: true, includePath: false);
+						break;
 					case ExecutionResponseStatus.DeniedPermission:
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message ?? $"You do not have permission to run {signature}."}", forceLog: true, includePath: false);
+						break;
 					case ExecutionResponseStatus.DeniedCheat:
-						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message ?? $"{signature} is cheat protected."}", forceLog: true, includePath: false);
 						break;
 					default:
 					case ExecutionResponseStatus.Error:
-						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message ?? $"An unknown error occured when trying to execute {signature}."}", forceLog: true, includePath: true);
 						break;
 				}
 			}
@@ -94,7 +100,7 @@ public static class StatementExecutor
 					targetArgs = [.. targetArgs, .. args];
 				}
 
-				ExecuteInternal(statements[i].Signature, targetArgs, callStack);
+				ExecuteInternal(executionSource, statements[i].Signature, targetArgs, callStack);
 			}
 
 			callStack.Pop();
