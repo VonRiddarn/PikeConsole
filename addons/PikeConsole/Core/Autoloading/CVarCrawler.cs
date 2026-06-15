@@ -1,9 +1,8 @@
-using FractalPike.PikeConsole.Autoloading;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
 
-namespace FractalPike.PikeConsole.Autoloading;
+namespace FractalPike.PikeConsole.Core.Autoloading;
 
 /*
     AUTHORS NOTE:

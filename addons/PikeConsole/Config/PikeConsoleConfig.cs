@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace FractalPike.PikeConsole.Autoloading;
+namespace FractalPike.PikeConsole.Config;
 
 #nullable enable
 // TODO: Use the settings from the godot editor and lazy-initialize them in here.
@@ -9,6 +9,7 @@ namespace FractalPike.PikeConsole.Autoloading;
 
 public static class PikeConsoleConfig
 {
+
 	// TODO: Turn this into an Project Setting. LOW PRIORITY!
 	/// <summary>
 	/// Write to the editor each time a command is registered, EG: "TestCommandSet.cs: Registered command: "hello_world"
