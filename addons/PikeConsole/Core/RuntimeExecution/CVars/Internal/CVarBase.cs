@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using FractalPike.PikeConsole.Autoloading;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using Godot;
 
