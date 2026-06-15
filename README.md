@@ -1,6 +1,8 @@
 # PikeConsole - The GoldSrc-inspired developer environment!
 
-![PikeConsole Banner](proprietary/pike-console-banner.png)
+<p align="center">
+	<img src="proprietary/pike-console-banner.png" alt="PikeConsole Banner"/>
+</p>
 
 ## 🔥 High performance C# ready for Godot 4.6+
 
