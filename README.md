@@ -1,235 +1,126 @@
-# PikeConsole - The high performance C# runtime developer console for Godot 4.
+# PikeConsole - The GoldSrc-inspired developer environment!
 
-**PikeConsole** is a _plug-and-play_ runtime execution framework that provides you with QOL features such as:
+![PikeConsole Banner](proprietary/pike-console-banner.png)
 
-- **Zero alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch!
-- **AOT-safe compilation**: The system is built with AOT compilation in mind, meaning there is no compile-time reflection based stripping that will ruin your day.
-- **Thread safe out of the box**: The backend Logger system turnstiles log events and the runtime UI consumes them in fast, thread safe batches.
-- **Context based, zero reflection commands**: Declarative command sets that are easy to use without file-bloat. Natively mapped to the SceneTrees lifecycle.
-- **No-code CVar registry**: Configuration variables created using native Godot resources and fetched at runtime. Self-contained data with O(1) lookup.
-- **Pit of success**: Self diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat, just an intuitive API.
+## 🔥 High performance C# ready for Godot 4.6+
+
+**PikeConsole** is a _plug-and-play_ runtime execution framework that gives you a production-ready, professional-grade debug and command environment.  
+You do not have to lift a finger. Just install / activate the addon and you will experience:
+
+- **Zero-alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch to protect performance!
+- **AOT-safe compilation**: The system is built natively for ahead-of-time compilation which is a MUST if you're porting to console / mobile.
+- **Thread safe out of the box**: The backend turnstiles log events safely and the runtime UI consumes them in fast, thread-safe batches.
+- **Context-aware commands**: Declarative command sets that know _who_ and _what_ triggered them. Natively mapped to the SceneTree's lifecycle with no reflection.
+- **No-code CVar registry**: Console variables based on native Godot resources allows for self-contained data with O(1) lookup!  
+  _(And the console variables are fetched automatically at runtime without reflection!)_
+- **Clickable logs**: Links in the editor output window that takes you to the caller!
+- **Pit of success**: The API is a self-diagnostic system that makes the easiest path the right path. No overcomplicated boilerplate or file bloat.
 - **Fail fast, fail safe**: When bad data is passed, the system flags the error and falls back on a safe default to prevent runtime crashes.
+- **Smart stripping**: The framework is intended to ship with the released version of the game. To prevent file-bloat the system automatically strips itself of editor-related code!
 
 The framework is built with **runtime optimization**, **extensibility** and **ease of use** in mind.  
-Thus, the console works great out of the box, but is open enough for any average C# developer to extend its features!
+Thus, everything will work great out of the box, but is also open enough for any average C# developer to extend its features!
 
-## IMPORTANT NOTES TO SELF
+## ‼️ Disclaimer
 
-**Config will be moved to PikeConsole/Config**  
-Some configs come from static files, some come from CVars.  
-Maybe separate scripts from CVars for better DX...
+This framework is a port from our Unity project.  
+It is actively being worked on right now and may potentially not have all the features listed.  
+Once this disclaimer is removed it is safe to assume that everything is functioning as intended.
 
-**Move repo-specific files into `PikeConsole/Repo`**  
-This makes the root folder cleaner and separates github stuff from game stuff.  
-Which makes it easier for someone to just remove bloat from their local machine.
+The final, estimated release date for `version 1.0` is by the **end of June, 2026**.
 
-**Make sure to mention the ExecutionSource enum**  
-This new feature allows the game system to use the console to run code.  
-It was originally made in preparation for my decoupled, source like event system.  
-Maybe use the event system as an example on why this is useful:  
-`ent_fire appartment_room_1 player_entered`  
-System can call it ez. Player (like QA) requires `cheatmode 1` to run it.
-
-**Create a library called PikeVars** -- This is done, just link it.  
-We are NOT porting the "InspectorVariables" from Unity into this project!  
-Instead, separate the concerns and decouple them.  
-Leave an explicit note that says **DO NOT USE CVARS FOR GAMEPLAY**!  
-_if you want a system that handles just like CVars but is lightweight and gameplay appropriate, check out (link: PikeVariables)_
-
-## TODO:
-
-Use **MKDOCS** to create a github page for the documentation.  
-NOTE TO SELF: Most open source projects use the "Material" theme.
-
-This comes with out of the box styling features so there is no need to create an entire website from scratch.
-
-```
-!!! note
-	This is a standard blue note bubble.
-
-!!! warning "Watch Out!"
-	This is an orange warning bubble. Don't use .Substring() here!
-
-!!! danger "Critical Error"
-    This is a red danger bubble. If you pass null, the game crashes.
-
-!!! success "Performance Boost"
-    This is a green success bubble for when you use an Inline Array.
-
-??? info "Click here to see something cool"
-	We're no strangers to love...
-```
-
-- Refine readme
--   - Check spelling and formatting
--   - Add quickstart guide
--   - Add eaxamples at each context
-- Map out system using diagrams
-- Add branding folder
-- Add benchmarks
--   - Raw allocation
--   - Allocation + Interop bridge cross (Most realistic)
--   - Killswitch on / off scenarios
-- Curated list of popular extensions
--   - Links to repos with extensions for CVars
--   - Links to forked repos with different design philosophy
-
-NOTE TO SELF:  
-Document the best practices for passing the args to the parser.  
-The parser uses ReadOnlySpan, so we need slice pointers to use it propper.
-
-```csharp
-// Do this
-if (!ArgumentParser.TryParseManyFloat(args.AsSpan(0, 3), out float[] posArray, out string err))
-	return new Response(Failed, err);
-```
-
-Also, INLINE ARRAYS!  
-This is for when we want to parse stuff that is notin order!  
-Maybe framing it like "Zero-Allocation non-continous arrays" or something.  
-Also make a note: "This is a pro-tip, not a rule. I still struggle with it myself ngl."
-
-```csharp
-// BAD! This allocates an array on the heap!
-string[] arr = new string[] { args[1], args[3], args[4] };
-ArgumentParser.TryParseManyFloat(arr, out float[] pos, out string err);
-
-// GOOD! This internally automatically uses a lightweight struct
-// Note: This woks because TryParseManyFloat takes a ReadOnlySpan<string> as first parameter.
-// This is a new C# feature.
-ReadOnlySpan<string> arr = [args[1], args[3], args[4]]
-ArgumentParser.TryParseManyFloat(arr, out float[] pos, out string err);
-
-// BEST AND SIMPLEST TO USE!
-// We don't actually need to store the inline array in a variable.
-ArgumentParser.TryParseManyFloat([args[1], args[3], args[4]], out float[] pos, out string err);
-
-```
-
-Maybe do something like "But since all TryParseMany variabts already expects a ReadOnlySpan<string>, we can just write it in the method argument.  
-This makes the note educating AND useful.
-
-Also:  
-Add `using static` pro tip to reduce boilerplate:
-
-```csharp
-// Tedious
-ArgumentParser.TryParseManyFloat(arr, out float[] pos, out string err);
-
-// Nice
-using static FractalPike.PikeConsole.Core.RuntimeExecution.ArgumentParser;
-TryParseManyFloat(arr, out float[] pos, out string err);
-```
-
-## Getting started
-
-To quickly get into PikeConsole and all of its features you can use the quick start guide (link to `docs/getting-started.md`)  
-Or browse the documentation folder (link to `docs/`)
-
-## Features
-
-Some are added prematurely as they are being ported from the old Unity framework.
-
-### Planned
-
-**ArgParser API utility**  
-Something that helps parse arguments into types. Maybe a generic method if possible?  
-**Command shorthand creation**  
-Improve the command shorthand when porting to Godot.
-
-### Runtime console
-
-A runtime console accessible through a keyboard shortcut **Default: `en:semicolon` `se:ö`**
-
-### Routed logs
-
-Logs can be routed to `Debug`, `Runtime` or `All`.
-
-#### High efficiency architecture
-
-##### Log as struct references
-
-All logs sent from log event are sent as references and consumed using the `in`keyword.  
-Meaning a near infinite number of subscribers can exist on the `LogEmitted` event with minimal overhead.
-
-#### Reflectionless design
-
-The system minimizes reflection and does not use assembly scanning to register commands or CVars.  
-This does not mean the system is completely reflection free. It just means that when reflection is used,
-it is done with care and the results are propperly cached. EG: CVars use `typeof(T).Name` to statically perform meta caching.
-
-##### Non alloc, no-op logger
-
-The system is structured to be included in runtime builds.  
-Therefore if logs are called on non-target systems they are non-alloc and no-op.
-
-##### Killswitch
-
-Should the player not wish to see logs, or want to save the small overhead of the console there exists a runtime killswitch.
-
-#### Domain filtering
-
-Logs can be tagged with a domain for easy filtering in subscribing systems.
-
-### CVars (Console variables)
-
-CVars can be created with a simple right-click menu inside the Godot editor.  
-Once a CVar is created they are loaded at runtime (without reflection!) and can be accessed at O(1) complexity.  
-CVars are extensible and allows users to inherit and write their own custom CVar overrides.
-
-### Commands
-
-Commands use a minimal-overhead, beginner friendly context based command-set architecture API.  
-Sets are registered by adding a CommandSet node to the object and inheriting from the root class.  
-Commands are managed at runtime and update at O(1) complexity with no reflection!
-
-### Command aliases
-
-Commands can be registered at runtime through the alias registry.  
-An alias is a Signature tied to an undefined statement that will parse and run.  
-**Recursion protection**: Alias stacking is allowed, and the statement executor actively breaks out of recursive aliases.
-
-### Clickable source paths (Godot editor)
-
-When using `PikeLogger.LogWarning(...)` or `PikeLogger.Error(...)` the log is automatically prefixed with a clickable link.  
-Clicking this will open up the callers file and line in your default IDE (engine settings).
-
-## Requrements
+## 🧰 Requirements
 
 - **Godot 4.6 or later**
 - **C# 12.0 (.NET 8) or later**
 
-## Privacy notice!
+## ⚠️ Privacy notice!
 
 This Logger uses compile-time directory baking to display certain paths in logs.  
 This results in super fast, interned strings - but it bakes your folder structure into the game!  
-If you care about not leaking your file system structure, edit your `.csproj` with the `<PathMap>` element:
+If you care about not leaking your file system structure, edit your `.csproj` with the `<PathMap>` element like so:
 
 ```xml
 <Project Sdk="Godot.NET.Sdk/4.6.3">
   <PropertyGroup>
 	. . .
-	<PathMap>$(MSBuildProjectDirectory)=/PikeConsole</PathMap> // Add this
+	<PathMap>$(MSBuildProjectDirectory)=/MyProjectName</PathMap> // Add this!
   </PropertyGroup>
 </Project>
 ```
 
-This replaces your project origin `\users\vonriddarn\Godot\Projects\MyProject` (example) with the new defined filepath `/PikeConsole` (example).
+This replaces your project origin `\users\vonriddarn\Godot\Projects\MyProject` (example) with the new defined filepath `/MyProjectName` (example).
 
-### Important note if you edit your PathMap!
+### If you edit your PathMap, do this!
 
-If you update the PathMap to something else, like `/PikeConsole` or whatever, you MUST update `PikeConsole/PikeConsoleConfig.cs` to include this alias!  
-Like so:
+If you update the PathMap to something else, like `/PikeConsole` or whatever, you MUST update the pathmap string to match.  
+Go into `Project settings (General)` > `FractalPike` > `PikeConsole` and set `PathMap` to match. In this case: `/MyProjectName`.
+
+Failing to do this will not break your project, but your log paths will **no longer be clickable**.
+
+## 🐇 Getting started
+
+PikeConsole has an extensive **documentation** where you can read up on whatever you're wondering.  
+If you just want to get started and have the project running in less than 2 minutes, check out the **quick start guide**(link to github pages generated with MKDocs)!
+
+## ⁉️ Questions & Answers
+
+### Why am I forced to use interpolated strings in the logger?
+
+_(Why does `PikeLogger.Log` give me an error?)_
+
+**The problem:**
+The PikeLogger uses a custom stringbuilder to enforce as close to zero allocation as possible.  
+If the current environment does not match the target environment, like if we are playing a release build, but the log is meant for the editor only, the interpolated string will not be built. This makes the system zero-allocating for untargeted environments.
+
+The drawback to this is that there is no real way (that I know of) to efficiently separate a concatenated string from a string literal.  
+That means we cannot differ:
 
 ```csharp
-	public const string PATH_MAP_ALIAS = "/PikeConsole";
+string foo = "Hello world!";
 ```
 
-If you fail to do this, your log paths will **no longer be clickable**.
+From:
 
-## Solving library collisions
+```csharp
+string bar = Hello() + World();
+```
 
-Many utilities use standarized names. Therefore there is a slight collision chance with other libraries.  
+This creates a problem since string concantenation (`Hello() + World()`) is processed before sending it into the method.  
+Thus, even if we block the log inside the logger, it is already too late. The system has spent processing power building the concantenated string.
+
+**The solution**
+
+Since we can't differ a (memory) safe string literal from an unsafe concantenated string, we allow neither.  
+Instead the system forces you to use interpolated strings, which can be (and are) intercepted before they are built.
+
+Thus, the propper syntax to use the `PikeLogger` becomes:
+
+```csharp
+// Notice the dollar sign before the string.
+PikeLogger.Log(LogTarget.Debug, $"Hello world");
+
+// Now, this becomes memory safe too!!
+PikeLogger.Log(LogTarget.Debug, $"{Hello() + World()}");
+```
+
+### What difference does the LogTargets do?
+
+The `LogTarget` tells the logger what environment this log should run in.  
+Below is a table showing where logs show depending on their `LogTarget`.
+
+| Build Environment                         | Runtime console (UI) | Output |
+| :---------------------------------------- | :------------------- | :----- |
+| **Playtesting in editor**                 | Debug, Runtime       | Editor |
+| **Compiled DEBUG build**                  | Debug, Runtime       | -      |
+| **Compiled RELEASE build** _(final game)_ | Runtime              | -      |
+
+Notice how _PikeLogger_ does not natively route logs to file.  
+If you want to route logs to a file, eg: `errors.txt` you will have to wire a system that subscribes to _PikeLoggers_ `LogEmitted` event.
+
+### How do I stop PikeConsole from colliding with my other namespaces?
+
+All utilities in PikeConsole use a mix of conventional and intuitive names. Therefore there is a slight collision chance with other libraries.  
 To avoid collisions, use a using-alias:
 
 ```csharp
@@ -242,37 +133,51 @@ using LogTarget = FractalPike.PikeConsole.Core.Logging.LogTarget;
 PikeLogger.Log(LogTarget.Runtime, $"Hello world!");
 ```
 
-## Why are interpolated strings enforced for the logger?
+## 🔦 Highlighted Features
 
-Because the system uses a custom stringbuilder to enforce as close to zero allocation as possible.  
-If the current environment does not match the target environment, the interpolated string will not be built and its parts not read.
+#### 💻 Runtime console
 
-Since there is no real way (that I know of) to efficiently separate concatenated string from string literals,
-I made the decision to just not allow them at all. This is because even though a string literal is safe and will trigger string interning,
-a concantenated string is not and will allocate and execute.
+Fully featured thread-safe runtime UI that receives logs, executes commands and modifies CVars. No setup required!
 
-**Example**
+#### 🔀 Advanced zero-allocation log routing
 
-```csharp
+Logs are dynamically routed as references to the receiver for the targeted environment. Logs can be domain tagged for easy filtering.  
+The runtime killswitch also makes the entire system no-op, meaning the console produces no overhead when turned off.
 
-// THIS IS WHAT YOU USE
-// This will use the custom LogInterpolatedStringHandler and thus only allocate and compile on Debug builds.
-// EVEN THOUGH we are using dynamic data.
-PikeLogger.Log(LogTarget.Debug, $"Hello, {Player.Name}!");
+#### 🔗 Clickable source paths (Godot editor)
 
-// THIS WILL NOT COMPILE
-// This is a static string literal. This is safe and will compile to an interned string reference.
-PikeLogger.Log(LogTarget.Debug, "Hello, VonRiddarn!");
+When using `PikeLogger.LogWarning(...)` or `PikeLogger.Error(...)` the log is automatically prefixed with a clickable link.  
+Clicking this will open up the file and line in your default IDE.  
+_Logs also contain overrides for explicitly hiding or showing the path on demand._
 
-// THIS WILL NOT COMPILE
-// THIS WILL NOT! This will allocate and potentially even run on undesired environments.
-// We could solve this with a Func<string> override, but that too would need some allocation and require developers to actually use it.
-PikeLogger.Log(LogTarget.Debug, "Hello, " + Player.Name + "!");
-```
+#### ⚙️ No-code CVar registry
 
-In the example above, since it is (again, to my knowledge) not feasible to differ the last two statements from eachother efficiently, I allow neither.
+Create CVars directly in the Godot editor! Just `right click` > `New Resource` and choose the CVar you want to create.  
+The CVar is automatically fetched at runtime without using reflection. Making them O(1) lookup at runtime and AOT-safe!
 
-## License & Copyright
+#### 🕹️ Context-based Commands & Aliases
+
+The declarative API for creating custom commands is beginner friendly and efficient. You get maximum power for minimal code!  
+Just inherit from the `CommandSet` node, attach it to your world and watch the magic!  
+**Aliases** can be registered at runtime and come with automatic recursion protection to prevent infinite loops that could crash the game.
+
+#### 🤓 Interop considerate
+
+All static interop values are saved in order to prevent marshalling accross the C++ bridge.  
+The entire system lives within the .NET environment and only leaves when strictly necessary.
+
+#### 📦 AOT-Safe compilation
+
+The entire framework is built with ahead-of-time compilation in mind.  
+Therefore there is no magic reflection or dangling attributes that could cause unintended stripping.
+
+## 🗣️ Credits and support
+
+**PikeConsole does not require you to give credits!**  
+You are free to use the framework however you'd like and never even mention it!  
+If you would like to support the project though, I'd love for you to leave a ⭐ if you found it useful!
+
+## ⚖️ License & Copyright
 
 This project is released under the MIT open source license.  
 **You may use, modify and distribute the contents of this repo however you'd like for free**.
