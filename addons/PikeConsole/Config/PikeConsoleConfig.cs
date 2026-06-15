@@ -10,6 +10,28 @@ namespace FractalPike.PikeConsole.Config;
 public static class PikeConsoleConfig
 {
 
+	// ----- ----- ----- ----- -----
+	// 			INTERNAL
+	// ----- ----- ----- ----- -----
+
+
+	// ----- ----- ----- ----- -----
+	// 			 CVars
+	// ----- ----- ----- ----- -----
+
+	// Max UI LOGS
+	// EnableRuntimeLogging
+	// Cheatmode
+
+	// ----- ----- ----- ----- -----
+	// 		PROJECT SETTINGS
+	// ----- ----- ----- ----- -----
+
+	// PathMap
+	// CVar dir
+	// Config dir
+	// UserConfigsEnabled 
+
 	// TODO: Turn this into an Project Setting. LOW PRIORITY!
 	/// <summary>
 	/// Write to the editor each time a command is registered, EG: "TestCommandSet.cs: Registered command: "hello_world"
