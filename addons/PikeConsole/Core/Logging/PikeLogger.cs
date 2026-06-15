@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using FractalPike.PikeConsole.Config;
+using FractalPike.PikeConsole.Autoloading;
 
 namespace FractalPike.PikeConsole.Core.Logging;
 

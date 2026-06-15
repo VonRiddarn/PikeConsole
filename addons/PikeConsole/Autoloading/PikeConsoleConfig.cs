@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace FractalPike.PikeConsole.Config;
+namespace FractalPike.PikeConsole.Autoloading;
 
 #nullable enable
 // TODO: Use the settings from the godot editor and lazy-initialize them in here.
