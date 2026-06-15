@@ -7,11 +7,12 @@
 ## 🔥 High performance C# ready for Godot 4.6+
 
 **PikeConsole** is a _plug-and-play_ runtime execution framework that gives you a production-ready, professional-grade debug and command environment.  
-You do not have to lift a finger. Just install / activate the addon and you will experience:
+You do not have to lift a finger.  
+Just install / activate the addon and you get it all:
 
 - **Zero-alloc routed logging**: Isolated log streams for both debug and runtime environments, with runtime killswitch to protect performance!
 - **AOT-safe compilation**: The system is built natively for ahead-of-time compilation which is a MUST if you're porting to console / mobile.
-- **Thread safe out of the box**: The backend turnstiles log events safely and the runtime UI consumes them in fast, thread-safe batches.
+- **Thread safety out of the box**: The backend turnstiles log events safely and the runtime UI consumes them in fast, thread-safe batches.
 - **Context-aware commands**: Declarative command sets that know _who_ and _what_ triggered them. Natively mapped to the SceneTree's lifecycle with no reflection.
 - **No-code CVar registry**: Console variables based on native Godot resources allows for self-contained data with O(1) lookup!  
   _(And the console variables are fetched automatically at runtime without reflection!)_
