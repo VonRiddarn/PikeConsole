@@ -109,6 +109,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		switch (response.Status)
 		{
 			case RegisterExecutableResponseStatus.Success:
+				// TODO: Add project setting escape flag here, like: "logCvarInitialized"
+				PikeLogger.LogSuccess(LogTarget.Editor, $"{Signature} added to CVar registry!");
 				break;
 			case RegisterExecutableResponseStatus.AlreadyExists:
 				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} couldn't register as a command or CVar of this name already exists!");
