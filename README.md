@@ -271,3 +271,16 @@ PikeLogger.Log(LogTarget.Debug, "Hello, " + Player.Name + "!");
 ```
 
 In the example above, since it is (again, to my knowledge) not feasible to differ the last two statements from eachother efficiently, I allow neither.
+
+## License & Copyright
+
+This project is released under the MIT open source license.  
+**You may use, modify and distribute the contents of this repo however you'd like for free**.
+
+### Branding exception
+
+The official `logo.png` placed at the root of this repository, as well as all files in the `proprietary` folder are the exclusive property of
+Timmy "VonRiddarn" Öhman / Fractal Pike Entertainment. All rights reserved.
+
+_This disclaimer is just here to protect my company branding and mascot._  
+_If you use my logo just to give credit, and do not say or imply that we are affiliated: I truly, utterly, do not mind ❤️._
