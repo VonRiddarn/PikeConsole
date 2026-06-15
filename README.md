@@ -21,7 +21,7 @@ You do not have to lift a finger. Just install / activate the addon and you will
 - **Smart stripping**: The framework is intended to ship with the released version of the game. To prevent file-bloat the system automatically strips itself of editor-related code!
 
 The framework is built with **runtime optimization**, **extensibility** and **ease of use** in mind.  
-Thus, everything will work great out of the box, but is also open enough for any average C# developer to extend its features!
+Thus, everything will work great out of the box - but is also open enough for any average C# developer to extend its features!
 
 ## ‼️ Disclaimer
 
