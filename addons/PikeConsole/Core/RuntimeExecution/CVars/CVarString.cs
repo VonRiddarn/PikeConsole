@@ -13,14 +13,10 @@ public partial class CVarString : CVarBase<string>
 
 	public override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
 	{
-		if (args.Length == 1)
-		{
-			Value = args[0];
-			return new(CvarSetResponseStatus.Success, null);
-		}
+		if (!ArgumentParser.ValidateCount(args, 1, out string error))
+			return new(CvarSetResponseStatus.InvalidArgs, $"{error} : If your text contains spaces, wrap it in \"quotes\". To use quotes within quotes, use backslashes: \\\"");
 
-		// Allocationg, but kinda necessary.
-		Value = string.Join(' ', args);
+		Value = args[0];
 		return new(CvarSetResponseStatus.Success, null);
 	}
 }
