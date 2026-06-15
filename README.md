@@ -28,9 +28,21 @@ Thus, everything will work great out of the box - but is also open enough for an
 
 This framework is a port from our Unity project.  
 It is actively being worked on right now and may potentially not have all the features listed.  
-Once this disclaimer is removed it is safe to assume that everything is functioning as intended.
+Once this disclaimer is removed it is safe to assume that everything is functioning as intended.  
+Most things are added and do work, like commands, cvars and aliases - but there's no frontend for it.
 
 The final, estimated release date for `version 1.0` is by the **end of June, 2026**.
+
+### 🚗 Roadmap (in order)
+
+- [ ] Create first documentation copy using MKDocs
+- [ ] Refactor hardcoded configs to internal dogfeed CVars
+- [ ] Create the CVar startup crawler
+- [ ] Create a tech-demo console UI
+- [ ] Create base command sets (Global, Alias, Environment)
+- [ ] Create the executable config IO system (.cfg readers)
+- [ ] Create the UserConfigManager and add a Project Setting for opt-in
+- [ ] Update the runtime UI to v1
 
 ## 🧰 Requirements
 
