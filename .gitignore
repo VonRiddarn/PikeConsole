@@ -33,3 +33,10 @@ project.godot
 # other
 build/
 builds/
+
+# C# specific ignores
+.vs/
+bin/
+obj/
+Export/
+export_presets.cfg
