@@ -35,9 +35,9 @@ The final, estimated release date for `version 1.0` is by the **end of June, 202
 
 ### 🚗 Roadmap (in order)
 
-- [ ] Create first documentation copy using MKDocs
-- [ ] Refactor hardcoded configs to internal dogfeed CVars
 - [ ] Create the CVar startup crawler
+- [ ] Refactor hardcoded configs to internal dogfeed CVars
+- [ ] Create first documentation copy using MKDocs
 - [ ] Create a tech-demo console UI
 - [ ] Create base command sets (Global, Alias, Environment)
 - [ ] Create the executable config IO system (.cfg readers)
