@@ -171,7 +171,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		}
 		catch (Exception e)
 		{
-			return new(ExecutionResponseStatus.Error, $"An unexpected error occured when setting value of {Signature}: {e.Message}");
+			return new(ExecutionResponseStatus.Error, $"An unexpected error occurred when setting value of {Signature}: {e.Message}");
 		}
 
 		// Return success, but log nothing.
@@ -187,11 +187,12 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			return new(ExecutionResponseStatus.Success, msg);
 		}
 
+		// Note, we are using "unexpected error" again here because a command creator could've caught the error and sent back null.
 		return response.Status switch
 		{
 			CvarSetResponseStatus.InvalidArgs => new(ExecutionResponseStatus.InvalidArgs, response.Message ?? $"Invalid arguments passed for {Signature}."),
 			CvarSetResponseStatus.Failed => new(ExecutionResponseStatus.Failed, response.Message ?? $"Failed to set the value for {Signature}"),
-			_ => new(ExecutionResponseStatus.Error, response.Message ?? $"An unexpected error occured when setting the value for {Signature}"),
+			_ => new(ExecutionResponseStatus.Error, response.Message ?? $"An unexpected error occurred when setting the value for {Signature}"),
 		};
 	}
 
