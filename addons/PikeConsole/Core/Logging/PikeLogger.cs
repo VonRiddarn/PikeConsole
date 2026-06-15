@@ -103,6 +103,10 @@ public static class PikeLogger
 		// Build the message from the interpolationhandler.
 		string message = handler.ToStringAndClear();
 
+		// Filter out any empty logs. We do this because if a system blindly logs $"{response.Message}" for something that is null,
+		// we just spam empty containers for no reason.
+		if (string.IsNullOrWhiteSpace(message)) return;
+
 		// Locks the rest of the execution so that only one thread can run the method at a time.
 		// Note: We still need to consume the events in a thread safe manner!
 		lock (_syncRoot)
@@ -114,6 +118,7 @@ public static class PikeLogger
 			// ----- GODOT EDITOR -----
 			if ((logTarget & LogTarget.Editor) != 0 && IsDebugEnvironment)
 			{
+
 				// Fix backslashes for windows systems.
 				filePath = filePath.Replace('\\', '/');
 
