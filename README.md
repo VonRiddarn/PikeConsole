@@ -84,9 +84,12 @@ If you just want to get started and have the project running in less than 2 minu
 
 _(Why does `PikeLogger.Log` give me an error?)_
 
-**The problem:**
+**The vision:**
+
 The PikeLogger uses a custom stringbuilder to enforce as close to zero allocation as possible.  
 If the current environment does not match the target environment, like if we are playing a release build, but the log is meant for the editor only, the interpolated string will not be built. This makes the system zero-allocating for untargeted environments.
+
+**The problem:**
 
 The drawback to this is that there is no real way (that I know of) to efficiently separate a concatenated string from a string literal.  
 That means we cannot differ:
