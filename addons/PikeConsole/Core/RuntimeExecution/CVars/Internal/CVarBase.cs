@@ -109,17 +109,20 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		switch (response.Status)
 		{
 			case RegisterExecutableResponseStatus.Success:
-				// TODO: Add project setting escape flag here, like: "logCvarInitialized"
-				PikeLogger.LogSuccess(LogTarget.Editor, $"{Signature} added to CVar registry!");
+#if TOOLS
+				// Stripped in compiled build so we don't even have to make the conditional check.
+				if (PikeConsoleConfig.LogCvarOnRegister)
+					PikeLogger.Log(LogTarget.Editor, $"{Signature} added to CVar registry!");
+#endif
 				break;
 			case RegisterExecutableResponseStatus.AlreadyExists:
-				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} couldn't register as a command or CVar of this name already exists!");
+				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} couldn't register as a command or CVar of this name already exists!", forceLog: true);
 				break;
 			case RegisterExecutableResponseStatus.ReplacedAlias:
-				PikeLogger.LogWarning(LogTarget.All, $"CVar {Signature} was registered, but replaced an alias with th same signature.");
+				PikeLogger.LogWarning(LogTarget.All, $"CVar {Signature} was registered, but replaced an alias with th same signature.", forceLog: true);
 				break;
 			default:
-				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} didn't get a valid response from the command registry.");
+				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} didn't get a valid response from the command registry.", forceLog: true);
 				break;
 		}
 
@@ -157,7 +160,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
 		// The system passes this check though, so we can still pass map specific overrides and cool stuff.
-		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode)
+		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
 			return new(ExecutionResponseStatus.DeniedCheat, null);
 
 		bool ramOnly = args.Length >= 2 && args[^1].Equals(RAM_ONLY_TAG, StringComparison.OrdinalIgnoreCase);

@@ -25,6 +25,10 @@ public abstract partial class CommandSet : Node
 	protected virtual void OnExitTree() { }
 
 	// ----- ----- PIKECONSOLE API WRAPPER ----- -----
+	/// <summary>
+	/// Method override that can be used to reset states or otherwise react to when cheatmode is toggled.
+	/// Eg: if player is noclipping and cheatmode is turned off, disable the noclip.
+	/// </summary>
 	protected virtual void OnCheatModeChanged(bool newState) { }
 
 	// ----- ----- SELF DIAGNOSTIC DEPENDENCIES ----- -----
@@ -68,7 +72,7 @@ public abstract partial class CommandSet : Node
 		if (Commands.IsDefault || Commands.IsEmpty)
 			InitializeCommandsInternal();
 
-		PikeConsoleConfig.CheatModeChanged += OnCheatModeChangedInternal;
+		PikeConsoleConfig.CheatMode.ValueChanged += OnCheatModeChangedInternal;
 		OnEnterTree();
 	}
 
@@ -81,7 +85,7 @@ public abstract partial class CommandSet : Node
 	public sealed override void _ExitTree()
 	{
 		RuntimeExecutableRegistry.Unregister([.. Commands]);
-		PikeConsoleConfig.CheatModeChanged -= OnCheatModeChangedInternal;
+		PikeConsoleConfig.CheatMode.ValueChanged -= OnCheatModeChangedInternal;
 		OnExitTree();
 	}
 
@@ -199,9 +203,9 @@ public abstract partial class CommandSet : Node
 			{
 				case RegisterExecutableResponseStatus.Success:
 #if TOOLS
-					// Stripped in build so we don't even have to make the conditional check.
-					if (PikeConsoleConfig.EditorLogCommandRegistered)
-						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1); // Lowkey unnecessary
+					// Stripped in compiled build so we don't even have to make the conditional check.
+					if (PikeConsoleConfig.LogCommandOnRegister)
+						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 #endif
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:

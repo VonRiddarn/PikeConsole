@@ -20,7 +20,7 @@ extends EditorPlugin
 # 			AUTOLOAD
 # ----- ----- ----- ----- -----
 const AUTOLOAD_NAME = "PikeConsoleBackend"
-const AUTOLOAD_PATH = "res://addons/PikeConsole/Core/pike_console_backend.tscn"
+const AUTOLOAD_PATH = "res://addons/PikeConsole/Core/Autoloading/pike_console_backend.tscn"
 # Basically: We use the autoloader scene tree to bridge engine logs, scan for CVars and initialize default commands.
 # The actual UI is not auto-injected as there is a high chance users want to customize it or make their own.
 
@@ -70,12 +70,19 @@ const SETTING_USE_USER_CONFIGS: Dictionary[String, Variant] = {
 "hint": PROPERTY_HINT_NONE, 
 "hint_string": ""
 }
-const SETTING_MAX_UI_LOGS: Dictionary[String, Variant] = {
-	"path": PATH_SETTINGS_RUNTIME + "max_ui_logs", 
-	"default_value": 500, 
-	"type": TYPE_INT, 
-	"hint": PROPERTY_HINT_RANGE, 
-	"hint_string": "-1,1000,1"
+const SETTING_LOG_CVAR_ON_REGISTER: Dictionary[String, Variant] = {
+	"path": PATH_SETTINGS_EDITOR + "log_cvar_on_regsiter", 
+	"default_value": true, 
+	"type": TYPE_BOOL, 
+	"hint": PROPERTY_HINT_NONE, 
+	"hint_string": ""
+}
+const SETTING_LOG_COMMAND_ON_REGISTER: Dictionary[String, Variant] = {
+"path": PATH_SETTINGS_EDITOR + "log_command_on_regsiter", 
+"default_value": true, 
+"type": TYPE_BOOL, 
+"hint": PROPERTY_HINT_NONE, 
+"hint_string": ""
 }
 const SETTING_SUPRESS_DOCUMENTATION_WARNINGS: Dictionary[String, Variant] = {
 	"path": PATH_SETTINGS_EDITOR + "suppress_documentation_warnings", 
@@ -146,7 +153,8 @@ func initialize_project_settings() -> void:
 		SETTING_CVAR_DIRECTORY,
 		SETTING_CONFIG_DIRECTORY,
 		SETTING_USE_USER_CONFIGS,
-		SETTING_MAX_UI_LOGS,
+		SETTING_LOG_CVAR_ON_REGISTER,
+		SETTING_LOG_COMMAND_ON_REGISTER,
 		SETTING_SUPRESS_DOCUMENTATION_WARNINGS,
 		SETTING_COLOR_INFO,
 		SETTING_COLOR_SUCCESS,

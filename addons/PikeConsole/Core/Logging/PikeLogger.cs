@@ -72,7 +72,6 @@ public static class PikeLogger
 #endif
 	}
 
-
 	/// <summary>
 	/// Used by subsystems, like the custom string builder to no-op on invalid environments.
 	/// </summary>
@@ -81,7 +80,7 @@ public static class PikeLogger
 	{
 		bool debugActive = (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
 		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor();
-		bool runtimeActive = PikeConsoleConfig.EnableRuntimeLogging && (target & LogTarget.Runtime) != 0;
+		bool runtimeActive = PikeConsoleConfig.ConsoleLoggerEnabled.Value && (target & LogTarget.Runtime) != 0;
 		return debugActive || runtimeActive || editorActive;
 	}
 
