@@ -1,0 +1,18 @@
+# Theme setup - material in darkmode is apparently like the "OSS default"
+theme:
+    name: material
+    palette:
+        scheme: slate
+    features:
+        - content.code.copy
+
+# Extentions - allows for cool special markdown
+markdown_extensions:
+    - pymdownx.superfences
+    - def_list
+    - pymdownx.blocks.admonition
+    - pymdownx.blocks.details
+# Actual site setup
+site_name: PikeConsole - Documentation
+nav:
+    - Home: index.md
