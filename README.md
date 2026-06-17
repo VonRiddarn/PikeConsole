@@ -1,4 +1,4 @@
-# PikeConsole - The GoldSrc-inspired console framework!
+# PikeConsole - The modern GoldSrc-inspired console framework!
 
 <p align="center">
 	<img src="proprietary/pike-console-banner.png" alt="PikeConsole Banner"/>
