@@ -316,6 +316,7 @@ This can be used to force-disable stuff like noclip.
 		{
 			PikeLogger.Log(LogTarget.All, $"Node ready!");
 		}
+		
 		protected override void OnExitTree()
 		{
 			PikeLogger.Log(LogTarget.All, $"Tree exited!");
