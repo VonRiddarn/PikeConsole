@@ -18,13 +18,14 @@ public static class StatementExecutor
 	/// </summary>
 	/// <param name="signature">The command or alias to execute.</param>
 	/// <param name="args">Arguments to pass with to the command or alias.</param>
-	public static void Execute(ExecutionSource executionSource, string signature, string[] args)
+	/// <param name="silent">Supress "success" logs.</param>
+	public static void Execute(ExecutionSource executionSource, string signature, string[] args, bool silent = false)
 	{
 		// We use a private internal method so recursion tracking is hidden from the public API
-		ExecuteInternal(executionSource, signature, args, null);
+		ExecuteInternal(executionSource, signature, args, silent, null);
 	}
 
-	static void ExecuteInternal(ExecutionSource executionSource, string signature, string[] args, Stack<string> callStack)
+	static void ExecuteInternal(ExecutionSource executionSource, string signature, string[] args, bool silent, Stack<string> callStack)
 	{
 		if (callStack != null)
 		{
@@ -52,8 +53,13 @@ public static class StatementExecutor
 				switch (response.Status)
 				{
 					// Using fallthrough cases so that we can map certain statuses to different log severities.
+					// NOTE TO FUTURE SELF: 
+					// 		Do not start adding response overrides here.
+					// 		This is a dumb execution pipe, not a response processor.
+					// 		If the command does not want to log its success, it doesn't need to.
 					case ExecutionResponseStatus.Success:
-						PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true);
+						if (!silent)
+							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true);
 						break;
 					case ExecutionResponseStatus.InvalidArgs:
 						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true);
@@ -94,7 +100,7 @@ public static class StatementExecutor
 					targetArgs = [.. targetArgs, .. args];
 				}
 
-				ExecuteInternal(executionSource, statements[i].Signature, targetArgs, callStack);
+				ExecuteInternal(executionSource, statements[i].Signature, targetArgs, silent, callStack);
 			}
 
 			callStack.Pop();
