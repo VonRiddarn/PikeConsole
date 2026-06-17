@@ -1,5 +1,5 @@
 using FractalPike.PikeConsole.Core.Logging;
-using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Internal;
+using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Extensions;
 using Godot;
 using System;
 using System.Text;
