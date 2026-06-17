@@ -45,7 +45,7 @@ public partial class MyCommandSet : CommandSet
 
 ## 3️⃣ Add the command to the Node  
 
-The `InstantiateCommands` is a declarative method that is automatically run by the CommandSet Node to initialize commands.
+The `InstantiateCommands` is a declarative method that is automatically run by the `CommandSet` Node to initialize commands.
 Any commands returned by this method will be automatically added to the command registry.  
 
 To instantiate the command, we will use the `Command()` shorthand method that is provided by the `CommandSet`. 
@@ -132,7 +132,7 @@ Hello world!
 
 ## 🧩 The `Command` shorthand properties
 
-In the above example we used a custom shorthand provided by the `CommandSet API`.  
+In the above example we used a custom shorthand provided by the `CommandSet` API.  
 This shorthand comes in 2 flavors of parameters: **Documented** and **Quick**. 
 Out of the two, the framework will nudge you to use the documented version.  
 
