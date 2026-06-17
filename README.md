@@ -31,6 +31,10 @@ It is actively being worked on right now and currently does not have a frontend 
 Once this disclaimer is removed it is safe to assume that everything is functioning as intended.  
 The backend (with an exception for the config manager) is fully developed and works though.
 
+If this README reads like som maniacs cork board, it is because it is.  
+Until version 1.0 this is more or less a temporary spitball file.  
+Most information in here will be moved to the documentation later.
+
 The final, estimated release date for `version 1.0` is by the **end of June, 2026**.
 
 ### 🚗 Roadmap (in order)
