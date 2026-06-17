@@ -9,7 +9,7 @@ public enum ExecutionResponseStatus
 	/// <summary>Denied because of cheat flag.</summary>
 	DeniedCheat = 2,
 	/// <summary>Denied because of permission system.</summary>
-	DeniedPermission = 3,
+	//DeniedPermission = 3,
 	/// <summary>Denied because of invalid arguments.</summary>
 	InvalidArgs = 4,
 	/// <summary>Failed expectedly (IE: Through gameplay context).</summary>
