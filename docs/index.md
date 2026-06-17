@@ -1,85 +1,36 @@
-# Welcome to MkDocs
+# PikeConsole - The modern GoldSrc-inspired console framework!  
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+<p align="center">
+	<img src="_media/proprietary/pike-console-banner.png" alt="PikeConsole branding and text"/>
+</p>
 
-## Commands
+Welcome to the official documentation for PikeConsole!  
+This is a production-ready framework that provides high-performance, 
+zero-allocation logging and command execution for Godot 4.6+!  
 
-- `mkdocs new [dir-name]` - Create a new project.
-- `mkdocs serve` - Start the live-reloading docs server.
-- `mkdocs build` - Build the documentation site.
-- `mkdocs -h` - Print help message and exit.
+It is 100% AOT-compilation safe and provides everything from commands 
+and CVars to user configs right out of the box! Whether you're looking for 
+a runtime developer console, easy-to-use global state variables or just a more efficient logging 
+system than the default `GD.Print` this is the tool for you!
 
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
-
-!!! note
-This is a standard blue note bubble.
-
-ABC
-
-!!! warning "Watch Out!"
-This is an orange warning bubble. Don't use .Substring() here!
-
-HEHE
-
-!!! danger "Critical Error"
-	This is a red danger bubble. If you pass null, the game crashes.
-
-    ```csharp
-    NOE!!
-    ```
-
-LOL
-
-!!! success "Performance Boost"
-This is a green success bubble for when you use an Inline Array.
-
-WHAAT
-
-??? info "Click here to see something cool"
-We're no strangers to love...
-
-```csharp
-
-PikeLogger.Log(LogTarget.Debug, $"Test {player}");
-```
-
-`Test`
-: Tests are cool.
-
-`NoTest`
-: Notests are poo.
-
-/// note
-This is a standard blue note bubble.
-
-ABC
+/// note | Quick reminder
+PikeConsole is provided "_as-is_".  
+All versioning, upkeep and issue tracking are done when time allows for me to do so.  
 ///
 
-/// warning | Watch Out!
-This is an orange warning bubble. Don't use .Substring() here!
+## Where to begin?
+At the top of the page you've got tabs for any and all available root-pages at all times.  
+If you're on mobile, these are inside the hamburger icon in the top left.  
 
-```csharp
-// CODE
-Console.WriteLine("Yoyoyo!");
-```
+The **Architecture & Framework** tab provides benchmarks and explanations regarding the different 
+design decisions that went into the making of the framework. 
+If you're looking for a more curated experience, you might want to start with:  
 
-HEHE
-///
+- **[Getting Started](guides/getting_started.md)**: Get the console setup and run your first command in less than 2 minutes!  
+- **[Logging](guides/logging.md)**: Learn how to replace `GD.Print` with PikeLogger in just one line of code!
+- **[Commands](guides/commands.md)**: Learn the inner workings of commands and create your own.  
+- **[CVars](guides/cvars.md)**: Lean about CVars, how to use them and how to make your own. 
 
-/// danger | Critical Error
-This is a red danger bubble. If you pass null, the game crashes.
-
-LOL
-///
-
-
-/// details | Click here to see something cool
-    type: warning
-
-We're no strangers to love...
-///
+## Requirements  
+* **Godot 4.6** _or later_.
+* **.NET 8** _or later_.

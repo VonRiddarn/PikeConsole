@@ -1,0 +1,61 @@
+For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+
+- `mkdocs new [dir-name]` - Create a new project.
+- `mkdocs serve` - Start the live-reloading docs server.
+- `mkdocs build` - Build the documentation site.
+- `mkdocs -h` - Print help message and exit.
+
+## Project layout
+
+    mkdocs.yml    # The configuration file.
+    docs/
+        index.md  # The documentation homepage.
+        ...       # Other markdown pages, images and other files.
+
+
+How to make boxes.
+If no name is added after the pipe, the type is the name, eg: "Note"
+
+/// note | name goes here
+This is a standard blue note bubble.
+ABC
+///
+
+/// warning | Watch Out!
+This is an orange warning bubble. Don't use .Substring() here!
+
+```csharp
+// CODE
+Console.WriteLine("Yoyoyo!");
+```
+
+HEHE
+///
+
+/// danger | Critical Error
+This is a red danger bubble. If you pass null, the game crashes.
+
+LOL
+///
+
+
+Dropdowns!
+Note that the type:-- must be indented!
+/// details | Click here to see something cool
+    type: note
+
+We're no strangers to love...
+///
+
+/// details | Click here to see something cool
+    type: warning
+
+We're no strangers to love...
+///
+
+
+
+How to make a dictionary list.
+Basically a thing, and the explanation of the thing indented
+`Test`
+: Tests are cool.

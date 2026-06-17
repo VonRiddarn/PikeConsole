@@ -4,7 +4,9 @@ theme:
     palette:
         scheme: slate
     features:
-        - content.code.copy
+        - content.code.copy # Copy button for code blocks
+        - navigation.tabs # Top level folders become tabs instead of a bloated tree
+        - navigation.indexes # Folders can have their own index.md file - not sure if I'll keep this
 
 # Extentions - allows for cool special markdown
 markdown_extensions:
@@ -12,7 +14,61 @@ markdown_extensions:
     - def_list
     - pymdownx.blocks.admonition
     - pymdownx.blocks.details
+
 # Actual site setup
 site_name: PikeConsole - Documentation
 nav:
     - Home: index.md
+
+    - Guides:
+          - Project Setup: guides/project_setup.md
+          - Getting Started: guides/getting_started.md
+          - Logging: guides/logging.md
+          - Commands: guides/commands.md
+          - CVars: guides/cvars.md
+
+    - Architecture & Framework:
+          - Framework Map: architecture/framework_map.md
+          - AOT Safety: architecture/aot_safety.md
+          - Benchmarks: architecture/benchmarks.md
+          - Godot Interop Bridge: architecture/godot_interop_bridge.md
+          - PikeLogger Internals: architecture/pikelogger.md
+          - Runtime Executables: architecture/runtime_executables.md
+          - Config & I/O: architecture/config_io.md
+          - Aliases: architecture/aliases.md
+
+    - API Reference:
+          - Logging:
+                - LogEvent: api/Logging/LogEvent.md
+                - LogLevel: api/Logging/LogLevel.md
+                - LogTarget: api/Logging/LogTarget.md
+                - PikeLogger: api/Logging/PikeLogger.md
+          - Runtime Execution:
+                # ALIAS FOLDER
+                - Aliases:
+                      - AliasRegistry: api/RuntimeExecution/Aliases/AliasRegistry.md
+                      - RegisterAliasResponseStatus: api/RuntimeExecution/Aliases/RegisterAliasResponseStatus.md
+                # COMMANDS FOLDER
+                - Commands:
+                      - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
+                # CVARS FOLDER
+                - CVars:
+                      - Extensions:
+                            - CVarBase<T>: api/CVars/Extensions/CVarBase_T.md
+                      - CVarBool: api/CVars/CVarBool.md
+                      - CVarDouble: api/CVars/CVarDouble.md
+                      - CVarEnum: api/CVars/CVarEnum.md
+                      - CVarFloat: api/CVars/CVarFloat.md
+                      - CVarInt: api/CVars/CVarInt.md
+                      - CVarString: api/CVars/CVarString.md
+                      - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
+                # RuntimeExecution ROOT
+                - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
+                - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
+                - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
+                - ExecutionSource: api/RuntimeExecution/ExecutionSource.md
+                - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
+                - Response<T>: api/RuntimeExecution/Response_T.md
+                - SearchMode: api/RuntimeExecution/SearchMode.md
+                - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
+                - StatementParser: api/RuntimeExecution/StatementParser.md
