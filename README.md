@@ -1,7 +1,7 @@
 # PikeConsole - The modern GoldSrc-inspired console framework!
 
 <p align="center">
-	<img src="proprietary/pike-console-banner.png" alt="PikeConsole Banner"/>
+	<img src="/docs/_media/proprietary/pike-console-banner.png" alt="PikeConsole Banner"/>
 </p>
 
 ## 🔥 High performance C# ready for Godot 4.6+
@@ -202,7 +202,7 @@ This project is released under the MIT open source license.
 
 ### Branding exception
 
-The official `logo.png` placed at the root of this repository, as well as all files in the `proprietary` folder are the exclusive property of
+The official `logo.png` placed at the root of this repository, as well as all files in **ANY FOLDER** named `proprietary` are the exclusive property of
 [Timmy "VonRiddarn" Öhman](https://github.com/VonRiddarn) / [Fractal Pike Entertainment](https://www.fractalpike.com/).  
 All rights reserved.
 
