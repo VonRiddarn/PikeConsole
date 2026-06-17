@@ -20,6 +20,8 @@ public sealed class Command : IRuntimeExecutable
 	static int _nextFallbackIndex = 0;
 	static Response<ExecutionResponseStatus> FallbackAction(string[] args) => new(ExecutionResponseStatus.Failed, "No action registered!");
 
+	// Onsolete attribute hack that allows us to yell when someone tries to instantiate a command directly
+	[Obsolete("Instantiating Commands directly bypasses Godot lifecycle safety-net! Inherit from CommandSet and use the Command() shorthand instead.")]
 	public Command(
 		string commandSignature,
 		string shortDesc,

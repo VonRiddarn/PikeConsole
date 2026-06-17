@@ -9,6 +9,10 @@ using Godot;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 
+// Disable obsolete warnings in this script. 
+// This is because we use the obsolete attribute to scare of people from using "new Command()"
+#pragma warning disable CS0618
+
 public abstract partial class CommandSet : Node
 {
 	/// <summary>
