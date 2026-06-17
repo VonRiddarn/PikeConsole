@@ -188,7 +188,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			if (Persist && !ramOnly)
 				PersistentCVarRegistry.Update(this);
 
-			string msg = response.Message ?? $"{Signature} set to {DisplayValue(Value)}";
+			string msg = response.Message ?? $"Set {Signature} to {DisplayValue(Value)}";
 			return new(ExecutionResponseStatus.Success, msg);
 		}
 

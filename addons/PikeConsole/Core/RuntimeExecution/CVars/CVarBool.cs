@@ -27,6 +27,6 @@ public partial class CVarBool : CVarBase<bool>
 			return new(CvarSetResponseStatus.NoChange, null);
 
 		Value = value;
-		return new(CvarSetResponseStatus.Success, $"Set {Signature} to {Value}.");
+		return new(CvarSetResponseStatus.Success, null);
 	}
 }
