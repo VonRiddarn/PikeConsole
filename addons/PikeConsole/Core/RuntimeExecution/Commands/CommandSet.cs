@@ -17,9 +17,9 @@ public abstract partial class CommandSet : Node
 {
 	/// <summary>
 	/// All commands within this CommandSet.
-	/// Initialized only once at runtime.
+	/// Initialized only once at node instantiation.
 	/// </summary>
-	public ImmutableArray<Command> Commands { get; private set; }
+	ImmutableArray<Command> _commands;
 
 	// ----- ----- GODOT API WRAPPER ----- -----
 	// Wrapper virtual API for Godot methods.
@@ -73,7 +73,7 @@ public abstract partial class CommandSet : Node
 	// overrides them without calling base..().
 	public sealed override void _EnterTree()
 	{
-		if (Commands.IsDefault || Commands.IsEmpty)
+		if (_commands.IsDefault || _commands.IsEmpty)
 			InitializeCommandsInternal();
 
 		PikeConsoleConfig.CheatMode.ValueChanged += OnCheatModeChangedInternal;
@@ -88,7 +88,7 @@ public abstract partial class CommandSet : Node
 
 	public sealed override void _ExitTree()
 	{
-		RuntimeExecutableRegistry.Unregister([.. Commands]);
+		RuntimeExecutableRegistry.Unregister([.. _commands]);
 		PikeConsoleConfig.CheatMode.ValueChanged -= OnCheatModeChangedInternal;
 		OnExitTree();
 	}
@@ -184,21 +184,21 @@ public abstract partial class CommandSet : Node
 		// This wil get around the filepath leading to the root CommandSet...
 		try
 		{
-			Commands = ImmutableArray.Create(InstantiateCommands() ?? []);
+			_commands = ImmutableArray.Create(InstantiateCommands() ?? []);
 		}
 		catch (Exception ex)
 		{
-			Commands = [];
+			_commands = [];
 			PikeLogger.LogError(LogTarget.All, $"UNEXPECTED ERROR: Failed to instantiate commands Node: [({Name}){this}] - {ex}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 		}
 
-		if (Commands.Length <= 0)
+		if (_commands.Length <= 0)
 			PikeLogger.LogWarning(LogTarget.All, $"Commands failed to register from Node [({Name}){this}]. Make sure InstantiateCommands return a valid array!", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 	}
 
 	void RegisterCommandsInternal()
 	{
-		Response<RegisterExecutableResponseStatus>[] responses = RuntimeExecutableRegistry.Register([.. Commands]);
+		Response<RegisterExecutableResponseStatus>[] responses = RuntimeExecutableRegistry.Register([.. _commands]);
 
 		// Self diagnose by checking all commands.
 		foreach (Response<RegisterExecutableResponseStatus> response in responses)
