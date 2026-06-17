@@ -20,7 +20,7 @@ Add a script to the Node and have it inherit from the `CommandSet` class.
 /// note
 The `CommandSet` should auto-complete in your IDE and automatically import the namespace.  
 If it doesn't, you need to manually import the the namespace at the top of the file:  
-```csharp 
+```csharp {linenums="1"}
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 ```
 ///
@@ -30,7 +30,7 @@ For VSCode, press ++ctrl++ + ++period++ and choose `Import abstract class`.
 
 **You should now have something like this:**
 
-```csharp
+```csharp {linenums="1"}
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 using System;
 
@@ -59,48 +59,48 @@ This shorthand automatically tags our commands with self-diagnostic metadata.
 I have written the code for the echo command below...
 
 === "Inline"
-	```csharp
-		using FractalPike.PikeConsole.Core.RuntimeExecution;
-		using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
-		using Godot;
+	```csharp {linenums="1"}
+	using FractalPike.PikeConsole.Core.RuntimeExecution;
+	using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+	using Godot;
 
-		public partial class MyCommandSet : CommandSet
-		{
-			protected override Command[] InstantiateCommands() => [
-				Command(
-					"my_echo",
-					false,
-					(args) => 
-						new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
-				),
-			];
-		}
+	public partial class MyCommandSet : CommandSet
+	{
+		protected override Command[] InstantiateCommands() => [
+			Command(
+				"my_echo",
+				false,
+				(args) => 
+					new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+			),
+		];
+	}
 	```
 
 === "Structured"
-	```csharp
-		using FractalPike.PikeConsole.Core.RuntimeExecution;
-		using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
-		using Godot;
+	```csharp {linenums="1"}
+	using FractalPike.PikeConsole.Core.RuntimeExecution;
+	using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+	using Godot;
 
-		public partial class MyCommandSet : CommandSet
+	public partial class MyCommandSet : CommandSet
+	{
+		protected override Command[] InstantiateCommands()
 		{
-			protected override Command[] InstantiateCommands()
-			{
-				return [
-					Command(
-						"my_echo",
-						false,
-						EchoCommand
-					),
-				];
-			}
-
-			Response<ExecutionResponseStatus> EchoCommand(string[] args)
-			{
-				return new(ExecutionResponseStatus.Success, $"{args.Join(" ")}");
-			}
+			return [
+				Command(
+					"my_echo",
+					false,
+					EchoCommand
+				),
+			];
 		}
+
+		Response<ExecutionResponseStatus> EchoCommand(string[] args)
+		{
+			return new(ExecutionResponseStatus.Success, $"{args.Join(" ")}");
+		}
+	}
 	```
 
 _There is **no real performative difference** between the two examples. Choose the syntax you like._
@@ -143,44 +143,45 @@ You can turn off warnings for undocumented commands by enabling:
 
 They have the following parameters: 
 
-/// details | Quick shorthand (Click to expand)
-`Signature` : `string`
-: The command signature used to call the command, eg: `my_echo`
+/// note | Shorthands
 
-`IsCheat` : `bool`
-: Defines if `cheatmode` must be active to run this command **in the console**.  
-_Note: Your internal systems can still run commands tagged with cheats_
+=== "Quick"
+	`Signature` : `string`
+	: The command signature used to call the command, eg: `my_echo`
 
-`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
-: A method that takes in a string array and returns a Response.  
-_Note: All commands **must** return a response. More info further down._  
-///
+	`IsCheat` : `bool`
+	: Defines if `cheatmode` must be active to run this command **in the console**.  
+	_Note: Your internal systems can still run commands tagged with cheats_
 
-/// details | Documented shorthand (Click to expand)
-`Signature` : `string`
-: The command signature used to call the command, eg: `my_echo`
+	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
+	: A method that takes in a string array and returns a Response.  
+	_Note: All commands **must** return a response. More info further down._  
 
-`ShortDesc` : `string`
-: A summary description of the command, preferably a one-liner.  
-EG: `Joins and echoes the arguments back to the caller`  
-This is used by the _help parser_.
+=== "Documented"
+	`Signature` : `string`
+	: The command signature used to call the command, eg: `my_echo`
 
-`LongDesc` : `string?`
-: An optional longer (multi-line) description of the command providing more context.  
-This is used by the _help parser_.
+	`ShortDesc` : `string`
+	: A summary description of the command, preferably a one-liner.  
+	EG: `Joins and echoes the arguments back to the caller`  
+	This is used by the _help parser_.
 
-`Usage` : `string`
-: Usage instructions for the command.
-EG: `my_echo [args...]`  
-This is used by the _help parser_.
+	`LongDesc` : `string?`
+	: An optional longer (multi-line) description of the command providing more context.  
+	This is used by the _help parser_.
 
-`IsCheat` : `bool`
-: Defines if `cheatmode` must be active to run this command **in the console**.  
-_Note: Your internal systems can still run commands tagged with cheats_
+	`Usage` : `string`
+	: Usage instructions for the command.
+	EG: `my_echo [args...]`  
+	This is used by the _help parser_.
 
-`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
-: A method that takes in a string array and returns a Response.  
-_Note: All commands **must** return a response. More info further down._  
+	`IsCheat` : `bool`
+	: Defines if `cheatmode` must be active to run this command **in the console**.  
+	_Note: Your internal systems can still run commands tagged with cheats_
+
+	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
+	: A method that takes in a string array and returns a Response.  
+	_Note: All commands **must** return a response. More info further down._  
 ///
 
 ### 📄 Documenting the echo command
@@ -188,54 +189,54 @@ _Note: All commands **must** return a response. More info further down._
 By applying the information above, we can now document our echo command, like so:  
 
 === "Inline"
-	```csharp
-		using FractalPike.PikeConsole.Core.RuntimeExecution;
-		using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
-		using Godot;
+	```csharp {linenums="1"}
+	using FractalPike.PikeConsole.Core.RuntimeExecution;
+	using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+	using Godot;
 
-		public partial class MyCommandSet : CommandSet
+	public partial class MyCommandSet : CommandSet
+	{
+		protected override Command[] InstantiateCommands() => [
+			Command(
+					"my_echo",
+					"Joins and echoes the arguments back to the caller",
+					null,
+					"my_echo [args...]",
+					false,
+					(args) =>
+						new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+				),
+			];
+	}
+	```
+
+=== "Structured"
+	```csharp {linenums="1"}
+	using FractalPike.PikeConsole.Core.RuntimeExecution;
+	using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+	using Godot;
+
+	public partial class MyCommandSet : CommandSet
+	{
+		protected override Command[] InstantiateCommands()
 		{
-			protected override Command[] InstantiateCommands() => [
+			return [
 				Command(
 						"my_echo",
 						"Joins and echoes the arguments back to the caller",
 						null,
 						"my_echo [args...]",
 						false,
-						(args) =>
-							new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+						EchoCommand
 					),
-				];
+			];
 		}
-	```
 
-=== "Structured"
-	```csharp
-		using FractalPike.PikeConsole.Core.RuntimeExecution;
-		using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
-		using Godot;
-
-		public partial class MyCommandSet : CommandSet
+		Response<ExecutionResponseStatus> EchoCommand(string[] args)
 		{
-			protected override Command[] InstantiateCommands()
-			{
-				return [
-					Command(
-							"my_echo",
-							"Joins and echoes the arguments back to the caller",
-							null,
-							"my_echo [args...]",
-							false,
-							EchoCommand
-						),
-				];
-			}
-
-			Response<ExecutionResponseStatus> EchoCommand(string[] args)
-			{
-				return new(ExecutionResponseStatus.Success, $"{args.Join(" ")}");
-			}
+			return new(ExecutionResponseStatus.Success, $"{args.Join(" ")}");
 		}
+	}
 	```
 
 Adding documentation to your commands may feel tedious, but it helps immensely 
@@ -258,95 +259,95 @@ This can be used to force-disable stuff like noclip.
 
 /// note | Here is that code added to our previous example
 === "Inline"
-	```csharp
-		using FractalPike.PikeConsole.Core.Logging;
-		using FractalPike.PikeConsole.Core.RuntimeExecution;
-		using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
-		using Godot;
+	```csharp {linenums="1"}
+	using FractalPike.PikeConsole.Core.Logging;
+	using FractalPike.PikeConsole.Core.RuntimeExecution;
+	using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+	using Godot;
 
-		public partial class MyCommandSet : CommandSet
+	public partial class MyCommandSet : CommandSet
+	{
+		protected override void OnEnterTree() =>
+			PikeLogger.Log(LogTarget.All, $"Tree entered!");
+
+		protected override void OnReady() =>
+			PikeLogger.Log(LogTarget.All, $"Node ready!");
+
+		protected override void OnExitTree() =>
+			PikeLogger.Log(LogTarget.All, $"Tree exited!");
+
+		protected override void OnCheatModeChanged(bool newState)
 		{
-			protected override void OnEnterTree() =>
-				PikeLogger.Log(LogTarget.All, $"Tree entered!");
-
-			protected override void OnReady() =>
-				PikeLogger.Log(LogTarget.All, $"Node ready!");
-
-			protected override void OnExitTree() =>
-				PikeLogger.Log(LogTarget.All, $"Tree exited!");
-
-			protected override void OnCheatModeChanged(bool newState)
+			if (newState == false)
 			{
-				if (newState == false)
-				{
-					PikeLogger.Log(LogTarget.All, $"Force removing noclip...");
-				}
+				PikeLogger.Log(LogTarget.All, $"Force removing noclip...");
 			}
+		}
 
-			protected override Command[] InstantiateCommands() => [
+		protected override Command[] InstantiateCommands() => [
+			Command(
+					"my_echo",
+					"Joins and echoes the arguments back to the caller",
+					null,
+					"my_echo [args...]",
+					false,
+					(args) =>
+						new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+				),
+			];
+	}
+	```
+
+=== "Structured"
+	```csharp {linenums="1"}
+	using FractalPike.PikeConsole.Core.Logging;
+	using FractalPike.PikeConsole.Core.RuntimeExecution;
+	using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+	using Godot;
+
+	public partial class MyCommandSet : CommandSet
+	{
+		protected override void OnEnterTree()
+		{
+			PikeLogger.Log(LogTarget.All, $"Tree entered!");
+		}
+
+		protected override void OnReady()
+		{
+			PikeLogger.Log(LogTarget.All, $"Node ready!");
+		}
+		protected override void OnExitTree()
+		{
+			PikeLogger.Log(LogTarget.All, $"Tree exited!");
+		}
+
+		protected override void OnCheatModeChanged(bool newState)
+		{
+			if (newState == false)
+			{
+				PikeLogger.Log(LogTarget.All, $"Force removing noclip...");
+			}
+		}
+
+		protected override Command[] InstantiateCommands()
+		{
+			return [
 				Command(
 						"my_echo",
 						"Joins and echoes the arguments back to the caller",
 						null,
 						"my_echo [args...]",
 						false,
-						(args) =>
-							new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+						EchoCommand
 					),
 				];
 		}
-	```
 
-=== "Structured"
-	```csharp
-		using FractalPike.PikeConsole.Core.Logging;
-		using FractalPike.PikeConsole.Core.RuntimeExecution;
-		using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
-		using Godot;
-
-		public partial class MyCommandSet : CommandSet
+		Response<ExecutionResponseStatus> EchoCommand(string[] args)
 		{
-			protected override void OnEnterTree()
-			{
-				PikeLogger.Log(LogTarget.All, $"Tree entered!");
-			}
-
-			protected override void OnReady()
-			{
-				PikeLogger.Log(LogTarget.All, $"Node ready!");
-			}
-			protected override void OnExitTree()
-			{
-				PikeLogger.Log(LogTarget.All, $"Tree exited!");
-			}
-
-			protected override void OnCheatModeChanged(bool newState)
-			{
-				if (newState == false)
-				{
-					PikeLogger.Log(LogTarget.All, $"Force removing noclip...");
-				}
-			}
-
-			protected override Command[] InstantiateCommands()
-			{
-				return [
-					Command(
-							"my_echo",
-							"Joins and echoes the arguments back to the caller",
-							null,
-							"my_echo [args...]",
-							false,
-							EchoCommand
-						),
-					];
-			}
-
-			Response<ExecutionResponseStatus> EchoCommand(string[] args)
-			{
-				return new(ExecutionResponseStatus.Success, $"{args.Join(" ")}");
-			}
+			return new(ExecutionResponseStatus.Success, $"{args.Join(" ")}");
 		}
+	}
 	```
 ///
 
@@ -364,7 +365,9 @@ return new Response<ExecutionResponseStatus> (
 	ExecutionResponseStatus.InvalidArgs, 
 	"Yo, those arguments are whack!"
 	);
+```
 
+```csharp
 // This will fail silently
 return new Response<ExecutionResponseStatus> (
 	ExecutionResponseStatus.InvalidArgs, 
