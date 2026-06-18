@@ -59,7 +59,7 @@ protected override Command[] InstantiateCommands() => [
 	Using this method automatically attaches the current `CommandSet`'s filepath, 
 	making any errors invoked from the command self-diagnostic.  
 
-	/// details | Parameters  
+	/// details | Parameter details (Click to expand)   
 	`Signature` : `string`
 	: The command signature used to call the command, eg: `my_echo`
 
@@ -123,7 +123,7 @@ protected override Command[] InstantiateCommands() => [
 	Declarative shorthand method for creating a command with **without runtime documentation**.  
 	Using this method automatically attaches the current `CommandSet`'s filepath and linenumber, making any errors invoked from the command self-diagnostic.  
 
-	/// details | Parameters  
+	/// details | Parameter details (Click to expand)  
 	`Signature` : `string`
 	: The command signature used to call the command, eg: `my_echo`
 
