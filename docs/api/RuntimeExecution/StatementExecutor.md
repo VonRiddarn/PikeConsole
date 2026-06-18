@@ -23,52 +23,172 @@ No public properties to showcase for this class.
 
 ## Method Descriptions  
 
-# TODO: CONTINUE FROM HERE!!!!
-# CommandSet.md contains the "style guide".
-
 ### Execute
-**Signature**: `public static void Execute(ExecutionSource executionSource, string signature, string[] args, bool silent = false)`
 
-/// details | Parameters  
-`Signature` : `string`
-: The command signature used to call the command, eg: `my_echo`
+=== "RAW / Input"  
+	**Signature**: `public static void Execute(ExecutionSource source, string rawInput, bool silent = false)`
 
-`ShortDesc` : `string`
-: A summary description of the command, preferably a one-liner.  
+	/// details | Parameter details (Click to expand)  
+	[ExecutionSource](../RuntimeExecution/ExecutionSource.md) : `source`
+	: The entity wanting to execute this statement. Can be `Player` or `System`.  
+	_Note: Executing as `System` bypasses cheat protection._
 
-: **Example**:  
-`Joins and echoes the arguments back to the caller`  
+	`string` : `rawInput`
+	: Raw, unparsed input. Usually provided from a line in a config, or user input through the console.  
 
-`LongDesc` : `string?`
-: An optional longer (multi-line) description of the command providing more context.  
+	: **Example**:  
+	`echo Hello World!; echo "Hello back at you!"`
 
-`Usage` : `string`
-: Usage instructions for the command.
 
-: **Example**:  
-`my_echo [args...]`  
+	`bool` : `silent` def `false`
+	: If set to true, success commands are supressed.  
+	Useful for supressing console spam when a system sets a large amount of variables  
+	```
+	ph_gravity set to 3
+	pl_speed set to 25
+	pl_jump_force set to 33
+	...
+	```
 
-`IsCheat` : `bool`
-: Defines if `cheatmode` must be active to run this command **in the console**.  
+	: /// note | _Errors_ will always log.
+	///
+	///
 
-: /// note | Internal systems can still run commands tagged with cheats
-///
+	**Description**:  
+	Takes a raw input and parses it into valid statement profiles.  
+	These statement profiles are then executed in order.  
 
-`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
-: A method that takes in a string array and returns a Response. 
-	
-: /// note | All action methods **must** return a response.
-///  
-///
-**Description**:  
-Executes at the start of `_EnterTree` to hydrate the internal command list.
+	Invalid statements will bounce and return "not a valid command".  
+	Thus, it is safe to pass wild, untamed data into this method.
 
-**Example**:
-```csharp {linenums="1"}
-protected override Command[] InstantiateCommands() => [
-	Command( /* Command stuff */),
-	Command( /* Command stuff */),
-	Command( /* Command stuff */),
-];
-```
+
+	**Examples**:
+
+	_Execute based on user input._
+	```csharp
+
+	void OnUserPressEnter(string consoleInput)
+	{
+		StatementExecutor.Execute(
+			ExecutionSource.System,
+			consoleInput
+		);
+	}
+	```
+
+	_Initialize commands from a file of unknown contents._
+	```csharp
+
+	// Fetch map config settings.
+	string[] lines = File.ReadAllLines("map_spooky_manor.cfg");
+
+	// Execute map config.
+	foreach(string line in lines)
+	{
+		StatementExecutor.Execute(
+			ExecutionSource.System,
+			line,
+			true
+		);
+	}
+	```
+
+=== "Programmatic"  
+	**Signature**: `public static void Execute(ExecutionSource executionSource, string signature, string[] args, bool silent = false)`
+
+	/// details | Parameter details (Click to expand)  
+	[ExecutionSource](../RuntimeExecution/ExecutionSource.md) : `source`
+	: The entity wanting to execute this statement. Can be `Player` or `System`.  
+	_Note: Executing as `System` bypasses cheat protection._
+
+	`string` : `signature`
+	: The signature of the command to execute.  
+
+	: **Example**:  
+	`echo`
+
+	`string[]` : `args`
+	: The arguments to pass through with the command signature.  
+
+	: **Example**:  
+	`["Hello", "world!"]`  
+
+	`bool` : `silent` def `false`
+	: If set to true, success commands are supressed.  
+	Useful for supressing console spam when a system sets a large amount of variables  
+	```
+	ph_gravity set to 3
+	pl_speed set to 25
+	pl_jump_force set to 33
+	...
+	```
+
+	: /// note | _Errors_ will always log.
+	///
+	///
+
+	**Description**:  
+	Takes the signature of a command and passes arguments into its execution method.  
+	If the command returns a response, the response is logged before proceeding.
+
+	**Examples**:
+
+	_Print back "Hello World!"_
+	```csharp
+
+	StatementExecutor.Execute(
+		ExecutionSource.System,
+		"echo",
+		["Hello", "World!"],
+	);
+	```
+
+	_Silently set "ph_gravity" without confirmation._
+	```csharp
+
+	StatementExecutor.Execute(
+		ExecutionSource.System,
+		"ph_gravity",
+		["3"],
+		true
+	);
+	```
+
+=== "Batch"  
+	**Signature**: `public static void Execute(ExecutionSource source, ParsedStatement[] parsedStatements, bool silent = false)`
+
+	/// details | Parameter details (Click to expand)  
+	[ExecutionSource](../RuntimeExecution/ExecutionSource.md) : `source`
+	: The entity wanting to execute this statement. Can be `Player` or `System`.  
+	_Note: Executing as `System` bypasses cheat protection._
+
+	[ParsedStatement](../RuntimeExecution/ParsedStatement.md)`[]` : `parsedStatements`
+	: A list of pre-parsed statement objects.  
+	Usually returned from the [StatementParser](../RuntimeExecution/StatementParser.md) class.
+
+	: **Example**:  
+	```csharp
+	{
+		Signature: "echo";
+		Arguments = ["Hello", "world!"];
+	}
+	```
+
+	`bool` : `silent` def `false`
+	: If set to true, success commands are supressed.  
+	Useful for supressing console spam when a system sets a large amount of variables  
+	```
+	ph_gravity set to 3
+	pl_speed set to 25
+	pl_jump_force set to 33
+	...
+	```
+
+	: /// note | _Errors_ will always log.
+	///
+	///
+
+	**Description**:  
+	Takes a parsed statement and executes the signature with the accompanied arguments. Mainly for internal use, but could work well with a statement container-like structure.
+
 ---
