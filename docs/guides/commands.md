@@ -141,48 +141,7 @@ You can turn off warnings for undocumented commands by enabling:
 `Project settings [General]` > `Fractal Pike` > `Pike Console` > `Supress Documentation Warnings`
 ///
 
-They have the following parameters: 
-
-/// note | Shorthands
-
-=== "Quick"
-	`Signature` : `string`
-	: The command signature used to call the command, eg: `my_echo`
-
-	`IsCheat` : `bool`
-	: Defines if `cheatmode` must be active to run this command **in the console**.  
-	_Note: Your internal systems can still run commands tagged with cheats_
-
-	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
-	: A method that takes in a string array and returns a Response.  
-	_Note: All commands **must** return a response. More info further down._  
-
-=== "Documented"
-	`Signature` : `string`
-	: The command signature used to call the command, eg: `my_echo`
-
-	`ShortDesc` : `string`
-	: A summary description of the command, preferably a one-liner.  
-	EG: `Joins and echoes the arguments back to the caller`  
-	This is used by the _help parser_.
-
-	`LongDesc` : `string?`
-	: An optional longer (multi-line) description of the command providing more context.  
-	This is used by the _help parser_.
-
-	`Usage` : `string`
-	: Usage instructions for the command.
-	EG: `my_echo [args...]`  
-	This is used by the _help parser_.
-
-	`IsCheat` : `bool`
-	: Defines if `cheatmode` must be active to run this command **in the console**.  
-	_Note: Your internal systems can still run commands tagged with cheats_
-
-	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
-	: A method that takes in a string array and returns a Response.  
-	_Note: All commands **must** return a response. More info further down._  
-///
+The API-Reference contains more information about the [Command](../api/RuntimeExecution/Commands/CommandSet.md#command) shorthands.
 
 ### 📄 Documenting the echo command
 

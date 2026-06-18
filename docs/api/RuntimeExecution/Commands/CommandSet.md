@@ -59,6 +59,38 @@ protected override Command[] InstantiateCommands() => [
 	Using this method automatically attaches the current `CommandSet`'s filepath, 
 	making any errors invoked from the command self-diagnostic.  
 
+	/// details | Parameters  
+	`Signature` : `string`
+	: The command signature used to call the command, eg: `my_echo`
+
+	`ShortDesc` : `string`
+	: A summary description of the command, preferably a one-liner.  
+
+	: **Example**:  
+	`Joins and echoes the arguments back to the caller`  
+
+	`LongDesc` : `string?`
+	: An optional longer (multi-line) description of the command providing more context.  
+
+	`Usage` : `string`
+	: Usage instructions for the command.
+
+	: **Example**:  
+	`my_echo [args...]`  
+
+	`IsCheat` : `bool`
+	: Defines if `cheatmode` must be active to run this command **in the console**.  
+
+	: /// note | Internal systems can still run commands tagged with cheats
+	///
+
+	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
+	: A method that takes in a string array and returns a Response. 
+		
+	: /// note | All action methods **must** return a response.
+	///  
+	///
+		
 	/// warning
 	Do not manually set the `filePath` or `lineNumber` properties!  
 	Doing so will break the self-diagnostic nature of the command 
@@ -90,6 +122,23 @@ protected override Command[] InstantiateCommands() => [
 	**Description**:  
 	Declarative shorthand method for creating a command with **without runtime documentation**.  
 	Using this method automatically attaches the current `CommandSet`'s filepath and linenumber, making any errors invoked from the command self-diagnostic.  
+
+	/// details | Parameters  
+	`Signature` : `string`
+	: The command signature used to call the command, eg: `my_echo`
+
+	`IsCheat` : `bool`
+	: Defines if `cheatmode` must be active to run this command **in the console**.  
+
+	: /// note | Internal systems can still run commands tagged with cheats
+	///
+
+	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
+	: A method that takes in a string array and returns a Response. 
+		
+	: /// note | All action methods **must** return a response.
+	///  
+	///
 
 	/// warning
 	Do not manually set the `filePath` or `lineNumber` properties!  
