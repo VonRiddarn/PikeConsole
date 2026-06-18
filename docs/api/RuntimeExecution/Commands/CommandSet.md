@@ -1,4 +1,5 @@
 # CommandSet
+`public abstract partial class CommandSet : Node`  
 
 **Inherits**: [Node (External link)](https://docs.godotengine.org/en/stable/classes/class_node.html#class-node)  
 **Namespace**: `FractalPike.PikeConsole.Core.RuntimeExecution.Commands`  
