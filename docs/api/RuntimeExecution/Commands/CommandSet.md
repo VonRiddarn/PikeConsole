@@ -60,31 +60,31 @@ protected override Command[] InstantiateCommands() => [
 	making any errors invoked from the command self-diagnostic.  
 
 	/// details | Parameter details (Click to expand)   
-	`Signature` : `string`
+	`string` : `Signature`
 	: The command signature used to call the command, eg: `my_echo`
 
-	`ShortDesc` : `string`
+	`string` : `ShortDesc`
 	: A summary description of the command, preferably a one-liner.  
 
 	: **Example**:  
 	`Joins and echoes the arguments back to the caller`  
 
-	`LongDesc` : `string?`
+	`string?` : `LongDesc`
 	: An optional longer (multi-line) description of the command providing more context.  
 
-	`Usage` : `string`
+	`string` : `Usage`
 	: Usage instructions for the command.
 
 	: **Example**:  
 	`my_echo [args...]`  
 
-	`IsCheat` : `bool`
+	`bool` : `IsCheat`
 	: Defines if `cheatmode` must be active to run this command **in the console**.  
 
 	: /// note | Internal systems can still run commands tagged with cheats
 	///
 
-	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
+	`Func<string[], Response<ExecutionResponseStatus>>` : `Action`
 	: A method that takes in a string array and returns a Response. 
 		
 	: /// note | All action methods **must** return a response.
@@ -124,16 +124,16 @@ protected override Command[] InstantiateCommands() => [
 	Using this method automatically attaches the current `CommandSet`'s filepath and linenumber, making any errors invoked from the command self-diagnostic.  
 
 	/// details | Parameter details (Click to expand)  
-	`Signature` : `string`
+	`string` : `Signature`
 	: The command signature used to call the command, eg: `my_echo`
 
-	`IsCheat` : `bool`
+	`bool` : `IsCheat`
 	: Defines if `cheatmode` must be active to run this command **in the console**.  
 
 	: /// note | Internal systems can still run commands tagged with cheats
 	///
 
-	`Action` : `Func<string[], Response<ExecutionResponseStatus>>`
+	`Func<string[], Response<ExecutionResponseStatus>>` : `Action`
 	: A method that takes in a string array and returns a Response. 
 		
 	: /// note | All action methods **must** return a response.
