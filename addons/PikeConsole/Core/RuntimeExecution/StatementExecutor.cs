@@ -31,7 +31,7 @@ public static class StatementExecutor
 	/// This makes us able to execute arbitrary statements without using the ConfigIO file.
 	/// </summary>
 	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
-	/// <param name="signature">The command or alias to execute.</param>
+	/// <param name="rawInput">A raw input line to parse and execute.</param>
 	/// <param name="silent">Supress "success" logs.</param>
 	public static void Execute(ExecutionSource source, string rawInput, bool silent = false)
 	{
