@@ -10,7 +10,7 @@ public static class StatementExecutor
 {
 	// New feature: Capped recursion depth prevents infinite loops even without exact signature matches
 	// <= 0 is infinite
-	// TODO: Turn this into a project setting later! (This goes under /runtime with UI logs)
+	// TODO: Turn this into a CVAr later! Could be cool! console_max_execution_depth
 	const int MAX_ALIAS_DEPTH = 128;
 
 	/// <summary>
