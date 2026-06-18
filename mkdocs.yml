@@ -57,7 +57,7 @@ nav:
                 # CVARS FOLDER
                 - CVars:
                       - Extensions:
-                            - CVarBase<T>: api/CVars/Extensions/CVarBase_T.md
+                            - CVarBase&lt;T&gt;: api/CVars/Extensions/CVarBase_T.md
                       - CVarBool: api/CVars/CVarBool.md
                       - CVarDouble: api/CVars/CVarDouble.md
                       - CVarEnum: api/CVars/CVarEnum.md
@@ -66,12 +66,13 @@ nav:
                       - CVarString: api/CVars/CVarString.md
                       - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
                 # RuntimeExecution ROOT
-                - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
-                - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
-                - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
-                - ExecutionSource: api/RuntimeExecution/ExecutionSource.md
-                - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
-                - Response<T>: api/RuntimeExecution/Response_T.md
+                - RuntimeExecutablesRegistry: api/RuntimeExecution/RuntimeExecutableRegistry.md
                 - SearchMode: api/RuntimeExecution/SearchMode.md
                 - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
+                - ExecutionSource: api/RuntimeExecution/ExecutionSource.md
                 - StatementParser: api/RuntimeExecution/StatementParser.md
+                - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
+                - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
+                - Response&lt;T&gt;: api/RuntimeExecution/Response_T.md
+                - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
+                - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
