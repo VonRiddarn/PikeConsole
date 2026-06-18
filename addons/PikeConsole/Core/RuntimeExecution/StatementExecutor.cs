@@ -16,6 +16,7 @@ public static class StatementExecutor
 	/// <summary>
 	/// Try to execute a command or alias matching the signature with the passed arguments.
 	/// </summary>
+	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
 	/// <param name="signature">The command or alias to execute.</param>
 	/// <param name="args">Arguments to pass with to the command or alias.</param>
 	/// <param name="silent">Supress "success" logs.</param>
@@ -23,6 +24,36 @@ public static class StatementExecutor
 	{
 		// We use a private internal method so recursion tracking is hidden from the public API
 		ExecuteInternal(executionSource, signature, args, silent, null);
+	}
+
+	/// <summary>
+	/// Execute raw statement (previously called "ExecuteLine" in Unity. <br />
+	/// This makes us able to execute arbitrary statements without using the ConfigIO file.
+	/// </summary>
+	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
+	/// <param name="signature">The command or alias to execute.</param>
+	/// <param name="silent">Supress "success" logs.</param>
+	public static void Execute(ExecutionSource source, string rawStatement, bool silent = false)
+	{
+		ParsedStatement[] statements = StatementParser.ParseLine(rawStatement);
+		foreach (var s in statements)
+		{
+			ExecuteInternal(source, s.Signature, s.Arguments, silent, null);
+		}
+	}
+
+	/// <summary>
+	/// Execute statements already parsed by the StatementParser.
+	/// </summary>
+	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
+	/// <param name="signature">The command or alias to execute.</param>
+	/// <param name="silent">Supress "success" logs.</param>
+	public static void Execute(ExecutionSource source, ParsedStatement[] parsedStatements, bool silent = false)
+	{
+		foreach (var s in parsedStatements)
+		{
+			ExecuteInternal(source, s.Signature, s.Arguments, silent, null);
+		}
 	}
 
 	static void ExecuteInternal(ExecutionSource executionSource, string signature, string[] args, bool silent, Stack<string> callStack)
