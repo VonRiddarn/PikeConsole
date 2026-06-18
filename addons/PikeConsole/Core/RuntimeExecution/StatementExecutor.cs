@@ -33,9 +33,9 @@ public static class StatementExecutor
 	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
 	/// <param name="signature">The command or alias to execute.</param>
 	/// <param name="silent">Supress "success" logs.</param>
-	public static void Execute(ExecutionSource source, string rawStatement, bool silent = false)
+	public static void Execute(ExecutionSource source, string rawInput, bool silent = false)
 	{
-		ParsedStatement[] statements = StatementParser.ParseLine(rawStatement);
+		ParsedStatement[] statements = StatementParser.ParseLine(rawInput);
 		foreach (var s in statements)
 		{
 			ExecuteInternal(source, s.Signature, s.Arguments, silent, null);
