@@ -46,7 +46,7 @@ public static class StatementExecutor
 	/// Execute statements already parsed by the StatementParser.
 	/// </summary>
 	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
-	/// <param name="signature">The command or alias to execute.</param>
+	/// <param name="parsedStatements">A list of pre-parsed statement structs.</param>
 	/// <param name="silent">Supress "success" logs.</param>
 	public static void Execute(ExecutionSource source, ParsedStatement[] parsedStatements, bool silent = false)
 	{
