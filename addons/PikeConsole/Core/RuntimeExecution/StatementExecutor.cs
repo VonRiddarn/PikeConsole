@@ -65,7 +65,6 @@ public static class StatementExecutor
 						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true);
 						break;
 					case ExecutionResponseStatus.Failed:
-					case ExecutionResponseStatus.DeniedPermission:
 					case ExecutionResponseStatus.DeniedCheat:
 					case ExecutionResponseStatus.Error:
 					default:
