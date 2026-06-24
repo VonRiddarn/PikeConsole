@@ -1,0 +1,19 @@
+# SearchMode
+`public enum SearchMode`  
+
+**Inherits**: None  
+**Namespace**: `FractalPike.PikeConsole.Core.RuntimeExecution`  
+
+## Description
+
+Defines what search mode to use when searching for an `IRuntimeExecutable` or alias.
+
+/// note | Values  
+`Contains` : `0`
+: Loose search that simply checks if the query string is present anywhere in the signature.
+
+`StartsWith` : `1`
+: Checks if the signature starts with the query string.
+
+`Exact` : `2`
+: Checks if the signature exactly (case insensitive) matches the query string. This results in O(1) lookup when using the [RegistryBrowser](./RegistryBrowser.md)
