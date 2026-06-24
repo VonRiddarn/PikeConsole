@@ -24,6 +24,7 @@ nav:
     - Home: index.md
 
     - Guides:
+          - Overview: guides/index.md
           - Project Setup: guides/project_setup.md
           - Getting Started: guides/getting_started.md
           - Logging: guides/logging.md
@@ -31,6 +32,7 @@ nav:
           - CVars: guides/cvars.md
 
     - Architecture & Framework:
+          - Overview: architecture/index.md
           - Framework Map: architecture/framework_map.md
           - AOT Safety: architecture/aot_safety.md
           - Benchmarks: architecture/benchmarks.md
@@ -41,6 +43,7 @@ nav:
           - Aliases: architecture/aliases.md
 
     - API Reference:
+          - Overview: api/index.md
           - Logging:
                 - LogEvent: api/Logging/LogEvent.md
                 - LogLevel: api/Logging/LogLevel.md
