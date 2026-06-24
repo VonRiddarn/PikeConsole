@@ -1,3 +1,26 @@
+https://facelessuser.github.io/pymdown-extensions/extensions/blocks/plugins/admonition/
+
+As a shortcut, Admonitions registers a number of admonition blocks that attach common classes: 
+note, 
+attention, 
+caution, 
+danger, 
+error, 
+tip, 
+hint, 
+warning.
+
+Others can be used like so: 
+
+/// admonition | Handling Separators
+	type: success
+Message 
+goes 
+here
+///
+
+
+
 For full documentation visit [mkdocs.org](https://www.mkdocs.org).
 
 - `mkdocs new [dir-name]` - Create a new project.
