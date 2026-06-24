@@ -38,7 +38,7 @@ This is an expected failure.
 : **Example**:  
 A developer has made a mistake when fetching an item inside an array and triggers an out of bounds error.
 
-/// note
+/// tip
 When using the provided [StatementExecutor](../RuntimeExecution/StatementExecutor.md) all executions are wrapped at the execution layer.  
 
 This means it is safe to leave commands without a try-catch block, though it removes a layer of log-control.

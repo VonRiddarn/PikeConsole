@@ -50,10 +50,17 @@ nav:
                 - LogTarget: api/Logging/LogTarget.md
                 - PikeLogger: api/Logging/PikeLogger.md
           - Runtime Execution:
-                # ALIAS FOLDER
-                - Aliases:
-                      - AliasRegistry: api/RuntimeExecution/Aliases/AliasRegistry.md
-                      - RegisterAliasResponseStatus: api/RuntimeExecution/Aliases/RegisterAliasResponseStatus.md
+                # RuntimeExecution ROOT
+                - RegistryBrowser: api/RuntimeExecution/RegistryBrowser.md
+                - SearchMode: api/RuntimeExecution/SearchMode.md
+                - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
+                - ExecutionSource: api/RuntimeExecution/ExecutionSource.md
+                - StatementParser: api/RuntimeExecution/StatementParser.md
+                - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
+                - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
+                - Response&lt;T&gt;: api/RuntimeExecution/Response_T.md
+                - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
+                - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
                 # COMMANDS FOLDER
                 - Commands:
                       - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
@@ -68,14 +75,3 @@ nav:
                       - CVarInt: api/CVars/CVarInt.md
                       - CVarString: api/CVars/CVarString.md
                       - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
-                # RuntimeExecution ROOT
-                - RuntimeExecutablesRegistry: api/RuntimeExecution/RuntimeExecutableRegistry.md
-                - SearchMode: api/RuntimeExecution/SearchMode.md
-                - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
-                - ExecutionSource: api/RuntimeExecution/ExecutionSource.md
-                - StatementParser: api/RuntimeExecution/StatementParser.md
-                - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
-                - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
-                - Response&lt;T&gt;: api/RuntimeExecution/Response_T.md
-                - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
-                - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
