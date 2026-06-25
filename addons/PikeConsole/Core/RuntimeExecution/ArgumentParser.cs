@@ -9,7 +9,7 @@ public static class ArgumentParser
 	public static bool ValidateCount(ReadOnlySpan<string> args, int min, int max, out string error)
 	{
 		int n = args.Length;
-		error = null;
+		error = "";
 
 		if (n > max)
 		{
