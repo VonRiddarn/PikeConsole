@@ -86,7 +86,7 @@ No public properties to showcase for this class.
 	_`string.Empty` if the validation passes._
 
 	: **Example**:  
-	`"Invalid argument cunt. Expected one of: 1, 3"`
+	`"Invalid argument count. Expected one of: 1, 3"`
 	///
 
 	**Description**:  
