@@ -33,7 +33,6 @@ _Arguments within double qoutes are passed as one argument, even if it contains 
 No public properties to showcase for this class.
 
 ## Methods
-### Protected
 | Scope | Return | Name |
 |-------|--------|------|
 | `public` | [ParsedStatement](./ParsedStatement.md) | [ParseLine](#parseline) |

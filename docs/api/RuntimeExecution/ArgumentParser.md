@@ -15,7 +15,6 @@ with the native .NET parser (Example: `int.TryParse`).
 No public properties to showcase for this class.
 
 ## Methods
-### Protected
 | Scope | Return | Name |
 |-------|--------|------|
 | `public` | `bool` | [ValidateCount](#validatecount) |

@@ -15,7 +15,6 @@ When executing statements the `StatementExecutor` will first look for `IRuntimeE
 No public properties to showcase for this class.
 
 ## Methods
-### Protected
 | Scope | Return | Name |
 |-------|--------|------|
 | `public` | `void` | [Execute](#execute) |
