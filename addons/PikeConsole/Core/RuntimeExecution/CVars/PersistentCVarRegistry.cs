@@ -34,7 +34,7 @@ public static class PersistentCVarRegistry
 			ValueUpdated?.Invoke(cvar);
 		}
 		else
-			PikeLogger.LogWarning(LogTarget.All, $"{cvar.Signature} is not in the persistent CVar registry, but tried to access it.");
+			PikeLogger.LogWarning(LogTarget.All, $"{cvar.Signature} is not in the persistent CVar registry.");
 	}
 
 	/// <summary>
