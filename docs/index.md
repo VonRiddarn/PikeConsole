@@ -36,7 +36,7 @@ If you're looking for a more curated experience, you might want to start with:
 * **.NET 8** _or later_.
 
 ## Deepest lore
-PikeConsole was created by me, [Timmy "VonRiddarn" Öhman](https://www.linkedin.com/in/timmyohman/) somwewhere back in late 2022 to solve the fast itteration playtest issues me and my partner had at the time.  
+PikeConsole was created by me, [Timmy Öhman](https://www.linkedin.com/in/timmyohman/) / ["VonRiddarn"](https://github.com/VonRiddarn) somwewhere back in late 2022 to solve the fast itteration playtest issues me and my partner had at the time.  
 
 I used to spend more time hacking together random debug GUIs than actually making the games. Thus, I planned out and built a GoldSrc inspired CVar framework to easily manage my gamestates at runtime. The framework has improved and grown a lot over the years and is now a crucial part of the [Fractal Pike](https://www.fractalpike.com) ecosystem. 
 
