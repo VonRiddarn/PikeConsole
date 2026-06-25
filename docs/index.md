@@ -18,20 +18,6 @@ PikeConsole is provided "_as-is_".
 All versioning, upkeep and issue tracking are done when time allows for me to do so.  
 ///
 
-## The docs are curated!  
-Please note that these docs are curated to provide as smooth and frictionless of an experience as possible. 
-Thus, some systems are occluded from the API reference or documentation in its entirety. This desn't mean the systems 
-aren't doing anything, it simply means they weren't intended to be interacted with.  
-
-PikeConsoles biggest strength is it's ease-of-use and out of the box magic. 
-Connecting to certain parts of the API (like instancing raw commands) would bypass what makes PikeConsole great, 
-and potentially tarnish your experience.  
-
-The [API Reference](./api/index.md) exposes most things that any power-user might want to explore, 
-but might leave out internal details. To hack into those details one must read the source code. 
-
-The magic of PikeConsole comes from its ease-of-use, and the docs job is to reflect that as much as possible.
-
 ## Where to begin?
 At the top of the page you've got tabs for any and all available root-pages at all times.  
 If you're on mobile, these are inside the hamburger icon in the top left.  
@@ -48,3 +34,10 @@ If you're looking for a more curated experience, you might want to start with:
 ## Requirements  
 * **Godot 4.6** _or later_.
 * **.NET 8** _or later_.
+
+## Deepest lore
+PikeConsole was created by me, [Timmy "VonRiddarn" Öhman](https://www.linkedin.com/in/timmyohman/) somwewhere back in 22 / 23 to solve the fast itteration playtest issues me and my partner had at the time.  
+
+I used to spend more time hacking together random debug GUIs than actually making the games. Thus, I planned out and built a GoldSrc inspired CVar framework to easily manage my gamestates at runtime. The framework has improved and grown a lot over the years and is now a crucial part of the [Fractal Pike](https://www.fractalpike.com) ecosystem. 
+
+Now it is ported to Godot and made open source so that all can enjoy.
