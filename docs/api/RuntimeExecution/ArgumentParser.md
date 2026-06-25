@@ -177,7 +177,7 @@ Takes an input and returns a strictly typed boolean from it.
 
 **Examples**:
 
-_Excerpt from [CVarBool](../CVars/CVarBool.md)._
+_Excerpt from `CVarBool.cs`._
 ```csharp
 if (!ArgumentParser.TryParseBool(args[0], out bool value))
 	return new(CvarSetResponseStatus.Failed, $"Could not parse {args[0]} into type bool.");
@@ -231,7 +231,7 @@ a string array instead of a strict enum.
 
 **Examples**:
 
-_Excerpt from [CVarEnum](../CVars/CVarEnum.md)._
+_Excerpt from `CVarEnum.cs`._
 ```csharp
 if (!ArgumentParser.TryParseEnum(args[0], _options, out int index, out error))
 	return new(CvarSetResponseStatus.Failed, error);
