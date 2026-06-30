@@ -8,3 +8,5 @@ Technically yes, but also no.
 The CVar does know about the registry, which isn't a purist approach.  
 However, cvars are still their own data container that handles their own scope.  
 They just provide a shorthand reference to their execution method to their sibling system. There is no need for further abstractions.
+
+# TODO: Go through the entire project with CTRL+f and replace ICVar and IRuntimeExecutable with links to this doc later.
