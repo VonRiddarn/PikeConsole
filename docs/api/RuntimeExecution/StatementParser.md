@@ -55,7 +55,7 @@ This could come from a console line, a weak-link system or a config file.
 Takes a raw input and parses it into valid statement profiles.  
 These statement profiles are returned as an array.  
 
-**Example**:  
+**Example(s)**:  
 `echo Hello World!; echo "Hello back at you!"; ; ; ; count "one argument" two "three and not four"`
 
 _Results in_:

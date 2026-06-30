@@ -53,7 +53,7 @@ No public properties to showcase for this class.
 	Takes an arguments array and a count, then returns if the array length is within 
 
 
-	**Examples**:
+	**Example(s)**:
 
 	_Usage within a CVar._
 	```csharp
@@ -93,7 +93,7 @@ No public properties to showcase for this class.
 	If the length matches any of the values exactly, the method returns true and assigns the length to the `out int count` parameter.
 
 
-	**Examples**:
+	**Example(s)**:
 
 	_Using the method with a switch statement._
 	```csharp
@@ -144,7 +144,7 @@ No public properties to showcase for this class.
 	Takes an arguments array and a min / max inclusive value , then returns if the array length is within bounds.  
 
 
-	**Examples**:
+	**Example(s)**:
 
 	_Usage within a CVar._
 	```csharp
@@ -176,7 +176,7 @@ Accepts `1`, `0`, `true` and `false`. Case insensitive.
 Takes an input and returns a strictly typed boolean from it.  
 
 
-**Examples**:
+**Example(s)**:
 
 _Excerpt from `CVarBool.cs`._
 ```csharp
@@ -232,7 +232,7 @@ a string array instead of a strict enum.
 ///
 
 
-**Examples**:
+**Example(s)**:
 
 _Excerpt from `CVarEnum.cs`._
 ```csharp
@@ -273,7 +273,7 @@ then parses them into a strictly typed array of `int`s.
 
 All arguments must pass for the method to return successfull.
 
-**Examples**:
+**Example(s)**:
 
 _Hypothetical usage within a command that sets the players position in a 2d grid._
 ```csharp
@@ -333,7 +333,7 @@ then parses them into a strictly typed array of `floats`s.
 
 All arguments must pass for the method to return successfull.
 
-**Examples**:
+**Example(s)**:
 
 _Hypothetical usage within a command that sets the players position in 3d world space._
 ```csharp
@@ -393,7 +393,7 @@ then parses them into a strictly typed array of `double`s.
 
 All arguments must pass for the method to return successfull.
 
-**Examples**:
+**Example(s)**:
 
 _Hypothetical usage within a command that sets the world origin in 3d large world space._  
 _In reality, this would never be done through commands._
@@ -452,7 +452,7 @@ then parses them into a strictly typed array of `bool`s.
 
 All arguments must pass for the method to return successfull.
 
-**Examples**:
+**Example(s)**:
 
 _Hypothetical usage within a command that has several boolean flags scattered in the argument signature._  
 _In this case, they are implicitly paired with positional and rotational arguments._
@@ -513,7 +513,7 @@ then parses them into a strictly typed array of `int`s that represent option ind
 
 All arguments must pass for the method to return successfull.
 
-**Examples**:
+**Example(s)**:
 
 _Hypothetical usage within a command that has several enums scattered in the argument signature._  
 _In this case, they are implicitly paired with a command that searches for other commands._

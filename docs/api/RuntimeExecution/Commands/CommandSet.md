@@ -32,7 +32,7 @@ No public properties to showcase for this class.
 **Description**:  
 Executes at the start of `_EnterTree` to hydrate the internal command list.
 
-**Example**:
+**Example(s)**:
 ```csharp {linenums="1"}
 protected override Command[] InstantiateCommands() => [
 	Command( /* Command stuff */),
@@ -97,7 +97,7 @@ protected override Command[] InstantiateCommands() => [
 	and defeat the purpose of the shorthand.
 	///
 
-	**Example**:
+	**Example(s)**:
 	```csharp {linenums="1"}
 	protected override Command[] InstantiateCommands() => [
 		Command(
@@ -152,7 +152,7 @@ protected override Command[] InstantiateCommands() => [
 	and defeat the purpose of the shorthand.
 	///
 
-	**Example**:
+	**Example(s)**:
 	```csharp {linenums="1"}
 	protected override Command[] InstantiateCommands() => [
 		Command(
@@ -179,7 +179,7 @@ This method runs after [InstantiateCommands](#initializecommands), meaning it is
 They are however, not registered to the global RuntimeExecution registry.
 ///
 
-**Example**:
+**Example(s)**:
 ```csharp {linenums="1"}
 protected override void OnEnterTree()
 {
@@ -200,7 +200,7 @@ this wrapper must be used when speaking to the API.
 This method runs after the commands have been registered to the RuntimeExecution registry. It is safe to assume that commands are fully integrated at this point.
 ///
 
-**Example**:
+**Example(s)**:
 ```csharp {linenums="1"}
 protected override void OnReady()
 {
@@ -221,7 +221,7 @@ this wrapper must be used when speaking to the API.
 This method runs after the commands have been **un**registered to the RuntimeExecution registry. At this point, the registry no longer knows about the commands.
 ///
 
-**Example**:
+**Example(s)**:
 ```csharp {linenums="1"}
 protected override void OnExitTree()
 {
@@ -237,7 +237,7 @@ protected override void OnExitTree()
 Executes when `PikeConsoleConfig.CheatMode` is toggled.  
 This is the recommended location to reset gamestate data when access to cheats is revoked. 
 
-**Example**:
+**Example(s)**:
 ```csharp {linenums="1"}
 protected override void OnCheatModeChanged(bool newState)
 {
