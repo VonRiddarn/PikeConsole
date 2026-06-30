@@ -27,7 +27,7 @@ For a tutorial on how to create a custom CVar type, see [the cvar guide](../../.
 | `public` | `string` | [FormattedValue](#formattedvalue) |
 | `public` | `bool` | [Persist](#persist) |
 | `public` | `bool` | [IsCheat](#ischeat) |
-| `public` | `string` | [Description](#description) |
+| `public` | `string` | [Description](#description_1) |
 | `public` | `string` | [Signature](#signature) |
 | `public` | `string` | [ShortDesc](#shortdesc) |
 | `public` | `string` | [LongDesc](#longdesc) |
@@ -55,7 +55,8 @@ Called when the value has been changed.
 Passes the new value as an argument to the consumer method.
 
 _This is useful for updating information using the observer pattern._  
-**Example**:
+
+**Example(s)**:
 ```csharp
 
 DifficultyCVar.ValueChanged += OnDifficultyChanged;
@@ -71,8 +72,9 @@ void OnDifficultyChanged(int newDifficulty)
 Called when the value has been changed.  
 Does NOT pass a value to the consumer method.  
 
-_This is useful when several CVars share execution method._  
-**Example**:
+_This is useful when several CVars share execution method._ 
+
+**Example(s)**:
 ```csharp
 
 CrosshairLengthCVar.ValueInvalidated += OnCrosshairChanged;
@@ -101,6 +103,8 @@ called if the new value is not equal to the old value.
 
 This saves performance on event invokation overhead.
 
+---
+
 ### IsModified
 A shorthand for checking if the current value is not the original, expected value.  
 This can be used by saving systems to occlude default CVars, which 
@@ -111,9 +115,13 @@ _Behind the scenes, this is the full signature._
 public bool IsModified => !EqualityComparer<T>.Default.Equals(_value, _defaultValue);
 ```
 
+---
+
 ### FormattedValue
 Shorthand that displays the formatted value of a CVar.  
 It does so by utilizing the `virtual` method [DisplayValue](#displayvalue).  
+
+---
 
 ### Persist
 This is a _Editor facing_ flag that decides whether or not the CVar 
@@ -123,6 +131,8 @@ By default this only allows the CVar to be saved in the [PersistentCVarRegistry]
 From there, one may opt-in for the built in userconfig `.cfg` system, 
 or build their own using the `PersistentCVarRegistry` api.
 
+---
+
 ### IsCheat
 This is a _Editor facing_ flag that decides whether or not the CVar **is considered a cheat**.  
 
@@ -131,17 +141,21 @@ edited by the system. Players are unable to edit them without entering cheatmode
 
 **See also**: [ExecutionSource](../../RuntimeExecution/ExecutionSource.md)
 
+---
+
 ### Description
 This is a _Editor facing_ flag that **sets the description** of the CVar.  
 
 This description is used by the [LongDesc](#longdesc) prefaces the [DescriptionInternal](#descriptioninternal).  
 It can be arbitrarily long or short and serves as a description for the specific **CVar resource**, rather than the _CVar type_.  
 
-**Example**:
+**Example(s)**:
 ```
 Crosshair length variable. 
 Used by the CrosshairManager when rendering the crosshair on screen.
 ```
+
+---
 
 ### Signature
 Fully automatic _"command"_ signature for the CVar.  
@@ -152,8 +166,10 @@ Signatures are automatically parsed at runtime to ensure no spaces or trailing w
 Trailing whitespaces are trimmed, and spaces are replaced with underscores.
 ///
 
+---
+
 ### ShortDesc
-Handled automatically by the root class.  
+Handled automatically by the root class (this).  
 `ShortDesc` is a required property for all `IRuntimeExecutable`s and 
 is used by help formatters and executable lists.  
 
@@ -168,26 +184,99 @@ When showing help for the executable signature it should be
 explicitly clear that it is a CVar shortcut, and that the command 
 only serves and invokes the CVars `Execute` method. 
 
-Details about what the command does comes from the help formatter and long description.
+Details about what the command does comes from the help formatter and [long description](#longdesc).
 ///
 
-### LongDesc
+---
 
+### LongDesc
+Handled automatically by the root class (this).  
+`LongDesc` is the canonical long description of any executable and 
+is hardwired for CVars to return both the [resource description](#description_1) and 
+the [internal description](#descriptioninternal).  
+
+
+_Behind the scenes, this is the full signature._
+```csharp
+public string LongDesc => $"{Description}\n{DescriptionInternal}";
+```
+
+---
 
 ### DisplayType
+This is the UI-friendly name of the type and is used to display the resource type in the console and logs. It is not designed to be parseable. However, all default CVars included in PikeConsole follow the strict naming pattern: `CVar_Type`
 
+**Example(s)**:  
+```csharp
+// Excerpt from CVarEnum.cs
+public override string DisplayType => "CVar_Enum";
+
+// Excerpt from CVarBool.cs
+public override string DisplayType => "CVar_Bool";
+
+// Excerpt from CVarInt.cs
+public override string DisplayType => "CVar_Int";
+
+// . . .
+```
+
+---
 
 ### Usage
+This is the UI-friendly, human readable usage instructions for the CVar.  
+Ideally it is kept short and concise for better parsing with the help command, but there is no arbitrary length limit.  
 
+By default it's formatted as `$"{Signature} [new value]"` for all CVars, but is overrideable for advanced extentions.
+
+_Behind the scenes, this is the full signature._
+```csharp
+public virtual string Usage => $"{Signature} [new value]";
+```
+
+---
 
 ### _defaultValue
+The de-facto default value of the CVar resource instance.  
+This is set in the Godot editor by the designer.  
 
+CVar resources are automatically set to their default value when initialized or reset using the [ResetValue](#resetvalue) method.  
+
+/// note
+If you are using the user configuration system the values are first set to their default values, _and then_ overridden by the user profile initializer at startup.
+///
+
+---
 
 ### _value
+The de-facto current value of the CVar resource instance.  
+Unless the [Persist](#persist) flag is set (and the user configuration system is active), this value is per-session scoped. Closing and opening the runtime will reset the value to its default automatically.
 
+---
 
 ### DescriptionInternal
+The META description for the CVar type.  
+The structure of this is fully arbitrary and just serves as an entry point for advanced extentions to list critical typ information.  
 
+**Example(s)**:  
+
+_excerpt from `CVarEnum.cs`._
+
+```csharp
+protected override string DescriptionInternal => _cachedHelpLst;
+
+protected override void InitializeInternal()
+{
+	// . . .
+	StringBuilder sb = new("OPTIONS:\n");
+	for (int i = 0; i < _options.Length; i++)
+		sb.Append($"\t{i} = {_options[i]}\n");
+
+	_cachedHelpLst = sb.ToString();
+}
+
+```
+
+---
 
 ## Method Descriptions  
 
@@ -227,7 +316,7 @@ _`string.Empty` if the validation passes._
 Takes an arguments array and a count, then returns if the array length is within 
 
 
-**Examples**:
+**Example**:
 
 _Usage within a CVar._
 ```csharp
