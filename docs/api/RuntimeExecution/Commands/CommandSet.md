@@ -119,6 +119,12 @@ protected override Command[] InstantiateCommands() => [
 			[CallerFilePath] string filePath = "",
 			[CallerLineNumber] int lineNumber = 0)`
 
+	/// tip
+	The quick shorthand will generate warnings in debug mode (debug builds and the Editor playtest).  
+	To disable this warning go to: `Project Settings (General)` > `Fractal Pike` > `PikeConsole`  
+	And turn on: `Suppress Documentation Warnings`
+	///
+
 	**Description**:  
 	Declarative shorthand method for creating a command with **without runtime documentation**.  
 	Using this method automatically attaches the current `CommandSet`'s filepath and linenumber, making any errors invoked from the command self-diagnostic.  
