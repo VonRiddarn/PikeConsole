@@ -152,6 +152,7 @@ No public properties to showcase for this class.
 	if (!ArgumentParser.ValidateCount(args, 1, 3, out string error))
 		return new(CvarSetResponseStatus.InvalidArgs, error);
 	```
+
 ---
 
 ### TryParseBool
@@ -184,6 +185,8 @@ if (!ArgumentParser.TryParseBool(args[0], out bool value))
 // . . .
 Value = value;
 ```
+
+---
 
 ### TryParseEnum
 
@@ -238,6 +241,8 @@ if (!ArgumentParser.TryParseEnum(args[0], _options, out int index, out error))
 // . . .
 Value = index;
 ```
+
+---
 
 ### TryParseManyInt
 
@@ -294,6 +299,8 @@ ArgumentParser.TryParseManyInt(args.AsSpan(), out int[] values, out error)
 ArgumentParser.TryParseManyInt(args.AsSpan(0, 2), out int[] values, out error)
 ```
 ///
+
+---
 
 ### TryParseManyFloat
 
@@ -352,6 +359,8 @@ ArgumentParser.TryParseManyFloat(args.AsSpan(), out float[] values, out error)
 ArgumentParser.TryParseManyFloat(args.AsSpan(0, 2), out float[] values, out error)
 ```
 ///
+
+---
 
 ### TryParseManyDouble
 
@@ -412,6 +421,8 @@ ArgumentParser.TryParseManyDouble(args.AsSpan(0, 2), out double[] values, out er
 ```
 ///
 
+---
+
 ### TryParseManyBool
 
 **Signature**: `public static bool TryParseManyBool(ReadOnlySpan<string> args, out bool[] values, out string error)`
@@ -469,6 +480,8 @@ ArgumentParser.TryParseManyBool(args.AsSpan(), out bool[] values, out error)
 ArgumentParser.TryParseManyBool(args.AsSpan(0, 2), out bool[] values, out error)
 ```
 ///
+
+---
 
 ### TryParseManyEnum
 
@@ -528,3 +541,5 @@ ArgumentParser.TryParseManyEnum(args.AsSpan(), out int[] values, out error)
 ArgumentParser.TryParseManyEnum(args.AsSpan(0, 2), out int[] values, out error)
 ```
 ///
+
+---
