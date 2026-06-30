@@ -38,7 +38,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	[Export] public bool IsCheat { get; private set; } = false;
 	/// <summary>Used to apply description within the editor. Appended to the LongDesc property.</summary>
 	/// <remarks>Use property <c>LongDesc</c> for the most accurate long description.</remarks>
-	[Export(PropertyHint.MultilineText)] public string Description { get; set; } = "";
+	[Export(PropertyHint.MultilineText)] public string Description { get; private set; } = "";
 
 	// Used after the command to register it to the persistent registry without triggering a save.
 	// Useful when running startup scripts etc.
@@ -46,7 +46,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	// Set automatic
 	public string Signature { get; private set; } = string.Empty;
-	public virtual string ShortDesc => $"View or set the value of {Signature}";
+	public string ShortDesc => $"View or set the value of {Signature}";
 	public virtual string Usage => $"{Signature} [new value]";
 
 	// Set in child
