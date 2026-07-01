@@ -41,10 +41,10 @@ For a tutorial on how to create a custom CVar type, see [the cvar guide](../../.
 | Scope | Return | Name |
 |-------|--------|------|
 | `public` | `void` | [Initialize](#initialize) |
-| `protected virtual` | `void` | [InitializeInternal](#initializeInternal) |
+| `protected virtual` | `void` | [InitializeInternal](#initializeinternal) |
 | `public` | `void` | [ResetValue](#resetvalue) |
 | `public` | `Response<ExecutionResponseStatus>` | [Execute](#execute) |
-| `public abstract` | `Response<CvarSetResponseStatus>` | [SetValue](#setvalue) |
+| `protected abstract` | `Response<CvarSetResponseStatus>` | [SetValue](#setvalue) |
 | `public` | `string` | [GetHelp](#gethelp) |
 | `public virtual` | `string` | [DisplayValue](#displayvalue) |
 
@@ -280,47 +280,257 @@ protected override void InitializeInternal()
 
 ## Method Descriptions  
 
-### DisplayValue
-Displayvalue is a method that converts the value to a readable string. 
-This is used by many internal systems to provide a clean and 
-consistent experience across CVars.
+### Initialize
 
-_A good example of how to use the DisplayValue override is this_ 
-_excerpt from `CVarEnum.cs`._
+**Signature**: `public void Initialize()`
 
+/// note | Takes no parameters 
+///
+
+**Description**:  
+Method used to add the CVar into the `RuntimeExecutableRegistry` and `PersistentCVarRegistry`. This is called automatically by the `CVarCrawler` inside the addons autoloader.  
+
+This method cannot be overridden. To extend the initializsation logic, see [InitializeInternal](#initializeinternal).   
+
+/// warning
+If CVars are used as intended, this method never has to be called by any user of this framework. It is called autoamtically by the `CVarCrawler` for all CVar resources in the designated CVar directory and all of its child directories.  
+
+The only exception is for internal system initializations where CVars are defined outside of the designated CVar folder, as is the case with PikeConsoles cheatmode CVar and others located at `addons/PikeConsole/Config/variables`.
+///
+
+**Example**:
+
+_Excerpt from `CVarCrawler.cs`._
 ```csharp
-public override string DisplayValue(int value) => $"{value} ({_options[value]})";
+// . . .
+Resource loadedResource = ResourceLoader.Load(fullPath);
+
+if (loadedResource is ICVar cvar)
+{
+	cvar.Initialize();
+}
+```
+---
+
+### InitializeInternal
+
+**Signature**: `protected virtual void InitializeInternal()`
+
+/// note | Takes no parameters 
+///
+
+**Description**:  
+Method used to extend initialization logic and apply things like internal caching or fetching. This is called automatically at the end of [Initialize](#initialize), which itself is automatically called by the `CVarCrawler`autoload at runtime initialization. 
+
+**Example**:
+
+_Excerpt from `CVarEnum.cs`._
+```csharp
+// At CVar initialization, pre-cache all options to 
+// improve runtime performance and text processing speed
+protected override void InitializeInternal()
+{
+	// . . .
+	StringBuilder sb = new("OPTIONS:\n");
+	for (int i = 0; i < _options.Length; i++)
+		sb.Append($"\t{i} = {_options[i]}\n");
+
+	_cachedHelpLst = sb.ToString();
+}
+```
+---
+
+### ResetValue
+
+**Signature**: `public void ResetValue()`
+
+/// note | Takes no parameters 
+///
+
+**Description**:  
+Resets the [value](#_value) of the CVar back to its [default value](#_defaultvalue).  
+If the value is a persistent value and the new value is not equal to the old, 
+the `PersistentCVarRegistry` sends an update event that is consumed by the user configuration storage (if it's enabled). 
+
+**Example**:
+
+_Hypothetical method that resets all user settings in a GUI within an optional scope._
+```csharp
+public void ResetAllSettings(string scope = string.Empty)
+{
+	foreach(ICVar setting in allSettings)
+	{
+		if(string.IsNullOrWhitespace(scope))
+			setting.ResetValue();
+		else if(setting.Signature.StartsWith(scope))
+			setting.ResetValue();
+	}
+}
 ```
 
-### ValidateCount
+---
 
-**Signature**: `public static bool ValidateCount(ReadOnlySpan<string> args, int count, out string error)`
+### Execute
+
+**Signature**: `public Response<ExecutionResponseStatus> Execute(ExecutionSource executionSource, string[] args)`
+
+/// warning
+CVars should not be set through code using the execution method unless it is necessary and used with intention. This method is used to map the CVar value to the `RuntimeExecutionSystem` and is mainly invoked through the means of a console or config file.  
+
+To set a CVar from code you should always manage the [Value](#value) property directly. 
+
+**Example**:  
+```csharp
+// This automatically runs like a system user and runs potential persistance events.
+_gravityModifierCVar.Value = 800f;
+
+```
+///
+
+/// details | Parameter details (Click to expand)  
+[ExecutionSource](../../RuntimeExecution/ExecutionSource.md) : `executionSource`
+: The definite caller of this execution. Could be a player through the console / player config file, or the game itself through internal systems. 
+**Example**: `ExecutionSource.Player`
+
+`string[]` : `args`
+: The unparsed arguments passed to the CVar. If they end with the ram only flag, the flag is read and stripped before passing the arguments into the [SetValue](#setvalue) method.
+
+: **Example**:  
+`["800", "ram_only"]`
+_In this example SetValue will be called using: `SetValue(["800"])`._  
+_Since `ram_only` was used the value will not persist._
+///
+
+**Description**:  
+API entry point that makes CVars agnostically executable from outside systems.  
+This is mainly used by the console and user config system and should not be regularly used by users of this framework. 
+
+**Example**:
+
+TODO: Add excerpt from the runtimeconsole here!
+```csharp
+// TODO: Add excerpt form the runtimeconsole once implemented.
+```
+---
+
+### SetValue
+
+**Signature**: `protected abstract Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args);`
 
 /// details | Parameter details (Click to expand)  
 `ReadOnlySpan<string>` : `args`
 : The argument string array. Passed as `ReadOnlySpan<string>` for performance and mutability safety.  
-**Example**: `["Hello", "world!"]`
 
-`int` : `count`
-: The exact amount of arguments allowed.
+**Example**: `["800"]`
 
-`string` : **out** `error`
-: An error message that is filled if the arguments are not valid.  
-_`string.Empty` if the validation passes._
-
-: **Example**:  
-`"Too many arguments. Argument count must be exactly 1."`
 ///
 
 **Description**:  
-Takes an arguments array and a count, then returns if the array length is within 
+This method handles the actual parsing and setting of data when calling the [Execute](#execute) method.  
+It is overridden within each CVar resource type and serves as the definite ruleset for what arguments are parsable.  
+
+/// tip 
+This method is best combined with the [ArgumentParser](../../RuntimeExecution/ArgumentParser.md) for 
+the best results and developer experience.
+///
 
 
-**Example**:
+**Example(s)**:
+
+_Excerpt from `CVarEnum.cs`._  
+_Note that the value is set using the [Value](#value) property. The value MUST be set within the method._
+
+```csharp
+public override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
+{
+	if (!ArgumentParser.ValidateCount(args, 1, out string error))
+		return new(CvarSetResponseStatus.InvalidArgs, error);
+
+	if (!ArgumentParser.TryParseEnum(args[0], _options, out int index, out error))
+		return new(CvarSetResponseStatus.Failed, error);
+
+	if (Value == index)
+		return new(CvarSetResponseStatus.NoChange, null);
+
+	Value = index;
+	return new(CvarSetResponseStatus.Success, null);
+}
+```
+
+---
+
+### GetHelp
+
+**Signature**: `public string GetHelp()`
+
+/// note | Takes no parameters 
+///
+
+**Description**:  
+Returns a human readable string with any help regarding the command by 
+automatically interpolating all information about the `IRuntimeExecutable`.  
+
+The primary consumer of this method is the [default command `help`](../../../guides/default_commands.md#help), which prints information about runtime executables into the runtime console.
+
+/// details | Extended knowledge
+	type: tip
+All `IRuntimeExecutables` get their help formatted from the `ConsoleFormatter`, like so:  
+```csharp
+	public string GetHelp() => ConsoleFormatter.FormatHelp(this);
+```
+
+This is an agressively inlined method that standarizes the text and outputs it the same no matter the caller.  
+Behind the scenes, this is the actual method being called:  
+
+```csharp
+[MethodImpl(MethodImplOptions.AggressiveInlining)]
+public static string FormatHelp(IRuntimeExecutable rte)
+{
+	return $"Signature: {rte.Signature}\nIs cheat: {rte.IsCheat}\nDescription: {rte.ShortDesc}\nType: {rte.DisplayType.ToUpper()}\nUsage: {rte.Usage}\n{rte.LongDesc}";
+}
+```
+///
+
+**Example(s)**:
 
 _Usage within a CVar._
 ```csharp
-// If there is not EXACTLY 1 argument, return an error.
-if (!ArgumentParser.ValidateCount(args, 1, out string error))
-	return new(CvarSetResponseStatus.InvalidArgs, error);
+[Export] CVarFloat _gravityModifierCVar;
+
+protected override void _EnterTree() => 
+	PikeConsole.Log(LogTarget.All, $"{_gravityModifierCVar.GetHelp()}");
 ```
+
+---
+
+### DisplayValue
+
+**Signature**: `public virtual string DisplayValue(T value)`
+
+/// details | Parameter details (Click to expand)  
+`T` : `value`
+: Any value of type T (the same as this CVar resource instance).  
+**Example**: `["400"]`
+
+///
+
+**Description**:  
+Takes any value of type `T` and returns a human readable / UI friendly representation for that value.  
+
+This method is used to parse othervise complex or unreadable data into something that would make sense when reading the value back. Such as the case with enums or vectors.
+
+
+**Example(s)**:
+
+_Excerpt from `CVarEnum.cs`._
+```csharp
+public override string DisplayValue(int value) => 
+	$"{value} ({_options[value]})";
+```
+
+This results in an output like: 
+```
+1 (Medium)
+```
+
+---
