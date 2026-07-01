@@ -20,8 +20,8 @@ public partial class CVarBool : CVarBase<bool>
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
 			return new(CvarSetResponseStatus.InvalidArgs, error);
 
-		if (!ArgumentParser.TryParseBool(args[0], out bool value))
-			return new(CvarSetResponseStatus.Failed, $"Could not parse {args[0]} into type bool.");
+		if (!ArgumentParser.TryParseBool(args[0], out bool value, out error))
+			return new(CvarSetResponseStatus.Failed, error);
 
 		if (Value == value)
 			return new(CvarSetResponseStatus.NoChange, null);
