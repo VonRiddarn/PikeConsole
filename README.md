@@ -35,7 +35,7 @@ If this README reads like som maniacs cork board, it is because it is.
 Until version 1.0 this is more or less a temporary spitball file.  
 Most information in here will be moved to the documentation later.
 
-The final, estimated release date for `version 1.0` is by the **end of June, 2026**.
+The final, estimated release date for `version 1.0` is by the **end of July, 2026**.
 
 ### 🚗 Roadmap (in order)
 
