@@ -3,10 +3,10 @@ theme:
     name: material
     palette:
         scheme: slate
-features:
-    - content.code.copy
-    - navigation.tabs
-    - navigation.indexes
+    features:
+        - content.code.copy
+        - navigation.tabs
+        - navigation.indexes
 
 markdown_extensions:
     - pymdownx.superfences
