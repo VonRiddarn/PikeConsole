@@ -1,9 +1,9 @@
-  # Theme setup - material in darkmode is apparently like the "OSS default"
-  theme:
-  name: material
-  palette:
+# Theme setup - material in darkmode is apparently like the "OSS default"
+theme:
+name: material
+palette:
     scheme: slate
-  features:
+features:
     - content.code.copy # Copy button for code blocks
     - navigation.tabs # Top level folders become tabs instead of a bloated tree
     - navigation.indexes # Folders can have their own index.md file - not sure if I'll keep this
