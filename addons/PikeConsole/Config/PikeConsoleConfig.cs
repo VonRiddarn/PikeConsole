@@ -76,9 +76,9 @@ public static class PikeConsoleConfig
 		// This is done from within the CVarCrawler.
 		// Note: This might be hacky, but it makes the autoloader less fragile.
 
+		_ = CheatMode;
 		_ = MaxUiLogs;
 		_ = ConsoleLoggerEnabled;
-		_ = CheatMode;
 	}
 
 	// ----- ----- ----- ----- -----
