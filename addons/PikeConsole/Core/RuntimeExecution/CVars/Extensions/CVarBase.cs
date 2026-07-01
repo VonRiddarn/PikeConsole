@@ -74,6 +74,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 				_value = value;
 				ValueChanged?.Invoke(value);
 				ValueInvalidated?.Invoke();
+
+				if (Persist)
+					PersistentCVarRegistry.Update(this);
 			}
 		}
 	}
