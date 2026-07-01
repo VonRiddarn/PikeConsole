@@ -1,12 +1,12 @@
-# Theme setup - material in darkmode is apparently like the "OSS default"
-theme:
-	name: material
-	palette:
-		scheme: slate
-	features:
-		- content.code.copy # Copy button for code blocks
-		- navigation.tabs # Top level folders become tabs instead of a bloated tree
-		- navigation.indexes # Folders can have their own index.md file - not sure if I'll keep this
+  # Theme setup - material in darkmode is apparently like the "OSS default"
+  theme:
+  name: material
+  palette:
+    scheme: slate
+  features:
+    - content.code.copy # Copy button for code blocks
+    - navigation.tabs # Top level folders become tabs instead of a bloated tree
+    - navigation.indexes # Folders can have their own index.md file - not sure if I'll keep this
 
 # Extentions - allows for cool special markdown
 markdown_extensions:
