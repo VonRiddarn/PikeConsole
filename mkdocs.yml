@@ -1,28 +1,24 @@
-# Theme setup - material in darkmode is apparently like the "OSS default"
+site_name: PikeConsole - Documentation
 theme:
-name: material
-palette:
-    scheme: slate
+    name: material
+    palette:
+        scheme: slate
 features:
-    - content.code.copy # Copy button for code blocks
-    - navigation.tabs # Top level folders become tabs instead of a bloated tree
-    - navigation.indexes # Folders can have their own index.md file - not sure if I'll keep this
+    - content.code.copy
+    - navigation.tabs
+    - navigation.indexes
 
-# Extentions - allows for cool special markdown
 markdown_extensions:
     - pymdownx.superfences
     - def_list
     - pymdownx.blocks.admonition
     - pymdownx.blocks.details
     - pymdownx.keys
-    - pymdownx.tabbed: # Adds code block tabs
+    - pymdownx.tabbed:
           alternate_style: true
 
-# Actual site setup
-site_name: PikeConsole - Documentation
 nav:
     - Home: index.md
-
     - Guides:
           - Overview: guides/index.md
           - Project Setup: guides/project_setup.md
@@ -30,7 +26,6 @@ nav:
           - Logging: guides/logging.md
           - Commands: guides/commands.md
           - CVars: guides/cvars.md
-
     - Architecture & Framework:
           - Overview: architecture/index.md
           - Framework Map: architecture/framework_map.md
@@ -41,7 +36,6 @@ nav:
           - Runtime Executables: architecture/runtime_executables.md
           - Config & I/O: architecture/config_io.md
           - Aliases: architecture/aliases.md
-
     - API Reference:
           - Overview: api/index.md
           - Logging:
@@ -50,7 +44,6 @@ nav:
                 - LogTarget: api/Logging/LogTarget.md
                 - PikeLogger: api/Logging/PikeLogger.md
           - Runtime Execution:
-                # RuntimeExecution ROOT
                 - RegistryBrowser: api/RuntimeExecution/RegistryBrowser.md
                 - SearchMode: api/RuntimeExecution/SearchMode.md
                 - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
@@ -58,20 +51,18 @@ nav:
                 - StatementParser: api/RuntimeExecution/StatementParser.md
                 - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
                 - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
-                - Response&lt;T&gt;: api/RuntimeExecution/Response_T.md
+                - Response<T>: api/RuntimeExecution/Response_T.md
                 - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
                 - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
-                # COMMANDS FOLDER
-                - Commands:
-                      - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
-                # CVARS FOLDER
-                - CVars:
-                      - Extensions:
-                            - CVarBase&lt;T&gt;: api/CVars/Extensions/CVarBase_T.md
-                      - CVarBool: api/CVars/CVarBool.md
-                      - CVarDouble: api/CVars/CVarDouble.md
-                      - CVarEnum: api/CVars/CVarEnum.md
-                      - CVarFloat: api/CVars/CVarFloat.md
-                      - CVarInt: api/CVars/CVarInt.md
-                      - CVarString: api/CVars/CVarString.md
-                      - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
+          - Commands:
+                - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
+          - CVars:
+                - Extensions:
+                      - CVarBase<T>: api/CVars/Extensions/CVarBase_T.md
+                - CVarBool: api/CVars/CVarBool.md
+                - CVarDouble: api/CVars/CVarDouble.md
+                - CVarEnum: api/CVars/CVarEnum.md
+                - CVarFloat: api/CVars/CVarFloat.md
+                - CVarInt: api/CVars/CVarInt.md
+                - CVarString: api/CVars/CVarString.md
+                - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
