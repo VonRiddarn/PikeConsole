@@ -82,12 +82,12 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	}
 
 	/// <summary>
-	/// This is the method used by the console to set the command.
-	/// It is responsible for parsing the arguments and setting the value.
+	/// This method is only used internally to manage arguments.  
+	/// It is always called from the "Execute" method.
 	/// </summary>
 	/// <param name="args">Arguments passed by the runtime console</param>
 	/// <returns>A response status with an optional message.</returns>
-	public abstract Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args);
+	protected abstract Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args);
 
 	/// <summary>
 	/// Initialize is called by the CVar crawler when the resource is loaded into memory.
