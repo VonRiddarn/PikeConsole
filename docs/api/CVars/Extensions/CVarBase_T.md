@@ -379,6 +379,8 @@ CVars should not be set through code using the execution method unless it is nec
 
 To set a CVar from code you should always manage the [Value](#value) property directly. 
 
+When making a custom runtime console [StatementExecutor](../../RuntimeExecution/StatementExecutor.md) should be used as the definitive entry point!
+
 **Example**:  
 ```csharp
 // This automatically runs like a system user and runs potential persistance events.
@@ -403,13 +405,18 @@ _Since `ram_only` was used the value will not persist._
 
 **Description**:  
 API entry point that makes CVars agnostically executable from outside systems.  
-This is mainly used by the console and user config system and should not be regularly used by users of this framework. 
+This is mainly used by the [StatementExecutor](../../RuntimeExecution/StatementExecutor.md) and should not be regularly used by users of this framework. 
 
 **Example**:
 
-TODO: Add excerpt from the runtimeconsole here!
+_Excerpt from `StatementExecutor.cs`._  
 ```csharp
-// TODO: Add excerpt form the runtimeconsole once implemented.
+// . . .
+if (RuntimeExecutableRegistry.TryGetExecutable(signature, out IRuntimeExecutable executable))
+{
+	Response<ExecutionResponseStatus> response = executable.Execute(executionSource, args);
+	// . . . 
+}
 ```
 ---
 
