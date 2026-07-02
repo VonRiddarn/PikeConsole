@@ -1,4 +1,3 @@
-using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
 using System.IO;
