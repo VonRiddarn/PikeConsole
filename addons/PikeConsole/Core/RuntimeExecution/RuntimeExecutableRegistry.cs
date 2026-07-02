@@ -4,6 +4,24 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 
+/* 
+	2026-07-02
+	Important note to self (and others)
+		
+		This is a thread safe class by implicit usage. Yes, we can technically instantiate a Node class on another thread using "new",
+		but all de-facto in-game Nodes in the SceneTree are living on the main thread. This means
+		there is no way to break the command system as long as the CommandSet Node is used as intended.
+
+		TL;DR:
+		The command is always registered on the main thread by implicit, 
+		as _EnterTree is always fired on the main thread.
+
+		NOTE TO SELF AGAIN (FOR CLARITY): 
+			
+			STOP COMING BACK HERE EVERY OTHER DAY WASTING TIME MAKING IT THREAD SAFE!! 
+			IT DOESN'T NEED TO BE AND DOESN'T NEED A CONCURRENT DICTIONARY!
+*/
+
 #nullable enable
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
