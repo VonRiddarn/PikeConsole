@@ -1,5 +1,4 @@
 using Godot;
-using System;
 
 namespace FractalPike.PikeConsole.Core.Logging;
 
@@ -12,6 +11,8 @@ public partial class EngineLoggerBridge : Logger
 	// NOTE: We currently only care about actual errors and warnings, not messages about them.
 	// IF we define _LogMessage we WILL receive interop mashalling from Godot, even if we early return.
 	// By not defining the method Godot skips marshalling at the engine level!
+
+	// TL;DR: Do NOT add _LogMessage here! 
 
 	public override void _LogError(
 		string function,

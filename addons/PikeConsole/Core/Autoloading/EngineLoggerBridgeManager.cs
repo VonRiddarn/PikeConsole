@@ -1,6 +1,7 @@
+using FractalPike.PikeConsole.Core.Logging;
 using Godot;
 
-namespace FractalPike.PikeConsole.Core.Logging;
+namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class EngineLoggerBridgeManager : Node
 {
