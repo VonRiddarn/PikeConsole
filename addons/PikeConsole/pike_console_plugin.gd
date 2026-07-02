@@ -70,6 +70,13 @@ const SETTING_USE_USER_CONFIGS: Dictionary[String, Variant] = {
 "hint": PROPERTY_HINT_NONE, 
 "hint_string": ""
 }
+const SETTING_FRONTEND_SCENE: Dictionary[String, Variant] = {
+	"path": PATH_SETTINGS_RUNTIME + "frontend_scene", 
+	"default_value": "res://addons/PikeConsole/Frontend/pike_console_ui.tscn",
+	"type": TYPE_STRING, 
+	"hint": PROPERTY_HINT_FILE, 
+	"hint_string": "*.tscn"
+}
 const SETTING_LOG_CVAR_ON_REGISTER: Dictionary[String, Variant] = {
 	"path": PATH_SETTINGS_EDITOR + "log_cvar_on_regsiter", 
 	"default_value": true, 
@@ -153,6 +160,7 @@ func initialize_project_settings() -> void:
 		SETTING_CVAR_DIRECTORY,
 		SETTING_CONFIG_DIRECTORY,
 		SETTING_USE_USER_CONFIGS,
+		SETTING_FRONTEND_SCENE,
 		SETTING_LOG_CVAR_ON_REGISTER,
 		SETTING_LOG_COMMAND_ON_REGISTER,
 		SETTING_SUPRESS_DOCUMENTATION_WARNINGS,

@@ -18,6 +18,7 @@ public static class PikeConsoleConfig
 
 	const string PROJECT_SETTINGS_ROOT = "fractal_pike/pike_console";
 	const string PROJECT_SETTINGS_CONFIG = $"{PROJECT_SETTINGS_ROOT}/config";
+	const string PROJECT_SETTINGS_RUNTIME = $"{PROJECT_SETTINGS_ROOT}/runtime";
 	const string PROJECT_SETTINGS_EDITOR = $"{PROJECT_SETTINGS_ROOT}/editor";
 	const string PROJECT_SETTINGS_EDITOR_COLORS = $"{PROJECT_SETTINGS_EDITOR}/colors";
 
@@ -105,6 +106,11 @@ public static class PikeConsoleConfig
 	// The user config system is an opt-in system. This is done in the project settings.
 	static bool? _userConfigsEnabled = null;
 	public static bool UserConfigsEnabled => _userConfigsEnabled ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_CONFIG}/use_user_configs", false).AsBool();
+
+	// ----- ----- RUNTIME ----- -----
+	static string? _frontendScenePath = null;
+	public static string FrontendScenePath => _frontendScenePath ??= ProjectSettings.GlobalizePath(
+		ProjectSettings.GetSetting($"{PROJECT_SETTINGS_RUNTIME}/frontend_scene", "res://addons/PikeConsole/Frontend/pike_console_ui.tscn").AsString());
 
 	// ----- ----- EDITOR ----- -----
 	static bool? _logCvarOnRegister = null;
