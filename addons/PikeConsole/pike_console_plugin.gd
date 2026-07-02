@@ -19,8 +19,8 @@ extends EditorPlugin
 # ----- ----- ----- ----- -----
 # 			AUTOLOAD
 # ----- ----- ----- ----- -----
-const AUTOLOAD_NAME = "PikeConsoleBackend"
-const AUTOLOAD_PATH = "res://addons/PikeConsole/Core/Autoloading/pike_console_backend.tscn"
+const AUTOLOAD_NAME = "PikeConsoleBootstrapper"
+const AUTOLOAD_PATH = "res://addons/PikeConsole/Core/Autoloading/pike_console_bootstrapper.tscn"
 # Basically: We use the autoloader scene tree to bridge engine logs, scan for CVars and initialize default commands.
 # The actual UI is not auto-injected as there is a high chance users want to customize it or make their own.
 
