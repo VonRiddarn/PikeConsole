@@ -53,6 +53,7 @@ public static class RuntimeExecutableRegistry
 		{
 			string type = executable is ICVar ? "cvar" : "command";
 			AliasRegistry.Unregister(signature);
+			_executables[signature] = executable;
 			return new(RegisterExecutableResponseStatus.ReplacedAlias, $"Alias \"{signature}\" has been overridden by a {type} with the same signature!");
 		}
 
