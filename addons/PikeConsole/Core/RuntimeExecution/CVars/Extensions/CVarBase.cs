@@ -141,14 +141,19 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		_isInitialized = true;
 	}
 
-	public void ResetValue()
+	public bool ResetValue(ExecutionSource executionSource)
 	{
+		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
+			return false;
+
 		var modified = IsModified;
 
 		Value = _defaultValue;
 
 		if (modified && Persist)
 			PersistentCVarRegistry.Update(this);
+
+		return true;
 	}
 
 	// ----- ----- Note to future self: 
@@ -173,7 +178,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
 		// The system passes this check though, so we can still pass map specific overrides and cool stuff.
 		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
-			return new(ExecutionResponseStatus.DeniedCheat, null);
+			return new(ExecutionResponseStatus.DeniedCheat, $"Failed to set value of \"{Signature}\". CVar is cheat protected.");
 
 		bool ramOnly = args.Length >= 2 && args[^1].Equals(RAM_ONLY_TAG, StringComparison.OrdinalIgnoreCase);
 
