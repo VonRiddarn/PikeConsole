@@ -1,4 +1,5 @@
 using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
 using Godot;
 
 namespace FractalPike.PikeConsole.Core.Autoloading;
@@ -9,22 +10,32 @@ public partial class EngineLoggerBridgeManager : Node
 	// The GC can't see the reference from accross the interop.
 	EngineLoggerBridge _engineLogger = null;
 
+	[Export] CVarBool _injectEngineLogs;
+
 	public override void _EnterTree()
 	{
-		// CVar.ChangedValue += OnNewInteropValue;
-		ActivateInteropLogger();
-		GD.Print("Does not trigger log bridge.");
-		GD.PrintErr("Will trigger log bridge.");
+		// We are responsible for initializing since this is not in the dedicated CVar dir.
+		// It's safe to accidentally call this more than once (though we shouldn't)
+		_injectEngineLogs.Initialize();
+		_injectEngineLogs.ValueChanged += OnInteropEnabledChanged;
 
-		// Triggers log bridge!
-		GD.PushWarning("What's going on?");
-		GD.PushError("OH NO! THE HUMANITY!");
-		PikeLogger.Log(LogTarget.All, $"TEst");
+		ActivateInteropLogger();
 	}
 
 	public override void _ExitTree()
 	{
+		// Note, we need to remove the event listener AFTER running killinterop.
+		// This is in case the interoplogger state is not aligned with the CVar and need to run the delegate for removal (edge case).
 		KillInteropLogger();
+		_injectEngineLogs.ValueChanged -= OnInteropEnabledChanged;
+	}
+
+	private void OnInteropEnabledChanged(bool enable)
+	{
+		if (enable)
+			ActivateInteropLogger();
+		else
+			KillInteropLogger();
 	}
 
 	void OnNewInteropValue(bool newValue)
@@ -35,34 +46,36 @@ public partial class EngineLoggerBridgeManager : Node
 			KillInteropLogger();
 	}
 
-	// TODO: Create internal CVars that manage this at runtime. 
-	// NOTE TO SELF: If we create internal CVars we are also responsible for initializing them. Use [Export] for the CVars.
 	public void ActivateInteropLogger()
 	{
-		if (_engineLogger != null) // || console_inject_engine_logs (CVar) false
+		if (_engineLogger != null || _injectEngineLogs.Value == false)
 			return;
 
 		_engineLogger = new EngineLoggerBridge();
 		OS.AddLogger(_engineLogger);
 
-		// TODO: Look into how Godot handles crashes (both engine and .NET environment)
-		// We could sub to AppDomain.CurrentDomain.UnhandledException here. 
-		// Though the UI would not be able to see it before the game dies, we 
-		// could still force-empty the buffer to some file for crash reports. 
-		// (Unless Godot already does that natively)
-
-		PikeLogger.Log(LogTarget.All, $"[PikeConsole] interop connection established. Engine exceptions and warnings are logged.");
+		PikeLogger.Log(LogTarget.All, $"[PikeConsole] Interop connection established. Engine exceptions and warnings are logged.");
 	}
 
 	public void KillInteropLogger()
 	{
-		if (_engineLogger == null) // || console_inject_engine_logs (CVar) true
+		if (_injectEngineLogs.Value)
+		{
+			// IMPORTANT:
+			// We want the CVar to be in sync with the current state. But since setting the value triggers this 
+			// exact method, we return and let the event delegate manage the removal. This avoids weird double-kill conditions.
+			_injectEngineLogs.Value = false;
+			PikeLogger.LogWarning(LogTarget.All, $"Force-setting \"{_injectEngineLogs.ResourcePath.GetFile().GetBaseName()}\" was forcefully set to false.");
+			return;
+		}
+
+		if (_engineLogger == null)
 			return;
 
 		OS.RemoveLogger(_engineLogger);
 		_engineLogger.Dispose();
 		_engineLogger = null;
 
-		PikeLogger.Log(LogTarget.All, $"[PikeConsole] interop connection severed. Engine exceptions are no longer logged.");
+		PikeLogger.Log(LogTarget.All, $"[PikeConsole] Interop connection severed. Engine exceptions are no longer logged.");
 	}
 }
