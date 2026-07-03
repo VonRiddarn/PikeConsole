@@ -73,7 +73,7 @@ public static class ArgumentParser
 			return true;
 		}
 
-		error = $"Can't parse {input} to a boolean value!";
+		error = $"Can't parse \"{input}\" to a boolean value!";
 		value = false;
 		return false;
 	}
@@ -106,7 +106,7 @@ public static class ArgumentParser
 			}
 		}
 
-		error = $"No match for {input}.";
+		error = $"No match for \"{input}\".";
 		return false;
 	}
 
@@ -208,7 +208,7 @@ public static class ArgumentParser
 			if (!parser(args[i], out values[i]))
 			{
 				values = [];
-				error = $"Failed to parse {args[i]} at index ({i}).";
+				error = $"Failed to parse \"{args[i]}\" at index ({i}).";
 				return false;
 			}
 		}

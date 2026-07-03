@@ -30,7 +30,7 @@ public partial class CVarCrawler : Node
 
 		if (dir == null)
 		{
-			PikeLogger.LogError(LogTarget.All, $"Could not open directory at {currentPath}. Some CVars might not have been loaded!");
+			PikeLogger.LogError(LogTarget.All, $"Could not open directory at \"{currentPath}\". Some CVars might not have been loaded!");
 			return;
 		}
 
