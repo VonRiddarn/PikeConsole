@@ -1,4 +1,3 @@
-using System;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
@@ -9,34 +8,41 @@ using Godot;
  * 
 */
 
+namespace FractalPike.PikeConsole.Frontend;
+
 public partial class PikeConsoleUI : Node
 {
-	[Export] LineEdit _lineEdit;
+	[Export] LineEdit _inputField;
 	[Export] RichTextLabel _richText;
 
-
-	public override void _EnterTree()
+	public sealed override void _EnterTree()
 	{
-		_lineEdit.TextSubmitted += OnInputSubmitted;
+		_inputField.TextSubmitted += OnInputSubmitted;
 		PikeLogger.LogEmitted += OnLogEmitted;
 	}
 
-	public override void _ExitTree()
+	public sealed override void _ExitTree()
 	{
-		_lineEdit.TextSubmitted -= OnInputSubmitted;
+		_inputField.TextSubmitted -= OnInputSubmitted;
 		PikeLogger.LogEmitted -= OnLogEmitted;
 	}
 
-	private void OnLogEmitted(in LogEvent logEvent)
+	void OnLogEmitted(in LogEvent logEvent)
 	{
 		// Lol, this is not how we should dod it...
 		_richText.Text += $"{logEvent.Message}\n";
 	}
 
-	private void OnInputSubmitted(string text)
+	void OnInputSubmitted(string inputStatement)
 	{
-		_richText.Text += $"> {_lineEdit.Text}\n";
-		StatementExecutor.Execute(ExecutionSource.Player, text);
-		_lineEdit.Clear();
+		_richText.Text += $"> {_inputField.Text}\n";
+		StatementExecutor.Execute(ExecutionSource.Player, inputStatement);
+		_inputField.Clear();
 	}
+
+	public void Clear()
+	{
+		_richText.Text = string.Empty;
+	}
+
 }

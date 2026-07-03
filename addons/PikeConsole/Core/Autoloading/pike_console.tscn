@@ -16,8 +16,6 @@ script = ExtResource("2_hj4c2")
 
 [node name="CommandSets" type="Node" parent="." unique_id=322416938]
 
-[node name="ConsoleCommandSet" type="Node" parent="CommandSets" unique_id=1722424151]
-
 [node name="GlobalGenericCommandSet" type="Node" parent="CommandSets" unique_id=845579108]
 
 [node name="AliasCommandSet" type="Node" parent="CommandSets" unique_id=508363395]

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bejwps7jfkded"]
 
 [ext_resource type="Script" uid="uid://b1j8ooy4tu66" path="res://addons/PikeConsole/Frontend/PikeConsoleUI.cs" id="1_ajuf4"]
+[ext_resource type="Script" uid="uid://cvmqldo8cek7m" path="res://addons/PikeConsole/Frontend/ConsoleCommandSet.cs" id="2_ddxch"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_luu45"]
 content_margin_left = 0.0
@@ -40,9 +41,9 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[node name="PikeConsoleUI" type="Node" unique_id=1620465653 node_paths=PackedStringArray("_lineEdit", "_richText")]
+[node name="PikeConsoleUI" type="Node" unique_id=1620465653 node_paths=PackedStringArray("_inputField", "_richText")]
 script = ExtResource("1_ajuf4")
-_lineEdit = NodePath("CanvasLayer/LineEdit")
+_inputField = NodePath("CanvasLayer/LineEdit")
 _richText = NodePath("CanvasLayer/Layout/OutputDisplay")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=477428624]
@@ -82,3 +83,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_ddxch")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ajuf4")
 placeholder_text = "Enter command..."
 keep_editing_on_text_submit = true
+
+[node name="ConsoleCommandSet" type="Node" parent="." unique_id=1741704386]
+script = ExtResource("2_ddxch")
