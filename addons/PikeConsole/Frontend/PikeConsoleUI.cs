@@ -35,6 +35,7 @@ public partial class PikeConsoleUI : Node
 
 	private void OnInputSubmitted(string text)
 	{
+		_richText.Text += $"> {_lineEdit.Text}\n";
 		StatementExecutor.Execute(ExecutionSource.Player, text);
 		_lineEdit.Clear();
 	}
