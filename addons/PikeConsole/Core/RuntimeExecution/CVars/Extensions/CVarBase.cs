@@ -81,6 +81,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		}
 	}
 
+	bool _isInitialized = false;
+
 	/// <summary>
 	/// This method is only used internally to manage arguments.  
 	/// It is always called from the "Execute" method.
@@ -92,6 +94,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// <summary>
 	/// Initialize is called by the CVar crawler when the resource is loaded into memory.
 	/// It is self diagnostic and will log errors or warnings regarding registering to the command registry.
+	/// Automatically no-ops if the resoure is already initialized.
 	/// </summary>
 	/// <remarks>
 	/// If your CVar is in the designated CVar folder you DO NOT call this method, it is called automatically! <br />
@@ -99,6 +102,10 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// </remarks>
 	public void Initialize()
 	{
+		if (_isInitialized)
+			return;
+
+
 		_value = _defaultValue;
 		// Note: This causes interop overhead at startup. That's okay and unavoidable.
 		// The resource filename IS the command name. Convenience vs customization and all that.
@@ -130,6 +137,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		}
 
 		InitializeInternal();
+
+		_isInitialized = true;
 	}
 
 	public void ResetValue()
