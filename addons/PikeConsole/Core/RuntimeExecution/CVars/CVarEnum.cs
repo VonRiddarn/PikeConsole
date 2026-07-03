@@ -54,9 +54,9 @@ public partial class CVarEnum : CVarBase<int>
 
 		// Upgrade from Unity framework!!
 		// Cache the options rather than building them at runtime.
-		StringBuilder sb = new("OPTIONS:\n");
+		StringBuilder sb = new("OPTIONS:");
 		for (int i = 0; i < _options.Length; i++)
-			sb.Append($"\t{i} = {_options[i]}\n");
+			sb.Append($"\n\t{i} = {_options[i]}");
 
 		_cachedHelpLst = sb.ToString();
 	}

@@ -13,6 +13,6 @@ public static class ConsoleFormatter
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static string FormatHelp(IRuntimeExecutable rte)
 	{
-		return $"Signature: {rte.Signature}\nIs cheat: {rte.IsCheat}\nDescription: {rte.ShortDesc}\nType: {rte.DisplayType.ToUpper()}\nUsage: {rte.Usage}\n{rte.LongDesc}";
+		return $"Signature: {rte.Signature}\nType: {rte.DisplayType.ToUpper()}\nIs cheat: {rte.IsCheat}\nBrief: {rte.ShortDesc}\nUsage: {rte.Usage}\nDescription: {rte.LongDesc}";
 	}
 }

@@ -51,7 +51,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	// Set in child
 	public abstract string DisplayType { get; }
-	public string LongDesc => $"{Description}\n{DescriptionInternal}";
+	public string LongDesc => $"{Description}{(string.IsNullOrWhiteSpace(DescriptionInternal) ? string.Empty : $"\n{DescriptionInternal}")}";
 	protected virtual string DescriptionInternal { get; } = "";
 
 	/// <summary>
@@ -198,7 +198,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		// Return success, but log nothing.
 		if (response.Status == CvarSetResponseStatus.NoChange)
-			return new(ExecutionResponseStatus.Success, null);
+			return new(ExecutionResponseStatus.Success, $"CVar \"{Signature}\" is already set to {DisplayValue(Value)}");
 
 		if (response.Status == CvarSetResponseStatus.Success)
 		{
