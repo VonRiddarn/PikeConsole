@@ -95,6 +95,13 @@ public static class RuntimeExecutableRegistry
 
 	// TODO: TEST RUNTIME EXECUTABLE SEARCH : REMOVE THIS TODO WHEN TESTED!!!!
 
+
+	// Note: 
+	// The search methods are still kind of a mess since the Unity framework.
+	// It uses quite heavy allocation and O(N log N) lookup for commands + cvars.
+	// There is a lot of room for optimization, but since this is only ever used by 
+	// QA testers, developers and cheaters it's okay to waste a few ms for now. It's a cold path lookup.
+
 	/// <summary>
 	/// LINQ "SQL-style" lookup.
 	/// Gets all executables containing the term with an optional type filter.
@@ -102,24 +109,21 @@ public static class RuntimeExecutableRegistry
 	/// <remarks>For games with very large sets (thousands) of commands / CVars this might cause some overhead.
 	/// Though executable querying is not part of the hot-path, so this should cover most usecases.</remarks>
 	/// <param name="term">The search term to pass.</param>
-	/// <param name="filterType">The type to filter by, EG: <code>typeof(CVar&lt; int &gt;)</code></param>
+	/// <param name="mode">Search mode for filtering.</param>
 	/// <param name="rankByPrefix">Place the results in order, prioritizing those who start with the term.</param>
-	/// <param name="emptyMeansAll">If term is empty, return all matching the other parameters.</param>
 	/// <returns>An array of IRuntimeExecutable[] (The results)</returns>
-	public static IRuntimeExecutable[] Search(
-			string term,
-			SearchMode mode = SearchMode.Contains,
-			Type? filterType = null,
-			bool rankByPrefix = false)
+	public static T[] Search<T>(
+		string term,
+		SearchMode mode = SearchMode.Contains,
+		bool rankByPrefix = false) where T : IRuntimeExecutable
 	{
-		var filtered = filterType != null
-			? _executables.Values.Where(filterType.IsInstanceOfType)
-			: _executables.Values;
+		var filtered = _executables.Values.OfType<T>();
 
 		if (string.IsNullOrWhiteSpace(term))
 			return [.. filtered.OrderBy(c => c.Signature)];
 
 		var comp = StringComparison.OrdinalIgnoreCase;
+
 		filtered = mode switch
 		{
 			SearchMode.StartsWith => filtered.Where(c => c.Signature.StartsWith(term, comp)),
@@ -130,5 +134,39 @@ public static class RuntimeExecutableRegistry
 		return rankByPrefix && mode != SearchMode.StartsWith
 			? [.. filtered.OrderBy(c => c.Signature.StartsWith(term, comp) ? 0 : 1).ThenBy(c => c.Signature)]
 			: [.. filtered.OrderBy(c => c.Signature)];
+	}
+
+	/// <summary>
+	/// LINQ "SQL-style" lookup.
+	/// Gets all SIGNATURES of the executables containing the term with an optional type filter.
+	/// </summary>
+	/// <remarks>For games with very large sets (thousands) of commands / CVars this might cause some overhead.
+	/// Though executable querying is not part of the hot-path, so this should cover most usecases.</remarks>
+	/// <param name="term">The search term to pass.</param>
+	/// <param name="mode">Search mode for filtering.</param>
+	/// <param name="rankByPrefix">Place the results in order, prioritizing those who start with the term.</param>
+	/// <returns>An array of IRuntimeExecutable[] (The results)</returns>
+	public static string[] SearchSignatures<T>(
+	string term,
+	SearchMode mode = SearchMode.Contains,
+	bool rankByPrefix = false) where T : IRuntimeExecutable
+	{
+		var filtered = _executables.Values.OfType<T>();
+
+		if (string.IsNullOrWhiteSpace(term))
+			return [.. filtered.Select(c => c.Signature).OrderBy(s => s)];
+
+		var comp = StringComparison.OrdinalIgnoreCase;
+
+		filtered = mode switch
+		{
+			SearchMode.StartsWith => filtered.Where(c => c.Signature.StartsWith(term, comp)),
+			SearchMode.Exact => filtered.Where(c => c.Signature.Equals(term, comp)),
+			_ => filtered.Where(c => c.Signature.Contains(term, comp))
+		};
+
+		return rankByPrefix && mode != SearchMode.StartsWith
+			? [.. filtered.OrderBy(c => c.Signature.StartsWith(term, comp) ? 0 : 1).ThenBy(c => c.Signature).Select(c => c.Signature)]
+			: [.. filtered.OrderBy(c => c.Signature).Select(c => c.Signature)];
 	}
 }

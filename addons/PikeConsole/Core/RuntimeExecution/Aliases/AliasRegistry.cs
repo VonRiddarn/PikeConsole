@@ -57,6 +57,12 @@ public static class AliasRegistry
 
 	// TODO: TEST ALIAS SEARCH : REMOVE THIS TODO WHEN TESTED!!!!
 
+	// Note: 
+	// The search methods are still kind of a mess since the Unity framework.
+	// It uses quite heavy allocation and O(N log N) lookup.
+	// There is a lot of room for optimization, but since this is only ever used by 
+	// QA testers, developers and cheaters it's okay to waste a few ms for now. It's a cold path lookup.
+
 	/// <summary>
 	/// LINQ "SQL-style" lookup.
 	/// Gets all aliases containing the term with an optional type filter.
