@@ -1,3 +1,4 @@
+using System.Text;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
@@ -99,5 +100,60 @@ public partial class ConsoleCommandSet : CommandSet
 				return new(ExecutionResponseStatus.Failed, $"Unknown signature \"{signature}\".");
 			}
 		),
+		Command(
+			"list",
+			"Lists all comands and CVars with an optional search term.",
+			null,
+			"list [term?]",
+			false,
+			(args) => {
+				string term = string.Join(' ', args);
+				var rtes = RegistryBrowser.FindExecutables(term, SearchMode.Contains, true);
+				return FormatAndLogResults(rtes, term, "results");
+			}
+		),
+		Command(
+			"list_commands",
+			"Lists all comands with an optional search term.",
+			null,
+			"list_commands [term?]",
+			false,
+			(args) => {
+				string term = string.Join(' ', args);
+				var rtes = RegistryBrowser.FindCommands(term, SearchMode.Contains, true);
+				return FormatAndLogResults(rtes, term, "commands");
+			}
+		),
+		Command(
+			"list_cvars",
+			"Lists all CVars with an optional search term.",
+			null,
+			"list_cvars [term?]",
+			false,
+			(args) => {
+				string term = string.Join(' ', args);
+				var rtes = RegistryBrowser.FindCVars(term, SearchMode.Contains, true);
+				return FormatAndLogResults(rtes, term, "cvars");
+			}
+		),
 	];
+
+
+	// DRY code is nice code. This is basically just a router for all list commands.
+	// Commands and CVars are both IRuntimeExecutables, so this is fine.
+	Response<ExecutionResponseStatus> FormatAndLogResults(IRuntimeExecutable[] rtes, string term, string nounPlural)
+	{
+		if (rtes.Length < 1)
+			return new(ExecutionResponseStatus.Success, string.IsNullOrWhiteSpace(term) ? "No results found." : $"No results found matching \"{term}\".");
+
+		string header = string.IsNullOrWhiteSpace(term) ? $"Showing all {nounPlural}..." : $"Showing results matching \"{term}\"...";
+		StringBuilder sb = new(header);
+
+		foreach (var rte in rtes)
+			sb.Append($"\n\n[{rte.DisplayType}] \"{rte.Signature}\"\n\t{rte.ShortDesc}");
+
+		PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
+
+		return new(ExecutionResponseStatus.Success, null);
+	}
 }
