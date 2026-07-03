@@ -188,7 +188,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		}
 		catch (Exception e)
 		{
-			return new(ExecutionResponseStatus.Error, $"An unexpected error occurred when setting value of {Signature}: {e.Message}");
+			return new(ExecutionResponseStatus.Error, $"An unexpected error occurred when setting value of \"{Signature}\": {e.Message}");
 		}
 
 		// Return success, but log nothing.
@@ -200,16 +200,15 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			if (Persist && !ramOnly)
 				PersistentCVarRegistry.Update(this);
 
-			string msg = response.Message ?? $"Set {Signature} to {DisplayValue(Value)}";
-			return new(ExecutionResponseStatus.Success, msg);
+			return new(ExecutionResponseStatus.Success, MessageOrFallback(response.Message, $"Set \"{Signature}\" to {DisplayValue(Value)}"));
 		}
 
 		// Note, we are using "unexpected error" again here because a command creator could've caught the error and sent back null.
 		return response.Status switch
 		{
-			CvarSetResponseStatus.InvalidArgs => new(ExecutionResponseStatus.InvalidArgs, response.Message ?? $"Invalid arguments passed for {Signature}."),
-			CvarSetResponseStatus.Failed => new(ExecutionResponseStatus.Failed, response.Message ?? $"Failed to set the value for {Signature}"),
-			_ => new(ExecutionResponseStatus.Error, response.Message ?? $"An unexpected error occurred when setting the value for {Signature}"),
+			CvarSetResponseStatus.InvalidArgs => new(ExecutionResponseStatus.InvalidArgs, MessageOrFallback(response.Message, $"Invalid arguments passed for \"{Signature}\".")),
+			CvarSetResponseStatus.Failed => new(ExecutionResponseStatus.Failed, MessageOrFallback(response.Message, $"Failed to set the value for \"{Signature}\"")),
+			_ => new(ExecutionResponseStatus.Error, MessageOrFallback(response.Message, $"An unexpected error occurred when setting the value for \"{Signature}\"")),
 		};
 	}
 
@@ -224,5 +223,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// <remarks>
 	/// <returns>Value as string</returns>
 	public virtual string DisplayValue(T value) => value?.ToString() ?? NOT_ASSIGNED;
+
+
+	string MessageOrFallback(string message, string fallback) => string.IsNullOrWhiteSpace(message) ? fallback : message;
 
 }
