@@ -5,8 +5,6 @@ using Godot;
 namespace FractalPike.PikeConsole.Config;
 
 #nullable enable
-// TODO: Use the settings from the godot editor and lazy-initialize them in here.
-// Note: Some settings will be CVars in the future.
 
 public static class PikeConsoleConfig
 {
