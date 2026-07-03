@@ -167,7 +167,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			string currentValue = _value != null ? DisplayValue(_value) : NOT_ASSIGNED;
 			string defaultValue = _defaultValue != null ? DisplayValue(_defaultValue) : NOT_ASSIGNED;
 
-			return new(ExecutionResponseStatus.Success, $"Current value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}");
+			return new(ExecutionResponseStatus.Success, $"Description: {Description}\nCurrent value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}");
 		}
 
 		// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
