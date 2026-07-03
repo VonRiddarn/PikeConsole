@@ -38,7 +38,7 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[node name="PikeConsoleUi" type="Node" unique_id=1620465653]
+[node name="PikeConsoleUI" type="Node" unique_id=1620465653]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=477428624]
 layer = 2000
