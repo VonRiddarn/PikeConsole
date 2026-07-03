@@ -1,3 +1,8 @@
 [gd_scene format=3 uid="uid://be4chtfo5ebls"]
 
+[ext_resource type="Script" uid="uid://c1vry0won1dfr" path="res://MyCommandSet.cs" id="1_ig7tw"]
+
 [node name="Main" type="Node" unique_id=370928029]
+
+[node name="MyCommandSet" type="Node" parent="." unique_id=94804779]
+script = ExtResource("1_ig7tw")
