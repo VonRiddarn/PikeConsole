@@ -46,7 +46,7 @@ public static class RuntimeExecutableRegistry
 		if (_executables.TryGetValue(signature, out var rte))
 		{
 			string rteType = rte is ICVar ? "cvar" : "command";
-			return new(RegisterExecutableResponseStatus.AlreadyExists, $"A {rteType} already exists for signature \"{signature}\"");
+			return new(RegisterExecutableResponseStatus.AlreadyExists, $"A {rteType} already exists for signature \"{signature}\".\nConflict found at: {rte.SourceLocation}");
 		}
 
 		if (AliasRegistry.TryGetAlias(signature, out string _))
