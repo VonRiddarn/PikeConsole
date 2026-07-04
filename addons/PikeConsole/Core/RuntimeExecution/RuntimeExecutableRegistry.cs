@@ -124,6 +124,8 @@ public static class RuntimeExecutableRegistry
 
 		var comp = StringComparison.OrdinalIgnoreCase;
 
+		// TODO: IMPORTANT!!!! If the match set to exact we should NOT be having O(N) lookup. That's messed up.
+		// If the match is exact, use O(1) lookup and THEN check if the returned object matches the filter type.
 		filtered = mode switch
 		{
 			SearchMode.StartsWith => filtered.Where(c => c.Signature.StartsWith(term, comp)),
