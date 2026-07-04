@@ -1,3 +1,5 @@
+using System.Text;
+using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
@@ -26,7 +28,32 @@ public partial class AliasCommandSet : CommandSet
 
 				return new(ExecutionResponseStatus.Failed, response.Message);
 			}
-		)
+		),
+		Command(
+			"alias_list",
+			"Lists all aliases with an optional search term.",
+			null,
+			"alias_list [..term?]",
+			false,
+			(args) => {
+				string term = string.Join(' ', args);
+				var aliases = RegistryBrowser.FindAliases(term, SearchMode.Contains, true);
+
+				if (aliases.Length < 1)
+					return new(ExecutionResponseStatus.Success, string.IsNullOrWhiteSpace(term) ? $"No aliases found." : $"No aliases found matching \"{term}\".");
+
+				string header = string.IsNullOrWhiteSpace(term) ? $"Showing all aliases..." : $"Showing aliases matching \"{term}\"...";
+
+				StringBuilder sb = new(header);
+
+				foreach (var alias in aliases)
+					sb.Append($"\n\n[Alias] {alias.Signature}\n]\t{alias.Statement}");
+
+				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
+
+				return new(ExecutionResponseStatus.Success, null);
+			}
+		),
 	];
 
 }
