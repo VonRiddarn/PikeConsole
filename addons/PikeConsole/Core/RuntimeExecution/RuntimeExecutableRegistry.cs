@@ -117,6 +117,16 @@ public static class RuntimeExecutableRegistry
 		SearchMode mode = SearchMode.Contains,
 		bool rankByPrefix = false) where T : IRuntimeExecutable
 	{
+		// IMPORTANT PERFORMANCE BOOST!
+		// If the mode is set to "exact", do a raw O(1) check and early return.
+		if (mode == SearchMode.Exact)
+		{
+			if (!TryGetExecutable(term, out var rte) || rte is not T typedRte)
+				return [];
+
+			return [typedRte];
+		}
+
 		var filtered = _executables.Values.OfType<T>();
 
 		if (string.IsNullOrWhiteSpace(term))
@@ -124,12 +134,9 @@ public static class RuntimeExecutableRegistry
 
 		var comp = StringComparison.OrdinalIgnoreCase;
 
-		// TODO: IMPORTANT!!!! If the match set to exact we should NOT be having O(N) lookup. That's messed up.
-		// If the match is exact, use O(1) lookup and THEN check if the returned object matches the filter type.
 		filtered = mode switch
 		{
 			SearchMode.StartsWith => filtered.Where(c => c.Signature.StartsWith(term, comp)),
-			SearchMode.Exact => filtered.Where(c => c.Signature.Equals(term, comp)),
 			_ => filtered.Where(c => c.Signature.Contains(term, comp))
 		};
 
@@ -153,6 +160,16 @@ public static class RuntimeExecutableRegistry
 	SearchMode mode = SearchMode.Contains,
 	bool rankByPrefix = false) where T : IRuntimeExecutable
 	{
+		// IMPORTANT PERFORMANCE BOOST!
+		// If the mode is set to "exact", do a raw O(1) check and early return.
+		if (mode == SearchMode.Exact)
+		{
+			if (!TryGetExecutable(term, out var rte) || rte is not T typedRte)
+				return [];
+
+			return [typedRte.Signature];
+		}
+
 		var filtered = _executables.Values.OfType<T>();
 
 		if (string.IsNullOrWhiteSpace(term))
@@ -163,7 +180,6 @@ public static class RuntimeExecutableRegistry
 		filtered = mode switch
 		{
 			SearchMode.StartsWith => filtered.Where(c => c.Signature.StartsWith(term, comp)),
-			SearchMode.Exact => filtered.Where(c => c.Signature.Equals(term, comp)),
 			_ => filtered.Where(c => c.Signature.Contains(term, comp))
 		};
 

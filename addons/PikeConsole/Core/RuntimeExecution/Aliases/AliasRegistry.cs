@@ -73,6 +73,16 @@ public static class AliasRegistry
 	/// <returns>An array of IRuntimeExecutable[] (The results)</returns>
 	public static string[] Search(string term, SearchMode mode = SearchMode.Contains, bool rankByPrefix = false)
 	{
+		// IMPORTANT PERFORMANCE BOOST!
+		// If the mode is set to "exact", do a raw O(1) check and early return.
+		if (mode == SearchMode.Exact)
+		{
+			if (!TryGetAlias(term, out var alias))
+				return [];
+
+			return [alias];
+		}
+
 		if (string.IsNullOrWhiteSpace(term))
 			return [.. _aliases.Keys.OrderBy(c => c)];
 
@@ -81,7 +91,6 @@ public static class AliasRegistry
 		var filtered = mode switch
 		{
 			SearchMode.StartsWith => _aliases.Keys.Where(c => c.StartsWith(term, comp)),
-			SearchMode.Exact => _aliases.Keys.Where(c => c.Equals(term, comp)),
 			_ => _aliases.Keys.Where(c => c.Contains(term, comp))
 		};
 
