@@ -144,9 +144,9 @@ public partial class ConsoleCommandSet : CommandSet
 	Response<ExecutionResponseStatus> FormatAndLogResults(IRuntimeExecutable[] rtes, string term, string nounPlural)
 	{
 		if (rtes.Length < 1)
-			return new(ExecutionResponseStatus.Success, string.IsNullOrWhiteSpace(term) ? "No results found." : $"No results found matching \"{term}\".");
+			return new(ExecutionResponseStatus.Success, string.IsNullOrWhiteSpace(term) ? $"No {nounPlural} found." : $"No {nounPlural} found matching \"{term}\".");
 
-		string header = string.IsNullOrWhiteSpace(term) ? $"Showing all {nounPlural}..." : $"Showing results matching \"{term}\"...";
+		string header = string.IsNullOrWhiteSpace(term) ? $"Showing all {nounPlural}..." : $"Showing {nounPlural} matching \"{term}\"...";
 		StringBuilder sb = new(header);
 
 		foreach (var rte in rtes)
