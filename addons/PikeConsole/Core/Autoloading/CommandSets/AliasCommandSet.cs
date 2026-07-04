@@ -54,6 +54,20 @@ public partial class AliasCommandSet : CommandSet
 				return new(ExecutionResponseStatus.Success, null);
 			}
 		),
+		Command(
+			"whereis",
+			"Lists all aliases with an optional search term.",
+			null,
+			"alias_list [..term?]",
+			false,
+			(args) => {
+				var a = RegistryBrowser.FindExecutables(args[0], SearchMode.Exact, true)[0];
+				if(a == null)
+					return new(ExecutionResponseStatus.Success, "No result");
+
+				return new(ExecutionResponseStatus.Success, a.SourceLocation);
+			}
+		),
 	];
 
 }

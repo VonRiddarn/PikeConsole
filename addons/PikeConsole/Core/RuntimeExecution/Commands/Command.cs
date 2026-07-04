@@ -12,6 +12,7 @@ public sealed class Command : IRuntimeExecutable
 	public string LongDesc { get; }
 	public string Usage { get; }
 	public bool IsCheat { get; }
+	public string SourceLocation { get; }
 
 	readonly Func<string[], Response<ExecutionResponseStatus>> _action;
 
@@ -33,15 +34,17 @@ public sealed class Command : IRuntimeExecutable
 		// This makes us able to track the exact file that is faulty.
 		CustomStackTrace customStackTrace)
 	{
+		var (filePath, lineNumber) = customStackTrace;
+
 		DisplayType = "Command";
 		Signature = ConsoleFormatter.ToSignature(commandSignature);
 		ShortDesc = string.IsNullOrWhiteSpace(shortDesc) ? "No description available." : shortDesc;
 		LongDesc = string.IsNullOrWhiteSpace(longDesc) ? "No long description available." : longDesc;
 		Usage = string.IsNullOrWhiteSpace(usage) ? "No usage instructions available." : usage;
 		IsCheat = isCheat;
-		_action = action;
+		SourceLocation = $"{filePath}:{lineNumber}";
 
-		var (filePath, lineNumber) = customStackTrace;
+		_action = action;
 
 		// Self diagnose errors to console and apply safe fallbacks...
 		if (string.IsNullOrWhiteSpace(Signature))

@@ -54,6 +54,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	public string LongDesc => $"{Description}{(string.IsNullOrWhiteSpace(DescriptionInternal) ? string.Empty : $"\n{DescriptionInternal}")}";
 	protected virtual string DescriptionInternal { get; } = "";
 
+	string _resourceLocation = "Unknown location. Did you forget to initialize?";
+	public string SourceLocation => _resourceLocation;
+
 	/// <summary>
 	/// Called at the end of initialize. This can be used by children to protect data or create special caches.
 	/// </summary>
@@ -110,6 +113,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		// Note: This causes interop overhead at startup. That's okay and unavoidable.
 		// The resource filename IS the command name. Convenience vs customization and all that.
 		Signature = ConsoleFormatter.ToSignature(ResourcePath.GetFile().GetBaseName());
+
+		_resourceLocation = ResourcePath;
 
 		if (Persist)
 			PersistentCVarRegistry.Write(Signature, this);
