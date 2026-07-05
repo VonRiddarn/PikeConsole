@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://dbmyyyatcxi0a" path="res://addons/PikeConsole/Core/Autoloading/FrontendInitializer.cs" id="3_tcwn3"]
 [ext_resource type="Script" uid="uid://h3qof2uc0f6u" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/AliasCommandSet.cs" id="4_cdf7k"]
 [ext_resource type="Script" uid="uid://byjf7sauxgmfc" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/GlobalCommandSet.cs" id="4_iryi3"]
+[ext_resource type="Script" uid="uid://ha2jv4833lgr" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/EnvironmentCommandSet.cs" id="5_olhe5"]
 
 [node name="PikeConsole" type="Node" unique_id=1879456131]
 
@@ -20,6 +21,9 @@ script = ExtResource("2_hj4c2")
 
 [node name="GlobalCommandSet" type="Node" parent="CommandSets" unique_id=1503279071]
 script = ExtResource("4_iryi3")
+
+[node name="EnvironmentCommandSet" type="Node" parent="CommandSets" unique_id=683622182]
+script = ExtResource("5_olhe5")
 
 [node name="AliasCommandSet" type="Node" parent="CommandSets" unique_id=508363395]
 script = ExtResource("4_cdf7k")
