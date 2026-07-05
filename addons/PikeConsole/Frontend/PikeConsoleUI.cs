@@ -30,6 +30,13 @@ public partial class PikeConsoleUI : Node
 	void OnLogEmitted(in LogEvent logEvent)
 	{
 		// Lol, this is not how we should dod it...
+		if (logEvent.LogLevel is LogLevel.Engine_Warning or LogLevel.Engine_Error)
+			_richText.Text += $"[Engine] ";
+
+		string p = logEvent.SourcePath;
+		if (!string.IsNullOrWhiteSpace(p))
+			_richText.Text += $"{p}: ";
+
 		_richText.Text += $"{logEvent.Message}\n";
 	}
 
