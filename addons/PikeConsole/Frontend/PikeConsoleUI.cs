@@ -35,7 +35,7 @@ public partial class PikeConsoleUI : Node
 
 		string p = logEvent.SourcePath;
 		if (!string.IsNullOrWhiteSpace(p))
-			_richText.Text += $"{p}: ";
+			_richText.Text += $"{p}:";
 
 		_richText.Text += $"{logEvent.Message}\n";
 	}
