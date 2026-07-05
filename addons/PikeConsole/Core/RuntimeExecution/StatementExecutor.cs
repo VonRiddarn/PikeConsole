@@ -142,7 +142,7 @@ public static class StatementExecutor
 		else // Once again, else is not needed, but if we ever accidentally remove a return we are safe.
 		{
 			// ----- ----- NOT FOUND ----- -----
-			PikeLogger.Log(LogTarget.All, $"Unknown command: \"{signature}\"", forceLog: true);
+			PikeLogger.Log(LogTarget.Runtime, $"Unknown command: \"{signature}\"", forceLog: true);
 			return;
 		}
 
