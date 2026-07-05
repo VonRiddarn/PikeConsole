@@ -45,11 +45,11 @@ public partial class PikeConsoleUI : Node
 		{
 			prefix += tag switch
 			{
-				RuntimeExecutionLogTags.Success => "[Success]",
-				RuntimeExecutionLogTags.InvalidArgs => "[Invalid Args]",
-				RuntimeExecutionLogTags.DeniedCheat => "[Cheatmode]",
-				RuntimeExecutionLogTags.Failed => "[Failed]",
-				RuntimeExecutionLogTags.Error => "[Error]",
+				RuntimeExecutionLogTags.Success => "[[color=green]Success[/color]]",
+				RuntimeExecutionLogTags.InvalidArgs => "[[color=yellow]Invalid Args[/color]]",
+				RuntimeExecutionLogTags.DeniedCheat => "[[color=yellow]Cheatmode[/color]]",
+				RuntimeExecutionLogTags.Failed => "[[color=orange]Failed[/color]]",
+				RuntimeExecutionLogTags.Error => "[[color=red]Error[/color]]",
 				_ => string.Empty
 			};
 		}
