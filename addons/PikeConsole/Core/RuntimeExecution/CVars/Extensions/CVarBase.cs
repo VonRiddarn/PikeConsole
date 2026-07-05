@@ -198,7 +198,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		}
 		catch (Exception e)
 		{
-			return new(ExecutionResponseStatus.Error, $"An unexpected error occurred when setting value of \"{Signature}\": {e.Message}");
+			return new(ExecutionResponseStatus.Error, $"Uncaught exception when setting value of \"{Signature}\"\nin {SourceLocation}:\n{e.Message}");
 		}
 
 		// Return success, but log nothing.

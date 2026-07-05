@@ -82,7 +82,7 @@ public sealed class Command : IRuntimeExecutable
 		}
 		catch (Exception e)
 		{
-			return new(ExecutionResponseStatus.Error, $"Uncaught exception caused by \"{Signature}\": {e.Message}");
+			return new(ExecutionResponseStatus.Error, $"Uncaught exception caused by \"{Signature}\"\nin {SourceLocation}:\n{e.Message}");
 		}
 	}
 
