@@ -85,7 +85,7 @@ public static class StatementExecutor
 				{
 					case ExecutionResponseStatus.Success:
 						if (!silent)
-							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.Success]);
+							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags]);
 						break;
 
 					case ExecutionResponseStatus.InvalidArgs:
@@ -102,7 +102,7 @@ public static class StatementExecutor
 
 					case ExecutionResponseStatus.Error:
 					default:
-						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [.. response.Flags, RuntimeExecutionLogTags.Error]);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [.. response.Flags]);
 						break;
 				}
 			}
