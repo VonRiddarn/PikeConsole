@@ -118,7 +118,7 @@ public partial class GlobalCommandSet : CommandSet
 						if(!cvar.ResetValue(ExecutionSource.Player))
 							return new(ExecutionResponseStatus.DeniedCheat, $"Failed to reset value of \"{cvar.Signature}\". CVar is cheat protected.");
 
-							return new(ExecutionResponseStatus.Success,$"\"{cvar.Signature}\" has been reset.");
+						return new(ExecutionResponseStatus.Success,$"\"{cvar.Signature}\" has been reset.");
 					}
 
 					return new(ExecutionResponseStatus.Failed, $"\"{rte.Signature}\" is not a CVar.");
