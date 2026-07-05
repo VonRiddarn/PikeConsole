@@ -91,6 +91,7 @@ public static class PikeLogger
 		LogLevel logLevel,
 		bool forceLog = false,
 		string domain = "",
+		string[] tags = null,
 		bool includePath = false,
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0,
@@ -184,6 +185,7 @@ public static class PikeLogger
 				return;
 #endif
 
+
 			// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
 			LogEmitted?.Invoke(new LogEvent(
 				HashCode.Combine(filePath, lineNumber, memberName),
@@ -191,6 +193,7 @@ public static class PikeLogger
 				message,
 				forceLog,
 				domain,
+				tags ??= [],
 				includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
 			));
 
@@ -223,12 +226,13 @@ public static class PikeLogger
 		LogLevel logLevel = LogLevel.Info,
 		bool forceLog = false,
 		string domain = "",
+		string[] tags = null,
 		bool includePath = false,
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0,
 		[CallerMemberName] string memberName = "")
 	{
-		LogInternal(logTarget, ref handler, logLevel, forceLog, domain, includePath, filePath, lineNumber, memberName);
+		LogInternal(logTarget, ref handler, logLevel, forceLog, domain, tags, includePath, filePath, lineNumber, memberName);
 	}
 
 	/// <summary>
@@ -252,12 +256,13 @@ public static class PikeLogger
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
 		bool forceLog = false,
 		string domain = "",
+		string[] tags = null,
 		bool includePath = false,
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0,
 		[CallerMemberName] string memberName = "")
 	{
-		LogInternal(logTarget, ref handler, LogLevel.Success, forceLog, domain, includePath, filePath, lineNumber, memberName);
+		LogInternal(logTarget, ref handler, LogLevel.Success, forceLog, domain, tags, includePath, filePath, lineNumber, memberName);
 	}
 
 	/// <summary>
@@ -281,12 +286,13 @@ public static class PikeLogger
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
 		bool forceLog = false,
 		string domain = "",
+		string[] tags = null,
 		bool includePath = true,
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0,
 		[CallerMemberName] string memberName = "")
 	{
-		LogInternal(logTarget, ref handler, LogLevel.Warning, forceLog, domain, includePath, filePath, lineNumber, memberName);
+		LogInternal(logTarget, ref handler, LogLevel.Warning, forceLog, domain, tags, includePath, filePath, lineNumber, memberName);
 	}
 
 	/// <summary>
@@ -310,11 +316,12 @@ public static class PikeLogger
 		[InterpolatedStringHandlerArgument("logTarget")] ref LogInterpolatedStringHandler handler,
 		bool forceLog = false,
 		string domain = "",
+		string[] tags = null,
 		bool includePath = true,
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0,
 		[CallerMemberName] string memberName = "")
 	{
-		LogInternal(logTarget, ref handler, LogLevel.Error, forceLog, domain, includePath, filePath, lineNumber, memberName);
+		LogInternal(logTarget, ref handler, LogLevel.Error, forceLog, domain, tags, includePath, filePath, lineNumber, memberName);
 	}
 }

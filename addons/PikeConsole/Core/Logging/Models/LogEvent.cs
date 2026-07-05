@@ -1,9 +1,11 @@
+using System;
+
 namespace FractalPike.PikeConsole.Core.Logging;
 
 /// <summary>
 /// A struct used for outwards communications from the PikeLogger.
 /// </summary>
-public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string message, bool forceLog, string domain, string sourcePath = "")
+public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string message, bool forceLog, string domain, string[] tags, string sourcePath = "")
 {
 	/// <summary>
 	/// Unique key built using the callers filepath and linenumber. Used by listeners for throttling.
@@ -36,7 +38,73 @@ public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string mes
 	public readonly string Domain = domain;
 
 	/// <summary>
+	/// Optional tags that can be appended to the event to be used for anything from filtering to formatting.
+	/// </summary>
+	public readonly string[] Tags = tags;
+
+	/// <summary>
 	/// The caller path in plaintext. Empty if "includePath" was not checked in the PikeLogger.
 	/// </summary>
 	public readonly string SourcePath = sourcePath;
+
+	/// <summary>
+	/// Compares many tags and returns true if any one exists in the tags array.
+	/// </summary>
+	/// <param name="searchTags"></param>
+	/// <returns></returns>
+	public bool HasAnyTag(string[] searchTags)
+	{
+		if (Tags == null || Tags.Length == 0)
+			return false;
+
+		for (int i = 0; i < searchTags.Length; i++)
+		{
+			// Note: This is faster than LINQ's "Contains" and zero allocating.
+			if (Array.IndexOf(Tags, searchTags[i]) >= 0)
+				return true;
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Fetches the first instance of a tag and outputs it into the tag parameter.
+	/// Useful for tag based switch statements.
+	/// </summary>
+	/// <param name="searchTags"></param>
+	/// <param name="tag"></param>
+	/// <returns></returns>
+	public bool TryGetAnyTag(string[] searchTags, out string tag)
+	{
+		tag = string.Empty;
+
+		if (Tags == null || Tags.Length == 0)
+			return false;
+
+		for (int i = 0; i < searchTags.Length; i++)
+		{
+			int index = Array.IndexOf(Tags, searchTags[i]);
+			// Note: This is faster than LINQ's "Contains" and zero allocating.
+			if (index >= 0)
+			{
+				tag = Tags[index];
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	/// <summary>
+	/// Compares for one tag and returns true if it exists in the tags array.
+	/// </summary>
+	/// <param name="searchTag"></param>
+	/// <returns></returns>
+	public bool HasTag(string searchTag)
+	{
+		if (Tags == null || Tags.Length == 0)
+			return false;
+
+		return Array.IndexOf(Tags, searchTag) >= 0;
+	}
 }

@@ -90,16 +90,24 @@ public static class StatementExecutor
 					// 		If the command does not want to log its success, it doesn't need to.
 					case ExecutionResponseStatus.Success:
 						if (!silent)
-							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true);
+							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Success]);
 						break;
+
 					case ExecutionResponseStatus.InvalidArgs:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.InvalidArgs]);
 						break;
+
 					case ExecutionResponseStatus.Failed:
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
+						break;
+
 					case ExecutionResponseStatus.DeniedCheat:
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.DeniedCheat]);
+						break;
+
 					case ExecutionResponseStatus.Error:
 					default:
-						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [RuntimeExecutionLogTags.Error]);
 						break;
 				}
 			}

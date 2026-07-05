@@ -29,15 +29,35 @@ public partial class PikeConsoleUI : Node
 
 	void OnLogEmitted(in LogEvent logEvent)
 	{
-		// Lol, this is not how we should dod it...
+		string prefix = string.Empty;
+
+		// Lol, this is not how we should do it...
+		// Though, it's a nice proof of concept!!
 		if (logEvent.LogLevel is LogLevel.Engine_Warning or LogLevel.Engine_Error)
-			_richText.Text += $"[Engine] ";
+			prefix += "[Engine]";
+		else if (logEvent.TryGetAnyTag([
+			RuntimeExecutionLogTags.Success,
+			RuntimeExecutionLogTags.InvalidArgs,
+			RuntimeExecutionLogTags.DeniedCheat,
+			RuntimeExecutionLogTags.Failed,
+			RuntimeExecutionLogTags.Error],
+			out string tag))
+		{
+			prefix += tag switch
+			{
+				RuntimeExecutionLogTags.Success => "[Success]",
+				RuntimeExecutionLogTags.InvalidArgs => "[Invalid Args]",
+				RuntimeExecutionLogTags.DeniedCheat => "[Cheatmode]",
+				RuntimeExecutionLogTags.Failed => "[Failed]",
+				RuntimeExecutionLogTags.Error => "[Error]",
+				_ => string.Empty
+			};
+		}
 
-		string p = logEvent.SourcePath;
-		if (!string.IsNullOrWhiteSpace(p))
-			_richText.Text += $"{p}:";
+		string sp = string.IsNullOrWhiteSpace(logEvent.SourcePath) ? string.Empty : $"{logEvent.SourcePath}: ";
 
-		_richText.Text += $"{logEvent.Message}\n";
+
+		_richText.Text += $"{prefix} {sp} {logEvent.Message}\n";
 	}
 
 	void OnInputSubmitted(string inputStatement)
