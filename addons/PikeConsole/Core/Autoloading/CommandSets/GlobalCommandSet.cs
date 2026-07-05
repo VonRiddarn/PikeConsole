@@ -2,6 +2,7 @@ using System.Text;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+using Godot;
 
 namespace FractalPike.PikeConsole.Core.Autoloading;
 
@@ -16,6 +17,28 @@ public partial class GlobalCommandSet : CommandSet
 			false,
 			(args) => {
 				PikeLogger.Log(LogTarget.Runtime, $"{string.Join(' ', args)}", forceLog: true, domain: "PikeConsole.Frontend");
+				return new(ExecutionResponseStatus.Success, null);
+			}
+		),
+		Command(
+			"push_warning",
+			"Push a warning to the Godot engine using GD.PushWarning. Used to test interop logger.",
+			"Combines all arguments into a string and pushes it to the Godot engine as a warning.",
+			"echo [..args]",
+			false,
+			(args) => {
+				GD.PushWarning(string.Join(' ', args));
+				return new(ExecutionResponseStatus.Success, null);
+			}
+		),
+		Command(
+			"push_error",
+			"Push a warning to the Godot engine using GD.PushError. Used to test interop logger.",
+			"Combines all arguments into a string and pushes it to the Godot engine as an error.",
+			"echo [..args]",
+			false,
+			(args) => {
+				GD.PushError(string.Join(' ', args));
 				return new(ExecutionResponseStatus.Success, null);
 			}
 		),
