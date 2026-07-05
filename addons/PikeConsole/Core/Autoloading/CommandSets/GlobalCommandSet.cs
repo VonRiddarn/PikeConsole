@@ -24,7 +24,7 @@ public partial class GlobalCommandSet : CommandSet
 			"push_warning",
 			"Push a warning to the Godot engine using GD.PushWarning. Used to test interop logger.",
 			"Combines all arguments into a string and pushes it to the Godot engine as a warning.",
-			"echo [..args]",
+			"push_warning [..args]",
 			false,
 			(args) => {
 				GD.PushWarning(string.Join(' ', args));
@@ -35,11 +35,21 @@ public partial class GlobalCommandSet : CommandSet
 			"push_error",
 			"Push a warning to the Godot engine using GD.PushError. Used to test interop logger.",
 			"Combines all arguments into a string and pushes it to the Godot engine as an error.",
-			"echo [..args]",
+			"push_error [..args]",
 			false,
 			(args) => {
 				GD.PushError(string.Join(' ', args));
 				return new(ExecutionResponseStatus.Success, null);
+			}
+		),
+		Command(
+			"throw",
+			"Throw a generic, unhandled exception to be caught by the StatementExecutor.",
+			"Combines all arguments into a message and throws a generic error in the .NET runtime environment. Used for testing the try-catch, PathMap and UI formatting.",
+			"throw [..args]",
+			false,
+			(args) => {
+				throw new System.Exception(string.Join(' ', args));
 			}
 		),
 		Command(
@@ -96,7 +106,8 @@ public partial class GlobalCommandSet : CommandSet
 					sb.Append($"\n[{signature}]\n\t\"{msg}\"");
 				}
 
-				return new(ExecutionResponseStatus.Success, sb.ToString());
+				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
+				return new(ExecutionResponseStatus.Success, null);
 			}
 		),
 		Command(
@@ -118,7 +129,7 @@ public partial class GlobalCommandSet : CommandSet
 						if(!cvar.ResetValue(ExecutionSource.Player))
 							return new(ExecutionResponseStatus.DeniedCheat, $"Failed to reset value of \"{cvar.Signature}\". CVar is cheat protected.");
 
-						return new(ExecutionResponseStatus.Success,$"\"{cvar.Signature}\" has been reset.");
+						return new(ExecutionResponseStatus.Success, $"\"{cvar.Signature}\" has been reset.");
 					}
 
 					return new(ExecutionResponseStatus.Failed, $"\"{rte.Signature}\" is not a CVar.");
