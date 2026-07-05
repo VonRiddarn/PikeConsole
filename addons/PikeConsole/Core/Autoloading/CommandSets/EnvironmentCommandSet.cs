@@ -47,10 +47,10 @@ public partial class EnvironmentCommandSet : CommandSet
 			$"{PREFIX}_info [no args]",
 			false,
 			(_) => {
-				StringBuilder sb = new($"{_projectName} \n");
-				sb.Append($"Godot version: {_godotVersion}\n");
-				sb.Append($"OS: {_osName} | RAM: {_systemRam}\n");
-				sb.Append($"CPU: {_cpuName}\n");
+				StringBuilder sb = new($"{_projectName}");
+				sb.AppendLine($"Godot version: {_godotVersion}");
+				sb.AppendLine($"OS: {_osName} | RAM: {_systemRam}");
+				sb.AppendLine($"CPU: {_cpuName}");
 				sb.Append($"GPU: {_videoAdapter} [API: {_videoAdapterApi}]");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
@@ -65,7 +65,7 @@ public partial class EnvironmentCommandSet : CommandSet
 			false,
 			(_) => {
 				StringBuilder sb = new($"Memory snapshot\n");
-				sb.Append($"System RAM: {_systemRam}\n");
+				sb.AppendLine($"System RAM: {_systemRam}");
 
 				double usedVramBytes = Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed);
 				sb.AppendLine($"VRAM Used: {DisplayBytes(usedVramBytes)}.");
@@ -74,7 +74,7 @@ public partial class EnvironmentCommandSet : CommandSet
 				sb.AppendLine($"Free: {DisplayBytes(systemAvailableBytes)}");
 
 				long csharpRamBytes = GC.GetTotalMemory(false);
-				sb.AppendLine($"Used (.NET): {DisplayBytes(csharpRamBytes)}");
+				sb.Append($"Used (.NET): {DisplayBytes(csharpRamBytes)}");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
 				return new(ExecutionResponseStatus.Success, null);
