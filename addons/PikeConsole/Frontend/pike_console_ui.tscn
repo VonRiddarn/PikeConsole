@@ -70,6 +70,7 @@ grow_vertical = 2
 [node name="OutputDisplay" type="RichTextLabel" parent="CanvasLayer/Layout" unique_id=107930]
 layout_mode = 2
 size_flags_vertical = 3
+bbcode_enabled = true
 
 [node name="LineEdit" type="LineEdit" parent="CanvasLayer" unique_id=1853006253]
 anchors_preset = -1

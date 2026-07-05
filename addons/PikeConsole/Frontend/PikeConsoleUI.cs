@@ -34,8 +34,8 @@ public partial class PikeConsoleUI : Node
 		// Lol, this is not how we should do it...
 		// Though, it's a nice proof of concept!!
 		if (logEvent.LogLevel is LogLevel.Engine_Warning or LogLevel.Engine_Error)
-			prefix += "[Engine]";
-		else if (logEvent.TryGetAnyTag([
+			prefix += "[Engine] ";
+		else if (!logEvent.HasTag(RuntimeExecutionLogTags.NoHeader) && logEvent.TryGetAnyTag([
 			RuntimeExecutionLogTags.Success,
 			RuntimeExecutionLogTags.InvalidArgs,
 			RuntimeExecutionLogTags.DeniedCheat,
@@ -45,11 +45,11 @@ public partial class PikeConsoleUI : Node
 		{
 			prefix += tag switch
 			{
-				RuntimeExecutionLogTags.Success => "[[color=green]Success[/color]]",
-				RuntimeExecutionLogTags.InvalidArgs => "[[color=yellow]Invalid Args[/color]]",
-				RuntimeExecutionLogTags.DeniedCheat => "[[color=yellow]Cheatmode[/color]]",
-				RuntimeExecutionLogTags.Failed => "[[color=orange]Failed[/color]]",
-				RuntimeExecutionLogTags.Error => "[[color=red]Error[/color]]",
+				RuntimeExecutionLogTags.Success => "[[color=green]Success[/color]] ",
+				RuntimeExecutionLogTags.InvalidArgs => "[[color=yellow]Invalid Args[/color]] ",
+				RuntimeExecutionLogTags.DeniedCheat => "[[color=yellow]Cheatmode[/color]] ",
+				RuntimeExecutionLogTags.Failed => "[[color=orange]Failed[/color]] ",
+				RuntimeExecutionLogTags.Error => "[[color=red]Error[/color]] ",
 				_ => string.Empty
 			};
 		}
@@ -57,12 +57,12 @@ public partial class PikeConsoleUI : Node
 		string sp = string.IsNullOrWhiteSpace(logEvent.SourcePath) ? string.Empty : $"{logEvent.SourcePath}: ";
 
 
-		_richText.Text += $"{prefix} {sp} {logEvent.Message}\n";
+		_richText.AppendText($"{prefix}{sp}{logEvent.Message}\n");
 	}
 
 	void OnInputSubmitted(string inputStatement)
 	{
-		_richText.Text += $"> {_inputField.Text}\n";
+		_richText.AppendText($"> {_inputField.Text}\n");
 		StatementExecutor.Execute(ExecutionSource.Player, inputStatement);
 		_inputField.Clear();
 	}

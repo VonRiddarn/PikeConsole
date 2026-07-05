@@ -83,31 +83,26 @@ public static class StatementExecutor
 			{
 				switch (response.Status)
 				{
-					// Using fallthrough cases so that we can map certain statuses to different log severities.
-					// NOTE TO FUTURE SELF: 
-					// 		Do not start adding response overrides here.
-					// 		This is a dumb execution pipe, not a response processor.
-					// 		If the command does not want to log its success, it doesn't need to.
 					case ExecutionResponseStatus.Success:
 						if (!silent)
-							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Success]);
+							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.Success]);
 						break;
 
 					case ExecutionResponseStatus.InvalidArgs:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.InvalidArgs]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.InvalidArgs]);
 						break;
 
 					case ExecutionResponseStatus.Failed:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.Failed]);
 						break;
 
 					case ExecutionResponseStatus.DeniedCheat:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.DeniedCheat]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.DeniedCheat]);
 						break;
 
 					case ExecutionResponseStatus.Error:
 					default:
-						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [RuntimeExecutionLogTags.Error]);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [.. response.Flags, RuntimeExecutionLogTags.Error]);
 						break;
 				}
 			}
