@@ -231,11 +231,11 @@ func inject_setting(setting: Dictionary) -> void:
 	# Defines the default value (reset spinner button) for the created setting.
 	ProjectSettings.set_initial_value(path, default_value)
 	ProjectSettings.add_property_info({
-        "name": path,
-        "type": type,
-        "hint": hint,
-        "hint_string": hint_string
-    })
+		"name": path,
+		"type": type,
+		"hint": hint,
+		"hint_string": hint_string
+	})
 
 # Adding keys is basically a carbon copy of how we add other settings.
 # Check if they exist and add to project.godot or return early.
