@@ -54,7 +54,6 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 
 ## 🧰 Requirements
 
-- **Godot 4.6 or later**
 - **C# 12.0 (.NET 8) or later**
 
 ## ⚠️ Privacy notice!
