@@ -43,7 +43,7 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 - [x] Refactor hardcoded configs to internal dogfeed CVars -- We are officially dogs baby!!! 🦴🐶
 - [x] Create first documentation copy using MKDocs -- FINALLY!! Still a lot to be done, but core API refs are written. 🎉
 - [x] Create a tech-demo console UI -- Console achieved! 😎
--   - [ ] Create base command sets
+- [ ] Create base command sets
 -   - [x] (Global)
 -   - [x] (Alias)
 -   - [ ] (Environment)
