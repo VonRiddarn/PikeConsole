@@ -11,6 +11,9 @@ Add a button for "save logs to file" that automatically saves all current logs f
 Integrate with the native filesystem so that non-.technical players / end users can save it to an easy accessible place (like the desktop).  
 Since all logs already live in the .NET environment this should be SUPER EASY. It's more or less just a for loop, stringbuilder and `File.WriteAllText()`
 
+Alternative solution: Have a button and for opening the `user://` folder.  
+This solves the issue game-wide where the player can just browse their user files.
+
 ### TODO: Diagnostic CommandSet
 
 Add a designated commandset for runtime diagnostic measuring, like: `diag_mem_start` and `diag_mem_stop`.  
