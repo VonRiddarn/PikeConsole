@@ -2,7 +2,8 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 public interface ICVar : IRuntimeExecutable
 {
 	public bool Persist { get; }
-	public bool ResetValue(ExecutionSource executionSource);
+
+	public bool ResetValue(ExecutionSource executionSource, bool ramOnly = false);
 
 	/// <summary>Used by the individual CVar to register itself to the registry.</summary>
 	public void Initialize();

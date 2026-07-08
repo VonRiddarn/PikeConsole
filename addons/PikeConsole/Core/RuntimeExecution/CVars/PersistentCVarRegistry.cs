@@ -38,6 +38,22 @@ public static class PersistentCVarRegistry
 	}
 
 	/// <summary>
+	/// Resets all persistent CVars.
+	/// </summary>
+	/// <remarks>
+	/// This will trigger the Update() method, meaning any config systems listening will reset.<br />
+	/// To avoid this ramOnly can be used, though that could cause desync in the settings! Not for ordinary use! 
+	/// </remarks>
+	/// <param name="ramOnly">Not for ordinary use! Only set to true if you are handling the settings desync yourself.</param>
+	public static void ResetAll(bool ramOnly = false)
+	{
+		foreach (ICVar cvar in GetSnapshot().Values)
+		{
+			cvar.ResetValue(ExecutionSource.System, ramOnly);
+		}
+	}
+
+	/// <summary>
 	/// Takes a snapshot of the registry in its current state.
 	/// This allocates memory and should be used only when actually writing to file.
 	/// </summary>

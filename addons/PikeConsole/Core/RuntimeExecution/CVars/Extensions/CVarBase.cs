@@ -146,7 +146,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		_isInitialized = true;
 	}
 
-	public bool ResetValue(ExecutionSource executionSource)
+	public bool ResetValue(ExecutionSource executionSource, bool ramOnly = false)
 	{
 		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
 			return false;
@@ -155,7 +155,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		Value = _defaultValue;
 
-		if (modified && Persist)
+		if (modified && Persist && !ramOnly)
 			PersistentCVarRegistry.Update(this);
 
 		return true;
@@ -238,6 +238,6 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	public virtual string DisplayValue(T value) => value?.ToString() ?? NOT_ASSIGNED;
 
 
-	string MessageOrFallback(string message, string fallback) => string.IsNullOrWhiteSpace(message) ? fallback : message;
+	static string MessageOrFallback(string message, string fallback) => string.IsNullOrWhiteSpace(message) ? fallback : message;
 
 }
