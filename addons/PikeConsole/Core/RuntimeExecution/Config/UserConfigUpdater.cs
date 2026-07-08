@@ -20,6 +20,7 @@ public partial class UserConfigUpdater : Node
 
 	private void OnCVarChanged(ICVar _)
 	{
-		// Debounce the save
+		// TODO: DEBOUNCE THIS!!
+		UserConfigManager.SaveCurrentConfig();
 	}
 }
