@@ -1,16 +1,81 @@
+using FractalPike.PikeConsole.Config;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 using System;
-using System.Collections.Generic;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
-// This manages the client_settings.cfg file and nothing else.
-// It is not a generic config manager. It is the players saved prefered settings.
-// This will run on startup, which is how all persistent CVar values are re-added, EG: r_viewdistance 5
+
+// TODO: HUGE CHANGE CFG SYSTEM!! LOOK HERE -- Bookmark 
+// Huge change:
+// The system will use the extention "ecfg" instead. It stands for ExecutableConfig.
+// This makes us able to ignore other files that may potentially share directory without having to rely on hacky naming.
+// Eg users: 
+// active.cfg -- Godot file
+// Timmy.ecfg -- Executable Config, and in this case, a valid profile
+
 public static class UserConfigManager
 {
-	private static readonly Dictionary<string, string> _activeConfig = [];
+	// Constants for easier access within the filesystem.
+	// We are using a Godot config file to get the stored last user.
+	const string FILENAME = "active.cfg";
+	const string SECTION = "Boot";
+	const string KEY = "last_used_config";
+	const string DEFAULT_USER = "user_default";
 
-	private const string CONFIG_FILENAME = "client_settings.cfg";
+	public static string[] GetAvailableConfigs()
+	{
+		throw new NotImplementedException();
+	}
+
+	public static void RenameConfig(string configName, string newName)
+	{
+		throw new NotImplementedException();
+	}
+
+	public static bool CreateUserConfig(bool selectOnCreate = true)
+	{
+		// Create a user profile file and potentially select it.
+		// Returns true if a profile was successfully created.
+		throw new NotImplementedException();
+	}
+
+	public static bool RemoveUserConfig(string configName)
+	{
+		// Match a filename with the name of the profile. Note that this can be without the "user_" prefix.
+		// In those cases we manually add it so that we aren't able to destroy the "active.setting" file.
+		throw new NotImplementedException();
+	}
+
+	public static bool SelectConfig(string name)
+	{
+		// Select a profile.
+		// Note: 
+		// This will clear all the persistant variables using persistantrepo.ResetAll(ramOnly: true)
+		// Then select the new profile and run all commands within - which will automatically make settings apply to the persistent cache.
+		throw new NotImplementedException();
+	}
+
+	public static void SaveCurrentConfig()
+	{
+		ConfigFile gdConfig = new();
+
+		UserFileSystem.EnsureDirectory(ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory));
+
+		if (gdConfig.Load($"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}") != Error.Ok)
+		{
+			gdConfig.SetValue(SECTION, KEY, DEFAULT_USER);
+		}
+	}
+
+	public static string GetCurrentConfig(string fallbackProfile = "default")
+	{
+		ConfigFile gdConfig = new();
+
+		if (gdConfig.Load($"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}") != Error.Ok)
+			return fallbackProfile;
+
+		return gdConfig.GetValue(SECTION, KEY, fallbackProfile).AsString();
+	}
 
 	// TODO: Implement logic here
 	// Note: We might want to prime for multiple profiles right away...
