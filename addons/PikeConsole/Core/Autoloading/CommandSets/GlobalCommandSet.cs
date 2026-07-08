@@ -15,7 +15,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Combines all arguments into a string and returns the concatenated result.",
 			"echo [..args]",
 			false,
-			(args) => {
+			static (args) => {
 				PikeLogger.Log(LogTarget.Runtime, $"{string.Join(' ', args)}", forceLog: true, domain: "PikeConsole.Frontend");
 				return new(ExecutionResponseStatus.Success, null);
 			}
@@ -26,7 +26,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Combines all arguments after the first into a string and logs the concatenated result to a specific environment. Used to test killswitches.",
 			"echo_target [runtime | debug | editor | all] [..args]",
 			false,
-			(args) => {
+			static (args) => {
 				if (args.Length < 2)
 					return new(ExecutionResponseStatus.InvalidArgs, "Usage: echo [target] [message]");
 
@@ -48,7 +48,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Combines all arguments into a string and pushes it to the Godot engine as a warning.",
 			"push_warning [..args]",
 			false,
-			(args) => {
+			static (args) => {
 				GD.PushWarning(string.Join(' ', args));
 				return new(ExecutionResponseStatus.Success, null);
 			}
@@ -59,7 +59,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Combines all arguments into a string and pushes it to the Godot engine as an error.",
 			"push_error [..args]",
 			false,
-			(args) => {
+			static (args) => {
 				GD.PushError(string.Join(' ', args));
 				return new(ExecutionResponseStatus.Success, null);
 			}
@@ -70,7 +70,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Combines all arguments into a message and throws a generic error in the .NET runtime environment. Used for testing the try-catch, PathMap and UI formatting.",
 			"throw [..args]",
 			false,
-			(args) => {
+			static (args) => {
 				throw new System.Exception(string.Join(' ', args));
 			}
 		),
@@ -80,7 +80,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Counts all arguments and logs an integer of the count.",
 			"count [..args]",
 			false,
-			(args) => {
+			static (args) => {
 				PikeLogger.Log(LogTarget.Runtime, $"{args.Length.ToString()}", forceLog: true, domain: "PikeConsole.Frontend");
 				return new(ExecutionResponseStatus.Success, null);
 			}
@@ -91,7 +91,7 @@ public partial class GlobalCommandSet : CommandSet
 			null,
 			"help [signature]",
 			false,
-			(args) => {
+			static (args) => {
 				if(!ArgumentParser.ValidateCount(args, 1, out string error))
 					return new(ExecutionResponseStatus.InvalidArgs, error);
 
@@ -112,7 +112,7 @@ public partial class GlobalCommandSet : CommandSet
 			null,
 			"whereis [..signatures]",
 			false,
-			(args) => {
+			static (args) => {
 				if(args.Length < 1)
 					return new(ExecutionResponseStatus.InvalidArgs, "\"whereis\" must be called with at least 1 argument.");
 
@@ -138,7 +138,7 @@ public partial class GlobalCommandSet : CommandSet
 			"Reset the value of a CVar and remove persistance overrides from the player settings config.",
 			"reset [signature]",
 			false,
-			(args) => {
+			static (args) => {
 				if(!ArgumentParser.ValidateCount(args, 1, out string error))
 					return new(ExecutionResponseStatus.InvalidArgs, error);
 
@@ -166,7 +166,7 @@ public partial class GlobalCommandSet : CommandSet
 			null,
 			"list [term?]",
 			false,
-			(args) => {
+			static (args) => {
 				string term = string.Join(' ', args);
 				var rtes = RegistryBrowser.FindExecutables(term, SearchMode.Contains, true);
 				return FormatAndLogResults(rtes, term, "results");
@@ -178,7 +178,7 @@ public partial class GlobalCommandSet : CommandSet
 			null,
 			"list_commands [term?]",
 			false,
-			(args) => {
+			static (args) => {
 				string term = string.Join(' ', args);
 				var rtes = RegistryBrowser.FindCommands(term, SearchMode.Contains, true);
 				return FormatAndLogResults(rtes, term, "commands");
@@ -190,7 +190,7 @@ public partial class GlobalCommandSet : CommandSet
 			null,
 			"list_cvars [term?]",
 			false,
-			(args) => {
+			static (args) => {
 				string term = string.Join(' ', args);
 				var rtes = RegistryBrowser.FindCVars(term, SearchMode.Contains, true);
 				return FormatAndLogResults(rtes, term, "cvars");
@@ -200,7 +200,7 @@ public partial class GlobalCommandSet : CommandSet
 
 	// DRY code is nice code. This is basically just a router for all list commands.
 	// Commands and CVars are both IRuntimeExecutables, so this is fine.
-	Response<ExecutionResponseStatus> FormatAndLogResults(IRuntimeExecutable[] rtes, string term, string nounPlural)
+	static Response<ExecutionResponseStatus> FormatAndLogResults(IRuntimeExecutable[] rtes, string term, string nounPlural)
 	{
 		if (rtes.Length < 1)
 			return new(ExecutionResponseStatus.Success, string.IsNullOrWhiteSpace(term) ? $"No {nounPlural} found." : $"No {nounPlural} found matching \"{term}\".");

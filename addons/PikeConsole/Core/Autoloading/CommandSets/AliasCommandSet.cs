@@ -15,7 +15,7 @@ public partial class AliasCommandSet : CommandSet
 			null,
 			"alias [alias signature] \"[alias statement]\"",
 			false,
-			(args) => {
+			static (args) => {
 				if(!ArgumentParser.ValidateCount(args, 2, out string error))
 					return new(ExecutionResponseStatus.InvalidArgs, error);
 
@@ -35,7 +35,7 @@ public partial class AliasCommandSet : CommandSet
 			null,
 			"alias_list [..term?]",
 			false,
-			(args) => {
+			static (args) => {
 				string term = string.Join(' ', args);
 				var aliases = RegistryBrowser.FindAliases(term, SearchMode.Contains, true);
 

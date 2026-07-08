@@ -35,7 +35,7 @@ public partial class EnvironmentCommandSet : CommandSet
 			"Shows OS, Engine version, GPU, GPU-API and RAM.",
 			$"{PREFIX}_info [no args]",
 			false,
-			(_) => {
+			static (_) => {
 				StringBuilder sb = new($"{GetProjectAndVersion()}\n");
 				sb.AppendLine($"\tGodot version: {Engine.GetVersionInfo()["string"].AsString()}");
 				sb.AppendLine($"\tOS: {OS.GetName()} | RAM: {DisplayBytes((long)OS.GetMemoryInfo()["physical"], false)}");
@@ -52,7 +52,7 @@ public partial class EnvironmentCommandSet : CommandSet
 			"Shows all relevant memory information as is. Provides live-diagnostic data for the snapshot.",
 			$"{PREFIX}_mem [no args]",
 			false,
-			(_) => {
+			static (_) => {
 				StringBuilder sb = new($"MEMORY SNAPSHOT\n");
 				sb.AppendLine($"\tSystem RAM: {DisplayBytes((long)OS.GetMemoryInfo()["physical"], false)}");
 
@@ -75,7 +75,7 @@ public partial class EnvironmentCommandSet : CommandSet
 			"Forces the garbage collector to run. Used for debugging and testing memory allocation.",
 			$"{PREFIX}_gc [no args]",
 			false,
-			(_) => {
+			static (_) => {
 				try{
 					GC.Collect();
 				}
@@ -92,7 +92,7 @@ public partial class EnvironmentCommandSet : CommandSet
 			"Shows all relevant time information as is. Provides live-diagnostic data for the snapshot.",
 			$"{PREFIX}_time [no args]",
 			false,
-			(_) => {
+			static (_) => {
 				StringBuilder sb = new("TIME SNAPSHOT\n");
 				sb.AppendLine($"\t{DateTime.Now}");
 
