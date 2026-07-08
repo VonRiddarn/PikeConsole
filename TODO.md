@@ -19,3 +19,12 @@ This solves the issue game-wide where the player can just browse their user file
 Add a designated commandset for runtime diagnostic measuring, like: `diag_mem_start` and `diag_mem_stop`.  
 Whilst active, measure diagnostics and add a flag for "is diagnosing" (maybe CVar) so that we can give user feedback for diagnostic mode.  
 On stop, compile results to usefull information and print. Maybe an option for saving to file. (Or just use the built in "save logs to file" button)
+
+### TODO: String extentions
+
+Quick shorthands for forcing strings to start or end with certain things
+
+- EndWith -> If not end with, make end with
+- NoEndWith -> If end with, make no end with
+- StartWtih -> If not start with, make start with
+- NoStartWith -> If start with, make no start with
