@@ -57,10 +57,10 @@ const SETTING_CVAR_DIRECTORY: Dictionary[String, Variant] = {
 	"hint_string": ""
 }
 const SETTING_CONFIG_DIRECTORY: Dictionary[String, Variant] = {
-	"path": PATH_SETTINGS_CONFIG + "config_directory", 
-	"default_value": "user://cfg", 
+	"path": PATH_SETTINGS_CONFIG + "config_directory_name", 
+	"default_value": "cfg", 
 	"type": TYPE_STRING, 
-	"hint": PROPERTY_HINT_DIR, 
+	"hint": PROPERTY_HINT_NONE, 
 	"hint_string": ""
 }
 const SETTING_USE_USER_CONFIGS: Dictionary[String, Variant] = {
@@ -142,8 +142,6 @@ func _enter_tree() -> void:
 	initialize_project_settings()
 	initialize_input_map()
 	initialize_directory(ProjectSettings.get_setting(SETTING_CVAR_DIRECTORY["path"]), "CVar")
-	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]), "config")
-	initialize_directory(ProjectSettings.get_setting(SETTING_CONFIG_DIRECTORY["path"]) + "/users", "user config")
 	add_autoload_singleton(AUTOLOAD_NAME, AUTOLOAD_PATH)
 	pike_log("%s autoload has been injected to the project settings." % [AUTOLOAD_NAME])
 

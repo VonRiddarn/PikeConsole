@@ -28,6 +28,12 @@ project/assembly_name="PikeConsole"
 
 enabled=PackedStringArray("res://addons/PikeConsole/plugin.cfg")
 
+[fractal_pike]
+
+pike_console/config/use_user_configs=true
+pike_console/editor/log_cvar_on_regsiter=false
+pike_console/editor/log_command_on_regsiter=false
+
 [input]
 
 pike_console_toggle={
