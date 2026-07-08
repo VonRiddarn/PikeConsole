@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://0aiogpicov8x"]
+
+[ext_resource type="Script" uid="uid://dd4hkfdh1kjoc" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigUpdater.cs" id="1_8g3nj"]
+
+[node name="UserConfigUpdater" type="Node" unique_id=371432207]
+script = ExtResource("1_8g3nj")

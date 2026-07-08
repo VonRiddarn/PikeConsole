@@ -1,7 +1,7 @@
 using FractalPike.PikeConsole.Config;
-using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 using System;
+using System.Collections.Generic;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 
@@ -20,7 +20,6 @@ public static class UserConfigManager
 	const string FILENAME = "active.cfg";
 	const string SECTION = "Boot";
 	const string KEY = "last_used_config";
-	const string DEFAULT_USER = "user_default";
 
 	public static string[] GetAvailableConfigs()
 	{
@@ -57,16 +56,29 @@ public static class UserConfigManager
 
 	public static void SaveCurrentConfig()
 	{
-		ConfigFile gdConfig = new();
+		// Get the data that we need to save or create the config.
+		string configPath = $"{ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory)}/{GetCurrentConfig()}.ecfg";
+		var cvarsToSave = PersistentCVarRegistry.GetSnapshot();
 
-		UserFileSystem.EnsureDirectory(ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory));
+		if (cvarsToSave.Count < 1)
+			return;
 
-		if (gdConfig.Load($"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}") != Error.Ok)
+		List<String> rows = new();
+
+		foreach (ICVar cvar in cvarsToSave.Values)
 		{
-			gdConfig.SetValue(SECTION, KEY, DEFAULT_USER);
+			if (cvar.IsModified)
+				rows.Add($"{cvar.Signature} {cvar.FormattedValue}; // [{cvar.DisplayType}] {cvar.CurrentValueDisplay}");
 		}
+
+		if (rows.Count < 1)
+			return;
+
 	}
 
+	/// <summary>
+	/// Gets the name of the current config. If the method fails, "fallbackProfile" is returned instead.
+	/// </summary>
 	public static string GetCurrentConfig(string fallbackProfile = "default")
 	{
 		ConfigFile gdConfig = new();
@@ -74,7 +86,11 @@ public static class UserConfigManager
 		if (gdConfig.Load($"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}") != Error.Ok)
 			return fallbackProfile;
 
-		return gdConfig.GetValue(SECTION, KEY, fallbackProfile).AsString();
+		string value = gdConfig.GetValue(SECTION, KEY, fallbackProfile).AsString();
+
+		// MAD allocation, but this will only trigger when persistent variables change anyway, and we debounce the saving.
+		// This is cold path usage.
+		return value.Replace(".ecfg", string.Empty).Trim().Replace(' ', '_');
 	}
 
 	// TODO: Implement logic here

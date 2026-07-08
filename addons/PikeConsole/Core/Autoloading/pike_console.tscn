@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://byjf7sauxgmfc" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/GlobalCommandSet.cs" id="4_iryi3"]
 [ext_resource type="Script" uid="uid://ha2jv4833lgr" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/EnvironmentCommandSet.cs" id="5_olhe5"]
 [ext_resource type="Script" uid="uid://tpc1u7agnekw" path="res://addons/PikeConsole/Core/Autoloading/ConfigInitializer.cs" id="7_jeug7"]
+[ext_resource type="PackedScene" uid="uid://0aiogpicov8x" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigUpdater.tscn" id="8_s6wl1"]
 
 [node name="PikeConsole" type="Node" unique_id=1879456131]
 
@@ -31,6 +32,7 @@ script = ExtResource("4_cdf7k")
 
 [node name="ConfigInitializer" type="Node" parent="." unique_id=1424947716]
 script = ExtResource("7_jeug7")
+_userConfigUpdater = ExtResource("8_s6wl1")
 
 [node name="FrontendInitializer" type="Node" parent="." unique_id=1955405307]
 script = ExtResource("3_tcwn3")
