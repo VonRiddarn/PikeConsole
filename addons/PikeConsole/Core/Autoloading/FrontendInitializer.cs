@@ -1,8 +1,9 @@
 using System;
 using FractalPike.PikeConsole.Config;
-using FractalPike.PikeConsole.Core.Autoloading;
 using FractalPike.PikeConsole.Core.Logging;
 using Godot;
+
+namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class FrontendInitializer : Node
 {
