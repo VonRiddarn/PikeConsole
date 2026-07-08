@@ -3,7 +3,7 @@ using Godot;
 
 namespace FractalPike.PikeConsole.Core.Utilities;
 
-public static class UserFileSystem
+public static class FileSystemHelper
 {
 	/// <summary>
 	/// The full path to the user directory on the system.

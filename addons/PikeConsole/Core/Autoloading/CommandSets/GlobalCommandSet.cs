@@ -204,12 +204,12 @@ public partial class GlobalCommandSet : CommandSet
 			$"userdir [no args]",
 			false,
 			static (_) => {
-				Error err = OS.ShellOpen(UserFileSystem.UserDirectory);
+				Error err = OS.ShellOpen(FileSystemHelper.UserDirectory);
 
 				if (err != Error.Ok)
 					return new(ExecutionResponseStatus.Error, $"Failed to open the user directory. OS Error: {err}");
 
-				return new(ExecutionResponseStatus.Success, $"Opened the user directoty at: {UserFileSystem.UserDirectory}");
+				return new(ExecutionResponseStatus.Success, $"Opened the user directoty at: {FileSystemHelper.UserDirectory}");
 			}
 		)
 	];
