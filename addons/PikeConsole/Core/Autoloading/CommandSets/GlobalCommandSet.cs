@@ -2,6 +2,7 @@ using System.Text;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
 namespace FractalPike.PikeConsole.Core.Autoloading;
@@ -196,6 +197,21 @@ public partial class GlobalCommandSet : CommandSet
 				return FormatAndLogResults(rtes, term, "cvars");
 			}
 		),
+		Command(
+			$"userdir",
+			"Opens the actual \"user://\" directory using the native file system and full system path.",
+			null,
+			$"userdir [no args]",
+			false,
+			static (_) => {
+				Error err = OS.ShellOpen(UserFileSystem.UserDirectory);
+
+				if (err != Error.Ok)
+					return new(ExecutionResponseStatus.Error, $"Failed to open the user directory. OS Error: {err}");
+
+				return new(ExecutionResponseStatus.Success, $"Opened the user directoty at: {UserFileSystem.UserDirectory}");
+			}
+		)
 	];
 
 	// DRY code is nice code. This is basically just a router for all list commands.
