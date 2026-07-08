@@ -13,6 +13,15 @@ public partial class ConfigInitializer : Node
 	public override void _EnterTree()
 	{
 		InitializeDirectories();
+
+		if (PikeConsoleConfig.UserConfigsEnabled && _userConfigUpdater == null)
+		{
+			PikeLogger.LogError(LogTarget.All, $"User config updater is not set in the Godot editor. Cannot initialize the Node!", forceLog: true);
+			return;
+		}
+
+		Node ucfgu = _userConfigUpdater.Instantiate();
+		AddChild(ucfgu);
 	}
 
 	static void InitializeDirectories()
