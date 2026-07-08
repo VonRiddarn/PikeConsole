@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Extensions;
@@ -39,10 +40,6 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// <summary>Used to apply description within the editor. Appended to the LongDesc property.</summary>
 	/// <remarks>Use property <c>LongDesc</c> for the most accurate long description.</remarks>
 	[Export(PropertyHint.MultilineText)] public string Description { get; private set; } = "";
-
-	// Used after the command to register it to the persistent registry without triggering a save.
-	// Useful when running startup scripts etc.
-	public const string RAM_ONLY_TAG = "ram_only";
 
 	// Set automatic
 	public string Signature { get; private set; } = string.Empty;
@@ -189,7 +186,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
 			return new(ExecutionResponseStatus.DeniedCheat, $"Failed to set value of \"{Signature}\". CVar is cheat protected.");
 
-		bool ramOnly = args.Length >= 2 && args[^1].Equals(RAM_ONLY_TAG, StringComparison.OrdinalIgnoreCase);
+		bool ramOnly = args.Length >= 2 && args[^1].Equals(FileSystemHelper.RAM_ONLY_FLAG, StringComparison.OrdinalIgnoreCase);
 
 		Response<CvarSetResponseStatus> response;
 

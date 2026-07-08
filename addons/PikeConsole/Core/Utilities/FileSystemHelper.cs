@@ -5,6 +5,9 @@ namespace FractalPike.PikeConsole.Core.Utilities;
 
 public static class FileSystemHelper
 {
+
+	public const string RAM_ONLY_FLAG = "ram_only";
+
 	/// <summary>
 	/// The full path to the user directory on the system.
 	/// </summary>
