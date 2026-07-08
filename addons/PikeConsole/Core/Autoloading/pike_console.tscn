@@ -28,8 +28,6 @@ script = ExtResource("5_olhe5")
 [node name="AliasCommandSet" type="Node" parent="CommandSets" unique_id=508363395]
 script = ExtResource("4_cdf7k")
 
-[node name="ConfigCommandSet" type="Node" parent="CommandSets" unique_id=1256457458]
-
 [node name="CfgLoader" type="Node" parent="." unique_id=1424947716]
 
 [node name="FrontendInitializer" type="Node" parent="." unique_id=1955405307]
