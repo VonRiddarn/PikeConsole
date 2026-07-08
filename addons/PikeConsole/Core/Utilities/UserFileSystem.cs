@@ -16,7 +16,7 @@ public static class UserFileSystem
 	/// <param name="segments">Segments leading towards the path to find. Eg: "cfg", "users" will locate the system path for user://cfg/users</param>
 	/// <returns>The full system path to the directory</returns>
 	public static string GetPath(params string[] segments)
-		=> Path.Combine([UserDirectory, .. segments]);
+		=> ProjectSettings.GlobalizePath(Path.Combine([UserDirectory, .. segments]));
 
 	/// <summary>
 	/// Ensures a directory exists at the desired location.
