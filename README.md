@@ -46,7 +46,7 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 - [ ] Create base command sets
 -   - [x] (Global)
 -   - [x] (Alias)
--   - [ ] (Environment)
+-   - [x] (Environment)
 -   - [ ] (Filesystem)
 - [ ] Create the executable config IO system (.cfg readers)
 - [ ] Create the UserConfigManager and add a Project Setting for opt-in
