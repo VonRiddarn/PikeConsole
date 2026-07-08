@@ -24,7 +24,7 @@ public partial class CVarCrawler : Node
 		CrawlForCVars(PikeConsoleConfig.CvarDirectory);
 	}
 
-	void CrawlForCVars(string currentPath)
+	static void CrawlForCVars(string currentPath)
 	{
 		using DirAccess dir = DirAccess.Open(currentPath);
 
@@ -40,7 +40,7 @@ public partial class CVarCrawler : Node
 		foreach (string dirName in dir.GetDirectories())
 		{
 			// Skip hidden folders, like ".godot" etc for performance.
-			if (dirName.StartsWith("."))
+			if (dirName.StartsWith('.'))
 				continue;
 
 			// Recursion!
