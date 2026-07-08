@@ -81,7 +81,6 @@ public static class UserConfigManager
 		string configName = GetCurrentConfig();
 		string root = $"{ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory)}/{configName}";
 		string path = $"{root}.ecfg";
-		string safePath = $"{root}.copy";
 		string tempPath = $"{root}.tmp";
 
 		// Actually apply the settings to real files.
@@ -93,7 +92,7 @@ public static class UserConfigManager
 			// If a real file exist, safe-replace the real file with the temp.
 			// If not, just rename the temp file.
 			if (File.Exists(path))
-				File.Replace(tempPath, path, safePath);
+				File.Replace(tempPath, path, null);
 			else
 				File.Move(tempPath, path);
 		}
