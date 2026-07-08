@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CVarBool" format=3 uid="uid://djtgbgtp5yjnx"]
+
+[ext_resource type="Script" uid="uid://j1th6vqhii2n" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarBool.cs" id="1_7ky1w"]
+
+[resource]
+script = ExtResource("1_7ky1w")
+Persist = true
+metadata/_custom_type_script = "uid://j1th6vqhii2n"
