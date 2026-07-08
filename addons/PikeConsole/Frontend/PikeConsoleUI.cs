@@ -36,8 +36,8 @@ public partial class PikeConsoleUI : Node
 
 		header += logEvent.LogLevel switch
 		{
-			LogLevel.Engine_Warning => "[[color=orange]Engine Warning[/color]] ",
-			LogLevel.Engine_Error => "[[color=red]Engine Error[/color]] ",
+			LogLevel.Engine_Warning => "[[color=#ff9c4b]Engine Warning[/color]] ",
+			LogLevel.Engine_Error => "[[color=#FF7373]Engine Error[/color]] ",
 			_ => string.Empty
 		};
 
@@ -53,9 +53,9 @@ public partial class PikeConsoleUI : Node
 			{
 				header += tag switch
 				{
-					RuntimeExecutionLogTags.InvalidArgs => "[[color=yellow]Invalid Args[/color]] ",
-					RuntimeExecutionLogTags.DeniedCheat => "[[color=yellow]Cheatmode[/color]] ",
-					RuntimeExecutionLogTags.Failed => "[[color=orange]Failed[/color]] ",
+					RuntimeExecutionLogTags.InvalidArgs => "[[color=#FFC973]Invalid Args[/color]] ",
+					RuntimeExecutionLogTags.DeniedCheat => "[[color=#FFC973]Cheatmode[/color]] ",
+					RuntimeExecutionLogTags.Failed => "[[color=#ff9c4b]Failed[/color]] ",
 					_ => string.Empty
 				};
 			}
@@ -63,9 +63,9 @@ public partial class PikeConsoleUI : Node
 			{
 				header += logEvent.LogLevel switch
 				{
-					LogLevel.Success => "[[color=green]Success[/color]] ",
-					LogLevel.Warning => "[[color=orange]Warning[/color]] ",
-					LogLevel.Error => "[[color=red]Error[/color]] ",
+					LogLevel.Success => "[[color=#B2FF73]Success[/color]] ",
+					LogLevel.Warning => "[[color=#ff9c4b]Warning[/color]] ",
+					LogLevel.Error => "[[color=#FF7373]Error[/color]] ",
 					_ => string.Empty
 				};
 			}
