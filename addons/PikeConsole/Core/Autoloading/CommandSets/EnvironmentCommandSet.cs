@@ -23,8 +23,8 @@ public partial class EnvironmentCommandSet : CommandSet
 	{
 		string n = ProjectSettings.GetSetting("application/config/name").AsString();
 		string v = ProjectSettings.GetSetting("application/config/version").AsString();
-		v = string.IsNullOrWhiteSpace(v) ? "" : $"({v})";
-		return $"{n} {v}";
+		v = string.IsNullOrWhiteSpace(v) ? string.Empty : $"({v})";
+		return $"{(OS.IsDebugBuild() ? "[DEBUG]" : string.Empty)}{n} {v}";
 	}
 
 	const string PREFIX = "env";
@@ -36,11 +36,11 @@ public partial class EnvironmentCommandSet : CommandSet
 			$"{PREFIX}_info [no args]",
 			false,
 			(_) => {
-				StringBuilder sb = new($"-- {GetProjectAndVersion()}\n");
-				sb.AppendLine($"Godot version: {Engine.GetVersionInfo()["string"].AsString()}");
-				sb.AppendLine($"OS: {OS.GetName()} | RAM: {DisplayBytes((long)OS.GetMemoryInfo()["physical"], false)}");
-				sb.AppendLine($"CPU: {OS.GetProcessorName()}");
-				sb.Append($"GPU: {RenderingServer.GetVideoAdapterName()} [API: {RenderingServer.GetVideoAdapterApiVersion()}]");
+				StringBuilder sb = new($"{GetProjectAndVersion()}\n");
+				sb.AppendLine($"\tGodot version: {Engine.GetVersionInfo()["string"].AsString()}");
+				sb.AppendLine($"\tOS: {OS.GetName()} | RAM: {DisplayBytes((long)OS.GetMemoryInfo()["physical"], false)}");
+				sb.AppendLine($"\tCPU: {OS.GetProcessorName()}");
+				sb.Append($"\tGPU: {RenderingServer.GetVideoAdapterName()} [API: {RenderingServer.GetVideoAdapterApiVersion()}]");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}", forceLog: true);
 				return new(ExecutionResponseStatus.Success, null);
@@ -53,17 +53,17 @@ public partial class EnvironmentCommandSet : CommandSet
 			$"{PREFIX}_mem [no args]",
 			false,
 			(_) => {
-				StringBuilder sb = new($"-- Memory snapshot\n");
-				sb.AppendLine($"System RAM: {DisplayBytes((long)OS.GetMemoryInfo()["physical"], false)}");
+				StringBuilder sb = new($"MEMORY SNAPSHOT\n");
+				sb.AppendLine($"\tSystem RAM: {DisplayBytes((long)OS.GetMemoryInfo()["physical"], false)}");
 
 				double usedVramBytes = Performance.GetMonitor(Performance.Monitor.RenderVideoMemUsed);
-				sb.AppendLine($"VRAM Used: {DisplayBytes(usedVramBytes)}.");
+				sb.AppendLine($"\tVRAM Used: {DisplayBytes(usedVramBytes)}.");
 
 				long systemAvailableBytes = (long)OS.GetMemoryInfo()["free"];
-				sb.AppendLine($"Free: {DisplayBytes(systemAvailableBytes)}");
+				sb.AppendLine($"\tFree: {DisplayBytes(systemAvailableBytes)}");
 
 				long csharpRamBytes = GC.GetTotalMemory(false);
-				sb.Append($"Used (.NET): {DisplayBytes(csharpRamBytes)}");
+				sb.Append($"\tUsed (.NET): {DisplayBytes(csharpRamBytes)}");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}", forceLog: true);
 				return new(ExecutionResponseStatus.Success, null);
@@ -93,21 +93,21 @@ public partial class EnvironmentCommandSet : CommandSet
 			$"{PREFIX}_time [no args]",
 			false,
 			(_) => {
-				StringBuilder sb = new("-- Time snapshot\n");
-				sb.AppendLine($"{DateTime.Now}");
+				StringBuilder sb = new("TIME SNAPSHOT\n");
+				sb.AppendLine($"\t{DateTime.Now}");
 
 				// Uptime for the actual system running the game.
 				TimeSpan uptime = TimeSpan.FromMilliseconds(System.Environment.TickCount64);
-				sb.AppendLine($"System Uptime: {uptime.Hours:D2}h {uptime.Minutes:D2}m {uptime.Seconds:D2}s");
+				sb.AppendLine($"\tSystem Uptime: {uptime.Hours:D2}h {uptime.Minutes:D2}m {uptime.Seconds:D2}s");
 
 				// Uptime for the actual C++ engine.
 				double timeInSeconds = Time.GetTicksMsec() / 1000.0;
 				int frames = Engine.GetFramesDrawn();
-				sb.AppendLine($"Godot Uptime: {timeInSeconds:F2}");
-				sb.AppendLine($"In Frames: {frames}");
-				sb.AppendLine($"Avg FPS: {Math.Floor(frames / timeInSeconds)}");
+				sb.AppendLine($"\tGodot Uptime: {timeInSeconds:F2}");
+				sb.AppendLine($"\tIn Frames: {frames}");
+				sb.AppendLine($"\tAvg FPS: {Math.Floor(frames / timeInSeconds)}");
 
-				sb.Append($"Scale: {Engine.TimeScale}");
+				sb.Append($"\tScale: {Engine.TimeScale}");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}", forceLog: true);
 				return new(ExecutionResponseStatus.Success, null);
