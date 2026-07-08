@@ -1,7 +1,10 @@
 using FractalPike.PikeConsole.Config;
+using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 
@@ -56,23 +59,53 @@ public static class UserConfigManager
 
 	public static void SaveCurrentConfig()
 	{
-		// Get the data that we need to save or create the config.
-		string configPath = $"{ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory)}/{GetCurrentConfig()}.ecfg";
+		// Get all the persistant variables, store them in a row 
 		var cvarsToSave = PersistentCVarRegistry.GetSnapshot();
 
 		if (cvarsToSave.Count < 1)
 			return;
 
-		List<String> rows = new();
+		List<string> rows = [];
 
 		foreach (ICVar cvar in cvarsToSave.Values)
 		{
 			if (cvar.IsModified)
-				rows.Add($"{cvar.Signature} {cvar.FormattedValue}; // [{cvar.DisplayType}] {cvar.CurrentValueDisplay}");
+				rows.Add($"{cvar.Signature} {cvar.FormattedValue} {FileSystemHelper.RAM_ONLY_FLAG}; // [{cvar.DisplayType}] {cvar.CurrentValueDisplay}");
 		}
 
 		if (rows.Count < 1)
 			return;
+
+		// Prepare paths for all files needed for a save.
+		// This might look overkill, but if the game crashes during save we do not want to corrupt or lose a player file.
+		string configName = GetCurrentConfig();
+		string root = $"{ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory)}/{configName}";
+		string path = $"{root}.ecfg";
+		string safePath = $"{root}.copy";
+		string tempPath = $"{root}.tmp";
+
+		// Actually apply the settings to real files.
+		try
+		{
+			// Make a temp file.
+			File.WriteAllLines(tempPath, rows);
+
+			// If a real file exist, safe-replace the real file with the temp.
+			// If not, just rename the temp file.
+			if (File.Exists(path))
+				File.Replace(tempPath, path, safePath);
+			else
+				File.Move(tempPath, path);
+		}
+		catch (Exception e)
+		{
+			PikeLogger.LogError(LogTarget.All, $"Failed to save config \"{configName}\": {e.Message}", forceLog: true);
+		}
+		finally
+		{
+			if (File.Exists(tempPath))
+				File.Delete(tempPath);
+		}
 
 	}
 
