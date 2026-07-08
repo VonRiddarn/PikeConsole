@@ -10,6 +10,9 @@ public interface ICVar : IRuntimeExecutable
 
 	// These are mostly for routing / saving the data.
 	public bool IsModified { get; }
+
+	public string CurrentValueDisplay { get; }
+
 	/// <summary>The string formated value. This value MUST be passable to the SetValue method (note that spaces become separate args).</summary>
 	/// <remarks>
 	/// By default, this just returns the values ToString method.<br />

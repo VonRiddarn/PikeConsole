@@ -64,7 +64,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	// Used for checking state during save
 	public bool IsModified => !EqualityComparer<T>.Default.Equals(_value, _defaultValue);
-	public string FormattedValue => DisplayValue(_value) ?? NOT_ASSIGNED;
+	public virtual string FormattedValue => _value?.ToString() ?? NOT_ASSIGNED;
+	public string CurrentValueDisplay => DisplayValue(_value);
 
 	// Current value getter / setter
 	public T Value
