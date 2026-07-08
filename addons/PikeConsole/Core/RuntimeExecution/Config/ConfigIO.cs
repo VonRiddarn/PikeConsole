@@ -1,11 +1,19 @@
-using Godot;
-using System;
+using System.IO;
+using System.Linq;
+using FractalPike.PikeConsole.Core.Utilities;
+
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
-// This is a generic config file (.cfg) manager.
-// Its only purpose is to provide a clean API for creating and managing cfg files on the system.
-// NOTE: All cfg files are located under user://cfg
-// The exception is the user_settings.cfg, which is located in user://cfg/users
-public partial class ConfigIO : Node
+
+public static class ConfigIO
 {
-	// TODO: Implement logic here
+	public static string[] GetConfigs(string localPath)
+	{
+		string globalPath = FileSystemHelper.GetGlobalPath(localPath);
+
+		if (!Directory.Exists(globalPath))
+			return [];
+
+		return [.. Directory.GetFiles(globalPath, "*.ecfg").Select(Path.GetFileName)];
+	}
+
 }
