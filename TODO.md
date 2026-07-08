@@ -8,7 +8,8 @@ a promise to implement mentioned features. it serves more like a whiteboard / no
 ## TODO: Save logs to file
 
 Add a button for "save logs to file" that automatically saves all current logs from the console in a human readable text document.  
-Integrate with the native filesystem so that non-.technical players / end users can save it to an easy accessible place (like the desktop).
+Integrate with the native filesystem so that non-.technical players / end users can save it to an easy accessible place (like the desktop).  
+Since all logs already live in the .NET environment this should be SUPER EASY. It's more or less just a for loop, stringbuilder and `File.WriteAllText()`
 
 ### TODO: Diagnostic CommandSet
 
