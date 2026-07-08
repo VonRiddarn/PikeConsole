@@ -2,6 +2,8 @@ using System.Runtime.CompilerServices;
 
 namespace FractalPike.PikeConsole.Core.Logging;
 
+// https://learn.microsoft.com/en-us/dotnet/csharp/advanced-topics/performance/interpolated-string-handler
+
 [InterpolatedStringHandler]
 public ref struct LogInterpolatedStringHandler
 {
