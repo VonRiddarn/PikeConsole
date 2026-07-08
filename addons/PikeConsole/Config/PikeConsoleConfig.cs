@@ -93,13 +93,11 @@ public static class PikeConsoleConfig
 
 	// ----- ----- CONFIG SYSTEM ----- -----
 	static string? _configDirectory = null;
-	public static string ConfigDirectory => _configDirectory ??= ProjectSettings.GlobalizePath(
-		ProjectSettings.GetSetting($"{PROJECT_SETTINGS_ROOT}/config/config_directory", "user://cfg").AsString());
+	public static string ConfigDirectory => _configDirectory ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_ROOT}/config/config_directory", "user://cfg").AsString();
 
 	// User configs are automatically placed within the configs directory.
 	static string? _userConfigsDirectory = null;
-	public static string UserConfigsDirectory => _userConfigsDirectory ??= ProjectSettings.GlobalizePath(
-		ProjectSettings.GetSetting($"{PROJECT_SETTINGS_CONFIG}/config_directory", "user://cfg").AsString()) + "/users";
+	public static string UserConfigsDirectory => _userConfigsDirectory ??= ConfigDirectory + "/users";
 
 	// The user config system is an opt-in system. This is done in the project settings.
 	static bool? _userConfigsEnabled = null;
