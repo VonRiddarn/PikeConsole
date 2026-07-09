@@ -9,17 +9,23 @@ public static class FileSystemHelper
 	public const string RAM_ONLY_FLAG = "ram_only";
 
 	/// <summary>
-	/// The full path to the user directory on the system.
+	/// Static class that manages the User directory
 	/// </summary>
-	public static string UserDirectory => ProjectSettings.GlobalizePath("user://");
+	public static class UserDirectory
+	{
+		/// <summary>
+		/// Combines strings into a full gloabl system path within the user directory.
+		/// </summary>
+		/// <returns>The full system path to the directory</returns>
+		public static string Global(params string[] segments)
+		{
+			string path = ProjectSettings.GlobalizePath("user://");
+			path = Path.Combine([path, .. segments]);
 
-	/// <summary>
-	/// Combines strings into a full system path within the user directory.
-	/// </summary>
-	/// <param name="segments">Segments leading towards the path to find. Eg: "cfg", "users" will locate the system path for user://cfg/users</param>
-	/// <returns>The full system path to the directory</returns>
-	public static string GetGlobalPath(params string[] segments)
-		=> ProjectSettings.GlobalizePath(Path.Combine([UserDirectory, .. segments]));
+			// Using GetFullPath instead of just returning path so that we make sure it's normalized.
+			return Path.GetFullPath(path);
+		}
+	}
 
 	/// <summary>
 	/// Ensures a directory exists at the desired location.

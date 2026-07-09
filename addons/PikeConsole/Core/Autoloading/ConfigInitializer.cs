@@ -26,13 +26,13 @@ public partial class ConfigInitializer : Node
 
 	static void InitializeDirectories()
 	{
-		string path = ProjectSettings.GlobalizePath(PikeConsoleConfig.ConfigDirectory);
+		string path = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.ConfigDirectory);
 
 		if (FileSystemHelper.EnsureDirectory(path))
 			PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] Config directory was missing. Created directory at: {path}");
 
 		// Reusing path
-		path = ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory);
+		path = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory);
 
 		if (PikeConsoleConfig.UserConfigsEnabled && FileSystemHelper.EnsureDirectory(path))
 			PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] User configs directory was missing. Created directory at: {path}");

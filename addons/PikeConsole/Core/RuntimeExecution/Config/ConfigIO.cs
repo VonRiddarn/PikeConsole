@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Linq;
 using FractalPike.PikeConsole.Config;
@@ -30,6 +31,42 @@ public static class ConfigIO
 		return true;
 	}
 
+	public static void WriteToConfig(string[] rows, string globalPath)
+	{
+		if (globalPath.EndsWith(".ecfg"))
+			globalPath = globalPath[..^5];
+
+		// Prepare paths for all files needed for a save.
+		// This might look overkill, but if the game crashes during save we do not want to corrupt or lose a player file.
+		string path = $"{globalPath}.ecfg";
+		string tempPath = $"{globalPath}.tmp";
+
+		// Actually apply the settings to real files.
+		try
+		{
+			FileSystemHelper.EnsureDirectory(Path.GetDirectoryName(globalPath));
+
+			// Make a temp file.
+			File.WriteAllLines(tempPath, rows);
+
+			// If a real file exist, safe-replace the real file with the temp.
+			// If not, just rename the temp file.
+			if (File.Exists(path))
+				File.Replace(tempPath, path, null);
+			else
+				File.Move(tempPath, path);
+		}
+		catch (Exception e)
+		{
+			PikeLogger.LogError(LogTarget.All, $"Failed to save config \"{globalPath}\": {e.Message}", forceLog: true);
+		}
+		finally
+		{
+			if (File.Exists(tempPath))
+				File.Delete(tempPath);
+		}
+	}
+
 	public static string[] ReadConfig(string localPath, bool trimWhiteSpaceAndComments = true)
 	{
 		if (string.IsNullOrWhiteSpace(localPath))
@@ -38,7 +75,7 @@ public static class ConfigIO
 		if (!localPath.EndsWith(".ecfg"))
 			localPath += ".ecfg";
 
-		string path = ProjectSettings.GlobalizePath($"{PikeConsoleConfig.ConfigDirectory}/{localPath}");
+		string path = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.ConfigDirectory, localPath);
 		if (!File.Exists(path))
 			return [];
 
@@ -53,14 +90,17 @@ public static class ConfigIO
 		}
 		catch (IOException e)
 		{
-			PikeLogger.LogError(LogTarget.All, $"Failed to read config file \"{localPath}\": {e.Message}", forceLog: true);
+			if (e is FileNotFoundException or DirectoryNotFoundException)
+				PikeLogger.LogWarning(LogTarget.All, $"Failed to read find config file at: \"{localPath}\"", forceLog: true, tags: [RuntimeExecutionLogTags.Failed]);
+			else
+				PikeLogger.LogError(LogTarget.All, $"Failed to read config file \"{localPath}\": {e.Message}", forceLog: true);
 			return [];
 		}
 	}
 
 	public static string[] GetConfigs(string localPath)
 	{
-		string globalPath = FileSystemHelper.GetGlobalPath(localPath);
+		string globalPath = FileSystemHelper.UserDirectory.Global(localPath);
 
 		if (!Directory.Exists(globalPath))
 			return [];

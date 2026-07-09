@@ -76,35 +76,9 @@ public static class UserConfigManager
 		if (rows.Count < 1)
 			return;
 
-		// Prepare paths for all files needed for a save.
-		// This might look overkill, but if the game crashes during save we do not want to corrupt or lose a player file.
 		string configName = GetCurrentConfig();
-		string root = $"{ProjectSettings.GlobalizePath(PikeConsoleConfig.UserConfigsDirectory)}/{configName}";
-		string path = $"{root}.ecfg";
-		string tempPath = $"{root}.tmp";
-
-		// Actually apply the settings to real files.
-		try
-		{
-			// Make a temp file.
-			File.WriteAllLines(tempPath, rows);
-
-			// If a real file exist, safe-replace the real file with the temp.
-			// If not, just rename the temp file.
-			if (File.Exists(path))
-				File.Replace(tempPath, path, null);
-			else
-				File.Move(tempPath, path);
-		}
-		catch (Exception e)
-		{
-			PikeLogger.LogError(LogTarget.All, $"Failed to save config \"{configName}\": {e.Message}", forceLog: true);
-		}
-		finally
-		{
-			if (File.Exists(tempPath))
-				File.Delete(tempPath);
-		}
+		string globalPath = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory, $"{configName}.ecfg");
+		ConfigIO.WriteToConfig([.. rows], globalPath);
 
 	}
 
