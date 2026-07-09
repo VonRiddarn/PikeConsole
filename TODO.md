@@ -28,3 +28,17 @@ Quick shorthands for forcing strings to start or end with certain things
 - NoEndWith -> If end with, make no end with
 - StartWtih -> If not start with, make start with
 - NoStartWith -> If start with, make no start with
+
+### Network ramble for future future future endavors
+
+"The thing is I can still add multiplayer to this system.
+You just make a multiplayer wrapper for it and have an IO point to the network. If the IO point receives a command from the server to change a CVar it can just change that CVar interally using "system" as the source (since the server is the final authority). If a player changes an internal CVar and that is tracked by the NetIO system they send a command to the server that they want to change something, the server checks if they are RCON authorized and sends back the change to all clients if they pass. (With the autorization set to Server)."
+
+Alternatively add a "IsNetworked" flag on each CVar through the CVarBase and have them automatically register themselves to the NetworkIO system on initialize.  
+Just like how persistent varaibles register to the persistence registry.
+
+We would probably have to add a guard clause for variables that are persistent AND networked - even though that is a logical fallacy (user errors).
+
+The server could also execute commands on the clients - that way we can sync events etc. Something like "rcon_execute [statement]".  
+This is why we HAVE to add a third authorization though! Otherwise a bad admin could run shitty commands like "rcon_execute exit" or "rcon_execute resetprofile".  
+Having an authorization clause that prevents this is neat. We could also make it backwards compatible by having the parameter in the Command shorthand set "rconCallable" to false by default.
