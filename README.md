@@ -54,6 +54,7 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 -   - [ ] .ecfg Delete
 -   - [x] .ecfg Execute
 - [ ] Create the UserConfigManager!
+- [ ] Fetch engine level logs at startup and inject into console
 - [ ] Update the runtime UI to v1
 
 ## 🧰 Requirements
