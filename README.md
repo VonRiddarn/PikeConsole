@@ -51,9 +51,14 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 -   - [x] .ecfg Create
 -   - [x] .ecfg Read
 -   - [x] .ecfg Update
--   - [ ] .ecfg Delete
+-   - [x] .ecfg Delete
 -   - [x] .ecfg Execute
 - [ ] Create the UserConfigManager!
+-   - [x] CRUDE
+-   - [ ] Initialize on start
+-   - [ ] Save debunced
+-   - [ ] Switch profiles
+-   - [ ] Failsafe activeprofile godot config
 - [ ] Fetch engine level logs at startup and inject into console
 - [ ] Add more CVars
 -   - [ ] Vector2 + Vector2I
