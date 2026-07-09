@@ -223,10 +223,10 @@ public partial class GlobalCommandSet : CommandSet
 
 				foreach(string arg in args)
 				{
-					if(!ConfigIO.ExecuteFromFile(ExecutionSource.Player, args[0]))
-						PikeLogger.LogWarning(LogTarget.Runtime, $"Execution failed. Make sure the file exists.", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
+					if(!ConfigIO.ExecuteFromFile(ExecutionSource.Player, arg))
+						PikeLogger.LogWarning(LogTarget.Runtime, $"Execution failed for \"{arg}\". Make sure the file exists.", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
 					else
-						return new(ExecutionResponseStatus.Success, "Execution complete.");
+						PikeLogger.LogSuccess(LogTarget.Runtime, $"Execution complete for \"{arg}\".", forceLog: true, includePath: false);
 				}
 
 				return new(ExecutionResponseStatus.Success, null);
