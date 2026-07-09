@@ -47,7 +47,7 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 -   - [x] (Global)
 -   - [x] (Alias)
 -   - [x] (Environment)
-- [ ] Create the executable config IO system
+- [x] Create the executable config IO system
 -   - [x] .ecfg Create
 -   - [x] .ecfg Read
 -   - [x] .ecfg Update
