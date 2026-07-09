@@ -41,7 +41,25 @@ public partial class UserConfigCommandSet : CommandSet
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
 				return new(ExecutionResponseStatus.Success, null);
 			}
-		)
+		),
+		Command(
+			$"{PREFIX}_remove",
+			"Displays a list of all available user configs.",
+			"Allows searching using wildcards, like \"sa*\" -> [\"Sam\", \"Sara\"]",
+			$"{PREFIX}_remove [config_name]",
+			false,
+			static (args) => {
+				if(!ArgumentParser.ValidateCount(args, 1, out string error))
+					return new(ExecutionResponseStatus.InvalidArgs, error);
+
+				string configName = args[0];
+
+				if(UserConfigManager.RemoveUserConfig(configName))
+					return new(ExecutionResponseStatus.Success, $"Removed config: {configName}");
+				else
+					return new(ExecutionResponseStatus.Failed, $"Failed to remove config: {configName}. Make sure the config exists.");
+			}
+		),
 	];
 
 }

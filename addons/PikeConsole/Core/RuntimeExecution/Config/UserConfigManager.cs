@@ -49,9 +49,10 @@ public static class UserConfigManager
 	// TODO: Add a "RemoveUserConfigResponse" - This can help with GUI additions later on.
 	public static bool RemoveUserConfig(string configName)
 	{
-		// Match a filename with the name of the profile. Note that this can be without the "user_" prefix.
-		// In those cases we manually add it so that we aren't able to destroy the "active.setting" file.
-		throw new NotImplementedException();
+		if (!configName.EndsWith(".ecfg"))
+			configName += ".ecfg";
+
+		return ConfigIO.RemoveConfig(FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory, configName));
 	}
 
 	// TODO: Add a "SelectUserConfigResponse" - This can help with GUI additions later on.
