@@ -215,9 +215,9 @@ public partial class GlobalCommandSet : CommandSet
 		),
 		Command(
 			$"exec",
-			"Opens the actual \"user://\" directory using the native file system and full system path.",
+			"Executes one or more executable config files (.ecfg) from the \"user://\" directory.",
 			null,
-			$"exec [no args]",
+			$"exec [.. localPaths]",
 			false,
 			static (args) => {
 
@@ -232,7 +232,6 @@ public partial class GlobalCommandSet : CommandSet
 				return new(ExecutionResponseStatus.Success, null);
 			}
 		),
-
 	];
 
 	// DRY code is nice code. This is basically just a router for all list commands.
