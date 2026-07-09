@@ -1,4 +1,5 @@
 using System.Text;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
@@ -214,8 +215,8 @@ public partial class GlobalCommandSet : CommandSet
 			}
 		),
 		Command(
-			$"exec",
-			"Executes one or more executable config files (.ecfg) from the \"user://\" directory.",
+			"exec",
+			$"Executes one or more executable config files (.ecfg) from the \"user://{PikeConsoleConfig.ConfigDirectory}\" directory.",
 			null,
 			$"exec [.. localPaths]",
 			false,
