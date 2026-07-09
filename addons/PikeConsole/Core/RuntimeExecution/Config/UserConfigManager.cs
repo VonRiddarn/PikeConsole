@@ -1,10 +1,9 @@
 using FractalPike.PikeConsole.Config;
-using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 
@@ -24,9 +23,14 @@ public static class UserConfigManager
 	const string SECTION = "Boot";
 	const string KEY = "last_used_config";
 
-	public static string[] GetAvailableConfigs()
+	public static string[] GetAvailableConfigs(string term = "*")
 	{
-		throw new NotImplementedException();
+		if (term.EndsWith(".ecfg"))
+			term = term[..^5];
+
+		string[] userConfigs = ConfigIO.GetConfigs(PikeConsoleConfig.UserConfigsDirectory, term);
+
+		return [.. userConfigs.Select(s => s.Replace(".ecfg", string.Empty))];
 	}
 
 	public static void RenameConfig(string configName, string newName)
@@ -34,6 +38,7 @@ public static class UserConfigManager
 		throw new NotImplementedException();
 	}
 
+	// TODO: Add a "CreateUserConfigResponse" - This can help with GUI additions later on.
 	public static bool CreateUserConfig(bool selectOnCreate = true)
 	{
 		// Create a user profile file and potentially select it.
@@ -41,6 +46,7 @@ public static class UserConfigManager
 		throw new NotImplementedException();
 	}
 
+	// TODO: Add a "RemoveUserConfigResponse" - This can help with GUI additions later on.
 	public static bool RemoveUserConfig(string configName)
 	{
 		// Match a filename with the name of the profile. Note that this can be without the "user_" prefix.
@@ -48,6 +54,7 @@ public static class UserConfigManager
 		throw new NotImplementedException();
 	}
 
+	// TODO: Add a "SelectUserConfigResponse" - This can help with GUI additions later on.
 	public static bool SelectConfig(string name)
 	{
 		// Select a profile.
