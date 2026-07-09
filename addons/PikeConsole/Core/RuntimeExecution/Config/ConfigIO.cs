@@ -66,6 +66,38 @@ public static class ConfigIO
 		}
 	}
 
+
+	public static bool TryRenameConfig(string newName, string globalPath, out string error)
+	{
+		error = string.Empty;
+
+		if (!globalPath.EndsWith(".ecfg"))
+			globalPath += ".ecfg";
+
+		if (!newName.EndsWith(".ecfg"))
+			newName += ".ecfg";
+
+		string originalFile = Path.GetFileName(globalPath);
+		string movePath = $"{Path.GetDirectoryName(globalPath)}/{newName}";
+
+		if (File.Exists(movePath))
+		{
+			error = $"Cannot rename config file \"{originalFile}\" to \"{newName}\". A file with that name already exists!";
+			return false;
+		}
+
+		try
+		{
+			File.Move(globalPath, movePath);
+		}
+		catch (Exception e)
+		{
+			PikeLogger.LogError(LogTarget.All, $"Failed to rename config file \"{originalFile}\": {e.Message}", forceLog: true);
+		}
+
+		return true;
+	}
+
 	public static bool RemoveConfig(string globalPath)
 	{
 		if (!globalPath.EndsWith(".ecfg"))
