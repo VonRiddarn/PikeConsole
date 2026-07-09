@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://0aiogpicov8x"]
 
 [ext_resource type="Script" uid="uid://dd4hkfdh1kjoc" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigUpdater.cs" id="1_8g3nj"]
+[ext_resource type="Script" uid="uid://bd42l4kne0me" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigCommandSet.cs" id="2_72r1c"]
 
 [node name="UserConfigUpdater" type="Node" unique_id=371432207]
 script = ExtResource("1_8g3nj")
+
+[node name="UserConfigCommandSet" type="Node" parent="." unique_id=1055935730]
+script = ExtResource("2_72r1c")
