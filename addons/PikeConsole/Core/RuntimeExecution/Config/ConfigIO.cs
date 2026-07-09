@@ -98,14 +98,20 @@ public static class ConfigIO
 		}
 	}
 
-	public static string[] GetConfigs(string localPath)
+	public static string[] GetConfigs(string localPath, string term)
 	{
+		if (term.EndsWith(".ecfg"))
+			term = term[..^5];
+
+		if (string.IsNullOrWhiteSpace(term))
+			term = "*";
+
 		string globalPath = FileSystemHelper.UserDirectory.Global(localPath);
 
 		if (!Directory.Exists(globalPath))
 			return [];
 
-		return [.. Directory.GetFiles(globalPath, "*.ecfg").Select(Path.GetFileName)];
+		return [.. Directory.GetFiles(globalPath, $"{term}.ecfg").Select(Path.GetFileName)];
 	}
 
 }
