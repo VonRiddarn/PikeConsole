@@ -66,6 +66,27 @@ public static class ConfigIO
 		}
 	}
 
+	public static bool RemoveConfig(string globalPath)
+	{
+		if (!globalPath.EndsWith(".ecfg"))
+			globalPath += ".ecfg";
+
+		// Actually apply the settings to real files.
+		try
+		{
+			if (!File.Exists(globalPath))
+				return false;
+
+			File.Delete(globalPath);
+			return true;
+		}
+		catch (Exception e)
+		{
+			PikeLogger.LogError(LogTarget.All, $"Failed to remove config \"{globalPath}\": {e.Message}", forceLog: true);
+			return false;
+		}
+	}
+
 	public static string[] ReadConfig(string localPath, bool trimWhiteSpaceAndComments = true)
 	{
 		if (string.IsNullOrWhiteSpace(localPath))
@@ -75,8 +96,6 @@ public static class ConfigIO
 			localPath += ".ecfg";
 
 		string path = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.ConfigDirectory, localPath);
-		if (!File.Exists(path))
-			return [];
 
 		try
 		{
