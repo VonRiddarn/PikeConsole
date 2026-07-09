@@ -48,9 +48,11 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 -   - [x] (Alias)
 -   - [x] (Environment)
 - [ ] Create the executable config IO system
--   - [x] .ecfg read
--   - [ ] .ecfg write
--   - [x] .ecfg execute
+-   - [ ] .ecfg Create
+-   - [x] .ecfg Read
+-   - [ ] .ecfg Update
+-   - [ ] .ecfg Delete
+-   - [x] .ecfg Execute
 - [ ] Create the UserConfigManager!
 - [ ] Update the runtime UI to v1
 
