@@ -211,15 +211,15 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			if (Persist && !ramOnly)
 				PersistentCVarRegistry.Update(this);
 
-			return new(ExecutionResponseStatus.Success, MessageOrFallback(response.Message, $"Set \"{Signature}\" to {DisplayValue(Value)}"));
+			return new(ExecutionResponseStatus.Success, MessageOrFallback(response.Message, $"Set \"{Signature}\" to {DisplayValue(Value)}"), response.Flags);
 		}
 
 		// Note, we are using "unexpected error" again here because a command creator could've caught the error and sent back null.
 		return response.Status switch
 		{
-			CvarSetResponseStatus.InvalidArgs => new(ExecutionResponseStatus.InvalidArgs, MessageOrFallback(response.Message, $"Invalid arguments passed for \"{Signature}\".")),
-			CvarSetResponseStatus.Failed => new(ExecutionResponseStatus.Failed, MessageOrFallback(response.Message, $"Failed to set the value for \"{Signature}\"")),
-			_ => new(ExecutionResponseStatus.Error, MessageOrFallback(response.Message, $"An unexpected error occurred when setting the value for \"{Signature}\"")),
+			CvarSetResponseStatus.InvalidArgs => new(ExecutionResponseStatus.InvalidArgs, MessageOrFallback(response.Message, $"Invalid arguments passed for \"{Signature}\"."), response.Flags),
+			CvarSetResponseStatus.Failed => new(ExecutionResponseStatus.Failed, MessageOrFallback(response.Message, $"Failed to set the value for \"{Signature}\""), response.Flags),
+			_ => new(ExecutionResponseStatus.Error, MessageOrFallback(response.Message, $"An unexpected error occurred when setting the value for \"{Signature}\""), response.Flags),
 		};
 	}
 

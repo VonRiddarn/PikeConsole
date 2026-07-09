@@ -48,7 +48,9 @@ public partial class PikeConsoleUI : Node
 			if (logEvent.TryGetAnyTag([
 			RuntimeExecutionLogTags.InvalidArgs,
 			RuntimeExecutionLogTags.DeniedCheat,
-			RuntimeExecutionLogTags.Failed],
+			RuntimeExecutionLogTags.Failed,
+			RuntimeExecutionLogTags.ValueLimited,
+			RuntimeExecutionLogTags.ValueClamped],
 			out string tag))
 			{
 				header += tag switch
@@ -56,6 +58,8 @@ public partial class PikeConsoleUI : Node
 					RuntimeExecutionLogTags.InvalidArgs => "[[color=#ffef63]Invalid Args[/color]] ",
 					RuntimeExecutionLogTags.DeniedCheat => "[[color=#ffef63]Cheatmode[/color]] ",
 					RuntimeExecutionLogTags.Failed => "[[color=#ffae63]Failed[/color]] ",
+					RuntimeExecutionLogTags.ValueLimited => "[[color=#ffef63]Limited[/color]] ",
+					RuntimeExecutionLogTags.ValueClamped => "[[color=#ffef63]Clamped[/color]] ",
 					_ => string.Empty
 				};
 			}

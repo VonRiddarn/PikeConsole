@@ -7,4 +7,6 @@ public static class RuntimeExecutionLogTags
 	public const string InvalidArgs = "execution_invalid_arguments";
 	public const string Failed = "execution_failed";
 	public const string DeniedCheat = "execution_denied_cheat";
+	public const string ValueLimited = "execution_value_limited";
+	public const string ValueClamped = "execution_value_clamped";
 }
