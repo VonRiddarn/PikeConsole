@@ -2,6 +2,7 @@ using System.Text;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+using FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
@@ -211,7 +212,27 @@ public partial class GlobalCommandSet : CommandSet
 
 				return new(ExecutionResponseStatus.Success, $"Opened the user directoty at: {FileSystemHelper.UserDirectory}");
 			}
-		)
+		),
+		Command(
+			$"exec",
+			"Opens the actual \"user://\" directory using the native file system and full system path.",
+			null,
+			$"exec [no args]",
+			false,
+			static (args) => {
+
+				foreach(string arg in args)
+				{
+					if(!ConfigIO.ExecuteFromFile(ExecutionSource.Player, args[0]))
+						PikeLogger.LogWarning(LogTarget.Runtime, $"Execution failed. Make sure the file exists.", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
+					else
+						return new(ExecutionResponseStatus.Success, "Execution complete.");
+				}
+
+				return new(ExecutionResponseStatus.Success, null);
+			}
+		),
+
 	];
 
 	// DRY code is nice code. This is basically just a router for all list commands.
