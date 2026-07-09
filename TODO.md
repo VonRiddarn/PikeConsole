@@ -37,7 +37,9 @@ You just make a multiplayer wrapper for it and have an IO point to the network. 
 Alternatively add a "IsNetworked" flag on each CVar through the CVarBase and have them automatically register themselves to the NetworkIO system on initialize.  
 Just like how persistent varaibles register to the persistence registry.
 
-We would probably have to add a guard clause for variables that are persistent AND networked - even though that is a logical fallacy (user errors).
+We would probably have to add a guard clause for variables that are persistent AND networked - even though that is a logical fallacy (user errors).  
+Edit: Actually, it's not a logical fallacy, because technically we could pass cl_name or cl_skin or cl_crosshaircolor etc to the server when we join or change some.  
+This would make the server able to display our crosshair on other clients, or temporarily force a server-sided crosshair / skin / name etc without overriding the local memory.
 
 The server could also execute commands on the clients - that way we can sync events etc. Something like "rcon_execute [statement]".  
 This is why we HAVE to add a third authorization though! Otherwise a bad admin could run shitty commands like "rcon_execute exit" or "rcon_execute resetprofile".  
