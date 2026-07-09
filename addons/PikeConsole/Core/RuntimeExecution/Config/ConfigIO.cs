@@ -10,23 +10,35 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 public static class ConfigIO
 {
 
-	public static bool ExecuteFromFile(ExecutionSource source, string localPath)
+	public static bool TryExecuteFromFile(ExecutionSource source, string localPath, out string error)
 	{
+
 		if (string.IsNullOrEmpty(localPath))
+		{
+			error = "Execution path is empty.";
 			return false;
+		}
 
 		if (!localPath.EndsWith(".ecfg"))
 			localPath += ".ecfg";
 
-		string[] lines = ReadConfig(localPath, true);
-		if (lines.Length < 1)
+		string[] lines = TryReadConfig(localPath, out error, true);
+
+		if (!string.IsNullOrWhiteSpace(error))
 			return false;
+
+		if (lines.Length < 1)
+		{
+			error = "Execution config file is empty.";
+			return false;
+		}
 
 		foreach (string line in lines)
 		{
 			StatementExecutor.Execute(source, StatementParser.ParseLine(line));
 		}
 
+		error = string.Empty;
 		return true;
 	}
 
@@ -119,10 +131,15 @@ public static class ConfigIO
 		}
 	}
 
-	public static string[] ReadConfig(string localPath, bool trimWhiteSpaceAndComments = true)
+	public static string[] TryReadConfig(string localPath, out string error, bool trimWhiteSpaceAndComments = true)
 	{
+		error = string.Empty;
+
 		if (string.IsNullOrWhiteSpace(localPath))
+		{
+			error = "Config path is empty.";
 			return [];
+		}
 
 		if (!localPath.EndsWith(".ecfg"))
 			localPath += ".ecfg";
@@ -141,9 +158,9 @@ public static class ConfigIO
 		catch (IOException e)
 		{
 			if (e is FileNotFoundException or DirectoryNotFoundException)
-				PikeLogger.LogWarning(LogTarget.All, $"Failed to read find config file at: \"{localPath}\"", forceLog: true, tags: [RuntimeExecutionLogTags.Failed]);
+				error = $"Failed to read find config file at: \"{localPath}\"";
 			else
-				PikeLogger.LogError(LogTarget.All, $"Failed to read config file \"{localPath}\": {e.Message}", forceLog: true);
+				error = $"Failed to read config file \"{localPath}\": {e.Message}";
 			return [];
 		}
 	}

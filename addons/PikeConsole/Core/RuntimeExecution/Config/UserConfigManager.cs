@@ -33,9 +33,17 @@ public static class UserConfigManager
 		return [.. userConfigs.Select(s => s.Replace(".ecfg", string.Empty))];
 	}
 
-	public static void RenameConfig(string configName, string newName)
+	public static bool TryRenameConfig(string configName, string newName, out string error)
 	{
-		throw new NotImplementedException();
+		if (!configName.EndsWith(".ecfg"))
+			configName += ".ecfg";
+
+		if (!newName.EndsWith(".ecfg"))
+			newName += ".ecfg";
+
+		string globalPath = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory, configName);
+
+		return ConfigIO.TryRenameConfig(newName, globalPath, out error);
 	}
 
 	// TODO: Add a "CreateUserConfigResponse" - This can help with GUI additions later on.
