@@ -55,6 +55,10 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 -   - [x] .ecfg Execute
 - [ ] Create the UserConfigManager!
 - [ ] Fetch engine level logs at startup and inject into console
+- [ ] Add more CVars
+-   - [ ] Vector2 + Vector2I
+-   - [ ] Vector3 + Vector3I
+-   - [ ] Color
 - [ ] Update the runtime UI to v1
 
 ## 🧰 Requirements
