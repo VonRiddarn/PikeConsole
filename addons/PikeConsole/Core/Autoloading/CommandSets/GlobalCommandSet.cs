@@ -150,7 +150,7 @@ public partial class GlobalCommandSet : CommandSet
 				{
 					if(rte is ICVar cvar)
 					{
-						if(!cvar.ResetValue(ExecutionSource.Player))
+						if(!cvar.ResetValue(ExecutionSource.Standard))
 							return new(ExecutionResponseStatus.DeniedCheat, $"Failed to reset value of \"{cvar.Signature}\". CVar is cheat protected.");
 
 						return new(ExecutionResponseStatus.Success, $"\"{cvar.Signature}\" has been reset.");
@@ -223,7 +223,7 @@ public partial class GlobalCommandSet : CommandSet
 
 				foreach(string arg in args)
 				{
-					if(!ConfigIO.ExecuteFromFile(ExecutionSource.Player, arg))
+					if(!ConfigIO.ExecuteFromFile(ExecutionSource.Standard, arg))
 						PikeLogger.LogWarning(LogTarget.Runtime, $"Execution failed for \"{arg}\". Make sure the file exists.", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
 					else
 						PikeLogger.LogSuccess(LogTarget.Runtime, $"Execution complete for \"{arg}\".", forceLog: true, includePath: false);

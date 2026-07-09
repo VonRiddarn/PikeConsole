@@ -84,7 +84,7 @@ public partial class PikeConsoleUI : Node
 	void OnInputSubmitted(string inputStatement)
 	{
 		_richText.AppendText($"> {_inputField.Text}\n");
-		StatementExecutor.Execute(ExecutionSource.Player, inputStatement);
+		StatementExecutor.Execute(ExecutionSource.Standard, inputStatement);
 		_inputField.Clear();
 	}
 
