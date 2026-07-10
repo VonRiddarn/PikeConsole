@@ -47,9 +47,21 @@ Either we need to make a struct for configs so that we can access a clean displa
 or we normalize it so that we always reference a config AS their global path.  
 The activeconfig pointer should also be normalized. Right now it's a jumbled mess of Godot calls.
 
+IMPORTANT:  
+ConfigIO and UserConfig should both be 100% dumb.  
+They should NEVER log to the console by themselves. They shouldn't even know about PikeLogger.  
+Instead, make a response system for them (LIKE I SAID IN MY F- NOTES ALREADY BUT DIDN'T LISTEN)  
+and ONLY return responses at most. If we want to tag the responses with flags we use ConfigLogFlags / Tags, not the RuntimeExec one.
 Also, make better use of the Path API. Like: `Path.ChangeExtension(path, ".tmp");`....
-
 Never code whilst sick and tired...
+
+---
+
+## TA EN DAGS PAUS - KODA INTE!!!!
+
+Läs allt ovanför!!
+
+---
 
 - [x] Create the CVar startup crawler
 - [x] Refactor hardcoded configs to internal dogfeed CVars -- We are officially dogs baby!!! 🦴🐶
@@ -59,9 +71,6 @@ Never code whilst sick and tired...
 -   - [x] (Global)
 -   - [x] (Alias)
 -   - [x] (Environment)
-
-## OBS: REFACTOR REFACTOR!
-
 - [x] Create the executable config IO system
 -   - [x] .ecfg Create
 -   - [x] .ecfg Read
