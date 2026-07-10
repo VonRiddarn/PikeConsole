@@ -35,9 +35,19 @@ If this README reads like som maniacs cork board, it is because it is.
 Until version 1.0 this is more or less a temporary spitball file.  
 Most information in here will be moved to the documentation later.
 
-The final, estimated release date for `version 1.0` is by the **end of July, 2026**.
+The final, estimated release date for `version 1.0` is soonTM.
 
 ### 🚗 Roadmap (in order)
+
+### Note to self
+
+ConfigIO and Userconfig is all whack.  
+ConfigIO is salvageable, but is in dire need of normalization and a big refactor.  
+Either we need to make a struct for configs so that we can access a clean display name AND the global path,  
+or we normalize it so that we always reference a config AS their global path.  
+The activeconfig pointer should also be normalized. Right now it's a jumbled mess of Godot calls.
+
+Never code whilst sick and tired...
 
 - [x] Create the CVar startup crawler
 - [x] Refactor hardcoded configs to internal dogfeed CVars -- We are officially dogs baby!!! 🦴🐶
@@ -47,6 +57,9 @@ The final, estimated release date for `version 1.0` is by the **end of July, 202
 -   - [x] (Global)
 -   - [x] (Alias)
 -   - [x] (Environment)
+
+## OBS: REFACTOR REFACTOR!
+
 - [x] Create the executable config IO system
 -   - [x] .ecfg Create
 -   - [x] .ecfg Read
