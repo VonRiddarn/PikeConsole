@@ -47,6 +47,8 @@ Either we need to make a struct for configs so that we can access a clean displa
 or we normalize it so that we always reference a config AS their global path.  
 The activeconfig pointer should also be normalized. Right now it's a jumbled mess of Godot calls.
 
+Also, make better use of the Path API. Like: `Path.ChangeExtension(path, ".tmp");`....
+
 Never code whilst sick and tired...
 
 - [x] Create the CVar startup crawler
