@@ -1,4 +1,5 @@
 using FractalPike.PikeConsole.Config;
+using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 using System;
@@ -47,7 +48,7 @@ public static class UserConfigManager
 	}
 
 	// TODO: Add a "CreateUserConfigResponse" - This can help with GUI additions later on.
-	public static bool CreateUserConfig(bool selectOnCreate = true)
+	public static bool CreateUserConfig(string configName, bool selectOnCreate = true)
 	{
 		// Create a user profile file and potentially select it.
 		// Returns true if a profile was successfully created.
@@ -64,13 +65,34 @@ public static class UserConfigManager
 	}
 
 	// TODO: Add a "SelectUserConfigResponse" - This can help with GUI additions later on.
-	public static bool SelectConfig(string name)
+	public static bool TrySelectConfig(string configName, out string error)
 	{
-		// Select a profile.
-		// Note: 
-		// This will clear all the persistant variables using persistantrepo.ResetAll(ramOnly: true)
-		// Then select the new profile and run all commands within - which will automatically make settings apply to the persistent cache.
-		throw new NotImplementedException();
+		if (string.IsNullOrWhiteSpace(configName))
+		{
+			error = "configName is empty, cannot filter configs.";
+			return false;
+		}
+
+		string config = ConfigIO.GetConfigs(PikeConsoleConfig.UserConfigsDirectory, configName).FirstOrDefault();
+
+		if (config == default)
+		{
+			error = $"No config was found matching the name {configName}";
+			return false;
+		}
+
+
+		PersistentCVarRegistry.ResetAll(ramOnly: true);
+		if (!TrySetCurrentConfig(configName, out error))
+			return false;
+
+		PersistentCVarRegistry.ResetAll(ramOnly: true);
+
+		if (!ConfigIO.TryExecuteFromFile(ExecutionSource.Standard, $"{PikeConsoleConfig.UserConfigsDirectory}/{configName}", out error))
+			return false;
+
+		error = string.Empty;
+		return true;
 	}
 
 	public static void SaveCurrentConfig()
@@ -113,6 +135,28 @@ public static class UserConfigManager
 		// MAD allocation, but this will only trigger when persistent variables change anyway, and we debounce the saving.
 		// This is cold path usage.
 		return value.Replace(".ecfg", string.Empty).Trim().Replace(' ', '_');
+	}
+
+	public static bool TrySetCurrentConfig(string configName, out string error)
+	{
+		string sanitizedConfigName = configName.Replace(".ecfg", string.Empty).Trim().Replace(' ', '_');
+		string path = $"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}";
+
+		ConfigFile gdConfig = new();
+
+		gdConfig.Load(path);
+
+		gdConfig.SetValue(SECTION, KEY, sanitizedConfigName);
+		Error err = gdConfig.Save(path);
+
+		if (err != Error.Ok)
+		{
+			error = $"Failed to save user config to {FILENAME}. Error: {err}";
+			return false;
+		}
+
+		error = string.Empty;
+		return true;
 	}
 
 	// TODO: Implement logic here
