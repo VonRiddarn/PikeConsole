@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
+using FractalPike.PikeConsole.Core.Utilities;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
@@ -89,15 +90,15 @@ public static class StatementExecutor
 						break;
 
 					case ExecutionResponseStatus.InvalidArgs:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.InvalidArgs]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, LogFlags.InvalidArgs]);
 						break;
 
 					case ExecutionResponseStatus.Failed:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.Failed]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, LogFlags.Failed]);
 						break;
 
 					case ExecutionResponseStatus.DeniedCheat:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, RuntimeExecutionLogTags.DeniedCheat]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, LogFlags.DeniedCheat]);
 						break;
 
 					case ExecutionResponseStatus.Error:

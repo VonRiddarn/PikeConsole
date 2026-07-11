@@ -1,6 +1,6 @@
-namespace FractalPike.PikeConsole.Core.RuntimeExecution;
+namespace FractalPike.PikeConsole.Core.Utilities;
 
-public static class RuntimeExecutionLogTags
+public static class LogFlags
 {
 	public const string NoHeader = "execution_no_header";
 

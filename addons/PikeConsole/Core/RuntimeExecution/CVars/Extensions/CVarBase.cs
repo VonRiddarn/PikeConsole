@@ -178,7 +178,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			return new(
 				ExecutionResponseStatus.Success,
 				$"Type: {DisplayType}\nCurrent value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}\nDescription: {Description}",
-				[RuntimeExecutionLogTags.NoHeader]);
+				[LogFlags.NoHeader]);
 		}
 
 		// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.

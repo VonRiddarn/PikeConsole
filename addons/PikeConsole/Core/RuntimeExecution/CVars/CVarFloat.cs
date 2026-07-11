@@ -2,6 +2,7 @@ using System;
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Extensions;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
@@ -57,12 +58,12 @@ public partial class CVarFloat : CVarBase<float>
 			if (UseLimitMin && v < MinLimitValue)
 			{
 				v = MinLimitValue;
-				logTags = [RuntimeExecutionLogTags.ValueLimited];
+				logTags = [LogFlags.ValueLimited];
 			}
 			else if (UseLimitMax && v > MaxLimitValue)
 			{
 				v = MaxLimitValue;
-				logTags = [RuntimeExecutionLogTags.ValueLimited];
+				logTags = [LogFlags.ValueLimited];
 			}
 		}
 
@@ -70,12 +71,12 @@ public partial class CVarFloat : CVarBase<float>
 		if (_useClampMin && v < _minClampValue)
 		{
 			v = _minClampValue;
-			logTags = [RuntimeExecutionLogTags.ValueClamped];
+			logTags = [LogFlags.ValueClamped];
 		}
 		else if (_useClampMax && v > _maxClampValue)
 		{
 			v = _maxClampValue;
-			logTags = [RuntimeExecutionLogTags.ValueClamped];
+			logTags = [LogFlags.ValueClamped];
 		}
 
 		Value = v;

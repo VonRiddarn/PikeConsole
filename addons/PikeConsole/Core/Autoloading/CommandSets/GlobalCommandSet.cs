@@ -225,7 +225,7 @@ public partial class GlobalCommandSet : CommandSet
 				foreach(string arg in args)
 				{
 					if(!ConfigIO.TryExecuteFromFile(ExecutionSource.Standard, arg, out string error))
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{error}", forceLog: true, includePath: false, tags: [RuntimeExecutionLogTags.Failed]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{error}", forceLog: true, includePath: false, tags: [LogFlags.Failed]);
 					else
 						PikeLogger.LogSuccess(LogTarget.Runtime, $"Execution complete for \"{arg}\".", forceLog: true, includePath: false);
 				}
