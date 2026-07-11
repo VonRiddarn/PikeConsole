@@ -27,6 +27,16 @@ public static class FileSystemHelper
 		}
 	}
 
+	public static PathType GetPathType(string path)
+	{
+		if (path.StartsWith("user://"))
+			return PathType.User;
+		else if (path.StartsWith("res://"))
+			return PathType.Resource;
+
+		return PathType.Standard;
+	}
+
 	/// <summary>
 	/// Ensures a directory exists at the desired location.
 	/// </summary>
