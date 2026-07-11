@@ -2,11 +2,11 @@ namespace FractalPike.PikeConsole.Core.Utilities;
 
 public static class LogFlags
 {
-	public const string NoHeader = "execution_no_header";
+	public const string NoHeader = "pikeconsole_no_header";
 
-	public const string InvalidArgs = "execution_invalid_arguments";
-	public const string Failed = "execution_failed";
-	public const string DeniedCheat = "execution_denied_cheat";
-	public const string ValueLimited = "execution_value_limited";
-	public const string ValueClamped = "execution_value_clamped";
+	public const string InvalidArgs = "pikeconsole_invalid_arguments";
+	public const string Failed = "pikeconsole_failed";
+	public const string DeniedCheat = "pikeconsole_denied_cheat";
+	public const string ValueLimited = "pikeconsole_value_limited";
+	public const string ValueClamped = "pikeconsole_value_clamped";
 }
