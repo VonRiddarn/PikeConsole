@@ -90,7 +90,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	/// </summary>
 	/// <param name="args">Arguments passed by the runtime console</param>
 	/// <returns>A response status with an optional message.</returns>
-	protected abstract Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args);
+	protected abstract Response<CvarSetResponseStatus, T> ParseValue(ReadOnlySpan<string> args);
 
 	/// <summary>
 	/// Initialize is called by the CVar crawler when the resource is loaded into memory.
@@ -188,14 +188,13 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		bool ramOnly = args.Length >= 2 && args[^1].Equals(FileSystemHelper.RAM_ONLY_FLAG, StringComparison.OrdinalIgnoreCase);
 
-		Response<CvarSetResponseStatus> response;
+		Response<CvarSetResponseStatus, T> response;
 
 		try
 		{
 			// If we have the RAM_ONLY flag, slice that argument from the parameters.
-			// SetValue will never have to deal with it.
-			// Updated Using a ReadOnlySpan to make this non-alloc!
-			response = SetValue(ramOnly ? args.AsSpan(0, args.Length - 1) : args.AsSpan());
+			// ParseValue will never have to deal with it as an argument.
+			response = ParseValue(ramOnly ? args.AsSpan(0, args.Length - 1) : args.AsSpan());
 		}
 		catch (Exception e)
 		{
@@ -208,6 +207,9 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		if (response.Status == CvarSetResponseStatus.Success)
 		{
+
+			Value = response.Payload!;
+
 			if (Persist && !ramOnly)
 				PersistentCVarRegistry.Update(this);
 

@@ -62,19 +62,18 @@ public partial class CVarEnum : CVarBase<int>
 		_cachedHelpLst = sb.ToString();
 	}
 
-	protected override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
+	protected override Response<CvarSetResponseStatus, int> ParseValue(ReadOnlySpan<string> args)
 	{
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
-			return new(CvarSetResponseStatus.InvalidArgs, error);
+			return new(CvarSetResponseStatus.InvalidArgs, default, error);
 
 		if (!ArgumentParser.TryParseEnum(args[0], _options, out int index, out error))
-			return new(CvarSetResponseStatus.Failed, error);
+			return new(CvarSetResponseStatus.Failed, default, error);
 
 		if (Value == index)
-			return new(CvarSetResponseStatus.NoChange, null);
+			return new(CvarSetResponseStatus.NoChange, index, null);
 
-		Value = index;
-		return new(CvarSetResponseStatus.Success, null);
+		return new(CvarSetResponseStatus.Success, index, null);
 	}
 
 	// ----- ----- ----- -----

@@ -35,16 +35,16 @@ public partial class CVarFloat : CVarBase<float>
 	[Export] bool _useClampMax = false;
 	[Export] float _maxClampValue = 0;
 
-	protected override Response<CvarSetResponseStatus> SetValue(ReadOnlySpan<string> args)
+	protected override Response<CvarSetResponseStatus, float> ParseValue(ReadOnlySpan<string> args)
 	{
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
-			return new(CvarSetResponseStatus.InvalidArgs, error);
+			return new(CvarSetResponseStatus.InvalidArgs, default, error);
 
-		if (!float.TryParse(args[0], out float v))
-			return new(CvarSetResponseStatus.Failed, $"Can not convert {args[0]} to type float.");
+		if (!float.TryParse(args[0], out float value))
+			return new(CvarSetResponseStatus.Failed, default, $"Can not convert {args[0]} to type float.");
 
-		if (v == Value)
-			return new(CvarSetResponseStatus.NoChange, null);
+		if (Value == value)
+			return new(CvarSetResponseStatus.NoChange, value, null);
 
 		// Prepare variables for the return status.
 		// These are just overridden in order and ends up being the last check.
@@ -55,31 +55,30 @@ public partial class CVarFloat : CVarBase<float>
 		// Manage soft limits. Users cannot exceed without cheatmode (Bypassable)
 		if (!cm)
 		{
-			if (UseLimitMin && v < MinLimitValue)
+			if (UseLimitMin && value < MinLimitValue)
 			{
-				v = MinLimitValue;
+				value = MinLimitValue;
 				logTags = [LogFlags.ValueLimited];
 			}
-			else if (UseLimitMax && v > MaxLimitValue)
+			else if (UseLimitMax && value > MaxLimitValue)
 			{
-				v = MaxLimitValue;
+				value = MaxLimitValue;
 				logTags = [LogFlags.ValueLimited];
 			}
 		}
 
 		// Manage hard limits. This can NEVER be exceedded.
-		if (_useClampMin && v < _minClampValue)
+		if (_useClampMin && value < _minClampValue)
 		{
-			v = _minClampValue;
+			value = _minClampValue;
 			logTags = [LogFlags.ValueClamped];
 		}
-		else if (_useClampMax && v > _maxClampValue)
+		else if (_useClampMax && value > _maxClampValue)
 		{
-			v = _maxClampValue;
+			value = _maxClampValue;
 			logTags = [LogFlags.ValueClamped];
 		}
 
-		Value = v;
-		return new(CvarSetResponseStatus.Success, null, logTags);
+		return new(CvarSetResponseStatus.Success, value, null, logTags);
 	}
 }
