@@ -6,16 +6,16 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 /// <summary>
 /// Helper class for managing config files.
 /// </summary>
-public class Ecfg
+public class ConfigRef
 {
 	public readonly string FullPath;
 	public string FileName { get; }
 	public string DisplayName { get; }
 	public string Directory { get; }
 
-	public Ecfg(string globalPath)
+	public ConfigRef(string path)
 	{
-		FullPath = Path.GetFullPath(Path.ChangeExtension(globalPath, ".ecfg"));
+		FullPath = Path.GetFullPath(Path.ChangeExtension(path, ".ecfg"));
 		FileName = Path.GetFileName(FullPath);
 		DisplayName = FileToDisplayName(FileName);
 		Directory = Path.GetDirectoryName(FullPath);
