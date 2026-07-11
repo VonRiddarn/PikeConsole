@@ -214,25 +214,6 @@ public partial class GlobalCommandSet : CommandSet
 				return new(ExecutionResponseStatus.Success, $"Opened the user directoty at: {FileSystemHelper.UserDirectory.Globalized()}");
 			}
 		),
-		Command(
-			"exec",
-			$"Executes one or more executable config files (.ecfg) from the \"user://{PikeConsoleConfig.ConfigDirectory}\" directory.",
-			null,
-			$"exec [.. localPaths]",
-			false,
-			static (args) => {
-
-				foreach(string arg in args)
-				{
-					if(!ConfigIO.TryExecuteFromFile(ExecutionSource.Standard, arg, out string error))
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{error}", forceLog: true, includePath: false, tags: [LogFlags.Failed]);
-					else
-						PikeLogger.LogSuccess(LogTarget.Runtime, $"Execution complete for \"{arg}\".", forceLog: true, includePath: false);
-				}
-
-				return new(ExecutionResponseStatus.Success, null);
-			}
-		),
 	];
 
 	// DRY code is nice code. This is basically just a router for all list commands.
