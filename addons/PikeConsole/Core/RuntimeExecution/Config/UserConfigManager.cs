@@ -16,6 +16,7 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 // active.cfg -- Godot file
 // Timmy.ecfg -- Executable Config, and in this case, a valid profile
 
+// TODO: Add a generic "UserConfigCRUDEResponseStatus" enum.
 public static class UserConfigManager
 {
 	// Constants for easier access within the filesystem.
@@ -24,27 +25,14 @@ public static class UserConfigManager
 	const string SECTION = "Boot";
 	const string KEY = "last_used_config";
 
-	public static string[] GetAvailableConfigs(string term = "*")
+	public static ConfigRef[] GetAvailableConfigs(string term = "*")
 	{
-		if (term.EndsWith(".ecfg"))
-			term = term[..^5];
-
-		string[] userConfigs = ConfigIO.GetConfigs(PikeConsoleConfig.UserConfigsDirectory, term);
-
-		return [.. userConfigs.Select(s => s.Replace(".ecfg", string.Empty))];
+		throw new NotImplementedException();
 	}
 
-	public static bool TryRenameConfig(string configName, string newName, out string error)
+	public static bool RenameConfig(string configName, string newName, out string error)
 	{
-		if (!configName.EndsWith(".ecfg"))
-			configName += ".ecfg";
-
-		if (!newName.EndsWith(".ecfg"))
-			newName += ".ecfg";
-
-		string globalPath = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory, configName);
-
-		return ConfigIO.TryRenameConfig(newName, globalPath, out error);
+		throw new NotImplementedException();
 	}
 
 	// TODO: Add a "CreateUserConfigResponse" - This can help with GUI additions later on.
@@ -58,105 +46,28 @@ public static class UserConfigManager
 	// TODO: Add a "RemoveUserConfigResponse" - This can help with GUI additions later on.
 	public static bool RemoveUserConfig(string configName)
 	{
-		if (!configName.EndsWith(".ecfg"))
-			configName += ".ecfg";
-
-		return ConfigIO.RemoveConfig(FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory, configName));
+		throw new NotImplementedException();
 	}
 
 	// TODO: Add a "SelectUserConfigResponse" - This can help with GUI additions later on.
 	public static bool TrySelectConfig(string configName, out string error)
 	{
-		if (string.IsNullOrWhiteSpace(configName))
-		{
-			error = "configName is empty, cannot filter configs.";
-			return false;
-		}
-
-		string config = ConfigIO.GetConfigs(PikeConsoleConfig.UserConfigsDirectory, configName).FirstOrDefault();
-
-		if (config == default)
-		{
-			error = $"No config was found matching the name {configName}";
-			return false;
-		}
-
-
-		PersistentCVarRegistry.ResetAll(ramOnly: true);
-		if (!TrySetCurrentConfig(configName, out error))
-			return false;
-
-		PersistentCVarRegistry.ResetAll(ramOnly: true);
-
-		if (!ConfigIO.TryExecuteFromFile(ExecutionSource.Standard, $"{PikeConsoleConfig.UserConfigsDirectory}/{configName}", out error))
-			return false;
-
-		error = string.Empty;
-		return true;
+		throw new NotImplementedException();
 	}
 
 	public static void SaveCurrentConfig()
 	{
-		// Get all the persistant variables, store them in a row 
-		var cvarsToSave = PersistentCVarRegistry.GetSnapshot();
-
-		if (cvarsToSave.Count < 1)
-			return;
-
-		List<string> rows = [];
-
-		foreach (ICVar cvar in cvarsToSave.Values)
-		{
-			if (cvar.IsModified)
-				rows.Add($"{cvar.Signature} {cvar.FormattedValue} {FileSystemHelper.RAM_ONLY_FLAG}; // [{cvar.DisplayType}] {cvar.CurrentValueDisplay}");
-		}
-
-		if (rows.Count < 1)
-			return;
-
-		string configName = GetCurrentConfig();
-		string globalPath = FileSystemHelper.UserDirectory.Global(PikeConsoleConfig.UserConfigsDirectory, $"{configName}.ecfg");
-		ConfigIO.WriteToConfig([.. rows], globalPath);
-
+		throw new NotImplementedException();
 	}
 
-	/// <summary>
-	/// Gets the name of the current config. If the method fails, "fallbackProfile" is returned instead.
-	/// </summary>
 	public static string GetCurrentConfig(string fallbackProfile = "default")
 	{
-		ConfigFile gdConfig = new();
-
-		if (gdConfig.Load($"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}") != Error.Ok)
-			return fallbackProfile;
-
-		string value = gdConfig.GetValue(SECTION, KEY, fallbackProfile).AsString();
-
-		// MAD allocation, but this will only trigger when persistent variables change anyway, and we debounce the saving.
-		// This is cold path usage.
-		return value.Replace(".ecfg", string.Empty).Trim().Replace(' ', '_');
+		throw new NotImplementedException();
 	}
 
 	public static bool TrySetCurrentConfig(string configName, out string error)
 	{
-		string sanitizedConfigName = configName.Replace(".ecfg", string.Empty).Trim().Replace(' ', '_');
-		string path = $"{PikeConsoleConfig.UserConfigsDirectory}/{FILENAME}";
-
-		ConfigFile gdConfig = new();
-
-		gdConfig.Load(path);
-
-		gdConfig.SetValue(SECTION, KEY, sanitizedConfigName);
-		Error err = gdConfig.Save(path);
-
-		if (err != Error.Ok)
-		{
-			error = $"Failed to save user config to {FILENAME}. Error: {err}";
-			return false;
-		}
-
-		error = string.Empty;
-		return true;
+		throw new NotImplementedException();
 	}
 
 	// TODO: Implement logic here
