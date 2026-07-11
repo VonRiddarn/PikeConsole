@@ -28,3 +28,6 @@ export_presets.cfg
 
 # VScode / Codium stuff
 .vscode
+
+builds
+builds/*
