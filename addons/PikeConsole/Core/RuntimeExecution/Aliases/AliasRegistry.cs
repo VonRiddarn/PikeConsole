@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FractalPike.PikeConsole.Core.Utilities;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 public static class AliasRegistry

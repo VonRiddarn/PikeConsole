@@ -3,6 +3,7 @@ using System.Collections.Immutable;
 using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
 #nullable enable
