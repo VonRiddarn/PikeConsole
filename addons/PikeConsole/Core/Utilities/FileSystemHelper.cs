@@ -17,7 +17,7 @@ public static class FileSystemHelper
 		/// Combines strings into a full gloabl system path within the user directory.
 		/// </summary>
 		/// <returns>The full system path to the directory</returns>
-		public static string Global(params string[] segments)
+		public static string Globalized(params string[] segments)
 		{
 			string path = ProjectSettings.GlobalizePath("user://");
 			path = Path.Combine([path, .. segments]);
