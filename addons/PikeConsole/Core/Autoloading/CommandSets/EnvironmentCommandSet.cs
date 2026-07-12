@@ -15,6 +15,8 @@ namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class EnvironmentCommandSet : CommandSet
 {
+	protected override string Prefix => "env";
+
 	static string DisplayBytes(double bytes, bool asMB = true) => asMB ?
 		$"{bytes / 1_048_576f:F2} MB ({bytes / 1_073_741_824f:F2} GB)"
 		: $"{bytes / 1_073_741_824f:F2} GB";
@@ -27,13 +29,12 @@ public partial class EnvironmentCommandSet : CommandSet
 		return $"{(OS.IsDebugBuild() ? "[DEBUG]" : string.Empty)}{n} {v}";
 	}
 
-	const string PREFIX = "env";
 	protected override Command[] InstantiateCommands() => [
 		Command(
-			$"{PREFIX}_info",
+			Signature("info"),
 			"Shows detailed information about the current environment.",
 			"Shows OS, Engine version, GPU, GPU-API and RAM.",
-			$"{PREFIX}_info [no args]",
+			$"{Signature("info")} [no args]",
 			false,
 			static (_) => {
 				StringBuilder sb = new($"{GetProjectAndVersion()}\n");
@@ -47,10 +48,10 @@ public partial class EnvironmentCommandSet : CommandSet
 			}
 		),
 		Command(
-			$"{PREFIX}_mem",
+			Signature("mem"),
 			"Log a snapshot of the environments memory usage at this time.",
 			"Shows all relevant memory information as is. Provides live-diagnostic data for the snapshot.",
-			$"{PREFIX}_mem [no args]",
+			$"{Signature("mem")} [no args]",
 			false,
 			static (_) => {
 				StringBuilder sb = new($"MEMORY SNAPSHOT\n");
@@ -70,10 +71,10 @@ public partial class EnvironmentCommandSet : CommandSet
 			}
 		),
 		Command(
-			$"{PREFIX}_gc",
+			Signature("gc"),
 			"Performs a manual garbage collection.",
 			"Forces the garbage collector to run. Used for debugging and testing memory allocation.",
-			$"{PREFIX}_gc [no args]",
+			$"{Signature("gc")} [no args]",
 			false,
 			static (_) => {
 				try{
@@ -87,10 +88,10 @@ public partial class EnvironmentCommandSet : CommandSet
 			}
 		),
 		Command(
-			$"{PREFIX}_time",
+			Signature("time"),
 			"Log a snapshot of the environments time context at this time.",
 			"Shows all relevant time information as is. Provides live-diagnostic data for the snapshot.",
-			$"{PREFIX}_time [no args]",
+			$"{Signature("time")} [no args]",
 			false,
 			static (_) => {
 				StringBuilder sb = new("TIME SNAPSHOT\n");

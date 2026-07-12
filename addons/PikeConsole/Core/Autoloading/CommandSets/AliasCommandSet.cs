@@ -8,12 +8,15 @@ namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class AliasCommandSet : CommandSet
 {
+
+	protected override string Prefix => "alias";
+
 	protected override Command[] InstantiateCommands() => [
 		Command(
-			"alias",
+			Prefix,
 			"Add or replace an alias in the registry.",
 			null,
-			"alias [alias signature] \"[alias statement]\"",
+			$"{Prefix} [alias signature] \"[alias statement]\"",
 			false,
 			static (args) => {
 				if(!ArgumentParser.ValidateCount(args, 2, out string error))
@@ -30,10 +33,10 @@ public partial class AliasCommandSet : CommandSet
 			}
 		),
 		Command(
-			"alias_list",
+			Signature("list"),
 			"Lists all aliases with an optional search term.",
 			null,
-			"alias_list [..term?]",
+			$"{Signature("list")} [..term?]",
 			false,
 			static (args) => {
 				string term = string.Join(' ', args);

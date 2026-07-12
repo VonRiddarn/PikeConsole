@@ -22,6 +22,22 @@ public abstract partial class CommandSet : Node
 	/// </summary>
 	ImmutableArray<Command> _commands;
 
+	// ----- ----- SIGNATURE SHORTHAND ----- -----
+	/// <summary>
+	/// Optional prefix that automatically spplies to strings using the <c>Signature(string signature)</c> shorthand.
+	/// </summary>
+	protected virtual string Prefix => string.Empty;
+	/// <summary>
+	/// Shorthand for creating a prefixed signature.
+	/// </summary>
+	/// <remarks>
+	/// To create a signature without a prefix, or using another prefix than the Prefix override, apply a raw string instead. <br />
+	/// Signature("foo_bar") -> "prefix_foo_bar". To get "foo_bar" you pass the actual string literal.
+	/// </remarks>
+	/// <param name="signature">The signature to apply the <c>Prefix</c> override to.</param>
+	/// <returns></returns>
+	protected string Signature(string signature) => (string.IsNullOrWhiteSpace(Prefix) || signature.StartsWith($"{Prefix}_")) ? signature : $"{Prefix}_{signature}";
+
 	// ----- ----- GODOT API WRAPPER ----- -----
 	// Wrapper virtual API for Godot methods.
 	// This is so that it is exceptionally clear that the original methods are off limits.
