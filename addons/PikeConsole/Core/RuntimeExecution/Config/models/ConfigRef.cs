@@ -29,7 +29,7 @@ public class ConfigRef
 	/// </remarks>
 	public static string DisplayToFileName(string displayName)
 	{
-		return displayName.Replace(' ', '_').Trim().ToLower();
+		return Path.ChangeExtension(displayName.Replace(' ', '_').Trim().ToLower(), ".ecfg");
 	}
 
 	static string FileToDisplayName(string fileName)
