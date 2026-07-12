@@ -20,8 +20,8 @@ public partial class ConfigInitializer : Node
 			return;
 		}
 
-		Node ucfgu = _userConfigUpdater.Instantiate();
-		AddChild(ucfgu);
+		Node userConfigUpdater = _userConfigUpdater.Instantiate();
+		AddChild(userConfigUpdater);
 	}
 
 	static void InitializeDirectories()
