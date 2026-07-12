@@ -33,7 +33,7 @@ public static class ConfigIO
 	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
 	/// <param name="path">The path to the executable. This can be a full or relative path.</param>
 	/// <returns></returns>
-	public static Response<ConfigResponseStatus> ExecuteFromConfig(ExecutionSource source, string path)
+	public static Response<ConfigResponseStatus> ExecuteFromConfig(ExecutionSource source, string path, bool silent = false)
 	{
 		if (string.IsNullOrEmpty(path))
 			return new(ConfigResponseStatus.InvalidArgs, "Execution path is empty.");
@@ -51,7 +51,7 @@ public static class ConfigIO
 
 		// NOTE: At this point the lines should to 100% certainty be within the fileResponse payload (fileResponse.Payload)
 		foreach (string line in fileResponse.Payload)
-			StatementExecutor.Execute(source, StatementParser.ParseLine(line));
+			StatementExecutor.Execute(source, StatementParser.ParseLine(line), silent);
 
 		return new(ConfigResponseStatus.Success, null);
 	}
