@@ -120,7 +120,7 @@ public abstract partial class CommandSet : Node
 	/// <param name="filePath">COMPILER INJECTED ARGUMENT, DO NOT SET.</param>
 	/// <param name="lineNumber">COMPILER INJECTED ARGUMENT, DO NOT SET.</param>
 	/// <returns>A command with an automatic compile-time custom stacktrace.</returns>
-	protected Command Command(
+	static protected Command Command(
 		string signature,
 		string shortDesc,
 		string longDesc,
