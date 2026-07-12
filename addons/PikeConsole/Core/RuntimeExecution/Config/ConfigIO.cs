@@ -33,12 +33,12 @@ public static class ConfigIO
 	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
 	/// <param name="path">The path to the executable. This can be a full or relative path.</param>
 	/// <returns></returns>
-	public static Response<ConfigCRUDEResponseStatus> ExecuteFromConfig(ExecutionSource source, string path)
+	public static Response<ConfigResponseStatus> ExecuteFromConfig(ExecutionSource source, string path)
 	{
 		if (string.IsNullOrEmpty(path))
-			return new(ConfigCRUDEResponseStatus.InvalidArgs, "Execution path is empty.");
+			return new(ConfigResponseStatus.InvalidArgs, "Execution path is empty.");
 
-		Response<ConfigCRUDEResponseStatus, string[]> fileResponse = FileSystemHelper.GetPathType(path) switch
+		Response<ConfigResponseStatus, string[]> fileResponse = FileSystemHelper.GetPathType(path) switch
 		{
 			PathType.Resource => ReadConfigResource(path),
 			PathType.User => ReadConfig(FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty))),
@@ -46,14 +46,14 @@ public static class ConfigIO
 		};
 
 		// This is kind of mixing concerns, but if we don't do it here, each listener must manually apply flags.
-		if (fileResponse.Status != ConfigCRUDEResponseStatus.Success)
+		if (fileResponse.Status != ConfigResponseStatus.Success)
 			return new(fileResponse.Status, fileResponse.Message, fileResponse.Flags);
 
 		// NOTE: At this point the lines should to 100% certainty be within the fileResponse payload (fileResponse.Payload)
 		foreach (string line in fileResponse.Payload)
 			StatementExecutor.Execute(source, StatementParser.ParseLine(line));
 
-		return new(ConfigCRUDEResponseStatus.Success, null);
+		return new(ConfigResponseStatus.Success, null);
 	}
 
 	/// <summary>
@@ -65,12 +65,12 @@ public static class ConfigIO
 	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
 	/// <param name="path">The path to the config. This can be a full or relative path.</param>
 	/// <returns></returns>
-	public static Response<ConfigCRUDEResponseStatus> WriteToConfig(string[] rows, string path, bool overWrite = false)
+	public static Response<ConfigResponseStatus> WriteToConfig(string[] rows, string path, bool overWrite = false)
 	{
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigCRUDEResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
@@ -84,7 +84,7 @@ public static class ConfigIO
 			FileSystemHelper.EnsureDirectory(Path.GetDirectoryName(path));
 
 			if (File.Exists(file) && !overWrite)
-				return new(ConfigCRUDEResponseStatus.FileConflict, $"Cannot write to file {Path.GetFileName(path)}. The file already exists.", [LogFlags.Conflict]);
+				return new(ConfigResponseStatus.FileConflict, $"Cannot write to file {Path.GetFileName(path)}. The file already exists.", [LogFlags.Conflict]);
 
 			// Make a temp file.
 			File.WriteAllLines(tempFile, rows);
@@ -98,7 +98,7 @@ public static class ConfigIO
 		}
 		catch (Exception e)
 		{
-			return new(ConfigCRUDEResponseStatus.Error, $"Failed to save config \"{path}\": {e.Message}");
+			return new(ConfigResponseStatus.Error, $"Failed to save config \"{path}\": {e.Message}");
 		}
 		finally
 		{
@@ -106,19 +106,19 @@ public static class ConfigIO
 				File.Delete(tempFile);
 		}
 
-		return new(ConfigCRUDEResponseStatus.Success, null);
+		return new(ConfigResponseStatus.Success, null);
 	}
 
 	/// <summary>
 	/// Rename a config using global path or <c>"user://"</c> path.
 	/// </summary>
 	/// <param name="path">Global or <c>"user://"</c></param>
-	public static Response<ConfigCRUDEResponseStatus> RenameConfig(string newName, string path)
+	public static Response<ConfigResponseStatus> RenameConfig(string newName, string path)
 	{
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigCRUDEResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
@@ -126,7 +126,7 @@ public static class ConfigIO
 		string movePath = Path.ChangeExtension($"{Path.GetDirectoryName(path)}/{newName}", EXT);
 
 		if (File.Exists(movePath))
-			return new(ConfigCRUDEResponseStatus.FileConflict, $"Cannot rename file to \"{Path.GetFileName(movePath)}\". That file already exists.", [LogFlags.Conflict]);
+			return new(ConfigResponseStatus.FileConflict, $"Cannot rename file to \"{Path.GetFileName(movePath)}\". That file already exists.", [LogFlags.Conflict]);
 
 		try
 		{
@@ -134,22 +134,22 @@ public static class ConfigIO
 		}
 		catch (Exception e)
 		{
-			return new(ConfigCRUDEResponseStatus.Error, $"Failed to rename config \"{path}\": {e.Message}");
+			return new(ConfigResponseStatus.Error, $"Failed to rename config \"{path}\": {e.Message}");
 		}
 
-		return new(ConfigCRUDEResponseStatus.Success, null);
+		return new(ConfigResponseStatus.Success, null);
 	}
 
 	/// <summary>
 	/// Remove a config using global path or <c>"user://"</c> path.
 	/// </summary>
 	/// <param name="path">Global or <c>"user://"</c></param>
-	public static Response<ConfigCRUDEResponseStatus> RemoveConfig(string path)
+	public static Response<ConfigResponseStatus> RemoveConfig(string path)
 	{
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigCRUDEResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
@@ -157,16 +157,16 @@ public static class ConfigIO
 		try
 		{
 			if (!File.Exists(path))
-				return new(ConfigCRUDEResponseStatus.NotFound, $"Couldn't find config file at \"{path}\"", [LogFlags.NotFound]);
+				return new(ConfigResponseStatus.NotFound, $"Couldn't find config file at \"{path}\"", [LogFlags.NotFound]);
 
 			File.Delete(path);
 		}
 		catch (Exception e)
 		{
-			return new(ConfigCRUDEResponseStatus.NotFound, $"Failed to remove file at \"{path}\": {e.Message}");
+			return new(ConfigResponseStatus.NotFound, $"Failed to remove file at \"{path}\": {e.Message}");
 		}
 
-		return new(ConfigCRUDEResponseStatus.Success, null);
+		return new(ConfigResponseStatus.Success, null);
 	}
 
 	/// <summary>
@@ -175,50 +175,50 @@ public static class ConfigIO
 	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
 	/// <param name="globalPath">The path, assuming the <c>user://{cfg}</c> directory as the root.</param>
 	/// <returns>A payloaded response.</returns>
-	public static Response<ConfigCRUDEResponseStatus, string[]> ReadConfig(string globalPath)
+	public static Response<ConfigResponseStatus, string[]> ReadConfig(string globalPath)
 	{
 		if (string.IsNullOrWhiteSpace(globalPath))
-			return new(ConfigCRUDEResponseStatus.InvalidArgs, default, "Config path is empty.", [LogFlags.InvalidArgs]);
+			return new(ConfigResponseStatus.InvalidArgs, default, "Config path is empty.", [LogFlags.InvalidArgs]);
 
 		globalPath = Path.ChangeExtension(globalPath, EXT);
 
 		try
 		{
 			string[] lines = File.ReadAllLines(globalPath);
-			return new(ConfigCRUDEResponseStatus.Success, lines, null);
+			return new(ConfigResponseStatus.Success, lines, null);
 		}
 		catch (IOException e)
 		{
 			if (e is FileNotFoundException or DirectoryNotFoundException)
-				return new(ConfigCRUDEResponseStatus.NotFound, default, $"Couldn't find config file at: \"{globalPath}\"", [LogFlags.NotFound]);
+				return new(ConfigResponseStatus.NotFound, default, $"Couldn't find config file at: \"{globalPath}\"", [LogFlags.NotFound]);
 			else
-				return new(ConfigCRUDEResponseStatus.Error, default, $"Failed to read config file \"{globalPath}\": {e.Message}");
+				return new(ConfigResponseStatus.Error, default, $"Failed to read config file \"{globalPath}\": {e.Message}");
 		}
 	}
 
 	// Wrapper that reads a resource config (a config file within the compiled binary)
-	static Response<ConfigCRUDEResponseStatus, string[]> ReadConfigResource(string resPath)
+	static Response<ConfigResponseStatus, string[]> ReadConfigResource(string resPath)
 	{
 		if (string.IsNullOrWhiteSpace(resPath.Replace("res://", string.Empty)))
-			return new(ConfigCRUDEResponseStatus.InvalidArgs, default, "Resource config path is empty.", [LogFlags.InvalidArgs]);
+			return new(ConfigResponseStatus.InvalidArgs, default, "Resource config path is empty.", [LogFlags.InvalidArgs]);
 
 		resPath = Path.ChangeExtension(resPath, EXT);
 
 		if (!Godot.FileAccess.FileExists(resPath))
-			return new(ConfigCRUDEResponseStatus.NotFound, default, $"Couldn't find resource config file at: \"{resPath}\"", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, default, $"Couldn't find resource config file at: \"{resPath}\"", [LogFlags.NotFound]);
 
 		using Godot.FileAccess file = Godot.FileAccess.Open(resPath, Godot.FileAccess.ModeFlags.Read);
 
 		if (file == null)
 		{
 			Godot.Error err = Godot.FileAccess.GetOpenError();
-			return new(ConfigCRUDEResponseStatus.Error, default, $"Failed to open resource config file \"{resPath}\". Godot Error: {err}");
+			return new(ConfigResponseStatus.Error, default, $"Failed to open resource config file \"{resPath}\". Godot Error: {err}");
 		}
 
 		string content = file.GetAsText();
 		string[] lines = content.Split(["\r\n", "\r", "\n"], StringSplitOptions.None);
 
-		return new(ConfigCRUDEResponseStatus.Success, lines, null);
+		return new(ConfigResponseStatus.Success, lines, null);
 	}
 
 	/// <summary>
@@ -231,13 +231,13 @@ public static class ConfigIO
 	/// </remarks>
 	/// <param name="searchPattern">Glob pattern</param>
 	/// <returns></returns>
-	public static Response<ConfigCRUDEResponseStatus, ConfigRef[]> GetConfigs(string searchPattern)
+	public static Response<ConfigResponseStatus, ConfigRef[]> GetConfigs(string searchPattern)
 	{
 
 		searchPattern = Path.ChangeExtension(searchPattern, EXT);
 		PikeLogger.Log(LogTarget.Runtime, $"{searchPattern}");
 
-		Response<ConfigCRUDEResponseStatus, ConfigRef[]> fileResponse = FileSystemHelper.GetPathType(searchPattern) switch
+		Response<ConfigResponseStatus, ConfigRef[]> fileResponse = FileSystemHelper.GetPathType(searchPattern) switch
 		{
 			PathType.Resource => GetConfigResourcesInternal(searchPattern),
 			PathType.User => GetConfigsInternal(FileSystemHelper.UserDirectory.Globalized(searchPattern.Replace("user://", string.Empty))),
@@ -247,27 +247,27 @@ public static class ConfigIO
 		return fileResponse;
 	}
 
-	static Response<ConfigCRUDEResponseStatus, ConfigRef[]> GetConfigsInternal(string globalPath)
+	static Response<ConfigResponseStatus, ConfigRef[]> GetConfigsInternal(string globalPath)
 	{
 		string dir = Path.GetDirectoryName(globalPath);
 		string term = Path.GetFileName(globalPath);
 		PikeLogger.Log(LogTarget.Runtime, $"\nDIR: {dir}\nTERM: {term}");
 
 		if (!Directory.Exists(dir))
-			return new(ConfigCRUDEResponseStatus.NotFound, [], $"Directory \"{dir}\" does not exist. Cannot search for files.", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, [], $"Directory \"{dir}\" does not exist. Cannot search for files.", [LogFlags.NotFound]);
 
 		try
 		{
 			ConfigRef[] configs = [.. Directory.GetFiles(dir, term).Select(f => new ConfigRef(f))];
-			return new(ConfigCRUDEResponseStatus.Success, configs, null);
+			return new(ConfigResponseStatus.Success, configs, null);
 		}
 		catch (Exception e)
 		{
-			return new(ConfigCRUDEResponseStatus.Error, [], $"Couldn't get the files from {dir} using {term}. Error: {e.Message}");
+			return new(ConfigResponseStatus.Error, [], $"Couldn't get the files from {dir} using {term}. Error: {e.Message}");
 		}
 	}
 
-	static Response<ConfigCRUDEResponseStatus, ConfigRef[]> GetConfigResourcesInternal(string resSearchPattern)
+	static Response<ConfigResponseStatus, ConfigRef[]> GetConfigResourcesInternal(string resSearchPattern)
 	{
 		// Note: Godot cannot search dynamically in compiled builds for files that weren't oficially imported, but we can reference them directly.
 		// While this method is MIA in a release build, the Execution method works perfectly fine as long as the path is direct, like: "res://cfg/map_5.ecfg"
@@ -276,7 +276,7 @@ public static class ConfigIO
 
 		// https://docs.godotengine.org/en/stable/tutorials/export/feature_tags.html
 		if (!Godot.OS.HasFeature("editor"))
-			return new(ConfigCRUDEResponseStatus.Failed, [], "Cannot dynamically search for internal config files in the compiled binary!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, [], "Cannot dynamically search for internal config files in the compiled binary!", [LogFlags.Failed]);
 
 		resSearchPattern = resSearchPattern.Replace("res://", string.Empty);
 		string dir = Path.GetDirectoryName(resSearchPattern);
@@ -287,11 +287,11 @@ public static class ConfigIO
 		dir = dir.Replace('\\', '/');
 
 		if (!Godot.DirAccess.DirExistsAbsolute($"res://{dir}"))
-			return new(ConfigCRUDEResponseStatus.NotFound, [], $"Resource directory \"{dir}\" does not exist.", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, [], $"Resource directory \"{dir}\" does not exist.", [LogFlags.NotFound]);
 
 		using Godot.DirAccess dirAccess = Godot.DirAccess.Open(dir);
 		if (dirAccess == null)
-			return new(ConfigCRUDEResponseStatus.Error, [], $"Failed to open resource directory \"{dir}\". Godot Error: {Godot.DirAccess.GetOpenError()}");
+			return new(ConfigResponseStatus.Error, [], $"Failed to open resource directory \"{dir}\". Godot Error: {Godot.DirAccess.GetOpenError()}");
 
 		string[] allFiles = dirAccess.GetFiles();
 
@@ -302,7 +302,7 @@ public static class ConfigIO
 		.Where(fileName => FileSystemName.MatchesSimpleExpression(term, fileName))
 		.Select(fileName => new ConfigRef($"{dir}/{fileName}"))];
 
-		return new(ConfigCRUDEResponseStatus.Success, configs, null);
+		return new(ConfigResponseStatus.Success, configs, null);
 	}
 
 }

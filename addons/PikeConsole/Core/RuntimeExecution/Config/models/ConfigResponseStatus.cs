@@ -1,6 +1,6 @@
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 
-public enum ConfigCRUDEResponseStatus
+public enum ConfigResponseStatus
 {
 	/// <summary>Default fallback.</summary>
 	None = 0,
