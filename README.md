@@ -47,14 +47,14 @@ The final, estimated release date for `version 1.0` is soonTM.
 -   - [x] (Global)
 -   - [x] (Alias)
 -   - [x] (Environment)
-- [x] Create the executable config IO system
+- [x] Create the executable config IO system -- New and improved system in place! 🎉
 -   - [x] .ecfg Create
 -   - [x] .ecfg Read
 -   - [x] .ecfg Update
 -   - [x] .ecfg Delete
 -   - [x] .ecfg Execute
 - [ ] Create the UserConfigManager!
--   - [x] CRUDE
+-   - [ ] CRUDE
 -   - [ ] Initialize on start
 -   - [ ] Save debunced
 -   - [ ] Switch profiles
