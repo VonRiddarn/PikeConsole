@@ -56,92 +56,117 @@ public static class ConfigIO
 		return new(ConfigCRUDEResponseStatus.Success, null);
 	}
 
-	public static void WriteToConfig(string[] rows, string globalPath)
+	/// <summary>
+	/// Execute all statements within an executable config file (.ecfg).
+	/// </summary>
+	/// <remarks>
+	/// Automatically correctly routes "user://" and "res://".
+	/// </remarks>
+	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
+	/// <param name="path">The path to the config. This can be a full or relative path.</param>
+	/// <returns></returns>
+	public static Response<ConfigCRUDEResponseStatus> WriteToConfig(string[] rows, string path, bool overWrite = false)
 	{
-		if (globalPath.EndsWith(EXT))
-			globalPath = globalPath[..^EXT.Length];
+		var pathType = FileSystemHelper.GetPathType(path);
+
+		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
+			return new(ConfigCRUDEResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
+			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
 		// Prepare paths for all files needed for a save.
 		// This might look overkill, but if the game crashes during save we do not want to corrupt or lose a player file.
-		string path = $"{globalPath}{EXT}";
-		string tempPath = $"{globalPath}.tmp";
+		string file = Path.ChangeExtension(path, EXT);
+		string tempFile = Path.ChangeExtension(path, ".tmp");
 
-		// Actually apply the settings to real files.
 		try
 		{
-			FileSystemHelper.EnsureDirectory(Path.GetDirectoryName(globalPath));
+			FileSystemHelper.EnsureDirectory(Path.GetDirectoryName(path));
+
+			if (File.Exists(file) && !overWrite)
+				return new(ConfigCRUDEResponseStatus.FileConflict, $"Cannot write to file {Path.GetFileName(path)}. The file already exists.", [LogFlags.Conflict]);
 
 			// Make a temp file.
-			File.WriteAllLines(tempPath, rows);
+			File.WriteAllLines(tempFile, rows);
 
 			// If a real file exist, safe-replace the real file with the temp.
 			// If not, just rename the temp file.
-			if (File.Exists(path))
-				File.Replace(tempPath, path, null);
+			if (File.Exists(file))
+				File.Replace(tempFile, file, null);
 			else
-				File.Move(tempPath, path);
+				File.Move(tempFile, file);
 		}
 		catch (Exception e)
 		{
-			PikeLogger.LogError(LogTarget.All, $"Failed to save config \"{globalPath}\": {e.Message}", forceLog: true);
+			return new(ConfigCRUDEResponseStatus.Error, $"Failed to save config \"{path}\": {e.Message}");
 		}
 		finally
 		{
-			if (File.Exists(tempPath))
-				File.Delete(tempPath);
+			if (File.Exists(tempFile))
+				File.Delete(tempFile);
 		}
+
+		return new(ConfigCRUDEResponseStatus.Success, null);
 	}
 
-	public static bool TryRenameConfig(string newName, string globalPath, out string error)
+	/// <summary>
+	/// Rename a config using global path or <c>"user://"</c> path.
+	/// </summary>
+	/// <param name="path">Global or <c>"user://"</c></param>
+	public static Response<ConfigCRUDEResponseStatus> RenameConfig(string newName, string path)
 	{
-		error = string.Empty;
+		var pathType = FileSystemHelper.GetPathType(path);
 
-		if (!globalPath.EndsWith(EXT))
-			globalPath += EXT;
+		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
+			return new(ConfigCRUDEResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
+			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
-		if (!newName.EndsWith(EXT))
-			newName += EXT;
-
-		string originalFile = Path.GetFileName(globalPath);
-		string movePath = $"{Path.GetDirectoryName(globalPath)}/{newName}";
+		string file = Path.ChangeExtension(path, EXT);
+		string movePath = Path.ChangeExtension($"{Path.GetDirectoryName(path)}/{newName}", EXT);
 
 		if (File.Exists(movePath))
-		{
-			error = $"Cannot rename config file \"{originalFile}\" to \"{newName}\". A file with that name already exists!";
-			return false;
-		}
+			return new(ConfigCRUDEResponseStatus.FileConflict, $"Cannot rename file to \"{Path.GetFileName(movePath)}\". That file already exists.", [LogFlags.Conflict]);
 
 		try
 		{
-			File.Move(globalPath, movePath);
+			File.Move(file, movePath);
 		}
 		catch (Exception e)
 		{
-			PikeLogger.LogError(LogTarget.All, $"Failed to rename config file \"{originalFile}\": {e.Message}", forceLog: true);
+			return new(ConfigCRUDEResponseStatus.Error, $"Failed to rename config \"{path}\": {e.Message}");
 		}
 
-		return true;
+		return new(ConfigCRUDEResponseStatus.Success, null);
 	}
 
-	public static bool RemoveConfig(string globalPath)
+	/// <summary>
+	/// Remove a config using global path or <c>"user://"</c> path.
+	/// </summary>
+	/// <param name="path">Global or <c>"user://"</c></param>
+	public static Response<ConfigCRUDEResponseStatus> RemoveConfig(string path)
 	{
-		if (!globalPath.EndsWith(EXT))
-			globalPath += EXT;
+		var pathType = FileSystemHelper.GetPathType(path);
+
+		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
+			return new(ConfigCRUDEResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
+			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
 		// Actually apply the settings to real files.
 		try
 		{
-			if (!File.Exists(globalPath))
-				return false;
+			if (!File.Exists(path))
+				return new(ConfigCRUDEResponseStatus.NotFound, $"Couldn't find config file at \"{path}\"", [LogFlags.NotFound]);
 
-			File.Delete(globalPath);
-			return true;
+			File.Delete(path);
 		}
 		catch (Exception e)
 		{
-			PikeLogger.LogError(LogTarget.All, $"Failed to remove config \"{globalPath}\": {e.Message}", forceLog: true);
-			return false;
+			return new(ConfigCRUDEResponseStatus.NotFound, $"Failed to remove file at \"{path}\": {e.Message}");
 		}
+
+		return new(ConfigCRUDEResponseStatus.Success, null);
 	}
 
 	/// <summary>
