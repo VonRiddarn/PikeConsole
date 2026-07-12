@@ -4,87 +4,199 @@ using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 
-// TODO: HUGE CHANGE CFG SYSTEM!! LOOK HERE -- Bookmark 
-// Huge change:
-// The system will use the extention "ecfg" instead. It stands for ExecutableConfig.
-// This makes us able to ignore other files that may potentially share directory without having to rely on hacky naming.
-// Eg users: 
-// active.cfg -- Godot file
-// Timmy.ecfg -- Executable Config, and in this case, a valid profile
-
-// TODO: Add a generic "UserConfigCRUDEResponseStatus" enum.
+// This class was not fun to work with. It sucked.
+// I hope I never have to go back in here, ever.
 public static class UserConfigManager
 {
 	// Constants for easier access within the filesystem.
 	// We are using a Godot config file to get the stored last user.
-	const string FILENAME = "active.cfg";
+	const string TRACKER_FILENAME = "active.cfg";
 	const string SECTION = "Boot";
 	const string KEY = "last_used_config";
 
-	public static ConfigRef[] GetAvailableConfigs(string term = "*")
+	static string GetPath(string profileName) =>
+		FileSystemHelper.UserDirectory.Globalized(PikeConsoleConfig.UserConfigsDirectory, ConfigRef.DisplayToFileName(profileName));
+
+	static string TrackerPath =>
+		FileSystemHelper.UserDirectory.Globalized(PikeConsoleConfig.UserConfigsDirectory, TRACKER_FILENAME);
+
+	public static event Action<ConfigRef> ActiveConfigChanged;
+
+	static ConfigRef _activeConfig = null;
+	public static ConfigRef ActiveConfig
 	{
-		throw new NotImplementedException();
+		get
+		{
+			if (_activeConfig != null)
+				return _activeConfig;
+
+			ConfigFile config = new();
+
+			// If the tracker file (users/active.cfg) is missing we just force create it and push the user into a default config
+			if (config.Load(TrackerPath) != Error.Ok || !config.HasSectionKey(SECTION, KEY))
+			{
+				_activeConfig = new ConfigRef(GetPath("default"));
+
+				if (!File.Exists(_activeConfig.FullPath))
+					ConfigIO.WriteToConfig([], _activeConfig.FullPath, false);
+
+				var response = SelectConfig("default");
+				if (response.Status != ConfigResponseStatus.Success)
+					PikeLogger.LogError(LogTarget.All, $"The config selection failed. Error: {response.Message}", tags: response.Flags);
+
+				return _activeConfig;
+			}
+
+			// If the tracker is loaded we just read the value, apply it to the cache and return.
+			string lastUsed = config.GetValue(SECTION, KEY).AsString();
+			_activeConfig = new ConfigRef(GetPath(lastUsed));
+			return _activeConfig;
+		}
 	}
 
-	public static bool RenameConfig(string configName, string newName, out string error)
+	// Methods are ordered in CRUD.
+	// ----- ----- CREATE ----- -----
+	public static Response<ConfigResponseStatus> CreateConfig(string configName, bool selectOnCreate = true)
 	{
-		throw new NotImplementedException();
+		ConfigRef newConfig = new(GetPath(configName));
+
+		var writeRes = ConfigIO.WriteToConfig([$"// {configName}"], newConfig.FullPath, overWrite: false);
+
+		if (writeRes.Status != ConfigResponseStatus.Success)
+			return writeRes;
+
+		if (selectOnCreate)
+			return SelectConfig(newConfig.FileName);
+
+		return new(ConfigResponseStatus.Success, $"Profile \"{newConfig.DisplayName}\" created successfully.");
 	}
 
-	// TODO: Add a "CreateUserConfigResponse" - This can help with GUI additions later on.
-	public static bool CreateUserConfig(string configName, bool selectOnCreate = true)
+	// ----- ----- READ ----- -----
+	public static Response<ConfigResponseStatus, ConfigRef[]> GetAvailableConfigs(string term = "*")
 	{
-		// Create a user profile file and potentially select it.
-		// Returns true if a profile was successfully created.
-		throw new NotImplementedException();
+		// "*" becomes something like c:/.../users/*.ecfg
+		// "Tompa Tjompa" becomes something like: c:/.../users/tompa_tjompa.ecfg
+		return ConfigIO.GetConfigs(GetPath(term));
 	}
 
-	// TODO: Add a "RemoveUserConfigResponse" - This can help with GUI additions later on.
-	public static bool RemoveUserConfig(string configName)
+	// ----- ----- UPDATE ----- -----
+	public static Response<ConfigResponseStatus> RenameConfig(string configName, string newName)
 	{
-		throw new NotImplementedException();
+		if (FileSystemHelper.HasInvalidChars(newName))
+			return new(
+				ConfigResponseStatus.InvalidArgs,
+				$"User profile contains invalid characters! Filenames may not include: [{string.Join(", ", Path.GetInvalidFileNameChars())}]",
+				[LogFlags.InvalidArgs]);
+
+		ConfigRef oldConfig = new(GetPath(configName));
+		newName = ConfigRef.DisplayToFileName(newName);
+
+		// Before we actually apply anything, cache if we are renaming the current active profile.
+		bool isActiveProfile = oldConfig.FileName == ActiveConfig.FileName;
+
+		var response = ConfigIO.RenameConfig(newName, oldConfig.FullPath);
+
+		// If the active profile was renamed, select it again to get rid of the zomvbie state in active.cfg
+		// This will also trigger the event, which in turn could help update any UI elements
+		if (response.Status == ConfigResponseStatus.Success && isActiveProfile)
+		{
+			UpdateActiveConfigTracker(new ConfigRef(GetPath(newName)));
+		}
+
+		return response;
 	}
 
-	// TODO: Add a "SelectUserConfigResponse" - This can help with GUI additions later on.
-	public static bool TrySelectConfig(string configName, out string error)
+	public static Response<ConfigResponseStatus> SaveCurrentConfig() => SaveConfig(ActiveConfig.DisplayName);
+	public static Response<ConfigResponseStatus> SaveConfig(string configName)
 	{
-		throw new NotImplementedException();
+		ConfigRef config = new(GetPath(configName));
+		if (!File.Exists(config.FullPath))
+			return new(ConfigResponseStatus.NotFound, $"Cannot save \"{config.DisplayName}\". Profile does not exist.", [LogFlags.NotFound]);
+
+		var snapshot = PersistentCVarRegistry.GetSnapshot();
+		List<string> rows = [];
+
+		foreach (ICVar cvar in snapshot.Values)
+		{
+			if (cvar.IsModified)
+				rows.Add($"{cvar.Signature} {cvar.FormattedValue} {FileSystemHelper.RAM_ONLY_FLAG}; // [{cvar.DisplayType}] {cvar.CurrentValueDisplay}");
+		}
+
+		return ConfigIO.WriteToConfig([.. rows], config.FullPath, overWrite: true);
 	}
 
-	public static void SaveCurrentConfig()
+	public static Response<ConfigResponseStatus> FullResetCurrentConfig()
 	{
-		throw new NotImplementedException();
+		try
+		{
+			PersistentCVarRegistry.ResetAll(ramOnly: false);
+		}
+		catch (Exception e)
+		{
+			return new(ConfigResponseStatus.Error, $"Failed to reset all Cvars. Error: {e.Message}");
+		}
+
+		return new(ConfigResponseStatus.Success, null);
 	}
 
-	public static string GetCurrentConfig(string fallbackProfile = "default")
+	public static Response<ConfigResponseStatus> SelectConfig(string configName)
 	{
-		throw new NotImplementedException();
+		if (string.IsNullOrWhiteSpace(configName))
+			return new(ConfigResponseStatus.InvalidArgs, "Config name cannot be empty.");
+
+		ConfigRef targetConfig = new(GetPath(configName));
+
+		if (!File.Exists(targetConfig.FullPath))
+			return new(ConfigResponseStatus.NotFound, $"Cannot select profile \"{targetConfig.DisplayName}\". File does not exist.");
+
+		if (!UpdateActiveConfigTracker(targetConfig))
+			return new(ConfigResponseStatus.Error, $"Failed to save active config to file!");
+
+		// IMPORTANT: The ramOnly flag here is F-ing crucial. Do not remove it!
+		// If ram only is not set, all variables will reset using persistence, meaning we clear and save the current config.
+		PersistentCVarRegistry.ResetAll(ramOnly: true);
+
+		var initializeResponse = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, targetConfig.FullPath, silent: true);
+
+		if (initializeResponse.Status != ConfigResponseStatus.Success)
+			return initializeResponse;
+
+		return new(ConfigResponseStatus.Success, $"Active profile set to \"{targetConfig.DisplayName}\".");
 	}
 
-	public static bool TrySetCurrentConfig(string configName, out string error)
+	// ----- ----- DELETE ----- -----
+	public static Response<ConfigResponseStatus> RemoveUserConfig(string configName)
 	{
-		throw new NotImplementedException();
+		ConfigRef target = new(GetPath(configName));
+
+		// Prevent deleting the active profile, as that would leave the cache and tracker in a zombie state
+		if (target.FileName == ActiveConfig.FileName)
+			return new(ConfigResponseStatus.Failed, "Cannot delete the currently active profile.", [LogFlags.Failed]);
+
+		return ConfigIO.RemoveConfig(target.FullPath);
 	}
 
-	// TODO: Implement logic here
-	// Note: We might want to prime for multiple profiles right away...
-	// Instead of a static config, we have a selected one, and a list of ones that can be selected.
-	// All configs are located (by default) in : user://cfg/users
-	// There they have the strict naming: "user_*"
-	// 
-	// This allows us to parse the folder for all user profiles.
-	// We use Godots persistent settings to keep track of what profile was last selected.
-	// When we re-open the game we compare all available setting files to the last selected.
-	// If it exists, we boot into it. Otherwise we pick the first one we can get. Otherwise, we boot to defaults and create one: user_default.
-	// 
-	// We could also have static getters inside this script for that. 
-	// Which allows us to even interact with user profiles through the GUI.
-	// When we save the GUI, we don't write to "the" user profile. We write to the selected user profile.
-	// NOTE TO SELF: Make sure to show the CFG system in action and why we use the `StatementExecutor` instead of Godots own `ConfigFile` system.
-	// A good example is how the `StatementExecutor` will not crash when new settings are added or old removed.
-	// It will print "Unknown command" and move on. 
+
+	// ----- ----- HELPERS ----- -----
+	/// <summary>
+	/// Updates the active.cfg tracker and cached ConfigRef variable.
+	/// </summary>
+	private static bool UpdateActiveConfigTracker(ConfigRef target)
+	{
+		ConfigFile gdConfig = new();
+		gdConfig.Load(TrackerPath);
+
+		gdConfig.SetValue(SECTION, KEY, target.FileName);
+
+		if (gdConfig.Save(TrackerPath) != Error.Ok)
+			return false;
+
+		_activeConfig = target;
+		ActiveConfigChanged?.Invoke(_activeConfig);
+		return true;
+	}
 }
