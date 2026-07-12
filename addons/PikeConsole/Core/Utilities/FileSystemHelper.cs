@@ -44,6 +44,11 @@ public static class FileSystemHelper
 		}
 	}
 
+	public static bool HasInvalidChars(string filename)
+	{
+		return filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
+	}
+
 	public static PathType GetPathType(string path)
 	{
 		if (path.StartsWith("user://"))
