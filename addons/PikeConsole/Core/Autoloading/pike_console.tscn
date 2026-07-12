@@ -5,9 +5,11 @@
 [ext_resource type="Resource" uid="uid://qs36scuxyjtu" path="res://addons/PikeConsole/Config/variables/console/console_inject_engine_logs.tres" id="2_jh5ft"]
 [ext_resource type="Script" uid="uid://dbmyyyatcxi0a" path="res://addons/PikeConsole/Core/Autoloading/FrontendInitializer.cs" id="3_tcwn3"]
 [ext_resource type="Script" uid="uid://h3qof2uc0f6u" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/AliasCommandSet.cs" id="4_cdf7k"]
-[ext_resource type="Script" uid="uid://byjf7sauxgmfc" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/GlobalCommandSet.cs" id="4_iryi3"]
+[ext_resource type="Script" uid="uid://byjf7sauxgmfc" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/DiagnosticCommandSet.cs" id="4_iryi3"]
 [ext_resource type="Script" uid="uid://ha2jv4833lgr" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/EnvironmentCommandSet.cs" id="5_olhe5"]
 [ext_resource type="Script" uid="uid://tpc1u7agnekw" path="res://addons/PikeConsole/Core/Autoloading/ConfigInitializer.cs" id="7_jeug7"]
+[ext_resource type="Script" uid="uid://cow0iilu8fk87" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/ConfigCommandSet.cs" id="7_t3nu2"]
+[ext_resource type="Script" uid="uid://d02ubsgnkst0v" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/DiscoveryCommandSet.cs" id="8_kjfc5"]
 [ext_resource type="PackedScene" uid="uid://0aiogpicov8x" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigUpdater.tscn" id="8_s6wl1"]
 
 [node name="PikeConsole" type="Node" unique_id=1879456131]
@@ -21,11 +23,17 @@ script = ExtResource("2_hj4c2")
 
 [node name="CommandSets" type="Node" parent="." unique_id=322416938]
 
-[node name="GlobalCommandSet" type="Node" parent="CommandSets" unique_id=1503279071]
+[node name="DiscoveryCommandSet" type="Node" parent="CommandSets" unique_id=1861238183]
+script = ExtResource("8_kjfc5")
+
+[node name="DiagnosticCommandSet" type="Node" parent="CommandSets" unique_id=1503279071]
 script = ExtResource("4_iryi3")
 
 [node name="EnvironmentCommandSet" type="Node" parent="CommandSets" unique_id=683622182]
 script = ExtResource("5_olhe5")
+
+[node name="ConfigCommandSet" type="Node" parent="CommandSets" unique_id=1666924907]
+script = ExtResource("7_t3nu2")
 
 [node name="AliasCommandSet" type="Node" parent="CommandSets" unique_id=508363395]
 script = ExtResource("4_cdf7k")
