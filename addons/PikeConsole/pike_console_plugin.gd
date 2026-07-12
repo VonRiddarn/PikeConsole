@@ -57,10 +57,10 @@ const SETTING_CVAR_DIRECTORY: Dictionary[String, Variant] = {
 	"hint_string": ""
 }
 const SETTING_CONFIG_DIRECTORY: Dictionary[String, Variant] = {
-	"path": PATH_SETTINGS_CONFIG + "config_directory_name", 
-	"default_value": "cfg", 
+	"path": PATH_SETTINGS_CONFIG + "config_directory_path", 
+	"default_value": "user://cfg", 
 	"type": TYPE_STRING, 
-	"hint": PROPERTY_HINT_NONE, 
+	"hint": PROPERTY_HINT_DIR, 
 	"hint_string": ""
 }
 const SETTING_USE_USER_CONFIGS: Dictionary[String, Variant] = {

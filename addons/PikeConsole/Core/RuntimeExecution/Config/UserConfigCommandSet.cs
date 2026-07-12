@@ -25,18 +25,6 @@ public partial class UserConfigCommandSet : CommandSet
 				return new(ExecutionResponseStatus.Success, sb.ToString(), response.Flags);
 			}
 		),
-		Command(
-			"exec",
-			false,
-			(args) => {
-				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, args[0]);
-
-				if(response.Status != ConfigResponseStatus.Success)
-					return new(ExecutionResponseStatus.Failed, response.Message, response.Flags);
-
-				return new(ExecutionResponseStatus.Success, response.Message, response.Flags);
-			}
-		),
 	];
 
 }

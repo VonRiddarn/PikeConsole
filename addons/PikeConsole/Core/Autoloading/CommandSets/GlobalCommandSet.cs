@@ -164,10 +164,10 @@ public partial class GlobalCommandSet : CommandSet
 			}
 		),
 		Command(
-			"list",
+			"find",
 			"Lists all comands and CVars with an optional search term.",
 			null,
-			"list [term?]",
+			"find [term?]",
 			false,
 			static (args) => {
 				string term = string.Join(' ', args);
@@ -176,10 +176,10 @@ public partial class GlobalCommandSet : CommandSet
 			}
 		),
 		Command(
-			"list_commands",
+			"find_command",
 			"Lists all comands with an optional search term.",
 			null,
-			"list_commands [term?]",
+			"find_command [term?]",
 			false,
 			static (args) => {
 				string term = string.Join(' ', args);
@@ -188,10 +188,10 @@ public partial class GlobalCommandSet : CommandSet
 			}
 		),
 		Command(
-			"list_cvars",
+			"find_cvar",
 			"Lists all CVars with an optional search term.",
 			null,
-			"list_cvars [term?]",
+			"find_cvar [term?]",
 			false,
 			static (args) => {
 				string term = string.Join(' ', args);
@@ -212,6 +212,21 @@ public partial class GlobalCommandSet : CommandSet
 					return new(ExecutionResponseStatus.Error, $"Failed to open the user directory. OS Error: {err}");
 
 				return new(ExecutionResponseStatus.Success, $"Opened the user directoty at: {FileSystemHelper.UserDirectory.Globalized()}");
+			}
+		),
+		Command(
+			"exec",
+			$"Executes one or more config files with the \"{PikeConsoleConfig.ConfigDirectory}\" directory as the root.",
+			"User facing command that forces the path root to be within",
+			$"userdir [no args]",
+			false,
+			(args) => {
+				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, PikeConsoleConfig.ConfigDirectory + "/" + args[0]);
+
+				if(response.Status != ConfigResponseStatus.Success)
+					return new(ExecutionResponseStatus.Failed, response.Message, response.Flags);
+
+				return new(ExecutionResponseStatus.Success, response.Message, response.Flags);
 			}
 		),
 	];

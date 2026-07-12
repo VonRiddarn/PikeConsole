@@ -19,8 +19,25 @@ public static class FileSystemHelper
 		/// <returns>The full system path to the directory</returns>
 		public static string Globalized(params string[] segments)
 		{
-			string path = ProjectSettings.GlobalizePath("user://");
-			path = Path.Combine([path, .. segments]);
+			if (segments == null || segments.Length == 0)
+				return Globalized(string.Empty);
+
+			// Using GetFullPath instead of just returning path so that we make sure it's normalized.
+			return Globalized(Path.Combine(segments));
+		}
+
+		/// <summary>
+		/// Converts a local 
+		/// </summary>
+		/// <returns>The full system path to the directory</returns>
+		public static string Globalized(string path)
+		{
+			if (path.StartsWith("user://"))
+				path = path[7..];
+
+			string usrDriGlobal = ProjectSettings.GlobalizePath("user://");
+
+			path = Path.Combine(usrDriGlobal, path);
 
 			// Using GetFullPath instead of just returning path so that we make sure it's normalized.
 			return Path.GetFullPath(path);
