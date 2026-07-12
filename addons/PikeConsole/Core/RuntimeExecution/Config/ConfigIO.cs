@@ -2,7 +2,6 @@ using System;
 using System.IO;
 using System.IO.Enumeration;
 using System.Linq;
-using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.Utilities;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Config;
@@ -235,7 +234,6 @@ public static class ConfigIO
 	{
 
 		searchPattern = Path.ChangeExtension(searchPattern, EXT);
-		PikeLogger.Log(LogTarget.Runtime, $"{searchPattern}");
 
 		Response<ConfigResponseStatus, ConfigRef[]> fileResponse = FileSystemHelper.GetPathType(searchPattern) switch
 		{
@@ -251,7 +249,6 @@ public static class ConfigIO
 	{
 		string dir = Path.GetDirectoryName(globalPath);
 		string term = Path.GetFileName(globalPath);
-		PikeLogger.Log(LogTarget.Runtime, $"\nDIR: {dir}\nTERM: {term}");
 
 		if (!Directory.Exists(dir))
 			return new(ConfigResponseStatus.NotFound, [], $"Directory \"{dir}\" does not exist. Cannot search for files.", [LogFlags.NotFound]);
