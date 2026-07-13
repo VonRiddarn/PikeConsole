@@ -2,8 +2,6 @@ using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 using FractalPike.PikeConsole.Core.Utilities;
-using Godot;
-using System;
 using System.Text;
 
 namespace FractalPike.PikeConsole.Core.Autoloading;
