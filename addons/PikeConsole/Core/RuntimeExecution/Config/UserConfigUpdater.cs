@@ -10,6 +10,8 @@ public partial class UserConfigUpdater : Node
 		if (PikeConsoleConfig.UserConfigsEnabled)
 			PersistentCVarRegistry.ValueUpdated += OnCVarChanged;
 
+		UserConfigManager.SelectConfig(UserConfigManager.ActiveConfig.FileName);
+
 	}
 
 	public override void _ExitTree()

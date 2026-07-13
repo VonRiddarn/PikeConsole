@@ -55,7 +55,7 @@ The final, estimated release date for `version 1.0` is soonTM.
 -   - [x] .ecfg Execute
 - [x] Create the UserConfigManager!
 -   - [x] CRUDE
--   - [ ] Initialize on start
+-   - [x] Initialize on start
 -   - [ ] Save debunced
 -   - [x] Switch profiles
 -   - [x] Failsafe activeprofile godot config
