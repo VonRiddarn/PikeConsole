@@ -1,3 +1,4 @@
+using System.Linq;
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
@@ -29,10 +30,10 @@ public partial class ConfigCommandSet : CommandSet
 			$"userdir",
 			"Opens the actual \"user://\" directory using the native file system and full system path.",
 			null,
-			$"userdir [no args]",
+			$"userdir [.. path?]",
 			false,
-			static (_) => {
-				Error err = OS.ShellOpen(FileSystemHelper.UserDirectory.Globalized());
+			static (args) => {
+				Error err = OS.ShellOpen(FileSystemHelper.UserDirectory.Globalized([.. args.Where(s => !string.IsNullOrWhiteSpace(s))]));
 
 				if (err != Error.Ok)
 					return new(ExecutionResponseStatus.Error, $"Failed to open the user directory. OS Error: {err}");
