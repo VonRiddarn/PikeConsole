@@ -118,7 +118,11 @@ public static class UserConfigManager
 			return new(ConfigResponseStatus.NotFound, $"Cannot save \"{config.DisplayName}\". Profile does not exist.", [LogFlags.NotFound]);
 
 		var snapshot = PersistentCVarRegistry.GetSnapshot();
-		List<string> rows = [];
+		List<string> rows = [
+			"// ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ",
+			"// THIS FILE IS VOLATILE AND CHANGES / ADDITIONS MAY BE OVERWRITTEN!",
+			"// ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- "
+			];
 
 		foreach (ICVar cvar in snapshot.Values)
 		{
