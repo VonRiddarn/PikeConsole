@@ -46,7 +46,7 @@ public static class UserConfigManager
 
 				var response = SelectConfig("default");
 				if (response.Status != ConfigResponseStatus.Success)
-					PikeLogger.LogError(LogTarget.All, $"The config selection failed. Error: {response.Message}", tags: response.Flags);
+					PikeLogger.LogError(LogTarget.All, $"The config selection failed. Error: {response.Message}", tags: response.Tags);
 
 				return _activeConfig;
 			}
@@ -90,7 +90,7 @@ public static class UserConfigManager
 			return new(
 				ConfigResponseStatus.InvalidArgs,
 				$"User profile contains invalid characters! Filenames may not include: [{string.Join(", ", Path.GetInvalidFileNameChars())}]",
-				[LogFlags.InvalidArgs]);
+				[LogTags.InvalidArgs]);
 
 		ConfigRef oldConfig = new(GetPath(configName));
 		newName = ConfigRef.DisplayToFileName(newName);
@@ -115,7 +115,7 @@ public static class UserConfigManager
 	{
 		ConfigRef config = new(GetPath(configName));
 		if (!File.Exists(config.FullPath))
-			return new(ConfigResponseStatus.NotFound, $"Cannot save \"{config.DisplayName}\". Profile does not exist.", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, $"Cannot save \"{config.DisplayName}\". Profile does not exist.", [LogTags.NotFound]);
 
 		var snapshot = PersistentCVarRegistry.GetSnapshot();
 		List<string> rows = [
@@ -179,7 +179,7 @@ public static class UserConfigManager
 
 		// Prevent deleting the active profile, as that would leave the cache and tracker in a zombie state
 		if (target.FileName == ActiveConfig.FileName)
-			return new(ConfigResponseStatus.Failed, "Cannot delete the currently active profile.", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Cannot delete the currently active profile.", [LogTags.Failed]);
 
 		return ConfigIO.RemoveConfig(target.FullPath);
 	}

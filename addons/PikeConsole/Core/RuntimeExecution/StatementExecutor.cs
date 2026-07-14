@@ -86,24 +86,24 @@ public static class StatementExecutor
 				{
 					case ExecutionResponseStatus.Success:
 						if (!silent)
-							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags]);
+							PikeLogger.LogSuccess(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Tags]);
 						break;
 
 					case ExecutionResponseStatus.InvalidArgs:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, LogFlags.InvalidArgs]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Tags, LogTags.InvalidArgs]);
 						break;
 
 					case ExecutionResponseStatus.Failed:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, LogFlags.Failed]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Tags, LogTags.Failed]);
 						break;
 
 					case ExecutionResponseStatus.DeniedCheat:
-						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Flags, LogFlags.DeniedCheat]);
+						PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: false, tags: [.. response.Tags, LogTags.DeniedCheat]);
 						break;
 
 					case ExecutionResponseStatus.Error:
 					default:
-						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [.. response.Flags]);
+						PikeLogger.LogError(LogTarget.Runtime, $"{response.Message}", forceLog: true, includePath: true, tags: [.. response.Tags]);
 						break;
 				}
 			}

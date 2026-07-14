@@ -20,9 +20,9 @@ public partial class ConfigCommandSet : CommandSet
 				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, PikeConsoleConfig.ConfigDirectory + "/" + args[0]);
 
 				if(response.Status != ConfigResponseStatus.Success)
-					return new(ExecutionResponseStatus.Failed, response.Message, response.Flags);
+					return new(ExecutionResponseStatus.Failed, response.Message, response.Tags);
 
-				return new(ExecutionResponseStatus.Success, response.Message, response.Flags);
+				return new(ExecutionResponseStatus.Success, response.Message, response.Tags);
 			}
 		),
 		Command(

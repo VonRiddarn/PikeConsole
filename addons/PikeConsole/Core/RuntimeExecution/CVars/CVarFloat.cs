@@ -58,12 +58,12 @@ public partial class CVarFloat : CVarBase<float>
 			if (UseLimitMin && value < MinLimitValue)
 			{
 				value = MinLimitValue;
-				logTags = [LogFlags.ValueLimited];
+				logTags = [LogTags.ValueLimited];
 			}
 			else if (UseLimitMax && value > MaxLimitValue)
 			{
 				value = MaxLimitValue;
-				logTags = [LogFlags.ValueLimited];
+				logTags = [LogTags.ValueLimited];
 			}
 		}
 
@@ -71,12 +71,12 @@ public partial class CVarFloat : CVarBase<float>
 		if (_useClampMin && value < _minClampValue)
 		{
 			value = _minClampValue;
-			logTags = [LogFlags.ValueClamped];
+			logTags = [LogTags.ValueClamped];
 		}
 		else if (_useClampMax && value > _maxClampValue)
 		{
 			value = _maxClampValue;
-			logTags = [LogFlags.ValueClamped];
+			logTags = [LogTags.ValueClamped];
 		}
 
 		return new(CvarSetResponseStatus.Success, value, null, logTags);

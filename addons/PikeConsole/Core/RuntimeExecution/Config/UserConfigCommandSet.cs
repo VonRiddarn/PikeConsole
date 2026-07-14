@@ -15,12 +15,12 @@ public partial class UserConfigCommandSet : CommandSet
 			false,
 			(args) => {
 				if(!ArgumentParser.TryParseBool(args[1], out bool b, out string _))
-					return new(ExecutionResponseStatus.Failed, "PARSE ERROR", [LogFlags.Failed]);
+					return new(ExecutionResponseStatus.Failed, "PARSE ERROR", [LogTags.Failed]);
 
 				var response = UserConfigManager.CreateConfig(args[0], b);
 
 				ExecutionResponseStatus s = response.Status == ConfigResponseStatus.Success ? ExecutionResponseStatus.Success : ExecutionResponseStatus.Failed;
-				return new(s, response.Message, response.Flags);
+				return new(s, response.Message, response.Tags);
 			}
 		),
 		Command(
@@ -33,7 +33,7 @@ public partial class UserConfigCommandSet : CommandSet
 				var response = UserConfigManager.SelectConfig(args[0]);
 
 				ExecutionResponseStatus s = response.Status == ConfigResponseStatus.Success ? ExecutionResponseStatus.Success : ExecutionResponseStatus.Failed;
-				return new(s, response.Message, response.Flags);
+				return new(s, response.Message, response.Tags);
 			}
 		),
 		Command(

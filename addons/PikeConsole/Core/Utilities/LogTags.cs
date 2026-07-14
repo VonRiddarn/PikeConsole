@@ -1,6 +1,6 @@
 namespace FractalPike.PikeConsole.Core.Utilities;
 
-public static class LogFlags
+public static class LogTags
 {
 	public const string NoHeader = "pikeconsole_no_header";
 

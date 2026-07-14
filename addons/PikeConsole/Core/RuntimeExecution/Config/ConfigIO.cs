@@ -46,7 +46,7 @@ public static class ConfigIO
 
 		// This is kind of mixing concerns, but if we don't do it here, each listener must manually apply flags.
 		if (fileResponse.Status != ConfigResponseStatus.Success)
-			return new(fileResponse.Status, fileResponse.Message, fileResponse.Flags);
+			return new(fileResponse.Status, fileResponse.Message, fileResponse.Tags);
 
 		// NOTE: At this point the lines should to 100% certainty be within the fileResponse payload (fileResponse.Payload)
 		foreach (string line in fileResponse.Payload)
@@ -69,7 +69,7 @@ public static class ConfigIO
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogTags.Failed]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
@@ -83,7 +83,7 @@ public static class ConfigIO
 			FileSystemHelper.EnsureDirectory(Path.GetDirectoryName(path));
 
 			if (File.Exists(file) && !overWrite)
-				return new(ConfigResponseStatus.FileConflict, $"Cannot write to file {Path.GetFileName(path)}. The file already exists.", [LogFlags.Conflict]);
+				return new(ConfigResponseStatus.FileConflict, $"Cannot write to file {Path.GetFileName(path)}. The file already exists.", [LogTags.Conflict]);
 
 			// Make a temp file.
 			File.WriteAllLines(tempFile, rows);
@@ -117,7 +117,7 @@ public static class ConfigIO
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogTags.Failed]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
@@ -125,7 +125,7 @@ public static class ConfigIO
 		string movePath = Path.ChangeExtension($"{Path.GetDirectoryName(path)}/{newName}", EXT);
 
 		if (File.Exists(movePath))
-			return new(ConfigResponseStatus.FileConflict, $"Cannot rename file to \"{Path.GetFileName(movePath)}\". That file already exists.", [LogFlags.Conflict]);
+			return new(ConfigResponseStatus.FileConflict, $"Cannot rename file to \"{Path.GetFileName(movePath)}\". That file already exists.", [LogTags.Conflict]);
 
 		try
 		{
@@ -148,7 +148,7 @@ public static class ConfigIO
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogTags.Failed]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
@@ -156,7 +156,7 @@ public static class ConfigIO
 		try
 		{
 			if (!File.Exists(path))
-				return new(ConfigResponseStatus.NotFound, $"Couldn't find config file at \"{path}\"", [LogFlags.NotFound]);
+				return new(ConfigResponseStatus.NotFound, $"Couldn't find config file at \"{path}\"", [LogTags.NotFound]);
 
 			File.Delete(path);
 		}
@@ -177,7 +177,7 @@ public static class ConfigIO
 	public static Response<ConfigResponseStatus, string[]> ReadConfig(string globalPath)
 	{
 		if (string.IsNullOrWhiteSpace(globalPath))
-			return new(ConfigResponseStatus.InvalidArgs, default, "Config path is empty.", [LogFlags.InvalidArgs]);
+			return new(ConfigResponseStatus.InvalidArgs, default, "Config path is empty.", [LogTags.InvalidArgs]);
 
 		globalPath = Path.ChangeExtension(globalPath, EXT);
 
@@ -189,7 +189,7 @@ public static class ConfigIO
 		catch (IOException e)
 		{
 			if (e is FileNotFoundException or DirectoryNotFoundException)
-				return new(ConfigResponseStatus.NotFound, default, $"Couldn't find config file at: \"{globalPath}\"", [LogFlags.NotFound]);
+				return new(ConfigResponseStatus.NotFound, default, $"Couldn't find config file at: \"{globalPath}\"", [LogTags.NotFound]);
 			else
 				return new(ConfigResponseStatus.Error, default, $"Failed to read config file \"{globalPath}\": {e.Message}");
 		}
@@ -199,12 +199,12 @@ public static class ConfigIO
 	static Response<ConfigResponseStatus, string[]> ReadConfigResource(string resPath)
 	{
 		if (string.IsNullOrWhiteSpace(resPath.Replace("res://", string.Empty)))
-			return new(ConfigResponseStatus.InvalidArgs, default, "Resource config path is empty.", [LogFlags.InvalidArgs]);
+			return new(ConfigResponseStatus.InvalidArgs, default, "Resource config path is empty.", [LogTags.InvalidArgs]);
 
 		resPath = Path.ChangeExtension(resPath, EXT);
 
 		if (!Godot.FileAccess.FileExists(resPath))
-			return new(ConfigResponseStatus.NotFound, default, $"Couldn't find resource config file at: \"{resPath}\"", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, default, $"Couldn't find resource config file at: \"{resPath}\"", [LogTags.NotFound]);
 
 		using Godot.FileAccess file = Godot.FileAccess.Open(resPath, Godot.FileAccess.ModeFlags.Read);
 
@@ -251,7 +251,7 @@ public static class ConfigIO
 		string term = Path.GetFileName(globalPath);
 
 		if (!Directory.Exists(dir))
-			return new(ConfigResponseStatus.NotFound, [], $"Directory \"{dir}\" does not exist. Cannot search for files.", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, [], $"Directory \"{dir}\" does not exist. Cannot search for files.", [LogTags.NotFound]);
 
 		try
 		{
@@ -273,7 +273,7 @@ public static class ConfigIO
 
 		// https://docs.godotengine.org/en/stable/tutorials/export/feature_tags.html
 		if (!Godot.OS.HasFeature("editor"))
-			return new(ConfigResponseStatus.Failed, [], "Cannot dynamically search for internal config files in the compiled binary!", [LogFlags.Failed]);
+			return new(ConfigResponseStatus.Failed, [], "Cannot dynamically search for internal config files in the compiled binary!", [LogTags.Failed]);
 
 		resSearchPattern = resSearchPattern.Replace("res://", string.Empty);
 		string dir = Path.GetDirectoryName(resSearchPattern);
@@ -284,7 +284,7 @@ public static class ConfigIO
 		dir = dir.Replace('\\', '/');
 
 		if (!Godot.DirAccess.DirExistsAbsolute($"res://{dir}"))
-			return new(ConfigResponseStatus.NotFound, [], $"Resource directory \"{dir}\" does not exist.", [LogFlags.NotFound]);
+			return new(ConfigResponseStatus.NotFound, [], $"Resource directory \"{dir}\" does not exist.", [LogTags.NotFound]);
 
 		using Godot.DirAccess dirAccess = Godot.DirAccess.Open(dir);
 		if (dirAccess == null)

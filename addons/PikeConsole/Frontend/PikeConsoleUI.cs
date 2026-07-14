@@ -42,25 +42,25 @@ public partial class PikeConsoleUI : Node
 			_ => string.Empty
 		};
 
-		if (!logEvent.HasTag(LogFlags.NoHeader))
+		if (!logEvent.HasTag(LogTags.NoHeader))
 		{
 			// If we aren't refusing a header, begin by going through header override tags.
 			// If no header override tags are present, attach a header based on the loglevel.
 			if (logEvent.TryGetAnyTag([
-			LogFlags.InvalidArgs,
-			LogFlags.DeniedCheat,
-			LogFlags.Failed,
-			LogFlags.ValueLimited,
-			LogFlags.ValueClamped],
+			LogTags.InvalidArgs,
+			LogTags.DeniedCheat,
+			LogTags.Failed,
+			LogTags.ValueLimited,
+			LogTags.ValueClamped],
 			out string tag))
 			{
 				header += tag switch
 				{
-					LogFlags.InvalidArgs => "[[color=#ffef63]Invalid Args[/color]] ",
-					LogFlags.DeniedCheat => "[[color=#ffef63]Cheatmode[/color]] ",
-					LogFlags.Failed => "[[color=#ffae63]Failed[/color]] ",
-					LogFlags.ValueLimited => "[[color=#ffef63]Limited[/color]] ",
-					LogFlags.ValueClamped => "[[color=#ffef63]Clamped[/color]] ",
+					LogTags.InvalidArgs => "[[color=#ffef63]Invalid Args[/color]] ",
+					LogTags.DeniedCheat => "[[color=#ffef63]Cheatmode[/color]] ",
+					LogTags.Failed => "[[color=#ffae63]Failed[/color]] ",
+					LogTags.ValueLimited => "[[color=#ffef63]Limited[/color]] ",
+					LogTags.ValueClamped => "[[color=#ffef63]Clamped[/color]] ",
 					_ => string.Empty
 				};
 			}
