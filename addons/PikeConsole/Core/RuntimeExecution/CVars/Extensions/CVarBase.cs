@@ -70,15 +70,26 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		get => _value;
 		set
 		{
-			if (!EqualityComparer<T>.Default.Equals(_value, value))
-			{
-				_value = value;
-				ValueChanged?.Invoke(value);
-				ValueInvalidated?.Invoke();
+			bool changed = !EqualityComparer<T>.Default.Equals(_value, value);
 
-				if (Persist)
-					PersistentCVarRegistry.Update(this);
-			}
+			SetRAM(value);
+
+			if (changed && Persist)
+				PersistentCVarRegistry.Update(this);
+		}
+	}
+
+	/// <summary>
+	/// Sets the value and triggers value changed events WITHOUT triggering an update for the persistent registry.
+	/// </summary>
+	/// <param name="value"></param>
+	public void SetRAM(T value)
+	{
+		if (!EqualityComparer<T>.Default.Equals(_value, value))
+		{
+			_value = value;
+			ValueChanged?.Invoke(value);
+			ValueInvalidated?.Invoke();
 		}
 	}
 
@@ -149,12 +160,10 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
 			return false;
 
-		var modified = IsModified;
-
-		Value = _defaultValue;
-
-		if (modified && Persist && !ramOnly)
-			PersistentCVarRegistry.Update(this);
+		if (Persist && !ramOnly)
+			Value = _defaultValue;
+		else
+			SetRAM(_defaultValue);
 
 		return true;
 	}
@@ -208,10 +217,10 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		if (response.Status == CvarSetResponseStatus.Success)
 		{
 
-			Value = response.Payload!;
-
 			if (Persist && !ramOnly)
-				PersistentCVarRegistry.Update(this);
+				Value = response.Payload!;
+			else
+				SetRAM(response.Payload!);
 
 			return new(ExecutionResponseStatus.Success, MessageOrFallback(response.Message, $"Set \"{Signature}\" to {DisplayValue(Value)}"), response.Tags);
 		}
