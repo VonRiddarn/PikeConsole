@@ -210,13 +210,11 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 			return new(ExecutionResponseStatus.Error, $"Uncaught exception when setting value of \"{Signature}\"\nin {SourceLocation}:\n{e.Message}");
 		}
 
-		// Return success, but log nothing.
 		if (response.Status == CvarSetResponseStatus.NoChange)
-			return new(ExecutionResponseStatus.Success, $"CVar \"{Signature}\" is already set to {DisplayValue(Value)}");
+			return new(ExecutionResponseStatus.Success, $"CVar \"{Signature}\" is already set to {DisplayValue(Value)}", [LogTags.ValueNoChange, .. response.Tags]);
 
 		if (response.Status == CvarSetResponseStatus.Success)
 		{
-
 			if (Persist && !ramOnly)
 				Value = response.Payload!;
 			else

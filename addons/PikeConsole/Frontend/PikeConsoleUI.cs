@@ -51,7 +51,8 @@ public partial class PikeConsoleUI : Node
 			LogTags.DeniedCheat,
 			LogTags.Failed,
 			LogTags.ValueLimited,
-			LogTags.ValueClamped],
+			LogTags.ValueClamped,
+			LogTags.ValueNoChange],
 			out string tag))
 			{
 				header += tag switch
@@ -61,6 +62,7 @@ public partial class PikeConsoleUI : Node
 					LogTags.Failed => "[[color=#ffae63]Failed[/color]] ",
 					LogTags.ValueLimited => "[[color=#ffef63]Limited[/color]] ",
 					LogTags.ValueClamped => "[[color=#ffef63]Clamped[/color]] ",
+					LogTags.ValueNoChange => "[[color=#B2FF73]No Change[/color]] ",
 					_ => string.Empty
 				};
 			}
