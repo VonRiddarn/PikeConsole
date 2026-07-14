@@ -5,7 +5,7 @@ namespace FractalPike.PikeConsole.Core.Logging;
 /// <summary>
 /// A struct used for outwards communications from the PikeLogger.
 /// </summary>
-public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string message, bool forceLog, string domain, string[] tags, string sourcePath = "")
+public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string message, bool forceLog, string[] tags, string sourcePath = "")
 {
 	/// <summary>
 	/// Unique key built using the callers filepath and linenumber. Used by listeners for throttling.
@@ -25,17 +25,6 @@ public readonly struct LogEvent(int callerKeyHash, LogLevel logLevel, string mes
 	/// Flag for listeners. Used to bypass throttling.
 	/// </summary>
 	public readonly bool ForceLog = forceLog;
-
-	/// <summary>
-	/// An optional string attached to the log event that allows advanced listeners to filter logs.
-	/// Internal systems separate their domains using dots (EG: "FractalPike.Entities.AI").
-	/// </summary>
-	/// <remarks>
-	/// Performance Note: Using string literals (EG: "Game.Combat") makes the compiler use string interning. 
-	/// This makes the execution zero-allocation. Dynamic domains (EG: $"Game.Player.{playerName}") 
-	/// will allocate heap memory. This shouldn't become a bottleneck, but worth mentioning.
-	/// </remarks>
-	public readonly string Domain = domain;
 
 	/// <summary>
 	/// Optional tags that can be appended to the event to be used for anything from filtering to formatting.

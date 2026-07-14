@@ -23,7 +23,7 @@ public partial class DiscoveryCommandSet : CommandSet
 
 				if(RuntimeExecutableRegistry.TryGetExecutable(signature, out var rte))
 				{
-					PikeLogger.Log(LogTarget.Runtime, $"{rte.GetHelp()}", forceLog: true, domain: "PikeConsole.Frontend");
+					PikeLogger.Log(LogTarget.Runtime, $"{rte.GetHelp()}", forceLog: true);
 					return new(ExecutionResponseStatus.Success, null);
 				}
 

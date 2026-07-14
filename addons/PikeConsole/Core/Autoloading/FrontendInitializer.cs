@@ -37,7 +37,7 @@ public partial class FrontendInitializer : Node
 			return;
 		}
 
-		PikeLogger.LogSuccess(LogTarget.Editor, $"[PikeConsole] Frontend UI successfully injected.", forceLog: true, domain: "PikeConsole");
+		PikeLogger.LogSuccess(LogTarget.Editor, $"[PikeConsole] Frontend UI successfully injected.", forceLog: true);
 	}
 
 	void ForceDisableRuntimeLogger(string warningMessage)
