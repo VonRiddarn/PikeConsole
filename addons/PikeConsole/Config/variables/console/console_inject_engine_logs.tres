@@ -6,6 +6,5 @@
 script = ExtResource("1_hr87x")
 _defaultValue = true
 _value = true
-Persist = true
 Description = "Killswitch for routing engine errors and warnings to the C# runtime and UI. Disabling this fully severs the C++ to C# interop bridge, which can save on performance if the engine is spamming errors."
 metadata/_custom_type_script = "uid://j1th6vqhii2n"
