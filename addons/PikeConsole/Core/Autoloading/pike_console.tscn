@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dx4bwtrbok1yg"]
 
 [ext_resource type="Script" uid="uid://cxhq248g21ptu" path="res://addons/PikeConsole/Core/Autoloading/EngineLoggerBridgeManager.cs" id="1_f8hgk"]
+[ext_resource type="Script" uid="uid://dc05g3jl4bfoy" path="res://addons/PikeConsole/Core/Autoloading/LogStartupCache.cs" id="1_mu1o4"]
 [ext_resource type="Script" uid="uid://nb3ptdy1fmnd" path="res://addons/PikeConsole/Core/Autoloading/CVarCrawler.cs" id="2_hj4c2"]
 [ext_resource type="Resource" uid="uid://qs36scuxyjtu" path="res://addons/PikeConsole/Config/variables/console/console_inject_engine_logs.tres" id="2_jh5ft"]
 [ext_resource type="Script" uid="uid://dbmyyyatcxi0a" path="res://addons/PikeConsole/Core/Autoloading/FrontendInitializer.cs" id="3_tcwn3"]
@@ -13,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://0aiogpicov8x" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigUpdater.tscn" id="8_s6wl1"]
 
 [node name="PikeConsole" type="Node" unique_id=1879456131]
+
+[node name="LogStartupCache" type="Node" parent="." unique_id=340013653]
+script = ExtResource("1_mu1o4")
 
 [node name="EngineLoggerBridgeManager" type="Node" parent="." unique_id=1141242866]
 script = ExtResource("1_f8hgk")
@@ -42,5 +46,6 @@ script = ExtResource("4_cdf7k")
 script = ExtResource("7_jeug7")
 _userConfigUpdater = ExtResource("8_s6wl1")
 
-[node name="FrontendInitializer" type="Node" parent="." unique_id=1955405307]
+[node name="FrontendInitializer" type="Node" parent="." unique_id=1955405307 node_paths=PackedStringArray("LogStartupCache")]
 script = ExtResource("3_tcwn3")
+LogStartupCache = NodePath("../LogStartupCache")
