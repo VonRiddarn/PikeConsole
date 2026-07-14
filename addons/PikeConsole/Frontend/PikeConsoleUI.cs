@@ -1,3 +1,4 @@
+using FractalPike.PikeConsole.Core.Autoloading;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.Utilities;
@@ -16,16 +17,21 @@ public partial class PikeConsoleUI : Node
 	[Export] LineEdit _inputField;
 	[Export] RichTextLabel _richText;
 
-	public sealed override void _EnterTree()
+	public override void _EnterTree()
 	{
 		_inputField.TextSubmitted += OnInputSubmitted;
 		PikeLogger.LogEmitted += OnLogEmitted;
 	}
 
-	public sealed override void _ExitTree()
+	public override void _ExitTree()
 	{
 		_inputField.TextSubmitted -= OnInputSubmitted;
 		PikeLogger.LogEmitted -= OnLogEmitted;
+	}
+
+	public override void _Ready()
+	{
+		ConsumeStartupLogs();
 	}
 
 	void OnLogEmitted(in LogEvent logEvent)
@@ -94,6 +100,12 @@ public partial class PikeConsoleUI : Node
 	public void Clear()
 	{
 		_richText.Text = string.Empty;
+	}
+
+	void ConsumeStartupLogs()
+	{
+		foreach (LogEvent log in (GetParent() as FrontendInitializer).LogStartupCache.Consume())
+			OnLogEmitted(log);
 	}
 
 }

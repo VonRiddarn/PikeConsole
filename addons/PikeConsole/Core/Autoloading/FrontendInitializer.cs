@@ -7,6 +7,19 @@ namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class FrontendInitializer : Node
 {
+	// Pointer that allows the frontend UI to just go "Parent.FrontendInitializer.LogStartupCache".
+	// It's a little hacky, but it gives us a reliable singleton without having to reference backend stuff.
+	[Export] public LogStartupCache LogStartupCache { get; private set; }
+
+	public override void _EnterTree()
+	{
+		if (LogStartupCache == null)
+		{
+			PikeLogger.LogError(LogTarget.Editor, $"LogStartupCache is not set up through the editor in {Name}!");
+			return;
+		}
+	}
+
 	public override void _Ready()
 	{
 		string uiPath = PikeConsoleConfig.FrontendScenePath;
@@ -55,5 +68,7 @@ public partial class FrontendInitializer : Node
 
 		// Log warning last so that it doesn't get burried by potential feedbacks
 		PikeLogger.LogWarning(LogTarget.Editor, $"{warningMessage} -- PikeConsole is running headless.", forceLog: true);
+
+		LogStartupCache?.Kill();
 	}
 }
