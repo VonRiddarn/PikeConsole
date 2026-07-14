@@ -56,7 +56,7 @@ The final, estimated release date for `version 1.0` is soonTM.
 - [x] Create the UserConfigManager!
 -   - [x] CRUDE
 -   - [x] Initialize on start
--   - [ ] Save debunced
+-   - [x] Save debunced
 -   - [x] Switch profiles
 -   - [x] Failsafe activeprofile godot config
 - [ ] Fetch engine level logs at startup and inject into console
