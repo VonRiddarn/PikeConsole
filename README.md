@@ -59,7 +59,7 @@ The final, estimated release date for `version 1.0` is soonTM.
 -   - [x] Save debunced
 -   - [x] Switch profiles
 -   - [x] Failsafe activeprofile godot config
-- [ ] Fetch engine level logs at startup and inject into console
+- [x] Fetch engine level logs at startup and inject into console -- **ALL** startup logs now show as expected!!
 - [ ] Add more CVars
 -   - [ ] Vector2 + Vector2I
 -   - [ ] Vector3 + Vector3I
