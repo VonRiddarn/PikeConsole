@@ -1,4 +1,3 @@
-using FractalPike.PikeConsole.Core.Autoloading;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.Utilities;
@@ -12,7 +11,7 @@ using Godot;
 
 namespace FractalPike.PikeConsole.Frontend;
 
-public partial class PikeConsoleUI : Node
+public partial class PikeConsoleUI : Node, IConsoleFrontend
 {
 	[Export] LineEdit _inputField;
 	[Export] RichTextLabel _richText;
@@ -29,9 +28,18 @@ public partial class PikeConsoleUI : Node
 		PikeLogger.LogEmitted -= OnLogEmitted;
 	}
 
-	public override void _Ready()
+	/// <summary>
+	/// Should only be called by the frontend initializer.
+	/// This bypasses all checks and just pushes to the console.
+	/// </summary>
+	/// <remakrs>
+	/// This method should be considered volotile.
+	/// </remakrs>
+	/// <param name="logEvents">Logs from the frontendinitializer. These logs were called before the frontend was initialized.</param>
+	public void PushStartupLogs(LogEvent[] logEvents)
 	{
-		ConsumeStartupLogs();
+		foreach (LogEvent log in logEvents)
+			OnLogEmitted(log);
 	}
 
 	void OnLogEmitted(in LogEvent logEvent)
@@ -101,11 +109,4 @@ public partial class PikeConsoleUI : Node
 	{
 		_richText.Text = string.Empty;
 	}
-
-	void ConsumeStartupLogs()
-	{
-		foreach (LogEvent log in (GetParent() as FrontendInitializer).LogStartupCache.Consume())
-			OnLogEmitted(log);
-	}
-
 }

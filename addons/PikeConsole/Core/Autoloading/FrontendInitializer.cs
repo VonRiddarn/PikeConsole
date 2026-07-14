@@ -1,6 +1,7 @@
 using System;
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
+using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
 namespace FractalPike.PikeConsole.Core.Autoloading;
@@ -43,6 +44,15 @@ public partial class FrontendInitializer : Node
 			PackedScene uiScene = ResourceLoader.Load<PackedScene>(uiPath);
 			Node uiInstance = uiScene.Instantiate();
 			AddChild(uiInstance);
+
+			// Always consume no matter what. This also kills the LogStartupCache.
+			var logs = LogStartupCache.Consume();
+
+			// Then we can just try pushing the startup cache to the frontend.
+			if (uiInstance is IConsoleFrontend frontend)
+				frontend.PushStartupLogs(logs);
+			else
+				PikeLogger.LogWarning(LogTarget.Debug, $"Frontend console does not inherit \"IConsoleFrontend\". Startup logs are lost.");
 		}
 		catch (Exception err)
 		{
