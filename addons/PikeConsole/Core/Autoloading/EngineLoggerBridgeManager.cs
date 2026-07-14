@@ -64,7 +64,7 @@ public partial class EngineLoggerBridgeManager : Node
 			// IMPORTANT:
 			// We want the CVar to be in sync with the current state. But since setting the value triggers this 
 			// exact method, we return and let the event delegate manage the removal. This avoids weird double-kill conditions.
-			_injectEngineLogs.Value = false;
+			_injectEngineLogs.SetRAM(false);
 			PikeLogger.LogWarning(LogTarget.All, $"Force-setting \"{_injectEngineLogs.ResourcePath.GetFile().GetBaseName()}\" was forcefully set to false.");
 			return;
 		}
