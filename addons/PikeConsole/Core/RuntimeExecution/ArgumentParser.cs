@@ -151,8 +151,81 @@ public static class ArgumentParser
 		value = Color.Color8(r, g, b, a);
 		return true;
 	}
-	// TODO: Add Vector2 [x, y] ["x y"]
-	// TODO: Add Vector3
+
+	// Vector3 simple parse. "Are these 3 arguments a vector 3?"
+	/// <summary>
+	/// Simple Vector3 parse. Checks for exactly 3 arguments and if they are all floats.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	/// <returns></returns>
+	public static bool TryParseVector3(ReadOnlySpan<string> args, out Vector3 value, out string error)
+	{
+		value = Vector3.Zero;
+
+		if (!ValidateCount(args, 3, out error))
+			return false;
+
+		if (!TryParseManyFloat(args, out float[] axies, out error))
+			return false;
+
+		error = string.Empty;
+		value = new Vector3(axies[0], axies[1], axies[2]);
+		return true;
+	}
+
+	// Vector3 simple parse. "Are these 3 arguments a vector 3?"
+	/// <summary>
+	/// Contextual Vector3 parse. Checks for exactly 3 arguments and uses XYZ as value pairs.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	/// <returns></returns>
+	public static bool TryParseVector3Contextual(ReadOnlySpan<string> args, Vector3 currentState, out Vector3 value, out string error)
+	{
+		value = currentState;
+
+		// If the arg length isn't right we don't even bother with anything else.
+		if (!ValidateCount(args, 3, out error))
+			return false;
+
+		// Dark magic that forces allocation on the stack. Lowkey overoptimization. 
+		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc
+		Span<float> axies = stackalloc float[3];
+
+		for (int i = 0; i < 3; i++)
+		{
+			string arg = args[i];
+
+			// Here we're just hard-checking the context.
+			// I F-ING LOVE DISJUNCTIVE PATTERNS!!
+			if (arg is "x" or "X")
+				axies[i] = currentState.X;
+			else if (arg is "y" or "Y")
+				axies[i] = currentState.Y;
+			else if (arg is "z" or "Z")
+				axies[i] = currentState.Z;
+
+			// If it's not a contextual string, we try to parse it. 
+			else if (float.TryParse(arg, System.Globalization.CultureInfo.InvariantCulture, out float f))
+				axies[i] = f;
+
+			// If it's none of all that, we're dealing with whack data.
+			else
+			{
+				value = Vector3.Zero;
+				error = $"Failed to parse \"{args[i]}\" at index ({i}). Expected a number or x, y, z.";
+				return false;
+			}
+		}
+
+		error = string.Empty;
+		value = new Vector3(axies[0], axies[1], axies[2]);
+		return true;
+	}
+
 
 	// ----- ----- NATIVE SHORTHANDS ----- -----
 
