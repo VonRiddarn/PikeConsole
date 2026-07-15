@@ -8,19 +8,6 @@ namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class FrontendInitializer : Node
 {
-	// Pointer that allows the frontend UI to just go "Parent.FrontendInitializer.LogStartupCache".
-	// It's a little hacky, but it gives us a reliable singleton without having to reference backend stuff.
-	[Export] public LogStartupCache LogStartupCache { get; private set; }
-
-	public override void _EnterTree()
-	{
-		if (LogStartupCache == null)
-		{
-			PikeLogger.LogError(LogTarget.Editor, $"LogStartupCache is not set up through the editor in {Name}!");
-			return;
-		}
-	}
-
 	public override void _Ready()
 	{
 		string uiPath = PikeConsoleConfig.FrontendScenePath;
@@ -45,11 +32,13 @@ public partial class FrontendInitializer : Node
 			Node uiInstance = uiScene.Instantiate();
 			AddChild(uiInstance);
 
-			// Always consume no matter what. This also kills the LogStartupCache.
-			var logs = LogStartupCache.Consume();
+			// Always consume no matter what. This also kills the StartupLogBuffer.
+			// Doing this in the initializer makes sure that the logbuffer is killed. 
+			// Leaving this up to the user would result in memory leaks if they forget to consume!
+			var logs = StartupLogBuffer.Consume();
 
 			// Then we can just try pushing the startup cache to the frontend.
-			if (uiInstance is IConsoleFrontend frontend)
+			if (uiInstance is IPikeFrontend frontend)
 				frontend.PushStartupLogs(logs);
 			else
 				PikeLogger.LogWarning(LogTarget.Debug, $"Frontend console does not inherit \"IConsoleFrontend\". Startup logs are lost.");
@@ -79,6 +68,7 @@ public partial class FrontendInitializer : Node
 		// Log warning last so that it doesn't get burried by potential feedbacks
 		PikeLogger.LogWarning(LogTarget.Editor, $"{warningMessage} -- PikeConsole is running headless.", forceLog: true);
 
-		LogStartupCache?.Kill();
+		// Still call consume to kill off the buffer and prevent memory leaks!
+		var _ = StartupLogBuffer.Consume();
 	}
 }

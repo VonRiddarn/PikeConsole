@@ -184,16 +184,23 @@ public static class PikeLogger
 				return;
 #endif
 
-
-			// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
-			LogEmitted?.Invoke(new LogEvent(
+			LogEvent e = new LogEvent(
 				HashCode.Combine(filePath, lineNumber, memberName),
 				logLevel,
 				message,
 				forceLog,
 				tags ??= [],
 				includePath ? $"{filePath}:{lineNumber}:{memberName}" : string.Empty
-			));
+			);
+
+			// ----- TRY BUFFERING -----
+			// Note: The buffer automatically kills itself upon consumption.
+			// The drawback being: If nothing consumes it, it does not die.
+			// Consumption happens within FrontendInitializer, which means it is not controlled (and cannot be broken by) by the end user.
+			StartupLogBuffer.TryBuffer(e);
+
+			// ----- EVENT LISTENERS (ALL ENVIRONMENTS) -----
+			LogEmitted?.Invoke(e);
 
 		}
 	}

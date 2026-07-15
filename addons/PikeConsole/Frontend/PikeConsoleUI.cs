@@ -11,7 +11,7 @@ using Godot;
 
 namespace FractalPike.PikeConsole.Frontend;
 
-public partial class PikeConsoleUI : Node, IConsoleFrontend
+public partial class PikeConsoleUI : Node, IPikeFrontend
 {
 	[Export] LineEdit _inputField;
 	[Export] RichTextLabel _richText;
