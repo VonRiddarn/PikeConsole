@@ -27,9 +27,8 @@ Thus, everything will work great out of the box - but is also open enough for an
 ## ‼️ Disclaimer
 
 This framework is a port from our Unity project.  
-It is actively being worked on right now and currently does not have a frontend UI or the user-CFG system mentioned.  
-Once this disclaimer is removed it is safe to assume that everything is functioning as intended.  
-The backend (with an exception for the config manager) is fully developed and works though.
+It is actively being worked on right now.  
+**Update**: Everything is done except the V1 frontend.
 
 If this README reads like som maniacs cork board, it is because it is.  
 Until version 1.0 this is more or less a temporary spitball file.  
