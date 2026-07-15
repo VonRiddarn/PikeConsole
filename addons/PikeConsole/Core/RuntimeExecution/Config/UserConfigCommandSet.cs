@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Text;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 using FractalPike.PikeConsole.Core.Utilities;
@@ -12,8 +13,14 @@ public partial class UserConfigCommandSet : CommandSet
 	protected override Command[] InstantiateCommands() => [
 		Command(
 			Signature("create"),
+			$"Create a new user config in {PikeConsoleConfig.UserConfigsDirectory}.",
+			null,
+			$"{Signature("create")} [config name] [select now (Bool)]",
 			false,
 			(args) => {
+				if(!ArgumentParser.ValidateCount(args, 2, out string error))
+					return new(ExecutionResponseStatus.InvalidArgs, error, [LogTags.InvalidArgs]);
+
 				if(!ArgumentParser.TryParseBool(args[1], out bool b, out string _))
 					return new(ExecutionResponseStatus.Failed, "PARSE ERROR", [LogTags.Failed]);
 
@@ -25,6 +32,9 @@ public partial class UserConfigCommandSet : CommandSet
 		),
 		Command(
 			Signature("active"),
+			"Displays the or switches the active config.",
+			null,
+			$"{Signature("active")} [config name?]",
 			false,
 			(args) => {
 				if(args.Length < 1)
@@ -38,6 +48,9 @@ public partial class UserConfigCommandSet : CommandSet
 		),
 		Command(
 			Signature("find"),
+			"Find one or more config of a certain name.",
+			"Defaults to \"*\" which will return all available configs.",
+			$"{Signature("find")} [search pattern?]",
 			false,
 			static (args) => {
 
