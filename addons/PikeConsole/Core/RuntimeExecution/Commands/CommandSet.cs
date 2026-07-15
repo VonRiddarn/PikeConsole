@@ -95,11 +95,14 @@ public abstract partial class CommandSet : Node
 
 		PikeConsoleConfig.CheatMode.ValueChanged += OnCheatModeChangedInternal;
 		OnEnterTree();
+
+		RegisterCommandsInternal();
 	}
 
+	// Technically this override is useless now, but I am keeping it as-is for compatibility.
+	// If we make use of it in the future, stuff wont break for anyone wanting to update their version.
 	public sealed override void _Ready()
 	{
-		RegisterCommandsInternal();
 		OnReady();
 	}
 
