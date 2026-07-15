@@ -16,8 +16,6 @@ public partial class CVarColor : CVarBase<Color>
 	[Export]
 	protected override Color _value { get; set; } = Colors.White;
 
-
-
 	protected override Response<CvarSetResponseStatus, Color> ParseValue(ReadOnlySpan<string> args)
 	{
 		if (!ArgumentParser.TryParseColor(args, out Color value, out string error))
@@ -40,4 +38,6 @@ public partial class CVarColor : CVarBase<Color>
 
 	// This is just used to display the value in a cool / readable way.
 	public override string DisplayValue(Color value) => $"({value.R8}, {value.G8}, {value.B8}, {value.A8}) | #{value.ToHtml()}";
+
+	public override string Usage => $"\n\t{Signature} [hex value]\n\t{Signature} [Red 0-255] [Green 0-255] [Blue 0-255] [Alpha? 0-255]";
 }

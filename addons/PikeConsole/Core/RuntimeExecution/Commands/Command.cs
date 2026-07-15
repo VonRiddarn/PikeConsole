@@ -41,7 +41,7 @@ public sealed class Command : IRuntimeExecutable
 		Signature = ConsoleFormatter.ToSignature(commandSignature);
 		ShortDesc = string.IsNullOrWhiteSpace(shortDesc) ? "No description available." : shortDesc;
 		LongDesc = string.IsNullOrWhiteSpace(longDesc) ? "No long description available." : longDesc;
-		Usage = string.IsNullOrWhiteSpace(usage) ? "No usage instructions available." : usage;
+		Usage = string.IsNullOrWhiteSpace(usage) ? "No usage instructions available." : $"\n\t{usage}";
 		IsCheat = isCheat;
 		SourceLocation = $"{filePath}:{lineNumber}";
 
