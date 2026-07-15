@@ -16,20 +16,18 @@ public partial class UserConfigUpdater : Node
 
 	public override void _EnterTree()
 	{
+
+		if (LogOnSave == null)
+			PikeLogger.LogError(LogTarget.All, $"(NODE: {Name} | FractalPike.PikeConsole.Core.RuntimeExecution.Config) Missing CVar for \"LogOnSave\".", forceLog: true);
+		else
+			LogOnSave.Initialize();
+
 		if (!PikeConsoleConfig.UserConfigsEnabled)
 			return;
 
 		UserConfigManager.SelectConfig(UserConfigManager.ActiveConfig.FileName);
 
 		PersistentCVarRegistry.ValueUpdated += OnCVarChanged;
-
-		if (LogOnSave == null)
-		{
-			PikeLogger.LogError(LogTarget.All, $"(NODE: {Name} | FractalPike.PikeConsole.Core.RuntimeExecution.Config) Missing CVar for \"LogOnSave\".", forceLog: true);
-			return;
-		}
-
-		LogOnSave.Initialize();
 	}
 
 	public override void _ExitTree()
@@ -55,7 +53,7 @@ public partial class UserConfigUpdater : Node
 			var active = UserConfigManager.ActiveConfig;
 			var response = UserConfigManager.SaveConfig(active.FileName);
 
-			if (response.Status == ConfigResponseStatus.Success && LogOnSave.Value)
+			if (response.Status == ConfigResponseStatus.Success && LogOnSave != null && LogOnSave.Value)
 				PikeLogger.LogSuccess(LogTarget.Runtime, $"Profile \"{active.DisplayName}\" has been saved.", forceLog: true);
 			else if (response.Status != ConfigResponseStatus.Error)
 				PikeLogger.LogWarning(LogTarget.Runtime, $"{response.Message}", forceLog: true, tags: response.Tags);
