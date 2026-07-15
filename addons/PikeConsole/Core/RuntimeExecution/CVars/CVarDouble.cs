@@ -39,7 +39,7 @@ public partial class CVarDouble : CVarBase<double>
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
 			return new(CvarSetResponseStatus.InvalidArgs, default, error);
 
-		if (!double.TryParse(args[0], out double value))
+		if (!ArgumentParser.TryParseDouble(args[0], out double value))
 			return new(CvarSetResponseStatus.Failed, default, $"Can not convert {args[0]} to type double.");
 
 		if (Value == value)
@@ -80,4 +80,13 @@ public partial class CVarDouble : CVarBase<double>
 
 		return new(CvarSetResponseStatus.Success, value, null, logTags);
 	}
+
+	// ----- ----- ----- -----
+	//	HELPERS AND OVERRIDES
+	// ----- ----- ----- -----
+
+	// CRITICAL!!
+	// Format the value using invariantculture. Otherwise a Swedish / European locale will break the system!!
+	public override string FormattedValue => _value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+	public override string DisplayValue(double value) => value.ToString(System.Globalization.CultureInfo.InvariantCulture);
 }

@@ -88,10 +88,16 @@ public partial class CVarVector2 : CVarBase<Vector2>
 
 	// CRITICAL INFORMATION: Formatted value on CVars must be 2 way parseable!!
 	// We MUST override the method here, as the default Vector2.ToString() doesn't give us the value as we expect it in the parser.
-	public override string FormattedValue => $"{_value.X} {_value.Y}";
+	public override string FormattedValue => string.Format(
+		System.Globalization.CultureInfo.InvariantCulture,
+		"{0} {1}",
+		_value.X, _value.Y);
 
 	// This is just used to display the value in a cool / readable way.
-	public override string DisplayValue(Vector2 value) => $"[x: {value.X} | y: {value.Y}]";
+	public override string DisplayValue(Vector2 value) => string.Format(
+		System.Globalization.CultureInfo.InvariantCulture,
+		"[x: {0} | y: {1}]",
+		value.X, value.Y);
 
 	public override string[] Usages => [$"{Signature} [x] [y]"];
 

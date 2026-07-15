@@ -96,10 +96,16 @@ public partial class CVarVector3 : CVarBase<Vector3>
 
 	// CRITICAL INFORMATION: Formatted value on CVars must be 2 way parseable!!
 	// We MUST override the method here, as the default Vector3.ToString() doesn't give us the value as we expect it in the parser.
-	public override string FormattedValue => $"{_value.X} {_value.Y} {_value.Z}";
+	public override string FormattedValue => string.Format(
+		System.Globalization.CultureInfo.InvariantCulture,
+		"{0} {1} {2}",
+		_value.X, _value.Y, _value.Z);
 
 	// This is just used to display the value in a cool / readable way.
-	public override string DisplayValue(Vector3 value) => $"[x: {value.X} | y: {value.Y} | z: {value.Z}]";
+	public override string DisplayValue(Vector3 value) => string.Format(
+		System.Globalization.CultureInfo.InvariantCulture,
+		"[x: {0} | y: {1} | z: {2}]",
+		value.X, value.Y, value.Z);
 
 	public override string[] Usages => [$"{Signature} [x] [y] [z]"];
 

@@ -55,6 +55,19 @@ public static class ArgumentParser
 		return false;
 	}
 
+	// ----- ----- Shorthands ----- -----
+	/// <summary>
+	/// Invariant shorthand.
+	/// </summary>
+	public static bool TryParseFloat(ReadOnlySpan<char> input, out float value) =>
+	float.TryParse(input, System.Globalization.CultureInfo.InvariantCulture, out value);
+
+	/// <summary>
+	/// Invariant shorthand.
+	/// </summary>
+	public static bool TryParseDouble(ReadOnlySpan<char> input, out double value) =>
+	double.TryParse(input, System.Globalization.CultureInfo.InvariantCulture, out value);
+
 	// ----- ----- CUSTOM PARSING ----- -----
 	// CVar 
 	public static bool TryParseBool(ReadOnlySpan<char> input, out bool value, out string error)

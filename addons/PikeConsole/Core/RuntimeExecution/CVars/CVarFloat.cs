@@ -40,7 +40,7 @@ public partial class CVarFloat : CVarBase<float>
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
 			return new(CvarSetResponseStatus.InvalidArgs, default, error);
 
-		if (!float.TryParse(args[0], out float value))
+		if (!ArgumentParser.TryParseFloat(args[0], out float value))
 			return new(CvarSetResponseStatus.Failed, default, $"Can not convert {args[0]} to type float.");
 
 		if (Value == value)
@@ -81,4 +81,13 @@ public partial class CVarFloat : CVarBase<float>
 
 		return new(CvarSetResponseStatus.Success, value, null, logTags);
 	}
+
+	// ----- ----- ----- -----
+	//	HELPERS AND OVERRIDES
+	// ----- ----- ----- -----
+
+	// CRITICAL!!
+	// Format the value using invariantculture. Otherwise a Swedish / European locale will break the system!!
+	public override string FormattedValue => _value.ToString(System.Globalization.CultureInfo.InvariantCulture);
+	public override string DisplayValue(float value) => value.ToString(System.Globalization.CultureInfo.InvariantCulture);
 }
