@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="CVarVector3" format=3 uid="uid://dv5isf8m2kvjs"]
+
+[ext_resource type="Script" uid="uid://k6x4rsserr0t" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarVector3.cs" id="1_sryuf"]
+
+[resource]
+script = ExtResource("1_sryuf")
+Persist = true
+metadata/_custom_type_script = "uid://k6x4rsserr0t"
