@@ -16,10 +16,8 @@ public interface IRuntimeExecutable
 	/// <summary>The long description for this executable. Go wild.</summary>
 	public string LongDesc { get; }
 
-	// TODO: Make Usage a string array instead. 
-	// If the list of CVars and commands in need of usage overrides grow, we might opt for a centralized approach instead.
 	/// <summary>Usage example of this executable, EG: "em_find [enemy id | enemy type]" or "env_gc [no args]"</summary>
-	public string Usage { get; }
+	public string[] Usages { get; }
 
 	/// <summary>If set to true CheatMode must be active to run this executable.</summary>
 	public bool IsCheat { get; }

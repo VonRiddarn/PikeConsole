@@ -44,7 +44,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	// Set automatic
 	public string Signature { get; private set; } = string.Empty;
 	public string ShortDesc => $"View or set the value of {Signature}";
-	public virtual string Usage => $"\n\t{Signature} [new value]";
+	public virtual string[] Usages => [$"{Signature} [new value]"];
 
 	// Set in child
 	public abstract string DisplayType { get; }

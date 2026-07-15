@@ -149,7 +149,19 @@ public abstract partial class CommandSet : Node
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0)
 	{
-		return new Command(signature, shortDesc, longDesc, usage, isCheat, action, new CustomStackTrace(filePath, lineNumber));
+		return new Command(signature, shortDesc, longDesc, [$"{usage}"], isCheat, action, new CustomStackTrace(filePath, lineNumber));
+	}
+	static protected Command Command(
+		string signature,
+		string shortDesc,
+		string longDesc,
+		string[] usages,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)
+	{
+		return new Command(signature, shortDesc, longDesc, usages, isCheat, action, new CustomStackTrace(filePath, lineNumber));
 	}
 
 	/// <summary>
@@ -178,7 +190,7 @@ public abstract partial class CommandSet : Node
 	/// <param name="filePath">COMPILER INJECTED ARGUMENT, DO NOT SET.</param>
 	/// <param name="lineNumber">COMPILER INJECTED ARGUMENT, DO NOT SET.</param>
 	/// <returns>A command with an automatic compile-time custom stacktrace.</returns>
-	protected Command Command(
+	static protected Command Command(
 		string signature,
 		bool isCheat,
 		Func<string[], Response<ExecutionResponseStatus>> action,

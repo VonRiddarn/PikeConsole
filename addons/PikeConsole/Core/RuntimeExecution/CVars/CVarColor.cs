@@ -39,5 +39,5 @@ public partial class CVarColor : CVarBase<Color>
 	// This is just used to display the value in a cool / readable way.
 	public override string DisplayValue(Color value) => $"({value.R8}, {value.G8}, {value.B8}, {value.A8}) | #{value.ToHtml()}";
 
-	public override string Usage => $"\n\t{Signature} [hex value]\n\t{Signature} [Red 0-255] [Green 0-255] [Blue 0-255] [Alpha? 0-255]";
+	public override string[] Usages => [$"{Signature} [hex value]", $"{Signature} [Red 0-255] [Green 0-255] [Blue 0-255] [Alpha? 0-255]"];
 }

@@ -11,7 +11,7 @@ public sealed class Command : IRuntimeExecutable
 	public string Signature { get; }
 	public string ShortDesc { get; }
 	public string LongDesc { get; }
-	public string Usage { get; }
+	public string[] Usages { get; }
 	public bool IsCheat { get; }
 	public string SourceLocation { get; }
 
@@ -28,7 +28,7 @@ public sealed class Command : IRuntimeExecutable
 		string commandSignature,
 		string shortDesc,
 		string longDesc,
-		string usage,
+		string[] usages,
 		bool isCheat,
 		Func<string[], Response<ExecutionResponseStatus>> action,
 		// We're sending the filePath and lineNumber from the CommandSet using compiler injection attributes.
@@ -41,7 +41,7 @@ public sealed class Command : IRuntimeExecutable
 		Signature = ConsoleFormatter.ToSignature(commandSignature);
 		ShortDesc = string.IsNullOrWhiteSpace(shortDesc) ? "No description available." : shortDesc;
 		LongDesc = string.IsNullOrWhiteSpace(longDesc) ? "No long description available." : longDesc;
-		Usage = string.IsNullOrWhiteSpace(usage) ? "No usage instructions available." : $"\n\t{usage}";
+		Usages = usages;
 		IsCheat = isCheat;
 		SourceLocation = $"{filePath}:{lineNumber}";
 
@@ -63,7 +63,7 @@ public sealed class Command : IRuntimeExecutable
 		{
 			if (string.IsNullOrWhiteSpace(shortDesc))
 				PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no short description. This is safe but unadvised.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
-			if (string.IsNullOrWhiteSpace(usage))
+			if (usages is null or [] or [""] or [null])
 				PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no usage instructions. This is safe but unadvised.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
 		}
 	}

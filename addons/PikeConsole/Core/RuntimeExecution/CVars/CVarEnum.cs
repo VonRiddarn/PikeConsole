@@ -37,7 +37,7 @@ public partial class CVarEnum : CVarBase<int>
 			PikeLogger.LogWarning(LogTarget.All, $"CVarEnum '{Signature}' has no options defined.");
 			_defaultValue = 0;
 			_value = 0;
-			_cachedHelpLst = "OPTIONS:\n\tNone defined.";
+			_cachedHelpLst = "\tOPTIONS:\n\t\tNone defined.";
 			return;
 		}
 
@@ -55,9 +55,9 @@ public partial class CVarEnum : CVarBase<int>
 
 		// Upgrade from Unity framework!!
 		// Cache the options rather than building them at runtime.
-		StringBuilder sb = new("OPTIONS:");
+		StringBuilder sb = new("\tOPTIONS:");
 		for (int i = 0; i < _options.Length; i++)
-			sb.Append($"\n\t{i} = {_options[i]}");
+			sb.Append($"\n\t\t{i} = {_options[i]}");
 
 		_cachedHelpLst = sb.ToString();
 	}
