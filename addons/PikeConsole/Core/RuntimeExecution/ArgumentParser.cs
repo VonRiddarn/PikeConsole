@@ -1,4 +1,5 @@
 using System;
+using Godot;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 public static class ArgumentParser
@@ -110,11 +111,48 @@ public static class ArgumentParser
 		return false;
 	}
 
-	// 
-	// Godot
+	// ----- ----- GODOT PARSING ----- -----
+	// Color [r,g,b,a] [r,g,b] [c] (NOTE TO SELF: "c": Color.FromString() allows hex and plaintext)
+	public static bool TryParseColor(ReadOnlySpan<string> args, out Color value, out string error)
+	{
+		value = Colors.Black;
+
+		// If arguments are whack, early return.
+		if (!ValidateCount(args, [1, 3, 4], out int argCount, out error))
+			return false;
+
+		// If we just have 1 argument, we can assume a hex code has been passed.
+		if (argCount == 1)
+		{
+			var fallback = new Color(-1, -1, -1, -1);
+			value = Color.FromString(args[0], fallback);
+
+			if (value == fallback)
+			{
+				// Since -1 on all values is impossible, we know this is our custom fallback color.
+				error = $"Cannot parse \"{args[0]}\" to a Color.";
+				value = Colors.Black;
+				return false;
+			}
+
+			return true;
+		}
+
+		// If we have 3 or 4 arguments, we can assume either RGB or RGBA is passed.
+		// Thus, we must make sure all arguments are actually ints. Luckily I've made a method for just that.
+		if (!TryParseManyByte(args, out byte[] channels, out error))
+			return false;
+
+		byte r = channels[0];
+		byte g = channels[1];
+		byte b = channels[2];
+		byte a = argCount == 4 ? channels[3] : (byte)255;
+
+		value = Color.Color8(r, g, b, a);
+		return true;
+	}
 	// TODO: Add Vector2 [x, y] ["x y"]
 	// TODO: Add Vector3
-	// TODO: Add Color [r,g,b,a] [r,g,b] [c] (NOTE TO SELF: "c": Color.FromString() allows hex, plaintext etc)
 
 	// ----- ----- NATIVE SHORTHANDS ----- -----
 
@@ -145,6 +183,13 @@ public static class ArgumentParser
 	/// </summary>
 	public static bool TryParseManyInt(ReadOnlySpan<string> args, out int[] values, out string error) =>
 	TryParseManyInternal(int.TryParse, args, out values, out error);
+
+	/// <summary>
+	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
+	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
+	/// </summary>
+	public static bool TryParseManyByte(ReadOnlySpan<string> args, out byte[] values, out string error) =>
+	TryParseManyInternal(byte.TryParse, args, out values, out error, "Bytes must contain a value between 0 - 255.");
 	/// <summary>
 	/// Use <c>args.AsSpan(start, end)</c> if the parameters are continuous. <br />
 	/// Use shorthand: <c>[args[1], args[3], args[7]]</c> if the parameters are non-continuous.
@@ -191,7 +236,7 @@ public static class ArgumentParser
 	/// <param name="error"></param>
 	/// <typeparam name="T"></typeparam>
 	/// <returns>Success: true and fills "values" || Fail: false and fills "error"</returns>
-	static bool TryParseManyInternal<T>(TryParseDelegate<T> parser, ReadOnlySpan<string> args, out T[] values, out string error)
+	static bool TryParseManyInternal<T>(TryParseDelegate<T> parser, ReadOnlySpan<string> args, out T[] values, out string error, string msgAddon = "")
 	{
 		if (args.Length <= 0)
 		{
@@ -208,7 +253,8 @@ public static class ArgumentParser
 			if (!parser(args[i], out values[i]))
 			{
 				values = [];
-				error = $"Failed to parse \"{args[i]}\" at index ({i}).";
+				string addon = string.IsNullOrWhiteSpace(msgAddon) ? string.Empty : $" {msgAddon}";
+				error = $"Failed to parse \"{args[i]}\" at index ({i}).{addon}";
 				return false;
 			}
 		}
