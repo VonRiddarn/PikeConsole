@@ -112,6 +112,11 @@ public static class ArgumentParser
 	}
 
 	// ----- ----- GODOT PARSING ----- -----
+	/*
+	 * Note: 
+	 * Some of the code below is not as DRY as it could be. 
+	 * Focus has been on getting the features to run, not flexing abstractions.
+	*/
 	// Color [r,g,b,a] [r,g,b] [c] (NOTE TO SELF: "c": Color.FromString() allows hex and plaintext)
 	public static bool TryParseColor(ReadOnlySpan<string> args, out Color value, out string error)
 	{
@@ -152,7 +157,10 @@ public static class ArgumentParser
 		return true;
 	}
 
-	// Vector3 simple parse. "Are these 3 arguments a vector 3?"
+	// ----- ----- -------- ----- -----
+	// ----- ----- VECTOR 3 ----- -----
+	// ----- ----- -------- ----- -----
+
 	/// <summary>
 	/// Simple Vector3 parse. Checks for exactly 3 arguments and if they are all floats.
 	/// </summary>
@@ -175,7 +183,6 @@ public static class ArgumentParser
 		return true;
 	}
 
-	// Vector3 simple parse. "Are these 3 arguments a vector 3?"
 	/// <summary>
 	/// Contextual Vector3 parse. Checks for exactly 3 arguments and uses XYZ as value pairs.
 	/// </summary>
@@ -226,6 +233,219 @@ public static class ArgumentParser
 		return true;
 	}
 
+	/// <summary>
+	/// Simple Vector3I (integer) parse. Checks for exactly 3 arguments and if they are all ints.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	public static bool TryParseVector3I(ReadOnlySpan<string> args, out Vector3I value, out string error)
+	{
+		value = Vector3I.Zero;
+
+		if (!ValidateCount(args, 3, out error))
+			return false;
+
+		if (!TryParseManyInt(args, out int[] axies, out error))
+			return false;
+
+		error = string.Empty;
+		value = new Vector3I(axies[0], axies[1], axies[2]);
+		return true;
+	}
+
+	/// <summary>
+	/// Contextual Vector3I (integer) parse. Checks for exactly 3 arguments and uses XYZ as value pairs.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	/// <returns></returns>
+	public static bool TryParseVector3IContextual(ReadOnlySpan<string> args, Vector3I currentState, out Vector3I value, out string error)
+	{
+		value = currentState;
+
+		// If the arg length isn't right we don't even bother with anything else.
+		if (!ValidateCount(args, 3, out error))
+			return false;
+
+		// Dark magic that forces allocation on the stack. Lowkey overoptimization. 
+		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc
+		Span<int> axies = stackalloc int[3];
+
+		for (int i = 0; i < 3; i++)
+		{
+			string arg = args[i];
+
+			// Here we're just hard-checking the context.
+			// I F-ING LOVE DISJUNCTIVE PATTERNS!!
+			if (arg is "x" or "X")
+				axies[i] = currentState.X;
+			else if (arg is "y" or "Y")
+				axies[i] = currentState.Y;
+			else if (arg is "z" or "Z")
+				axies[i] = currentState.Z;
+
+			// If it's not a contextual string, we try to parse it. 
+			else if (int.TryParse(arg, out int parsedInt))
+				axies[i] = parsedInt;
+
+			// If it's none of all that, we're dealing with whack data.
+			else
+			{
+				value = Vector3I.Zero;
+				error = $"Failed to parse \"{args[i]}\" at index ({i}). Expected a whole number or x, y, z.";
+				return false;
+			}
+		}
+
+		error = string.Empty;
+		value = new Vector3I(axies[0], axies[1], axies[2]);
+		return true;
+	}
+
+	// ----- ----- -------- ----- -----
+	// ----- ----- VECTOR 2 ----- -----
+	// ----- ----- -------- ----- -----
+
+	/// <summary>
+	/// Simple Vector2 parse. Checks for exactly 2 arguments and if they are all floats.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	/// <returns></returns>
+	public static bool TryParseVector2(ReadOnlySpan<string> args, out Vector2 value, out string error)
+	{
+		value = Vector2.Zero;
+
+		if (!ValidateCount(args, 2, out error))
+			return false;
+
+		if (!TryParseManyFloat(args, out float[] axies, out error))
+			return false;
+
+		error = string.Empty;
+		value = new Vector2(axies[0], axies[1]);
+		return true;
+	}
+
+	/// <summary>
+	/// Contextual Vector2 parse. Checks for exactly 2 arguments and uses XY as value pairs.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	/// <returns></returns>
+	public static bool TryParseVector2Contextual(ReadOnlySpan<string> args, Vector2 currentState, out Vector2 value, out string error)
+	{
+		value = currentState;
+
+		// If the arg length isn't right we don't even bother with anything else.
+		if (!ValidateCount(args, 2, out error))
+			return false;
+
+		// Dark magic that forces allocation on the stack. Lowkey overoptimization. 
+		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc
+		Span<float> axies = stackalloc float[2];
+
+		for (int i = 0; i < 2; i++)
+		{
+			string arg = args[i];
+
+			// Here we're just hard-checking the context.
+			// I F-ING LOVE DISJUNCTIVE PATTERNS!!
+			if (arg is "x" or "X")
+				axies[i] = currentState.X;
+			else if (arg is "y" or "Y")
+				axies[i] = currentState.Y;
+
+			// If it's not a contextual string, we try to parse it. 
+			else if (float.TryParse(arg, System.Globalization.CultureInfo.InvariantCulture, out float f))
+				axies[i] = f;
+
+			// If it's none of all that, we're dealing with whack data.
+			else
+			{
+				value = Vector2.Zero;
+				error = $"Failed to parse \"{args[i]}\" at index ({i}). Expected a number or x, y.";
+				return false;
+			}
+		}
+
+		error = string.Empty;
+		value = new Vector2(axies[0], axies[1]);
+		return true;
+	}
+
+	/// <summary>
+	/// Simple Vector2I (integer) parse. Checks for exactly 2 arguments and if they are all ints.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	public static bool TryParseVector2I(ReadOnlySpan<string> args, out Vector2I value, out string error)
+	{
+		value = Vector2I.Zero;
+
+		if (!ValidateCount(args, 2, out error))
+			return false;
+
+		if (!TryParseManyInt(args, out int[] axies, out error))
+			return false;
+
+		error = string.Empty;
+		value = new Vector2I(axies[0], axies[1]);
+		return true;
+	}
+
+	/// <summary>
+	/// Contextual Vector3I (integer) parse. Checks for exactly 3 arguments and uses XYZ as value pairs.
+	/// </summary>
+	/// <param name="args">Arguments to parse</param>
+	/// <param name="value">Usable vector</param>
+	/// <param name="error">Error. Empty if successfull</param>
+	/// <returns></returns>
+	public static bool TryParseVector2IContextual(ReadOnlySpan<string> args, Vector2I currentState, out Vector2I value, out string error)
+	{
+		value = currentState;
+
+		// If the arg length isn't right we don't even bother with anything else.
+		if (!ValidateCount(args, 2, out error))
+			return false;
+
+		// Dark magic that forces allocation on the stack. Lowkey overoptimization. 
+		// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/stackalloc
+		Span<int> axies = stackalloc int[2];
+
+		for (int i = 0; i < 2; i++)
+		{
+			string arg = args[i];
+
+			// Here we're just hard-checking the context.
+			// I F-ING LOVE DISJUNCTIVE PATTERNS!!
+			if (arg is "x" or "X")
+				axies[i] = currentState.X;
+			else if (arg is "y" or "Y")
+				axies[i] = currentState.Y;
+
+			// If it's not a contextual string, we try to parse it. 
+			else if (int.TryParse(arg, out int parsedInt))
+				axies[i] = parsedInt;
+
+			// If it's none of all that, we're dealing with whack data.
+			else
+			{
+				value = Vector2I.Zero;
+				error = $"Failed to parse \"{args[i]}\" at index ({i}). Expected a whole number or x, y.";
+				return false;
+			}
+		}
+
+		error = string.Empty;
+		value = new Vector2I(axies[0], axies[1]);
+		return true;
+	}
 
 	// ----- ----- NATIVE SHORTHANDS ----- -----
 
