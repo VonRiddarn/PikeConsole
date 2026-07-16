@@ -256,7 +256,11 @@ public static class ConfigIO
 		try
 		{
 			ConfigRef[] configs = [.. Directory.GetFiles(dir, term).Select(f => new ConfigRef(f))];
-			return new(ConfigResponseStatus.Success, configs, null);
+
+
+			return configs.Length > 0 ?
+				new(ConfigResponseStatus.Success, configs, null)
+				: new(ConfigResponseStatus.Success, configs, null, [LogTags.NotFound]);
 		}
 		catch (Exception e)
 		{
@@ -299,7 +303,9 @@ public static class ConfigIO
 		.Where(fileName => FileSystemName.MatchesSimpleExpression(term, fileName))
 		.Select(fileName => new ConfigRef($"{dir}/{fileName}"))];
 
-		return new(ConfigResponseStatus.Success, configs, null);
+		return configs.Length > 0 ?
+			new(ConfigResponseStatus.Success, configs, null)
+			: new(ConfigResponseStatus.Success, configs, null, [LogTags.NotFound]);
 	}
 
 }
