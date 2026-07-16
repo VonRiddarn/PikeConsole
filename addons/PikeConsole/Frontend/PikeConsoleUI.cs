@@ -16,6 +16,8 @@ public partial class PikeConsoleUI : Node, IPikeFrontend
 	[Export] LineEdit _inputField;
 	[Export] RichTextLabel _richText;
 
+	const string FEEDBACK_PREFIX = "] ";
+
 	public override void _EnterTree()
 	{
 		_inputField.TextSubmitted += OnInputSubmitted;
@@ -100,7 +102,7 @@ public partial class PikeConsoleUI : Node, IPikeFrontend
 
 	void OnInputSubmitted(string inputStatement)
 	{
-		_richText.AppendText($"> {_inputField.Text}\n");
+		_richText.AppendText($"{FEEDBACK_PREFIX}{_inputField.Text}\n");
 		StatementExecutor.Execute(ExecutionSource.Standard, inputStatement);
 		_inputField.Clear();
 	}
