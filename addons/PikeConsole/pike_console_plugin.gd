@@ -132,7 +132,7 @@ const SETTING_COLOR_ERROR: Dictionary[String, Variant] = {
 # ----- ----- ----- ----- -----
 const KB_TOGGLE_CONSOLE: Dictionary[String, Variant] = {
 	"name": "pike_console_toggle",
-	"default_key": KEY_SEMICOLON
+	"default_key": KEY_QUOTELEFT
 }
 
 # ----- ----- ----- ----- -----
