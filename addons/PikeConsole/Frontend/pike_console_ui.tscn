@@ -58,16 +58,17 @@ selection_enabled = true
 
 [node name="InputBG" type="Panel" parent="CanvasLayer" unique_id=811833345]
 anchors_preset = -1
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 606.0
+offset_top = -45.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 theme = ExtResource("2_y7fok")
 theme_type_variation = &"InputBG"
 
 [node name="InputField" type="LineEdit" parent="CanvasLayer" unique_id=1853006253]
-anchors_preset = 12
+anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
