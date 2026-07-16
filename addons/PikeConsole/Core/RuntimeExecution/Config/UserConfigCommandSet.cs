@@ -15,16 +15,22 @@ public partial class UserConfigCommandSet : CommandSet
 			Signature("create"),
 			$"Create a new user config in {PikeConsoleSettings.UserConfigsDirectory}.",
 			null,
-			$"{Signature("create")} [config name] [select now (Bool)]",
+			[$"{Signature("create")} [config name]",
+			$"{Signature("create")} [config name] [select now (Bool)]"],
 			false,
 			(args) => {
-				if(!ArgumentParser.ValidateCount(args, 2, out string error))
+				if(!ArgumentParser.ValidateCount(args, [1, 2], out int count, out string error))
 					return new(ExecutionResponseStatus.InvalidArgs, error, [LogTags.InvalidArgs]);
 
-				if(!ArgumentParser.TryParseBool(args[1], out bool b, out string _))
-					return new(ExecutionResponseStatus.Failed, "PARSE ERROR", [LogTags.Failed]);
+				bool select = true;
+				if(count == 2)
+				{
+					if(!ArgumentParser.TryParseBool(args[1], out bool wantSelect, out string _))
+						return new(ExecutionResponseStatus.Failed, "PARSE ERROR", [LogTags.Failed]);
+					select = wantSelect;
+				}
 
-				var response = UserConfigManager.CreateConfig(args[0], b);
+				var response = UserConfigManager.CreateConfig(args[0], select);
 
 				ExecutionResponseStatus s = response.Status == ConfigResponseStatus.Success ? ExecutionResponseStatus.Success : ExecutionResponseStatus.Failed;
 				return new(s, response.Message, response.Tags);
