@@ -15,6 +15,9 @@ public static class ConsoleFormatter
 		var shortDesc = string.IsNullOrWhiteSpace(rte.ShortDesc) ? "No description available." : rte.ShortDesc;
 		var longDesc = string.IsNullOrWhiteSpace(rte.LongDesc) ? "No long description available." : rte.LongDesc;
 
-		return $"Signature: {rte.Signature}\n\tType: {rte.DisplayType.ToUpper()}\n\tIs cheat: {rte.IsCheat}\n\tBrief: {shortDesc}\n\tUsage:\n\t\t{string.Join("\n\t\t", usg)}\n\tDescription: {longDesc}";
+		if (rte is ICVar cvar)
+			return $"Signature: {cvar.Signature}\n\tType: {cvar.DisplayType.ToUpper()}\n\tIs cheat: {cvar.IsCheat}\n\tValue: \"{cvar.CurrentValueDisplay}\"\n\tDefault: \"{cvar.DefaultValueDisplay}\"\n\tBrief: {shortDesc}\n\tUsage:\n\t\t{string.Join("\n\t\t", usg)}\n\tDescription: {longDesc}";
+		else
+			return $"Signature: {rte.Signature}\n\tType: {rte.DisplayType.ToUpper()}\n\tIs cheat: {rte.IsCheat}\n\tBrief: {shortDesc}\n\tUsage:\n\t\t{string.Join("\n\t\t", usg)}\n\tDescription: {longDesc}";
 	}
 }
