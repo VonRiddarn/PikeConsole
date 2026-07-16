@@ -1,5 +1,7 @@
 [gd_resource type="Theme" format=3 uid="uid://db1031xw8a0ep"]
 
+[ext_resource type="FontFile" uid="uid://3mhap30n0nys" path="res://addons/PikeConsole/Frontend/FONT/Inconsolata-SemiBold.ttf" id="1_if0br"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7fok"]
 bg_color = Color(0.12156863, 0.16470589, 0.21960784, 1)
 border_width_top = 1
@@ -23,29 +25,9 @@ corner_radius_bottom_left = 4
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1u64f"]
 bg_color = Color(0.06666667, 0.078431375, 0.08627451, 0.78431374)
 
-[sub_resource type="FontFile" id="FontFile_0rdgg"]
-cache/0/variation_coordinates = {}
-cache/0/face_index = 0
-cache/0/embolden = 0.0
-cache/0/transform = Transform2D(1, 0, 0, 1, 0, 0)
-cache/0/spacing_top = 0
-cache/0/spacing_bottom = 0
-cache/0/spacing_space = 0
-cache/0/spacing_glyph = 0
-cache/0/baseline_offset = 0.0
-cache/0/16/0/ascent = 0.0
-cache/0/16/0/descent = 0.0
-cache/0/16/0/underline_position = 0.0
-cache/0/16/0/underline_thickness = 0.0
-cache/0/16/0/scale = 1.0
-cache/0/24/0/ascent = 0.0
-cache/0/24/0/descent = 0.0
-cache/0/24/0/underline_position = 0.0
-cache/0/24/0/underline_thickness = 0.0
-cache/0/24/0/scale = 1.0
-
 [resource]
-default_font = SubResource("FontFile_0rdgg")
+default_font = ExtResource("1_if0br")
+default_font_size = 18
 InputBG/base_type = &"RootBG"
 InputBG/styles/panel = SubResource("StyleBoxFlat_y7fok")
 LineEdit/colors/caret_color = Color(0.6632608, 0.6632608, 0.6632608, 1)
