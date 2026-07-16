@@ -63,6 +63,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	public bool IsModified => !EqualityComparer<T>.Default.Equals(_value, _defaultValue);
 	public virtual string FormattedValue => _value?.ToString() ?? NOT_ASSIGNED;
 	public string CurrentValueDisplay => DisplayValue(_value);
+	public string DefaultValueDisplay => DisplayValue(_defaultValue);
 
 	// Current value getter / setter
 	public T Value
@@ -186,7 +187,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 			return new(
 				ExecutionResponseStatus.Success,
-				$"Type: {DisplayType}\nCurrent value: {currentValue}\nDefault value: {defaultValue}\nIs cheat: {IsCheat}\nDescription: {Description}",
+				$"[{DisplayType.ToUpper()}] \"{Signature}\"\n\tValue: \"{currentValue}\"\n\tDefault: \"{defaultValue}\"",
 				[LogTags.NoHeader]);
 		}
 

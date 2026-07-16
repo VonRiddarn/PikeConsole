@@ -12,6 +12,7 @@ public interface ICVar : IRuntimeExecutable
 	public bool IsModified { get; }
 
 	public string CurrentValueDisplay { get; }
+	public string DefaultValueDisplay { get; }
 
 	/// <summary>The string formated value. This value MUST be passable to the SetValue method (note that spaces become separate args).</summary>
 	/// <remarks>
