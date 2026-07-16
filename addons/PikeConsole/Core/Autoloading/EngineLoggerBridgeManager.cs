@@ -1,3 +1,4 @@
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
 using Godot;
@@ -10,27 +11,24 @@ public partial class EngineLoggerBridgeManager : Node
 	// The GC can't see the reference from accross the interop.
 	EngineLoggerBridge _engineLogger = null;
 
-	[Export] CVarBool _injectEngineLogs;
+	// Quick access ref to the CVar in PikeConsoleCvars.
+	CVarBool _enabled = null;
 
 	public override void _EnterTree()
 	{
-		// We are responsible for initializing since this is not in the dedicated CVar dir.
-		// It's safe to accidentally call this more than once (though we shouldn't)
-		_injectEngineLogs.Initialize();
-		_injectEngineLogs.ValueChanged += OnInteropEnabledChanged;
+		_enabled = PikeConsoleCVars.RuntimeConsoleEnabled;
+		PikeConsoleCVars.RuntimeConsoleEnabled.ValueChanged += OnRuntimeActiveChanged;
 
 		ActivateInteropLogger();
 	}
 
 	public override void _ExitTree()
 	{
-		// Note, we need to remove the event listener AFTER running killinterop.
-		// This is in case the interoplogger state is not aligned with the CVar and need to run the delegate for removal (edge case).
 		KillInteropLogger();
-		_injectEngineLogs.ValueChanged -= OnInteropEnabledChanged;
+		PikeConsoleCVars.RuntimeConsoleEnabled.ValueChanged -= OnRuntimeActiveChanged;
 	}
 
-	private void OnInteropEnabledChanged(bool enable)
+	void OnRuntimeActiveChanged(bool enable)
 	{
 		if (enable)
 			ActivateInteropLogger();
@@ -38,37 +36,19 @@ public partial class EngineLoggerBridgeManager : Node
 			KillInteropLogger();
 	}
 
-	void OnNewInteropValue(bool newValue)
-	{
-		if (newValue)
-			ActivateInteropLogger();
-		else
-			KillInteropLogger();
-	}
-
 	public void ActivateInteropLogger()
 	{
-		if (_engineLogger != null || _injectEngineLogs.Value == false)
+		if (_engineLogger != null || _enabled.Value == false)
 			return;
 
 		_engineLogger = new EngineLoggerBridge();
 		OS.AddLogger(_engineLogger);
 
-		PikeLogger.Log(LogTarget.All, $"[PikeConsole] Interop connection established. Engine exceptions and warnings are logged.");
+		PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] Interop connection established. Engine exceptions and warnings are logged.");
 	}
 
 	public void KillInteropLogger()
 	{
-		if (_injectEngineLogs.Value)
-		{
-			// IMPORTANT:
-			// We want the CVar to be in sync with the current state. But since setting the value triggers this 
-			// exact method, we return and let the event delegate manage the removal. This avoids weird double-kill conditions.
-			_injectEngineLogs.SetRAM(false);
-			PikeLogger.LogWarning(LogTarget.All, $"Force-setting \"{_injectEngineLogs.ResourcePath.GetFile().GetBaseName()}\" was forcefully set to false.");
-			return;
-		}
-
 		if (_engineLogger == null)
 			return;
 
@@ -76,6 +56,6 @@ public partial class EngineLoggerBridgeManager : Node
 		_engineLogger.Dispose();
 		_engineLogger = null;
 
-		PikeLogger.Log(LogTarget.All, $"[PikeConsole] Interop connection severed. Engine exceptions are no longer logged.");
+		PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] Interop connection severed. Engine exceptions are no longer logged.");
 	}
 }

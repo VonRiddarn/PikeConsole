@@ -10,7 +10,7 @@ public partial class FrontendInitializer : Node
 {
 	public override void _Ready()
 	{
-		string uiPath = PikeConsoleConfig.FrontendScenePath;
+		string uiPath = PikeConsoleSettings.FrontendScenePath;
 
 		if (string.IsNullOrEmpty(uiPath))
 		{
@@ -62,7 +62,7 @@ public partial class FrontendInitializer : Node
 			PikeLogger.LogError(LogTarget.Editor, $"Could not find the EngineLoggerBridgeManager node to kill interop logger!");
 
 		// Disable dogfed CVars
-		PikeConsoleConfig.ConsoleLoggerEnabled.SetRAM(false);
+		PikeConsoleCVars.RuntimeConsoleEnabled.SetRAM(false);
 		// TODO: When there is an interop logger CVAr, diasable it here.
 
 		// Log warning last so that it doesn't get burried by potential feedbacks

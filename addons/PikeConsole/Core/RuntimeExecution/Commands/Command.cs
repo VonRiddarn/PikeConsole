@@ -59,7 +59,7 @@ public sealed class Command : IRuntimeExecutable
 			_action = FallbackAction;
 		}
 
-		if (!PikeConsoleConfig.SuppressDocumentationWarnings)
+		if (!PikeConsoleSettings.SuppressDocumentationWarnings)
 		{
 			if (string.IsNullOrWhiteSpace(shortDesc))
 				PikeLogger.LogWarning(LogTarget.Debug, $"Command \"{Signature}\" is being registered with no short description. This is safe but unadvised.", filePath: filePath, lineNumber: lineNumber, forceLog: true);
@@ -76,7 +76,7 @@ public sealed class Command : IRuntimeExecutable
 		{
 			// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
 			// The system passes this check though, so we can still pass map specific overrides and cool stuff.
-			if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleConfig.CheatMode.Value)
+			if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleCVars.CheatMode.Value)
 				return new(ExecutionResponseStatus.DeniedCheat, $"{Signature} is cheat protected!");
 
 			return _action.Invoke(args);

@@ -19,10 +19,10 @@ public static class UserConfigManager
 	const string KEY = "last_used_config";
 
 	static string GetPath(string profileName) =>
-		FileSystemHelper.UserDirectory.Globalized(PikeConsoleConfig.UserConfigsDirectory, ConfigRef.DisplayToFileName(profileName));
+		FileSystemHelper.UserDirectory.Globalized(PikeConsoleSettings.UserConfigsDirectory, ConfigRef.DisplayToFileName(profileName));
 
 	static string TrackerPath =>
-		FileSystemHelper.UserDirectory.Globalized(PikeConsoleConfig.UserConfigsDirectory, TRACKER_FILENAME);
+		FileSystemHelper.UserDirectory.Globalized(PikeConsoleSettings.UserConfigsDirectory, TRACKER_FILENAME);
 
 	public static event Action<ConfigRef> ActiveConfigChanged;
 

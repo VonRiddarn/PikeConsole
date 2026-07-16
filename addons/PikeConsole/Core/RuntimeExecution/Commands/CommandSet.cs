@@ -93,7 +93,7 @@ public abstract partial class CommandSet : Node
 		if (_commands.IsDefault || _commands.IsEmpty)
 			InitializeCommandsInternal();
 
-		PikeConsoleConfig.CheatMode.ValueChanged += OnCheatModeChangedInternal;
+		PikeConsoleCVars.CheatMode.ValueChanged += OnCheatModeChangedInternal;
 		OnEnterTree();
 
 		RegisterCommandsInternal();
@@ -109,7 +109,7 @@ public abstract partial class CommandSet : Node
 	public sealed override void _ExitTree()
 	{
 		RuntimeExecutableRegistry.Unregister([.. _commands]);
-		PikeConsoleConfig.CheatMode.ValueChanged -= OnCheatModeChangedInternal;
+		PikeConsoleCVars.CheatMode.ValueChanged -= OnCheatModeChangedInternal;
 		OnExitTree();
 	}
 
@@ -240,7 +240,7 @@ public abstract partial class CommandSet : Node
 				case RegisterExecutableResponseStatus.Success:
 #if TOOLS
 					// Stripped in compiled build so we don't even have to make the conditional check.
-					if (PikeConsoleConfig.LogCommandOnRegister)
+					if (PikeConsoleSettings.LogCommandOnRegister)
 						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 #endif
 					break;

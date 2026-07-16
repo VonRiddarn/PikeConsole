@@ -14,7 +14,7 @@ public partial class ConfigInitializer : Node
 	{
 		InitializeDirectories();
 
-		if (PikeConsoleConfig.UserConfigsEnabled && _userConfigUpdater == null)
+		if (PikeConsoleSettings.UserConfigsEnabled && _userConfigUpdater == null)
 		{
 			PikeLogger.LogError(LogTarget.All, $"User config updater is not set in the Godot editor. Cannot initialize the Node!", forceLog: true);
 			return;
@@ -26,15 +26,15 @@ public partial class ConfigInitializer : Node
 
 	static void InitializeDirectories()
 	{
-		string path = FileSystemHelper.UserDirectory.Globalized(PikeConsoleConfig.ConfigDirectory);
+		string path = FileSystemHelper.UserDirectory.Globalized(PikeConsoleSettings.ConfigDirectory);
 
 		if (FileSystemHelper.EnsureDirectory(path))
 			PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] Config directory was missing. Created directory at: {path}");
 
 		// Reusing path
-		path = FileSystemHelper.UserDirectory.Globalized(PikeConsoleConfig.UserConfigsDirectory);
+		path = FileSystemHelper.UserDirectory.Globalized(PikeConsoleSettings.UserConfigsDirectory);
 
-		if (PikeConsoleConfig.UserConfigsEnabled && FileSystemHelper.EnsureDirectory(path))
+		if (PikeConsoleSettings.UserConfigsEnabled && FileSystemHelper.EnsureDirectory(path))
 			PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] User configs directory was missing. Created directory at: {path}");
 	}
 }

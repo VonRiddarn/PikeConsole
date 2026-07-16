@@ -78,8 +78,8 @@ public static class PikeLogger
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsTargetEnabled(LogTarget target)
 	{
-		bool debugActive = PikeConsoleConfig.ConsoleLoggerEnabled.Value && (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
-		bool runtimeActive = PikeConsoleConfig.ConsoleLoggerEnabled.Value && (target & LogTarget.Runtime) != 0;
+		bool debugActive = PikeConsoleCVars.RuntimeConsoleEnabled.Value && (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
+		bool runtimeActive = PikeConsoleCVars.RuntimeConsoleEnabled.Value && (target & LogTarget.Runtime) != 0;
 		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor();
 		return debugActive || runtimeActive || editorActive;
 	}
@@ -123,8 +123,8 @@ public static class PikeLogger
 
 				// Replace the potential path map with a localized version so that Godot can recognize the string as a file.
 				// NOTE: We could implement ReadOnlySpan<char> here to only allocate once, but it would make it less readable and only save a few nanoseconds.
-				if (!string.IsNullOrEmpty(PikeConsoleConfig.PathMap) && filePath.StartsWith(PikeConsoleConfig.PathMap))
-					filePath = filePath.Replace(PikeConsoleConfig.PathMap, "res:/");
+				if (!string.IsNullOrEmpty(PikeConsoleSettings.PathMap) && filePath.StartsWith(PikeConsoleSettings.PathMap))
+					filePath = filePath.Replace(PikeConsoleSettings.PathMap, "res:/");
 				else // If we have no PathMap alias force-inverse the path into local. Note: This crosses the interop bridge. 
 					filePath = Godot.ProjectSettings.LocalizePath(filePath);
 
@@ -140,39 +140,39 @@ public static class PikeLogger
 					// It's ugly, but it's also a fair trade to keep a low footprint.
 					case LogLevel.Info:
 						if (includePath)
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.InfoColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 						else
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.InfoColor.ToHtml(false)}]{message}[/color]");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.InfoColor.ToHtml(false)}]{message}[/color]");
 						break;
 					case LogLevel.Success:
 						if (includePath)
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.SuccessColor.ToHtml(false)}][url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 						else
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.SuccessColor.ToHtml(false)}]{message}[/color]");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.SuccessColor.ToHtml(false)}]{message}[/color]");
 						break;
 					case LogLevel.Warning:
 						if (includePath)
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.WarningColor.ToHtml(false)}][b]WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 						else
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b]WARNING[/b]: {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.WarningColor.ToHtml(false)}][b]WARNING[/b]: {message}");
 						break;
 					case LogLevel.Error:
 						if (includePath)
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.ErrorColor.ToHtml(false)}][b]ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 						else
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b]ERROR[/b]: {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.ErrorColor.ToHtml(false)}][b]ERROR[/b]: {message}");
 						break;
 					case LogLevel.Engine_Warning:
 						if (includePath)
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b][ENGINE] WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.WarningColor.ToHtml(false)}][b][ENGINE] WARNING[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 						else
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.WarningColor.ToHtml(false)}][b][ENGINE] WARNING[/b]: {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.WarningColor.ToHtml(false)}][b][ENGINE] WARNING[/b]: {message}");
 						break;
 					case LogLevel.Engine_Error:
 						if (includePath)
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b][ENGINE] ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.ErrorColor.ToHtml(false)}][b][ENGINE] ERROR[/b]: [url={filePath}:{lineNumber}]{filePath}:{lineNumber}[/url]:{memberName} - {message}");
 						else
-							Godot.GD.PrintRich($"[color=#{PikeConsoleConfig.ErrorColor.ToHtml(false)}][b][ENGINE] ERROR[/b]: {message}");
+							Godot.GD.PrintRich($"[color=#{PikeConsoleSettings.ErrorColor.ToHtml(false)}][b][ENGINE] ERROR[/b]: {message}");
 						break;
 				}
 			}
@@ -184,7 +184,7 @@ public static class PikeLogger
 				return;
 #endif
 
-			LogEvent e = new LogEvent(
+			LogEvent e = new(
 				HashCode.Combine(filePath, lineNumber, memberName),
 				logLevel,
 				message,

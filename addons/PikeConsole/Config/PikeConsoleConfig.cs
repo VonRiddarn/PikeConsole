@@ -1,84 +1,20 @@
-using System;
-using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
 using Godot;
 
 namespace FractalPike.PikeConsole.Config;
 
 #nullable enable
 
-public static class PikeConsoleConfig
+public static class PikeConsoleSettings
 {
 
 	// ----- ----- ----- ----- -----
 	// 			INTERNAL
 	// ----- ----- ----- ----- -----
-	const string INTERNAL_CVARS_PATH = "res://addons/PikeConsole/Config/variables";
-
 	const string PROJECT_SETTINGS_ROOT = "fractal_pike/pike_console";
 	const string PROJECT_SETTINGS_CONFIG = $"{PROJECT_SETTINGS_ROOT}/config";
 	const string PROJECT_SETTINGS_RUNTIME = $"{PROJECT_SETTINGS_ROOT}/runtime";
 	const string PROJECT_SETTINGS_EDITOR = $"{PROJECT_SETTINGS_ROOT}/editor";
 	const string PROJECT_SETTINGS_EDITOR_COLORS = $"{PROJECT_SETTINGS_EDITOR}/colors";
-
-	// ----- ----- ----- ----- -----
-	// 			 CVars
-	// ----- ----- ----- ----- -----
-
-	static CVarInt? _maxUiLogs;
-	public static CVarInt MaxUiLogs
-	{
-		get
-		{
-			if (_maxUiLogs == null)
-			{
-				// Assign the maxlogs BEFORE we initialize!!
-				// Thus when initialize call PikeLogger and PikeLogger asks for MaxLogs we return the cached CVar...
-				_maxUiLogs = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_max_ui_logs");
-				_maxUiLogs.Initialize();
-			}
-			return _maxUiLogs;
-		}
-	}
-
-	static CVarBool? _consoleLoggerEnabled;
-	public static CVarBool ConsoleLoggerEnabled
-	{
-		get
-		{
-			if (_consoleLoggerEnabled == null)
-			{
-				_consoleLoggerEnabled = CvarLoader.LoadInternalCVar<CVarBool>($"{INTERNAL_CVARS_PATH}/console", "console_logger_enabled");
-				_consoleLoggerEnabled.Initialize();
-			}
-			return _consoleLoggerEnabled;
-		}
-	}
-
-	static CVarBool? _cheatMode;
-	public static CVarBool CheatMode
-	{
-		get
-		{
-			if (_cheatMode == null)
-			{
-				_cheatMode = CvarLoader.LoadInternalCVar<CVarBool>(INTERNAL_CVARS_PATH, "cheatmode");
-				_cheatMode.Initialize();
-			}
-			return _cheatMode;
-		}
-	}
-
-	public static void Boot()
-	{
-		// Since the config CVars are lazy initialized we poke them at startup to make sure they
-		// exist before we start registering cvars from the auto-crawl directory.
-		// This is done from within the CVarCrawler.
-		// Note: This might be hacky, but it makes the autoloader less fragile.
-
-		_ = CheatMode;
-		_ = MaxUiLogs;
-		_ = ConsoleLoggerEnabled;
-	}
 
 	// ----- ----- ----- ----- -----
 	// 		PROJECT SETTINGS

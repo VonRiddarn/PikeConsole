@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CVarEnum" format=3 uid="uid://brblqh2hicx1"]
+
+[ext_resource type="Script" uid="uid://c288qu3rap4mc" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarEnum.cs" id="1_dcvku"]
+
+[resource]
+script = ExtResource("1_dcvku")
+Options = PackedStringArray("Classic", "Circle", "Square", "Cross")
+Persist = true
+Description = "Determines the type of crosshair on screen."
+metadata/_custom_type_script = "uid://c288qu3rap4mc"

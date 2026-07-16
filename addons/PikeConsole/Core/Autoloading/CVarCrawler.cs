@@ -17,11 +17,12 @@ namespace FractalPike.PikeConsole.Core.Autoloading;
 
 public partial class CVarCrawler : Node
 {
+
 	public override void _EnterTree()
 	{
-		PikeConsoleConfig.Boot();
+		PikeConsoleCVars.Boot();
 
-		CrawlForCVars(PikeConsoleConfig.CvarDirectory);
+		CrawlForCVars(PikeConsoleSettings.CvarDirectory);
 	}
 
 	static void CrawlForCVars(string currentPath)

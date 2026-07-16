@@ -13,7 +13,7 @@ public partial class UserConfigCommandSet : CommandSet
 	protected override Command[] InstantiateCommands() => [
 		Command(
 			Signature("create"),
-			$"Create a new user config in {PikeConsoleConfig.UserConfigsDirectory}.",
+			$"Create a new user config in {PikeConsoleSettings.UserConfigsDirectory}.",
 			null,
 			$"{Signature("create")} [config name] [select now (Bool)]",
 			false,

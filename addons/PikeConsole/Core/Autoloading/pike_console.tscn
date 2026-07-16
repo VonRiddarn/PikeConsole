@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cxhq248g21ptu" path="res://addons/PikeConsole/Core/Autoloading/EngineLoggerBridgeManager.cs" id="1_f8hgk"]
 [ext_resource type="Script" uid="uid://nb3ptdy1fmnd" path="res://addons/PikeConsole/Core/Autoloading/CVarCrawler.cs" id="2_hj4c2"]
-[ext_resource type="Resource" uid="uid://qs36scuxyjtu" path="res://addons/PikeConsole/Config/variables/console/console_inject_engine_logs.tres" id="2_jh5ft"]
+[ext_resource type="Script" uid="uid://j1th6vqhii2n" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarBool.cs" id="2_kjfc5"]
 [ext_resource type="Script" uid="uid://dbmyyyatcxi0a" path="res://addons/PikeConsole/Core/Autoloading/FrontendInitializer.cs" id="3_tcwn3"]
 [ext_resource type="Script" uid="uid://h3qof2uc0f6u" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/AliasCommandSet.cs" id="4_cdf7k"]
 [ext_resource type="Script" uid="uid://byjf7sauxgmfc" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/DiagnosticCommandSet.cs" id="4_iryi3"]
@@ -12,11 +12,19 @@
 [ext_resource type="Script" uid="uid://d02ubsgnkst0v" path="res://addons/PikeConsole/Core/Autoloading/CommandSets/DiscoveryCommandSet.cs" id="8_kjfc5"]
 [ext_resource type="PackedScene" uid="uid://0aiogpicov8x" path="res://addons/PikeConsole/Core/RuntimeExecution/Config/UserConfigUpdater.tscn" id="8_s6wl1"]
 
+[sub_resource type="Resource" id="Resource_mu1o4"]
+script = ExtResource("2_kjfc5")
+_defaultValue = true
+_value = true
+Persist = true
+Description = "Killswitch for routing engine errors and warnings to the C# runtime and UI. Disabling this fully severs the C++ to C# interop bridge, which can save on performance if the engine is spamming errors."
+metadata/_custom_type_script = "uid://j1th6vqhii2n"
+
 [node name="PikeConsole" type="Node" unique_id=1879456131]
 
 [node name="EngineLoggerBridgeManager" type="Node" parent="." unique_id=1141242866]
 script = ExtResource("1_f8hgk")
-_injectEngineLogs = ExtResource("2_jh5ft")
+_injectEngineLogs = SubResource("Resource_mu1o4")
 
 [node name="CVarCrawler" type="Node" parent="." unique_id=1203019227]
 script = ExtResource("2_hj4c2")
@@ -42,6 +50,5 @@ script = ExtResource("4_cdf7k")
 script = ExtResource("7_jeug7")
 _userConfigUpdater = ExtResource("8_s6wl1")
 
-[node name="FrontendInitializer" type="Node" parent="." unique_id=1955405307 node_paths=PackedStringArray("LogStartupCache")]
+[node name="FrontendInitializer" type="Node" parent="." unique_id=1955405307]
 script = ExtResource("3_tcwn3")
-LogStartupCache = NodePath("")

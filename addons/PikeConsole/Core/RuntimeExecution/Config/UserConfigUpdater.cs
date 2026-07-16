@@ -22,7 +22,7 @@ public partial class UserConfigUpdater : Node
 		else
 			LogOnSave.Initialize();
 
-		if (!PikeConsoleConfig.UserConfigsEnabled)
+		if (!PikeConsoleSettings.UserConfigsEnabled)
 			return;
 
 		UserConfigManager.SelectConfig(UserConfigManager.ActiveConfig.FileName);
@@ -32,7 +32,7 @@ public partial class UserConfigUpdater : Node
 
 	public override void _ExitTree()
 	{
-		if (PikeConsoleConfig.UserConfigsEnabled)
+		if (PikeConsoleSettings.UserConfigsEnabled)
 			PersistentCVarRegistry.ValueUpdated -= OnCVarChanged;
 
 		_debounceCts?.Cancel();

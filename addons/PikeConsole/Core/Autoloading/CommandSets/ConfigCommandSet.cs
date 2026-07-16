@@ -12,12 +12,12 @@ public partial class ConfigCommandSet : CommandSet
 	protected override Command[] InstantiateCommands() => [
 		Command(
 			"exec",
-			$"Executes one or more config files with the \"{PikeConsoleConfig.ConfigDirectory}\" directory as the root.",
+			$"Executes one or more config files with the \"{PikeConsoleSettings.ConfigDirectory}\" directory as the root.",
 			"User facing command that forces the path root to be within",
 			$"userdir [no args]",
 			false,
 			static (args) => {
-				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, PikeConsoleConfig.ConfigDirectory + "/" + args[0]);
+				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, PikeConsoleSettings.ConfigDirectory + "/" + args[0]);
 
 				if(response.Status != ConfigResponseStatus.Success)
 					return new(ExecutionResponseStatus.Failed, response.Message, response.Tags);
