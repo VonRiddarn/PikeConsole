@@ -26,7 +26,7 @@ public partial class EnvironmentCommandSet : CommandSet
 		string n = ProjectSettings.GetSetting("application/config/name").AsString();
 		string v = ProjectSettings.GetSetting("application/config/version").AsString();
 		v = string.IsNullOrWhiteSpace(v) ? string.Empty : $"({v})";
-		return $"{(OS.IsDebugBuild() ? "[DEBUG]" : string.Empty)}{n} {v}";
+		return $"{(OS.IsDebugBuild() ? "[DEBUG] " : string.Empty)}{n} {v}";
 	}
 
 	protected override Command[] InstantiateCommands() => [
