@@ -27,12 +27,18 @@ public partial class InputController : LineEdit
 	{
 		TextSubmitted += OnInputSubmitted;
 		TextChanged += OnInputChanged;
+
+		FocusEntered += OnFocusEntered;
+		FocusExited += OnFocusExited;
 	}
 
 	public override void _ExitTree()
 	{
 		TextSubmitted -= OnInputSubmitted;
 		TextChanged -= OnInputChanged;
+
+		FocusEntered -= OnFocusEntered;
+		FocusExited -= OnFocusExited;
 	}
 
 	// AcceptEvent seems to be like preventdefault() in JS.
@@ -70,6 +76,16 @@ public partial class InputController : LineEdit
 				AcceptEvent();
 			}
 		}
+	}
+
+	private void OnFocusExited()
+	{
+		CloseSuggestions();
+	}
+
+	private void OnFocusEntered()
+	{
+		HandleInputChanged(Text);
 	}
 
 	void OnInputSubmitted(string inputStatement)
