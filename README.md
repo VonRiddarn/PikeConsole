@@ -63,11 +63,14 @@ The final, estimated release date for `version 1.0` is soonTM.
 -   - [x] Vector2 + Vector2I
 -   - [x] Vector3 + Vector3I
 -   - [x] Color
-- [ ] Update the runtime UI to v1
+- [x] Update the runtime UI to v1
 -   - [x] Queue logs thread-safe
 -   - [x] Throttle logs on caller path
 -   - [x] Limit logs using max lines
--   - [ ] Log history
+-   - [x] Log history
+
+Holy shit. I'm done....
+Now all that remains is recording some youtube tutorial and going back to write some docs!
 
 ## 🧰 Requirements
 
