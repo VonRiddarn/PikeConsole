@@ -2,7 +2,7 @@ namespace FractalPike.PikeConsole.Core.Utilities;
 
 public static class LogTags
 {
-	public const string NoHeader = "pikeconsole_no_header";
+	public const string NoHeader = "no_header";
 
 	public const string InvalidArgs = "pikeconsole_invalid_arguments";
 	public const string Failed = "pikeconsole_failed";
