@@ -54,7 +54,7 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 		int maxLines = PikeConsoleCVars.ConsoleMaxLines.Value;
 		int pgf = GetParagraphCount();
 
-		while (pgf > PikeConsoleCVars.ConsoleMaxLines.Value)
+		while (pgf > maxLines)
 		{
 			RemoveParagraph(0, true);
 			pgf--;
