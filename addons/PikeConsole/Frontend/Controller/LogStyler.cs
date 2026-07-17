@@ -1,6 +1,7 @@
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -25,7 +26,7 @@ public partial class LogStyler : Node
 	// PikeConsole/Utilities/LogTags.cs
 	HeaderOverride[] _defaultHeaderOverrides = [];
 
-	readonly Dictionary<string, HeaderOverride> _headerRegistry = [];
+	readonly Dictionary<string, HeaderOverride> _headerRegistry = new(StringComparer.OrdinalIgnoreCase);
 
 	public override void _EnterTree()
 	{
