@@ -21,7 +21,7 @@ public static class PikeConsoleSettings
 	// ----- ----- ----- ----- -----
 	// MUST ALWAYS match the one defined inside PikeConsole.gd. 
 	// This is just a way to centralize the source of truth.
-	public static string ActionName => "pike_console_toggle";
+	public static string ToggleConsoleActionName => "pike_console_toggle";
 
 	// ----- ----- ----- ----- -----
 	// 		PROJECT SETTINGS

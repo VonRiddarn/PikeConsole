@@ -41,6 +41,12 @@ public static class PikeConsoleStates
 		}
 	}
 
+	public static bool ToggleConsoleUI()
+	{
+		_consoleUIActive = !_consoleUIActive;
+		return _consoleUIActive;
+	}
+
 	// ----- ----- ----- ----- -----
 	// 			 CVars
 	// ----- ----- ----- ----- -----

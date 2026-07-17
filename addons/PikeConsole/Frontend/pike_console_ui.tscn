@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bejwps7jfkded"]
 
+[ext_resource type="Script" uid="uid://bhdnnd6gdq2vu" path="res://addons/PikeConsole/Frontend/Controller/StateController.cs" id="1_x46yb"]
 [ext_resource type="Script" uid="uid://cvmqldo8cek7m" path="res://addons/PikeConsole/Frontend/ConsoleCommandSet.cs" id="2_ddxch"]
 [ext_resource type="Script" uid="uid://doey2tj1i7vqd" path="res://addons/PikeConsole/Frontend/Controller/LogDispatcher.cs" id="2_hqk8t"]
 [ext_resource type="Theme" uid="uid://db1031xw8a0ep" path="res://addons/PikeConsole/Frontend/pike_console.tres" id="2_y7fok"]
@@ -22,6 +23,11 @@ expand_margin_bottom = 2.0
 
 [node name="PikeConsoleUI" type="Node" unique_id=1620465653]
 
+[node name="StateController" type="Node" parent="." unique_id=318480378 node_paths=PackedStringArray("_consoleUI", "_inputController")]
+script = ExtResource("1_x46yb")
+_consoleUI = NodePath("../CanvasLayer")
+_inputController = NodePath("../CanvasLayer/InputField")
+
 [node name="LogDispatcher" type="Node" parent="." unique_id=1552572139]
 script = ExtResource("2_hqk8t")
 
@@ -31,8 +37,6 @@ _outputController = NodePath("../CanvasLayer/VerticalLayout/Output")
 
 [node name="LogStyler" type="Node" parent="." unique_id=938425512]
 script = ExtResource("3_0rdgg")
-
-[node name="StateController" type="Node" parent="." unique_id=318480378]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=477428624]
 layer = 128
@@ -89,7 +93,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 6.0
 offset_top = -37.0
-offset_right = -6.0
+offset_right = 18.0
 offset_bottom = -6.0
 grow_horizontal = 2
 grow_vertical = 0
@@ -109,7 +113,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -54.0
-offset_right = -1065.0
+offset_right = -1142.0
 offset_bottom = -44.0
 grow_vertical = 0
 mouse_filter = 2
