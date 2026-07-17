@@ -1,11 +1,11 @@
 [gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://uv8i70sndb70"]
 
-[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_gtmo4"]
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_tpjo6"]
 
 [resource]
-script = ExtResource("1_gtmo4")
-_defaultValue = 512
-_value = 512
+script = ExtResource("1_tpjo6")
+_defaultValue = 1024
+_value = 1024
 _useClampMin = true
 Persist = true
 Description = "The amount of individual logs that can be emitted to the UI at once (RichText paragraphs). Lowering this value will increase performance, but reduce visible log history. Do not use this value to disable the console. use \"console_enabled 0\" instead as that truly turns off the console."

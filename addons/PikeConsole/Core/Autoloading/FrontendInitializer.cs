@@ -38,10 +38,12 @@ public partial class FrontendInitializer : Node
 			var logs = StartupLogBuffer.Consume();
 
 			// Then we can just try pushing the startup cache to the frontend.
-			if (uiInstance is IPikeFrontend frontend)
-				frontend.PushStartupLogs(logs);
+			// We recursively go through all children of the ui to see if there is a consumer.
+			// This only happens at startup, so it's fine.
+			if (TryFindConsumer(uiInstance, out IStartupLogConsumer consumer))
+				consumer.ConsumeStartupLogs(logs);
 			else
-				PikeLogger.LogWarning(LogTarget.Debug, $"Frontend console does not inherit \"IConsoleFrontend\". Startup logs are lost.");
+				PikeLogger.LogWarning(LogTarget.Debug, $"Frontend console does not inherit \"IStartupLogConsumer\". Startup logs are lost.");
 		}
 		catch (Exception err)
 		{
@@ -70,5 +72,25 @@ public partial class FrontendInitializer : Node
 
 		// Still call consume to kill off the buffer and prevent memory leaks!
 		var _ = StartupLogBuffer.Consume();
+	}
+
+
+	static bool TryFindConsumer(Node root, out IStartupLogConsumer result)
+	{
+		if (root is IStartupLogConsumer consumer)
+		{
+			result = consumer;
+			return true;
+		}
+
+		// If not found, recursively check all children
+		foreach (Node child in root.GetChildren())
+		{
+			if (TryFindConsumer(child, out result))
+				return true;
+		}
+
+		result = null;
+		return false;
 	}
 }

@@ -67,10 +67,10 @@ public static class PikeConsoleAPI
 		/// This is a wrapper for "PikeConsoleCVars.MaxUiLogs". <br />
 		/// If subscriptions to ValueChanged is needed for some reason, access the property directly instead.
 		/// </remarks>
-		public static int MaxUiLogs
+		public static int MaxLines
 		{
-			get => PikeConsoleCVars.MaxUiLogs.Value;
-			set { PikeConsoleCVars.MaxUiLogs.Value = value; }
+			get => PikeConsoleCVars.ConsoleMaxLines.Value;
+			set { PikeConsoleCVars.ConsoleMaxLines.Value = value; }
 		}
 	}
 

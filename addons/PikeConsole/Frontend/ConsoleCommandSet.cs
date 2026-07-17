@@ -1,15 +1,20 @@
+using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
+using FractalPike.PikeConsole.Frontend.Controllers;
+using Godot;
 
 namespace FractalPike.PikeConsole.Frontend;
 
 public partial class ConsoleCommandSet : CommandSet
 {
-	PikeConsoleUI _pikeConsoleUi = null;
+	[ExportGroup("Dependencies")]
+	[Export] OutputController _outputController;
 
 	protected override void OnEnterTree()
 	{
-		_pikeConsoleUi = Owner as PikeConsoleUI;
+		if (_outputController == null)
+			PikeLogger.LogError(LogTarget.Editor, $"Output Controller has not been through the editor in \"{Name}\".");
 	}
 
 	protected override Command[] InstantiateCommands() => [
@@ -17,13 +22,13 @@ public partial class ConsoleCommandSet : CommandSet
 			"clear",
 			"Clears the runtime console of logs.",
 			null,
-			"clear [no args]",
+			"clear",
 			false,
 			(_) => {
-				if(_pikeConsoleUi == null)
-					return new(ExecutionResponseStatus.Failed, "No console frontend is setup in the Godot editor.");
+				if(_outputController == null)
+					return new(ExecutionResponseStatus.Error, "Missing dependency for output controller.");
 
-				_pikeConsoleUi.Clear();
+				_outputController.Clear();
 				return new(ExecutionResponseStatus.Success, null);
 			}
 		),

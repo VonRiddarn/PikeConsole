@@ -241,7 +241,7 @@ public abstract partial class CommandSet : Node
 #if TOOLS
 					// Stripped in compiled build so we don't even have to make the conditional check.
 					if (PikeConsoleSettings.LogCommandOnRegister)
-						PikeLogger.Log(LogTarget.Editor, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
+						PikeLogger.Log(LogTarget.Debug, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 #endif
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:

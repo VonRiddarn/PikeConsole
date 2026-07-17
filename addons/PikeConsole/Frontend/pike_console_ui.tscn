@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://bejwps7jfkded"]
 
-[ext_resource type="Script" uid="uid://b1j8ooy4tu66" path="res://addons/PikeConsole/Frontend/PikeConsoleUI.cs" id="1_ajuf4"]
 [ext_resource type="Script" uid="uid://cvmqldo8cek7m" path="res://addons/PikeConsole/Frontend/ConsoleCommandSet.cs" id="2_ddxch"]
+[ext_resource type="Script" uid="uid://doey2tj1i7vqd" path="res://addons/PikeConsole/Frontend/Controller/LogDispatcher.cs" id="2_hqk8t"]
 [ext_resource type="Theme" uid="uid://db1031xw8a0ep" path="res://addons/PikeConsole/Frontend/pike_console.tres" id="2_y7fok"]
+[ext_resource type="Script" uid="uid://d4keqj2vxyt3w" path="res://addons/PikeConsole/Frontend/Controller/OutputController.cs" id="4_el3v5"]
+[ext_resource type="Script" uid="uid://dwmk64o0ioiaw" path="res://addons/PikeConsole/Frontend/Controller/InputController.cs" id="5_0rdgg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ajuf4"]
 content_margin_left = 4.0
@@ -17,10 +19,14 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[node name="PikeConsoleUI" type="Node" unique_id=1620465653 node_paths=PackedStringArray("_inputField", "_richText")]
-script = ExtResource("1_ajuf4")
-_inputField = NodePath("CanvasLayer/InputField")
-_richText = NodePath("CanvasLayer/VerticalLayout/Output")
+[node name="PikeConsoleUI" type="Node" unique_id=1620465653]
+
+[node name="LogDispatcher" type="Node" parent="." unique_id=1552572139]
+script = ExtResource("2_hqk8t")
+
+[node name="ConsoleCommandSet" type="Node" parent="." unique_id=1741704386 node_paths=PackedStringArray("_outputController")]
+script = ExtResource("2_ddxch")
+_outputController = NodePath("../CanvasLayer/VerticalLayout/Output")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=477428624]
 layer = 128
@@ -45,7 +51,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_y7fok")
 
-[node name="Output" type="RichTextLabel" parent="CanvasLayer/VerticalLayout" unique_id=107930]
+[node name="Output" type="RichTextLabel" parent="CanvasLayer/VerticalLayout" unique_id=107930 node_paths=PackedStringArray("_dispatcher")]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
@@ -55,6 +61,8 @@ scroll_following = true
 tab_size = 2
 context_menu_enabled = true
 selection_enabled = true
+script = ExtResource("4_el3v5")
+_dispatcher = NodePath("../../../LogDispatcher")
 
 [node name="InputBG" type="Panel" parent="CanvasLayer" unique_id=811833345]
 anchors_preset = -1
@@ -67,7 +75,7 @@ grow_vertical = 0
 theme = ExtResource("2_y7fok")
 theme_type_variation = &"InputBG"
 
-[node name="InputField" type="LineEdit" parent="CanvasLayer" unique_id=1853006253]
+[node name="InputField" type="LineEdit" parent="CanvasLayer" unique_id=1853006253 node_paths=PackedStringArray("_outputController")]
 anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
@@ -82,6 +90,5 @@ theme = ExtResource("2_y7fok")
 theme_override_styles/focus = SubResource("StyleBoxFlat_ajuf4")
 placeholder_text = "Enter command..."
 keep_editing_on_text_submit = true
-
-[node name="ConsoleCommandSet" type="Node" parent="." unique_id=1741704386]
-script = ExtResource("2_ddxch")
+script = ExtResource("5_0rdgg")
+_outputController = NodePath("../VerticalLayout/Output")

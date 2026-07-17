@@ -2,7 +2,7 @@ using FractalPike.PikeConsole.Core.Logging;
 
 namespace FractalPike.PikeConsole.Core.Utilities;
 
-public interface IPikeFrontend
+public interface IStartupLogConsumer
 {
 	/// <summary>
 	/// Used by the FrontendInitializer to push startup logs to the frontend.
@@ -12,5 +12,5 @@ public interface IPikeFrontend
 	/// These logs may contain important errors, warnings or diagnostics.
 	/// </remarks>
 	/// <param name="logEvents">All logevents that was missed by the frontend.</param>
-	public void PushStartupLogs(LogEvent[] logEvents);
+	public void ConsumeStartupLogs(LogEvent[] logEvents);
 }
