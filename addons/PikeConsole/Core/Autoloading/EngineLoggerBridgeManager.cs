@@ -16,8 +16,8 @@ public partial class EngineLoggerBridgeManager : Node
 
 	public override void _EnterTree()
 	{
-		_enabled = PikeConsoleCVars.RuntimeConsoleEnabled;
-		PikeConsoleCVars.RuntimeConsoleEnabled.ValueChanged += OnRuntimeActiveChanged;
+		_enabled = PikeConsoleStates.RuntimeConsoleEnabled;
+		PikeConsoleStates.RuntimeConsoleEnabled.ValueChanged += OnRuntimeActiveChanged;
 
 		ActivateInteropLogger();
 	}
@@ -25,7 +25,7 @@ public partial class EngineLoggerBridgeManager : Node
 	public override void _ExitTree()
 	{
 		KillInteropLogger();
-		PikeConsoleCVars.RuntimeConsoleEnabled.ValueChanged -= OnRuntimeActiveChanged;
+		PikeConsoleStates.RuntimeConsoleEnabled.ValueChanged -= OnRuntimeActiveChanged;
 	}
 
 	void OnRuntimeActiveChanged(bool enable)

@@ -93,7 +93,7 @@ public abstract partial class CommandSet : Node
 		if (_commands.IsDefault || _commands.IsEmpty)
 			InitializeCommandsInternal();
 
-		PikeConsoleCVars.CheatMode.ValueChanged += OnCheatModeChangedInternal;
+		PikeConsoleStates.CheatMode.ValueChanged += OnCheatModeChangedInternal;
 		OnEnterTree();
 
 		RegisterCommandsInternal();
@@ -109,7 +109,7 @@ public abstract partial class CommandSet : Node
 	public sealed override void _ExitTree()
 	{
 		RuntimeExecutableRegistry.Unregister([.. _commands]);
-		PikeConsoleCVars.CheatMode.ValueChanged -= OnCheatModeChangedInternal;
+		PikeConsoleStates.CheatMode.ValueChanged -= OnCheatModeChangedInternal;
 		OnExitTree();
 	}
 

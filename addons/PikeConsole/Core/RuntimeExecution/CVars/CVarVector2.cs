@@ -48,7 +48,7 @@ public partial class CVarVector2 : CVarBase<Vector2>
 		if (Value == value)
 			return new(CvarSetResponseStatus.NoChange, value, null);
 
-		bool cm = PikeConsoleCVars.CheatMode.Value;
+		bool cm = PikeConsoleStates.CheatMode.Value;
 		string[] logTags = null;
 
 		Vector2 requestedPreLimit = value;

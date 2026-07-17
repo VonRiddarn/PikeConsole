@@ -49,7 +49,7 @@ public partial class CVarFloat : CVarBase<float>
 		// Prepare variables for the return status.
 		// These are just overridden in order and ends up being the last check.
 		// Which is why we go soft -> hard
-		bool cm = PikeConsoleCVars.CheatMode.Value;
+		bool cm = PikeConsoleStates.CheatMode.Value;
 		string[] logTags = null;
 
 		// Manage soft limits. Users cannot exceed without cheatmode (Bypassable)

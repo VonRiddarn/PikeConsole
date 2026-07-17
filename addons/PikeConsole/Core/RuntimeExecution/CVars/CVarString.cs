@@ -19,7 +19,7 @@ public partial class CVarString : CVarBase<string>
 		if (!ArgumentParser.ValidateCount(args, 1, out string error))
 			return new(CvarSetResponseStatus.InvalidArgs, default, $"{error} : If your text contains spaces, wrap it in \"quotes\". To use quotes within quotes, use backslashes: \\\"");
 
-		if (MaxCharacters > 0 && args[0].Length > MaxCharacters && !PikeConsoleCVars.CheatMode.Value)
+		if (MaxCharacters > 0 && args[0].Length > MaxCharacters && !PikeConsoleStates.CheatMode.Value)
 			return new(CvarSetResponseStatus.InvalidArgs, default, $"Max character count for \"{Signature}\" is {MaxCharacters}");
 
 		return new(CvarSetResponseStatus.Success, args[0], null);

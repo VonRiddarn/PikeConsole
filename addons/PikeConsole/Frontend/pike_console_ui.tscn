@@ -32,6 +32,8 @@ _outputController = NodePath("../CanvasLayer/VerticalLayout/Output")
 [node name="LogStyler" type="Node" parent="." unique_id=938425512]
 script = ExtResource("3_0rdgg")
 
+[node name="StateController" type="Node" parent="." unique_id=318480378]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=477428624]
 layer = 128
 

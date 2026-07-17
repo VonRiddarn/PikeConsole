@@ -78,8 +78,8 @@ public static class PikeLogger
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsTargetEnabled(LogTarget target)
 	{
-		bool debugActive = PikeConsoleCVars.RuntimeConsoleEnabled.Value && (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
-		bool runtimeActive = PikeConsoleCVars.RuntimeConsoleEnabled.Value && (target & LogTarget.Runtime) != 0;
+		bool debugActive = PikeConsoleStates.RuntimeConsoleEnabled.Value && (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
+		bool runtimeActive = PikeConsoleStates.RuntimeConsoleEnabled.Value && (target & LogTarget.Runtime) != 0;
 		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor();
 		return debugActive || runtimeActive || editorActive;
 	}

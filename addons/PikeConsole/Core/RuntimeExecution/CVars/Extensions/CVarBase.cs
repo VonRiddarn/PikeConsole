@@ -158,7 +158,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 	public bool ResetValue(ExecutionSource executionSource, bool ramOnly = false)
 	{
-		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleCVars.CheatMode.Value)
+		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleStates.CheatMode.Value)
 			return false;
 
 		if (Persist && !ramOnly)
@@ -193,7 +193,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 
 		// If this is a cheat AND we are not the system AND cheatmode is off. Fail the execution.
 		// The system passes this check though, so we can still pass map specific overrides and cool stuff.
-		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleCVars.CheatMode.Value)
+		if (IsCheat && executionSource is not ExecutionSource.System && !PikeConsoleStates.CheatMode.Value)
 			return new(ExecutionResponseStatus.DeniedCheat, $"Failed to set value of \"{Signature}\". CVar is cheat protected.");
 
 		bool ramOnly = args.Length >= 2 && args[^1].Equals(FileSystemHelper.RAM_ONLY_FLAG, StringComparison.OrdinalIgnoreCase);

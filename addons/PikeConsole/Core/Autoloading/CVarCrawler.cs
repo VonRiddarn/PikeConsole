@@ -20,7 +20,7 @@ public partial class CVarCrawler : Node
 
 	public override void _EnterTree()
 	{
-		PikeConsoleCVars.Boot();
+		PikeConsoleStates.Boot();
 
 		CrawlForCVars(PikeConsoleSettings.CvarDirectory);
 	}

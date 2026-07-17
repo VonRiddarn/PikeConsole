@@ -19,7 +19,6 @@ public static class PikeConsoleSettings
 	// ----- ----- ----- ----- -----
 	// 		PROJECT SETTINGS
 	// ----- ----- ----- ----- -----
-
 	// ----- ----- PIKE CONSOLE ----- -----
 	static string? _pathMap = null;
 	public static string PathMap => _pathMap ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_ROOT}/pathmap", "").AsString();

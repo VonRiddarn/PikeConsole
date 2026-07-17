@@ -23,12 +23,12 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 			return;
 		}
 
-		PikeConsoleCVars.ConsoleMaxLines.ValueInvalidated += ValidateLines;
+		PikeConsoleStates.ConsoleMaxLines.ValueInvalidated += ValidateLines;
 	}
 	public override void _ExitTree()
 	{
 		_dispatcher.DispatchLogBatch -= OnLogBatchDispatched;
-		PikeConsoleCVars.ConsoleMaxLines.ValueInvalidated -= ValidateLines;
+		PikeConsoleStates.ConsoleMaxLines.ValueInvalidated -= ValidateLines;
 	}
 
 	void OnLogBatchDispatched(LogEvent[] logEvents)
@@ -51,7 +51,7 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 
 	void ValidateLines()
 	{
-		int maxLines = PikeConsoleCVars.ConsoleMaxLines.Value;
+		int maxLines = PikeConsoleStates.ConsoleMaxLines.Value;
 		int pgf = GetParagraphCount();
 
 		while (pgf > maxLines)

@@ -64,7 +64,7 @@ public partial class FrontendInitializer : Node
 			PikeLogger.LogError(LogTarget.Editor, $"Could not find the EngineLoggerBridgeManager node to kill interop logger!");
 
 		// Disable dogfed CVars
-		PikeConsoleCVars.RuntimeConsoleEnabled.SetRAM(false);
+		PikeConsoleStates.RuntimeConsoleEnabled.SetRAM(false);
 		// TODO: When there is an interop logger CVAr, diasable it here.
 
 		// Log warning last so that it doesn't get burried by potential feedbacks

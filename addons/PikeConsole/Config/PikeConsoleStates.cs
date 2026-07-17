@@ -1,3 +1,4 @@
+using System;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
 
 namespace FractalPike.PikeConsole.Config;
@@ -10,12 +11,38 @@ namespace FractalPike.PikeConsole.Config;
 
 #nullable enable
 
-public static class PikeConsoleCVars
+public static class PikeConsoleStates
 {
 	// ----- ----- ----- ----- -----
 	// 			INTERNAL
 	// ----- ----- ----- ----- -----
 	const string INTERNAL_CVARS_PATH = "res://addons/PikeConsole/Config/variables";
+
+	// ----- ----- ----- ----- -----
+	// 		   CENTRALIZED
+	// ----- ----- ----- ----- -----
+	// MUST ALWAYS match the one defined inside PikeConsole.gd. 
+	// This is just a way to centralize the source of truth.
+	public static string ActionName => "pike_console_toggle";
+
+	/// <summary>Subscribe to the UI state of the console. Useful for hooking up pre-existing pause systems to the console state.</summary>
+	public static event Action<bool>? ConsoleUIActiveChanged;
+
+	static bool _consoleUIActive = false;
+	/// <summary>Get the current state of the runtime console. False makes the console and logger are no-op!</summary>
+	/// <remarks>This has nothing to do with if the UI is active. To check the state of the UI, use IsActive.</remarks>
+	public static bool ConsoleUIActive
+	{
+		get => _consoleUIActive;
+		set
+		{
+			if (_consoleUIActive == value)
+				return;
+
+			_consoleUIActive = value;
+			ConsoleUIActiveChanged?.Invoke(value);
+		}
+	}
 
 	// ----- ----- ----- ----- -----
 	// 			 CVars

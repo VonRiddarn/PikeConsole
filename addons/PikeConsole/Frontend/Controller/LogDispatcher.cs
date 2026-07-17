@@ -38,12 +38,12 @@ public partial class LogDispatcher : Node
 
 	public override void _EnterTree()
 	{
-		PikeConsoleCVars.ConsoleUpdateRate.ValueChanged += OnUpdateRateChanged;
+		PikeConsoleStates.ConsoleUpdateRate.ValueChanged += OnUpdateRateChanged;
 	}
 
 	public override void _ExitTree()
 	{
-		PikeConsoleCVars.ConsoleUpdateRate.ValueChanged -= OnUpdateRateChanged;
+		PikeConsoleStates.ConsoleUpdateRate.ValueChanged -= OnUpdateRateChanged;
 	}
 
 	void OnUpdateRateChanged(int newRate)
@@ -53,7 +53,7 @@ public partial class LogDispatcher : Node
 
 	public override void _Ready()
 	{
-		OnUpdateRateChanged(PikeConsoleCVars.ConsoleUpdateRate.Value);
+		OnUpdateRateChanged(PikeConsoleStates.ConsoleUpdateRate.Value);
 		PikeLogger.LogEmitted += OnLogEmitted;
 	}
 
