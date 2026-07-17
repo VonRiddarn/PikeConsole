@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cvmqldo8cek7m" path="res://addons/PikeConsole/Frontend/ConsoleCommandSet.cs" id="2_ddxch"]
 [ext_resource type="Script" uid="uid://doey2tj1i7vqd" path="res://addons/PikeConsole/Frontend/Controller/LogDispatcher.cs" id="2_hqk8t"]
 [ext_resource type="Theme" uid="uid://db1031xw8a0ep" path="res://addons/PikeConsole/Frontend/pike_console.tres" id="2_y7fok"]
+[ext_resource type="Script" uid="uid://blya123sm2w8f" path="res://addons/PikeConsole/Frontend/Controller/LogStyler.cs" id="3_0rdgg"]
 [ext_resource type="Script" uid="uid://d4keqj2vxyt3w" path="res://addons/PikeConsole/Frontend/Controller/OutputController.cs" id="4_el3v5"]
 [ext_resource type="Script" uid="uid://dwmk64o0ioiaw" path="res://addons/PikeConsole/Frontend/Controller/InputController.cs" id="5_0rdgg"]
 
@@ -28,6 +29,9 @@ script = ExtResource("2_hqk8t")
 script = ExtResource("2_ddxch")
 _outputController = NodePath("../CanvasLayer/VerticalLayout/Output")
 
+[node name="LogStyler" type="Node" parent="." unique_id=938425512]
+script = ExtResource("3_0rdgg")
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=477428624]
 layer = 128
 
@@ -51,7 +55,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("2_y7fok")
 
-[node name="Output" type="RichTextLabel" parent="CanvasLayer/VerticalLayout" unique_id=107930 node_paths=PackedStringArray("_dispatcher")]
+[node name="Output" type="RichTextLabel" parent="CanvasLayer/VerticalLayout" unique_id=107930 node_paths=PackedStringArray("_dispatcher", "_styler")]
 layout_mode = 2
 size_flags_vertical = 3
 focus_mode = 2
@@ -63,6 +67,7 @@ context_menu_enabled = true
 selection_enabled = true
 script = ExtResource("4_el3v5")
 _dispatcher = NodePath("../../../LogDispatcher")
+_styler = NodePath("../../../LogStyler")
 
 [node name="InputBG" type="Panel" parent="CanvasLayer" unique_id=811833345]
 anchors_preset = -1

@@ -31,6 +31,7 @@ enabled=PackedStringArray("res://addons/PikeConsole/plugin.cfg")
 [fractal_pike]
 
 pike_console/config/use_user_configs=true
+pike_console/runtime/frontend_scene="uid://bejwps7jfkded"
 
 [input]
 
