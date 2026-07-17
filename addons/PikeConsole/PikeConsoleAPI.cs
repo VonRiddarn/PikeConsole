@@ -32,13 +32,31 @@ public static class PikeConsoleAPI
 	/// </remarks>
 	public static class RuntimeConsole
 	{
+		static bool _uiActive = false;
 		/// <summary>Get the current state of the runtime console. False makes the console and logger are no-op!</summary>
+		/// <remarks>This has nothing to do with if the UI is active. To check the state of the UI, use IsActive.</remarks>
+		public static bool UiActive
+		{
+			get => _uiActive;
+			set
+			{
+				if (_uiActive == value)
+					return;
+
+				_uiActive = value;
+				UiActiveChanged?.Invoke(value);
+			}
+		}
+		/// <summary>Subscribe to the UI state of the console. Useful for hooking up pre-existing pause systems to the console state.</summary>
+		public static event Action<bool> UiActiveChanged;
+
+		/// <summary>Get the current state of the runtime console. False makes the console and logger are no-op!</summary>
+		/// <remarks>This has nothing to do with if the UI is active. To check the state of the UI, use UiActive.</remarks>
 		public static bool IsEnabled => PikeConsoleCVars.RuntimeConsoleEnabled.Value;
 		/// <summary>Set the current state of the runtime console. False makes the console and logger are no-op!</summary>
 		public static void SetEnabled(bool newState) => PikeConsoleCVars.RuntimeConsoleEnabled.Value = newState;
 		/// <summary>Toggle the current state of the runtime console. When false, the console and logger are no-op!</summary>
 		public static void ToggleEnabled() => PikeConsoleCVars.RuntimeConsoleEnabled.Value = !PikeConsoleCVars.RuntimeConsoleEnabled.Value;
-		/// <summary>Subscribe to the state of the console. Useful for hooking up pre-existing pause systems to the console state.</summary>
 		public static event Action<bool> EnabledChanged
 		{
 			add => PikeConsoleCVars.RuntimeConsoleEnabled.ValueChanged += value;
