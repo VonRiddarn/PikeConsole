@@ -137,7 +137,7 @@ public partial class InputController : LineEdit
 		int count = Mathf.Min(matches.Length, _maxSuggestions);
 		for (int i = 0; i < count; i++)
 		{
-			_suggestionBox.AddItem(matches[i]);
+			_suggestionBox.AddItem(matches[i].ToLower());
 		}
 
 		_suggestionBox.Show();
