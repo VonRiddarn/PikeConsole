@@ -45,6 +45,7 @@ public partial class InputController : LineEdit
 	// Idk if this is good or not. Feels brittle.
 	public override void _GuiInput(InputEvent e)
 	{
+		// TODO: Add command history here. Up = previous command.
 		if (_suggestionBox == null || !_suggestionBox.Visible)
 			return;
 
