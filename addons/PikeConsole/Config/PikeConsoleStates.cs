@@ -63,6 +63,26 @@ public static class PikeConsoleStates
 			return _consoleMaxLines;
 		}
 	}
+
+	static CVarInt? _consoleHistorySize;
+	/// <summary>
+	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
+	/// </summary>
+	public static CVarInt ConsoleHistorySize
+	{
+		get
+		{
+			if (_consoleHistorySize == null)
+			{
+				// Assign the maxlogs BEFORE we initialize!!
+				// Thus when initialize call PikeLogger and PikeLogger asks for MaxLogs we return the cached CVar...
+				_consoleHistorySize = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_history_size");
+				_consoleHistorySize.Initialize();
+			}
+			return _consoleHistorySize;
+		}
+	}
+
 	static CVarInt? _consoleUpdateRate;
 	/// <summary>
 	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
@@ -127,5 +147,6 @@ public static class PikeConsoleStates
 		_ = ConsoleMaxLines;
 		_ = RuntimeConsoleEnabled;
 		_ = ConsoleUpdateRate;
+		_ = ConsoleHistorySize;
 	}
 }

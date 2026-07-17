@@ -1,6 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
 
@@ -14,14 +16,22 @@ public partial class InputController : LineEdit
 
 	[ExportGroup("Settings")]
 	[Export] string _feedbackPrefix = "] ";
-	[Export] int _maxSuggestions = 5;
+	[Export] int _maxSuggestions = 5; // TODO: Make this a cvar later? 
 	[Export] int _suggestionsDebounceMs = 200;
 
 
+	// Suggestion box related
 	CancellationTokenSource _debounceCts;
 
 	bool _isBrowsingSelections = false;
 	string _currentSearchTerm = string.Empty;
+
+	// Command history cache
+	List<string> _commandHistory = [];
+	int _historyIndex = 0;
+	bool _isBrowsingHistory = false;
+	bool _isApplyingHistory = false;
+
 
 	public override void _EnterTree()
 	{
@@ -30,6 +40,8 @@ public partial class InputController : LineEdit
 
 		FocusEntered += OnFocusEntered;
 		FocusExited += OnFocusExited;
+
+		PikeConsoleStates.ConsoleHistorySize.ValueChanged += OnHistorySizeChanged;
 	}
 
 	public override void _ExitTree()
@@ -39,27 +51,39 @@ public partial class InputController : LineEdit
 
 		FocusEntered -= OnFocusEntered;
 		FocusExited -= OnFocusExited;
+
+		PikeConsoleStates.ConsoleHistorySize.ValueChanged -= OnHistorySizeChanged;
 	}
 
 	// AcceptEvent seems to be like preventdefault() in JS.
 	// Idk if this is good or not. Feels brittle.
 	public override void _GuiInput(InputEvent e)
 	{
-		// TODO: Add command history here. Up = previous command.
-		if (_suggestionBox == null || !_suggestionBox.Visible)
-			return;
-
 		if (e is InputEventKey keyEvent && keyEvent.Pressed)
 		{
+			bool suggestionsOpen = _suggestionBox != null && _suggestionBox.Visible;
+
 			if (keyEvent.Keycode == Key.Up)
 			{
-				NavigateSuggestions(-1);
+				if (suggestionsOpen)
+					NavigateSuggestions(-1);
+				else if (string.IsNullOrEmpty(Text) || _isBrowsingHistory)
+					NavigateHistory(-1);
+
 				AcceptEvent();
 			}
 			else if (keyEvent.Keycode == Key.Down)
 			{
-				NavigateSuggestions(1);
+				if (suggestionsOpen)
+					NavigateSuggestions(1);
+				else if (string.IsNullOrEmpty(Text) || _isBrowsingHistory)
+					NavigateHistory(1);
+
 				AcceptEvent();
+			}
+			else if (keyEvent.Keycode is Key.Left or Key.Right)
+			{
+				_isBrowsingHistory = false;
 			}
 			else if (keyEvent.Keycode == Key.Escape)
 			{
@@ -79,12 +103,21 @@ public partial class InputController : LineEdit
 		}
 	}
 
-	private void OnFocusExited()
+	void OnHistorySizeChanged(int newSize)
+	{
+		while (_commandHistory.Count > newSize && _commandHistory.Count > 0)
+			_commandHistory.RemoveAt(0);
+
+		if (_historyIndex > _commandHistory.Count)
+			_historyIndex = _commandHistory.Count;
+	}
+
+	void OnFocusExited()
 	{
 		CloseSuggestions();
 	}
 
-	private void OnFocusEntered()
+	void OnFocusEntered()
 	{
 		HandleInputChanged(Text);
 	}
@@ -93,11 +126,28 @@ public partial class InputController : LineEdit
 	{
 		_outputController.PushText($"{_feedbackPrefix}{inputStatement}\n");
 		StatementExecutor.Execute(ExecutionSource.Standard, inputStatement);
+
+		// Save to history
+		if (!string.IsNullOrWhiteSpace(inputStatement))
+			if (_commandHistory.Count == 0 || _commandHistory[^1] != inputStatement)
+				_commandHistory.Add(inputStatement);
+
+		if (_commandHistory.Count > PikeConsoleStates.ConsoleHistorySize.Value)
+			_commandHistory.RemoveAt(0);
+
+		// Reset all history states
+		_historyIndex = _commandHistory.Count;
+		_isBrowsingHistory = false;
+
 		Clear();
 	}
 
 	async void OnInputChanged(string newText)
 	{
+		// If we type ANYTHING we are no longer in history mode.
+		if (!_isApplyingHistory)
+			_isBrowsingHistory = false;
+
 		// Early check to see if we should just kill the suggestion box.
 		// This is because we don't want the debounce make the input feel "laggy" when removing all text.
 		if (string.IsNullOrWhiteSpace(newText) || _suggestionBox == null)
@@ -160,6 +210,36 @@ public partial class InputController : LineEdit
 		_suggestionBox.Show();
 	}
 
+
+	// ----- ----- ----- ----- ----- 
+	// 		HISTORY NAVIGATION
+	// ----- ----- ----- ----- ----- 
+	void NavigateHistory(int step)
+	{
+		if (_commandHistory.Count == 0)
+			return;
+
+		_isBrowsingHistory = true;
+		_historyIndex += step;
+
+		if (_historyIndex < 0)
+			_historyIndex = 0;
+		else if (_historyIndex >= _commandHistory.Count)
+		{
+			_historyIndex = _commandHistory.Count;
+			_isBrowsingHistory = false;
+
+			_isApplyingHistory = true;
+			Text = string.Empty;
+			_isApplyingHistory = false;
+			return;
+		}
+
+		_isApplyingHistory = true;
+		Text = _commandHistory[_historyIndex];
+		CaretColumn = Text.Length;
+		_isApplyingHistory = false;
+	}
 
 	// ----- ----- ----- ----- ----- 
 	// 	SUGGESTION BOX NAVUGATION
