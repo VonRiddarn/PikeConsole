@@ -10,6 +10,17 @@ border_blend = true
 corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_if0br"]
+bg_color = Color(0.12156863, 0.16470589, 0.21960784, 1)
+border_width_top = 2
+border_width_right = 2
+border_color = Color(0.2901961, 0.36862746, 0.46666667, 0.9098039)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0rdgg"]
+bg_color = Color(0.12941177, 0.2, 0.28235295, 1)
+corner_detail = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5byw"]
 content_margin_left = 8.0
 content_margin_right = 8.0
 bg_color = Color(0.12941177, 0.2, 0.28235295, 1)
@@ -30,11 +41,17 @@ default_font = ExtResource("1_if0br")
 default_font_size = 18
 InputBG/base_type = &"RootBG"
 InputBG/styles/panel = SubResource("StyleBoxFlat_y7fok")
+ItemList/constants/icon_margin = 0
+ItemList/constants/v_separation = 8
+ItemList/font_sizes/font_size = 18
+ItemList/fonts/font = ExtResource("1_if0br")
+ItemList/styles/panel = SubResource("StyleBoxFlat_if0br")
+ItemList/styles/selected = SubResource("StyleBoxFlat_0rdgg")
 LineEdit/colors/caret_color = Color(0.6632608, 0.6632608, 0.6632608, 1)
 LineEdit/colors/font_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
 LineEdit/colors/selection_color = Color(0.42745098, 0.56078434, 0.7254902, 0.5882353)
-LineEdit/styles/focus = SubResource("StyleBoxFlat_if0br")
-LineEdit/styles/normal = SubResource("StyleBoxFlat_if0br")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_s5byw")
+LineEdit/styles/normal = SubResource("StyleBoxFlat_s5byw")
 Panel/styles/panel = null
 RichTextLabel/colors/default_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
 RichTextLabel/colors/selection_color = Color(0.42745098, 0.56078434, 0.7254902, 0.5882353)
