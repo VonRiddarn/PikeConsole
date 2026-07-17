@@ -80,7 +80,7 @@ grow_vertical = 0
 theme = ExtResource("2_y7fok")
 theme_type_variation = &"InputBG"
 
-[node name="InputField" type="LineEdit" parent="CanvasLayer" unique_id=1853006253 node_paths=PackedStringArray("_outputController")]
+[node name="InputField" type="LineEdit" parent="CanvasLayer" unique_id=1853006253 node_paths=PackedStringArray("_outputController", "_suggestionBox")]
 anchors_preset = -1
 anchor_top = 1.0
 anchor_right = 1.0
@@ -97,3 +97,16 @@ placeholder_text = "Enter command..."
 keep_editing_on_text_submit = true
 script = ExtResource("5_0rdgg")
 _outputController = NodePath("../VerticalLayout/Output")
+_suggestionBox = NodePath("../ItemList")
+
+[node name="ItemList" type="ItemList" parent="CanvasLayer" unique_id=707293641]
+anchors_preset = -1
+anchor_top = 0.93100005
+anchor_bottom = 0.93100005
+offset_top = -9.288025
+offset_right = 13.0
+offset_bottom = -0.2880249
+grow_vertical = 0
+allow_search = false
+auto_width = true
+auto_height = true
