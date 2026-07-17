@@ -10,6 +10,7 @@ border_blend = true
 corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_if0br"]
+content_margin_left = 8.0
 bg_color = Color(0.12156863, 0.16470589, 0.21960784, 1)
 border_width_top = 2
 border_width_right = 2
