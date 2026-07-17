@@ -17,6 +17,13 @@ public static class PikeConsoleSettings
 	const string PROJECT_SETTINGS_EDITOR_COLORS = $"{PROJECT_SETTINGS_EDITOR}/colors";
 
 	// ----- ----- ----- ----- -----
+	// 			CENTRALIZED
+	// ----- ----- ----- ----- -----
+	// MUST ALWAYS match the one defined inside PikeConsole.gd. 
+	// This is just a way to centralize the source of truth.
+	public static string ActionName => "pike_console_toggle";
+
+	// ----- ----- ----- ----- -----
 	// 		PROJECT SETTINGS
 	// ----- ----- ----- ----- -----
 	// ----- ----- PIKE CONSOLE ----- -----

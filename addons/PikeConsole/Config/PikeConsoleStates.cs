@@ -21,9 +21,6 @@ public static class PikeConsoleStates
 	// ----- ----- ----- ----- -----
 	// 		   CENTRALIZED
 	// ----- ----- ----- ----- -----
-	// MUST ALWAYS match the one defined inside PikeConsole.gd. 
-	// This is just a way to centralize the source of truth.
-	public static string ActionName => "pike_console_toggle";
 
 	/// <summary>Subscribe to the UI state of the console. Useful for hooking up pre-existing pause systems to the console state.</summary>
 	public static event Action<bool>? ConsoleUIActiveChanged;
