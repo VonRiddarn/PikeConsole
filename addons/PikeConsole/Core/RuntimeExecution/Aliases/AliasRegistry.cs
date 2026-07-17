@@ -17,6 +17,8 @@ public static class AliasRegistry
 
 	public static Response<RegisterAliasResponseStatus> Register(string signature, string input, bool replace = true)
 	{
+		signature = ConsoleFormatter.ToSignature(signature);
+
 		if (RuntimeExecutableRegistry.TryGetExecutable(signature, out IRuntimeExecutable rte))
 		{
 			string type = rte is ICVar ? "cvar" : "command";
