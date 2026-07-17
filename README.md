@@ -64,11 +64,10 @@ The final, estimated release date for `version 1.0` is soonTM.
 -   - [x] Vector3 + Vector3I
 -   - [x] Color
 - [ ] Update the runtime UI to v1
--   - [ ] Queue logs thread-safe
--   - [ ] Throttle logs on caller path
--   - [ ] Limit logs using max-ui-logs
--   - [ ] Filter logs on severity
--   - [ ] Button for opening user directory
+-   - [x] Queue logs thread-safe
+-   - [x] Throttle logs on caller path
+-   - [x] Limit logs using max lines
+-   - [ ] Log history
 
 ## 🧰 Requirements
 
