@@ -19,7 +19,7 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 		else
 		{
 			PikeLogger.LogError(LogTarget.Editor, $"Dispoatcher has not been through the editor in \"{Name}\".");
-			PikeConsoleAPI.RuntimeConsole.SetEnabled(false);
+			PikeConsoleStates.RuntimeConsoleEnabled.Value = false;
 			return;
 		}
 
