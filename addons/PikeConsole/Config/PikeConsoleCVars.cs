@@ -21,22 +21,40 @@ public static class PikeConsoleCVars
 	// 			 CVars
 	// ----- ----- ----- ----- -----
 
-	static CVarInt? _maxUiLogs;
+	static CVarInt? _consoleMaxUiLogs;
 	/// <summary>
 	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
 	/// </summary>
-	public static CVarInt MaxUiLogs
+	public static CVarInt ConsoleMaxUiLogs
 	{
 		get
 		{
-			if (_maxUiLogs == null)
+			if (_consoleMaxUiLogs == null)
 			{
 				// Assign the maxlogs BEFORE we initialize!!
 				// Thus when initialize call PikeLogger and PikeLogger asks for MaxLogs we return the cached CVar...
-				_maxUiLogs = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_max_ui_logs");
-				_maxUiLogs.Initialize();
+				_consoleMaxUiLogs = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_max_ui_logs");
+				_consoleMaxUiLogs.Initialize();
 			}
-			return _maxUiLogs;
+			return _consoleMaxUiLogs;
+		}
+	}
+	static CVarInt? _consoleUpdateRate;
+	/// <summary>
+	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
+	/// </summary>
+	public static CVarInt ConsoleUpdateRate
+	{
+		get
+		{
+			if (_consoleUpdateRate == null)
+			{
+				// Assign the maxlogs BEFORE we initialize!!
+				// Thus when initialize call PikeLogger and PikeLogger asks for MaxLogs we return the cached CVar...
+				_consoleUpdateRate = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_update_rate");
+				_consoleUpdateRate.Initialize();
+			}
+			return _consoleUpdateRate;
 		}
 	}
 
@@ -82,7 +100,7 @@ public static class PikeConsoleCVars
 		// Note: This might be hacky, but it makes the autoloader less fragile.
 
 		_ = CheatMode;
-		_ = MaxUiLogs;
+		_ = ConsoleMaxUiLogs;
 		_ = RuntimeConsoleEnabled;
 	}
 }

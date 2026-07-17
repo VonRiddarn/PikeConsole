@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://b7d55b7sfhlgw"]
+
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_nc24h"]
+
+[resource]
+script = ExtResource("1_nc24h")
+_defaultValue = 32
+_value = 32
+_useClampMin = true
+_minClampValue = 1
+Persist = true
+Description = "The update rate of the console's UI logic. Increasing this value may make the console UI feel more responsive, though it would require more resources. Do not use this value to disable the console. use \"console_enabled 0\" instead as that truly turns off the console."
+metadata/_custom_type_script = "uid://bblxtwt8mavck"

@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource("1_gtmo4")
-_defaultValue = 250
-_value = 250
+_defaultValue = 512
+_value = 512
 _useClampMin = true
-Description = "The amount of individual UI log elements that can be present before object pooling takes place. Lowering this value will increase performance, but reduce visible log history. Do not use this to kill the console. Use \"console_logger_enabled\" and \"console_logger_interop_enabled\" instead."
+Persist = true
+Description = "The amount of individual logs that can be emitted to the UI at once (RichText paragraphs). Lowering this value will increase performance, but reduce visible log history. Do not use this value to disable the console. use \"console_enabled 0\" instead as that truly turns off the console."
 metadata/_custom_type_script = "uid://bblxtwt8mavck"
