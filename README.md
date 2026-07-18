@@ -9,7 +9,8 @@ The framework is built with **runtime optimization**, **extensibility** and **ea
 
 ## 🧰 Requirements
 
-- **C# 12.0 (.NET 8) or later**
+- **C# 12.0+ (.NET 8 or later)**
+- **Godot 4.6+**
 
 ## 🐇💨 Getting started
 
@@ -43,7 +44,7 @@ There is also a quite extensive **[📑 DOCUMENTATION](#)** where you can find a
 - **Preconfigured commands and settings**  
   PikeConsole comes pre-configured with commands and CVars for basic debugging, user config management and console configuration.
 - **Opt-in user config manager**  
-  Save user configurations and settings with custom `.ecfg` files. The active profile run automatically at startup and seemlessly saves all user (CVar) configurations on change. Use as a single source of truth, or alongside an already integrated save system.
+  Save user configurations and settings with custom `.ecfg` files. The active profile run automatically at startup and seamlessly saves all user (CVar) configurations on change. Use as a single source of truth, or alongside an already integrated save system.
 - **Clickable logs**  
   Links in the editor output window that takes you to the caller when clicked!
 - **Automatic engine errors**  
@@ -65,10 +66,9 @@ Diagnostics will be made in a realistic TRUE STRESSTEST environment with all sys
 
 Levels:
 
-- Indie: 250 cvars, 250 commands (500 total)
-- AA: 2500 cvars, 2500 commands (5000 total)
-- AAA: 5000 cvars, 5000 commands (10000 total)  
-  _Note: CSGO uses aprox 8000 commands and CVars which sets a realistic upper benchmark limit for AAA usage._
+- Indie: 500 cvars, 500 commands (1000 total) REF: Half Life (~800 total)
+- AA: 2500 cvars, 2500 commands (5000 total) REF: Half Life 2 (~2500 total)
+- AAA: 5000 cvars, 5000 commands (10000 total) REF: CSGO (~8000 total)
 
 ## 🖼️ Screenshots
 
@@ -87,7 +87,8 @@ Levels:
 **Modular and easy to understand project settings!**
 
 <p align="center">
-	<img src="/docs/_media/showcase-project-settings.png"/>
+	<img src="/docs/_media/showcase-project-settings.png"/> <br/>
+	<i>(Typos has been fixed since the capture of this screenshot)</i>
 </p>
 
 ## ⚠️ Privacy notice!
