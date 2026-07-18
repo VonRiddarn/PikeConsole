@@ -78,14 +78,14 @@ const SETTING_FRONTEND_SCENE: Dictionary[String, Variant] = {
 	"hint_string": "*.tscn"
 }
 const SETTING_LOG_CVAR_ON_REGISTER: Dictionary[String, Variant] = {
-	"path": PATH_SETTINGS_EDITOR + "log_cvar_on_regsiter", 
+	"path": PATH_SETTINGS_EDITOR + "log_cvar_on_register", 
 	"default_value": false, 
 	"type": TYPE_BOOL, 
 	"hint": PROPERTY_HINT_NONE, 
 	"hint_string": ""
 }
 const SETTING_LOG_COMMAND_ON_REGISTER: Dictionary[String, Variant] = {
-"path": PATH_SETTINGS_EDITOR + "log_command_on_regsiter", 
+"path": PATH_SETTINGS_EDITOR + "log_command_on_register", 
 "default_value": false, 
 "type": TYPE_BOOL, 
 "hint": PROPERTY_HINT_NONE, 
