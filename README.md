@@ -74,14 +74,14 @@ Levels:
 
 **Custom aliases with automatic recursion protection!**
 
-<p align="left">
-	<img src="/docs/_media/showcase-alias.png" width=1024 height=576/>
+<p align="center">
+	<img src="/docs/_media/showcase-alias.png"/>
 </p>
 
 **Smart suggestions that shows Commands, CVars and runtime aliases!**
 
-<p align="left">
-	<img src="/docs/_media/showcase-suggestions.png" width=1024 height=576/>
+<p align="center">
+	<img src="/docs/_media/showcase-suggestions.png"/>
 </p>
 
 ## ⚠️ Privacy notice!
