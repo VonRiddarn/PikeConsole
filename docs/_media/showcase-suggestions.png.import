@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cw0woy5exk3y"
-path="res://.godot/imported/pike-console-banner.png-26d7b3c3d443b0fc167e754d49726d64.ctex"
+uid="uid://dudxp6sxnn5m7"
+path="res://.godot/imported/showcase-suggestions.png-91dfd8ef6e822a7f8b6392e26100f062.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/_media/proprietary/pike-console-banner.png"
-dest_files=["res://.godot/imported/pike-console-banner.png-26d7b3c3d443b0fc167e754d49726d64.ctex"]
+source_file="res://docs/_media/showcase-suggestions.png"
+dest_files=["res://.godot/imported/showcase-suggestions.png-91dfd8ef6e822a7f8b6392e26100f062.ctex"]
 
 [params]
 

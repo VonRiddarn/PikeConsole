@@ -54,13 +54,35 @@ There is also a quite extensive **[📑 DOCUMENTATION](#)** where you can find a
 - **And more!**  
   There are literally so many features that I know I'm forgetting cool things to list!
 
+<p align="center">
+	<img src="/docs/_media/showcase-animation.gif"/>
+</p>
+
 ## 📊 Diagnostic tests
+
+Coming soon!  
+Diagnostics will be made in a realistic TRUE STRESSTEST environment with all systems enabled.
+
+Levels:
+
+- Indie: 250 cvars, 250 commands (500 total)
+- AA: 2500 cvars, 2500 commands (5000 total)
+- AAA: 5000 cvars, 5000 commands (10000 total)  
+  _Note: CSGO uses aprox 8000 commands and CVars which sets a realistic upper benchmark limit for AAA usage._
 
 ## 🖼️ Screenshots
 
-- Screenshot 1 goes here
-- Screenshot 2 goes here
-- Screenshot 3 goes here
+**Custom aliases with automatic recursion protection!**
+
+<p align="left">
+	<img src="/docs/_media/showcase-alias.png" width=1024 height=576/>
+</p>
+
+**Smart suggestions that shows Commands, CVars and runtime aliases!**
+
+<p align="left">
+	<img src="/docs/_media/showcase-suggestions.png" width=1024 height=576/>
+</p>
 
 ## ⚠️ Privacy notice!
 
