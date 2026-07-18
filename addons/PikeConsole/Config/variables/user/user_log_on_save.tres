@@ -4,8 +4,5 @@
 
 [resource]
 script = ExtResource("1_lotrp")
-_defaultValue = true
-_value = true
-Persist = true
 Description = "If enabled the console will log a confirmation each time a user config is saved."
 metadata/_custom_type_script = "uid://j1th6vqhii2n"
