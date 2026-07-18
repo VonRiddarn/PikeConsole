@@ -53,11 +53,11 @@ public static class PikeConsoleSettings
 	// ----- ----- EDITOR ----- -----
 	static bool? _logCvarOnRegister = null;
 	public static bool LogCvarOnRegister =>
-		_logCvarOnRegister ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_EDITOR}/log_cvar_on_regsiter", true).AsBool();
+		_logCvarOnRegister ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_EDITOR}/log_cvar_on_regsiter", false).AsBool();
 
 	static bool? _logCommandOnRegister = null;
 	public static bool LogCommandOnRegister =>
-		_logCommandOnRegister ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_EDITOR}/log_command_on_regsiter", true).AsBool();
+		_logCommandOnRegister ??= ProjectSettings.GetSetting($"{PROJECT_SETTINGS_EDITOR}/log_command_on_regsiter", false).AsBool();
 
 	static bool? _suppressDocumentationWarnings = null;
 	public static bool SuppressDocumentationWarnings =>
