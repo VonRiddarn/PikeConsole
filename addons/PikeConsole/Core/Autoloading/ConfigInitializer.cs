@@ -20,8 +20,11 @@ public partial class ConfigInitializer : Node
 			return;
 		}
 
-		Node userConfigUpdater = _userConfigUpdater.Instantiate();
-		AddChild(userConfigUpdater);
+		if (PikeConsoleSettings.UserConfigsEnabled)
+		{
+			Node userConfigUpdater = _userConfigUpdater.Instantiate();
+			AddChild(userConfigUpdater);
+		}
 	}
 
 	static void InitializeDirectories()
@@ -34,7 +37,8 @@ public partial class ConfigInitializer : Node
 		// Reusing path
 		path = FileSystemHelper.UserDirectory.Globalized(PikeConsoleSettings.UserConfigsDirectory);
 
-		if (PikeConsoleSettings.UserConfigsEnabled && FileSystemHelper.EnsureDirectory(path))
-			PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] User configs directory was missing. Created directory at: {path}");
+		if (PikeConsoleSettings.UserConfigsEnabled)
+			if (FileSystemHelper.EnsureDirectory(path))
+				PikeLogger.Log(LogTarget.Editor, $"[PikeConsole] User configs directory was missing. Created directory at: {path}");
 	}
 }
