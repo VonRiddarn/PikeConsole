@@ -36,12 +36,28 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 		if (logEvents.Length == 0)
 			return;
 
+		int maxLines = PikeConsoleStates.ConsoleMaxLines.Value;
+
+
 		StringBuilder sb = new();
 		foreach (LogEvent logEvent in logEvents)
 			sb.Append(NormalizeLog(logEvent));
 
-		AppendText(sb.ToString());
+		string incomingText = sb.ToString();
 
+		incomingText = CutLinesFromEnd(incomingText, maxLines, out int lineCount);
+
+		if (lineCount >= maxLines)
+		{
+			Clear();
+			AppendText($"----- Response exceeded {PikeConsoleStates.ConsoleMaxLines.Value} lines! -----\n");
+
+			int firstNewline = incomingText.IndexOf('\n');
+			if (firstNewline != -1 && firstNewline < incomingText.Length - 1)
+				incomingText = incomingText[(firstNewline + 1)..];
+		}
+
+		AppendText(incomingText);
 		ValidateLines();
 	}
 
@@ -49,10 +65,48 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 	//		  HELPERS
 	// ----- ----- ----- -----
 
+	static string CutLinesFromEnd(string text, int maxLines, out int lineCount)
+	{
+		lineCount = 0;
+		if (string.IsNullOrEmpty(text) || maxLines <= 0)
+			return string.Empty;
+
+		// This is just to skip the last newline,
+		int startIndex = text.Length - 1;
+		if (text[startIndex] == '\n')
+			startIndex--;
+
+		// Basically, go through the text backwards and count the lines.
+		// If we exceed the maxlines, we can cut that part entirely so it isn't handle by the RichTextLabel (which was super slow)
+		for (int i = startIndex; i >= 0; i--)
+		{
+			if (text[i] == '\n')
+			{
+				lineCount++;
+				if (lineCount >= maxLines)
+					return text[(i + 1)..];
+			}
+		}
+
+		lineCount++;
+		return text;
+	}
+
 	void ValidateLines()
 	{
 		int maxLines = PikeConsoleStates.ConsoleMaxLines.Value;
 		int pgf = GetParagraphCount();
+		int allowedLines = maxLines + 1;
+
+		if (pgf <= allowedLines)
+			return;
+
+		if (pgf > allowedLines * 2)
+		{
+			Clear();
+			AppendText($"\n----- Trimmed {pgf - maxLines} lines to save memory -----\n");
+			return;
+		}
 
 		while (pgf > maxLines)
 		{
