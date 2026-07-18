@@ -84,6 +84,12 @@ Levels:
 	<img src="/docs/_media/showcase-suggestions.png"/>
 </p>
 
+**Modular and easy to understand project settings!**
+
+<p align="center">
+	<img src="/docs/_media/showcase-project-settings.png"/>
+</p>
+
 ## ⚠️ Privacy notice!
 
 _For a video tutorial on how to edit the path map, check out the official **[▶️ YOUTUBE PLAYLIST](#)**_.
