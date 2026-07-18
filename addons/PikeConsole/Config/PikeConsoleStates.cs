@@ -102,6 +102,23 @@ public static class PikeConsoleStates
 		}
 	}
 
+	static CVarBool? _consoleThrottleSource;
+	/// <summary>
+	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
+	/// </summary>
+	public static CVarBool ConsoleThrottleSource
+	{
+		get
+		{
+			if (_consoleThrottleSource == null)
+			{
+				_consoleThrottleSource = CvarLoader.LoadInternalCVar<CVarBool>($"{INTERNAL_CVARS_PATH}/console", "console_throttle_source");
+				_consoleThrottleSource.Initialize();
+			}
+			return _consoleThrottleSource;
+		}
+	}
+
 	static CVarBool? _runtimeConsoleEnabled;
 	/// <summary>
 	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.

@@ -60,7 +60,7 @@ public partial class LogDispatcher : Node
 	void OnLogEmitted(in LogEvent logEvent)
 	{
 		// Early return if the throttle wont let us through and we're not forcing the log.
-		if (!logEvent.ForceLog && TryThrottle(logEvent.CallerKeyHash))
+		if (PikeConsoleStates.ConsoleThrottleSource.Value && !logEvent.ForceLog && TryThrottle(logEvent.CallerKeyHash))
 			return;
 
 		// Locking so that we can drop logs without race conditions.

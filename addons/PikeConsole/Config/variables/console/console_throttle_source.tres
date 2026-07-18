@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CVarBool" format=3 uid="uid://cyjwae5kqs04d"]
+
+[ext_resource type="Script" uid="uid://j1th6vqhii2n" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarBool.cs" id="1_n1v3t"]
+
+[resource]
+script = ExtResource("1_n1v3t")
+_defaultValue = true
+_value = true
+IsCheat = true
+Description = "Enables or disables the console log throttle. Normally logs are throttled by their call-source hash. Enabling this may have an impact on performance!"
+metadata/_custom_type_script = "uid://j1th6vqhii2n"
