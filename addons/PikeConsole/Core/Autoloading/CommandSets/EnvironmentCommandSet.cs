@@ -86,7 +86,27 @@ public partial class EnvironmentCommandSet : CommandSet
 				sb.AppendLine($"\tFree: {DisplayBytes(systemAvailableBytes)}");
 
 				long csharpRamBytes = GC.GetTotalMemory(false);
-				sb.Append($"\tUsed (.NET): {DisplayBytes(csharpRamBytes)}");
+				sb.AppendLine($"\tUsed (.NET): {DisplayBytes(csharpRamBytes)}");
+
+				// NOTE:
+				// This is very, very estimated and a little out of my league.
+				// The magic numbers are a high estimate of byte allocations. 
+				// This is NOT my domain at all, but I've counted:
+				// 		Dictionary: ~35 bytes per entry
+				// 		Commands and Cvars: ~900 bytes per entry
+				// If these values are whack a PR and explanation would be appreciated!
+				// 
+				// When testing in an empty project with 10 000 entries (5 000 Cvar, 5 000 Commands),
+				// we are counting about 2MB higher than the actual .NET allocated memory, which is prefered over counting low.
+				int cvars = RuntimeExecutableRegistry.CvarCount;
+				int cmds = RuntimeExecutableRegistry.CommandCount;
+				long dictOverhead = (cvars + cmds) * 35;
+				long estimatedBytes = dictOverhead + (cvars + cmds) * 900;
+
+				sb.AppendLine($"\tRuntime executables ({cvars + cmds})");
+				sb.AppendLine($"\t\tCvars: {cvars}");
+				sb.AppendLine($"\t\tCommands: {cmds}");
+				sb.Append($"\t\tEST: {DisplayBytes(estimatedBytes)}");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}", forceLog: true);
 				return new(ExecutionResponseStatus.Success, null);
@@ -115,7 +135,8 @@ public partial class EnvironmentCommandSet : CommandSet
 			"Shows all relevant time information as is. Provides live-diagnostic data for the snapshot.",
 			$"{Signature("time")} [no args]",
 			false,
-			static (_) => {
+			static (_) =>
+			{
 				StringBuilder sb = new("TIME SNAPSHOT\n");
 				sb.AppendLine($"\t{DateTime.Now}");
 

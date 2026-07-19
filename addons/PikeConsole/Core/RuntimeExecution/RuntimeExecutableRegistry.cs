@@ -33,7 +33,10 @@ public static class RuntimeExecutableRegistry
 	static readonly Dictionary<string, IRuntimeExecutable> _executables = new(StringComparer.OrdinalIgnoreCase);
 
 	static bool? _isDebugEnvironment = null;
-	static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
+	static bool IsDebugEnvironment => _isDebugEnvironment ??= OS.IsDebugBuild();
+
+	public static int CvarCount { get; private set; } = 0;
+	public static int CommandCount { get; private set; } = 0;
 
 	/// <summary>
 	/// Protective and pragmatic wrapper for <c>_executables.TryGetValue(signature, out executable)</c>
@@ -50,16 +53,20 @@ public static class RuntimeExecutableRegistry
 
 		// Cache in stack since we reuse it like 4 times.
 		string signature = executable.Signature;
+		string type = executable is ICVar ? "cvar" : "command";
 
 		if (_executables.TryGetValue(signature, out var rte))
-		{
-			string rteType = rte is ICVar ? "cvar" : "command";
-			return new(RegisterExecutableResponseStatus.AlreadyExists, $"A {rteType} already exists for signature \"{signature}\".\nConflict found at: {rte.SourceLocation}");
-		}
+			return new(RegisterExecutableResponseStatus.AlreadyExists, $"A {type} already exists for signature \"{signature}\".\nConflict found at: {rte.SourceLocation}");
+
+		// At this point we KNOW that we WILL add the command. We just don't know if it'll override an alias. 
+		// Thus it is safe to at least increase the count here.
+		if (executable is ICVar)
+			CvarCount++;
+		else
+			CommandCount++;
 
 		if (AliasRegistry.TryGetAlias(signature, out string _))
 		{
-			string type = executable is ICVar ? "cvar" : "command";
 			AliasRegistry.Unregister(signature);
 			_executables[signature] = executable;
 			return new(RegisterExecutableResponseStatus.ReplacedAlias, $"Alias \"{signature}\" has been overridden by a {type} with the same signature!");
@@ -88,7 +95,13 @@ public static class RuntimeExecutableRegistry
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static void Unregister(IRuntimeExecutable executable)
 	{
-		_executables.Remove(executable.Signature);
+		if (_executables.Remove(executable.Signature, out var removed))
+		{
+			if (removed is ICVar)
+				CvarCount--;
+			else
+				CommandCount--;
+		}
 	}
 
 	/// <summary>
