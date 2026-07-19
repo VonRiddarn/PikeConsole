@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 PikeConsole="*uid://dx4bwtrbok1yg"
+CommandSetsAutload="*uid://cin4pow3cbebf"
 
 [dotnet]
 
