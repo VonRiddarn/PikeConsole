@@ -12,5 +12,7 @@ public enum RegisterExecutableResponseStatus
 	/// <summary>Command force-removed an alias of the same signature on registration.</summary>
 	ReplacedAlias = 2,
 	/// <summary>Denied because a command with that signature already exists.</summary>
-	AlreadyExists = 3
+	AlreadyExists = 3,
+	/// <summary>Denied because this command should not be visible in release.</summary>
+	Hidden = 4
 }

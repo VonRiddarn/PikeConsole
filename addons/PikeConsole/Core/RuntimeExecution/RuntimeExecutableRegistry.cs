@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 using FractalPike.PikeConsole.Core.Utilities;
+using Godot;
 
 /* 
 	2026-07-02
@@ -31,6 +32,9 @@ public static class RuntimeExecutableRegistry
 	public static IReadOnlyDictionary<string, IRuntimeExecutable> Executables => _executables;
 	static readonly Dictionary<string, IRuntimeExecutable> _executables = new(StringComparer.OrdinalIgnoreCase);
 
+	static bool? _isDebugEnvironment = null;
+	static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
+
 	/// <summary>
 	/// Protective and pragmatic wrapper for <c>_executables.TryGetValue(signature, out executable)</c>
 	/// </summary>
@@ -41,6 +45,9 @@ public static class RuntimeExecutableRegistry
 
 	public static Response<RegisterExecutableResponseStatus> Register(IRuntimeExecutable executable)
 	{
+		if (executable.HideInRelease && !IsDebugEnvironment)
+			return new(RegisterExecutableResponseStatus.Hidden);
+
 		// Cache in stack since we reuse it like 4 times.
 		string signature = executable.Signature;
 

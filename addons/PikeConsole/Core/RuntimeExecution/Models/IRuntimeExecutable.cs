@@ -22,6 +22,9 @@ public interface IRuntimeExecutable
 	/// <summary>If set to true CheatMode must be active to run this executable.</summary>
 	public bool IsCheat { get; }
 
+	/// <summary>If set to true CheatMode must be active to run this executable.</summary>
+	public bool HideInRelease { get; }
+
 	public string SourceLocation { get; }
 
 	// public bool IsLocal { get; } -- Placing this here as a reminder if we want to tackle multiplayer someday.

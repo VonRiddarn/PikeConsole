@@ -14,6 +14,7 @@ public sealed class Command : IRuntimeExecutable
 	public string[] Usages { get; }
 	public bool IsCheat { get; }
 	public string SourceLocation { get; }
+	public bool HideInRelease { get; }
 
 	readonly Func<string[], Response<ExecutionResponseStatus>> _action;
 
@@ -30,6 +31,7 @@ public sealed class Command : IRuntimeExecutable
 		string longDesc,
 		string[] usages,
 		bool isCheat,
+		bool hideInRelease,
 		Func<string[], Response<ExecutionResponseStatus>> action,
 		// We're sending the filePath and lineNumber from the CommandSet using compiler injection attributes.
 		// This makes us able to track the exact file that is faulty.
@@ -43,6 +45,7 @@ public sealed class Command : IRuntimeExecutable
 		LongDesc = string.IsNullOrWhiteSpace(longDesc) ? "No long description available." : longDesc;
 		Usages = usages;
 		IsCheat = isCheat;
+		HideInRelease = hideInRelease;
 		SourceLocation = $"{filePath}:{lineNumber}";
 
 		_action = action;

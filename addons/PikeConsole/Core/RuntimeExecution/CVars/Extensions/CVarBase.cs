@@ -37,6 +37,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 	[ExportGroup("CVar")]
 	[Export] public bool Persist { get; private set; } = false;
 	[Export] public bool IsCheat { get; private set; } = false;
+	[Export] public bool HideInRelease { get; private set; } = false;
 	/// <summary>Used to apply description within the editor. Appended to the LongDesc property.</summary>
 	/// <remarks>Use property <c>LongDesc</c> for the most accurate long description.</remarks>
 	[Export(PropertyHint.MultilineText)] public string Description { get; private set; } = "";
@@ -145,6 +146,8 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 				break;
 			case RegisterExecutableResponseStatus.ReplacedAlias:
 				PikeLogger.LogWarning(LogTarget.All, $"CVar {Signature} was registered, but replaced an alias with th same signature.", forceLog: true);
+				break;
+			case RegisterExecutableResponseStatus.Hidden:
 				break;
 			default:
 				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} didn't get a valid response from the command registry.", forceLog: true);

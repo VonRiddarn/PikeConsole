@@ -10,6 +10,12 @@ using Godot;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 
+/*
+ * This code has seen some itterations. 
+ * Might be worthwhile to DRY it up if we start expanding more...
+*/
+
+
 // Disable obsolete warnings in this script. 
 // This is because we use the obsolete attribute to scare of people from using "new Command()"
 #pragma warning disable CS0618
@@ -149,7 +155,7 @@ public abstract partial class CommandSet : Node
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0)
 	{
-		return new Command(signature, shortDesc, longDesc, [$"{usage}"], isCheat, action, new CustomStackTrace(filePath, lineNumber));
+		return new Command(signature, shortDesc, longDesc, [$"{usage}"], isCheat, false, action, new CustomStackTrace(filePath, lineNumber));
 	}
 	static protected Command Command(
 		string signature,
@@ -161,7 +167,32 @@ public abstract partial class CommandSet : Node
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0)
 	{
-		return new Command(signature, shortDesc, longDesc, usages, isCheat, action, new CustomStackTrace(filePath, lineNumber));
+		return new Command(signature, shortDesc, longDesc, usages, isCheat, false, action, new CustomStackTrace(filePath, lineNumber));
+	}
+
+	static protected Command CommandHidden(
+		string signature,
+		string shortDesc,
+		string longDesc,
+		string usage,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)
+	{
+		return new Command(signature, shortDesc, longDesc, [$"{usage}"], isCheat, true, action, new CustomStackTrace(filePath, lineNumber));
+	}
+	static protected Command CommandHidden(
+		string signature,
+		string shortDesc,
+		string longDesc,
+		string[] usages,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)
+	{
+		return new Command(signature, shortDesc, longDesc, usages, isCheat, true, action, new CustomStackTrace(filePath, lineNumber));
 	}
 
 	/// <summary>
@@ -197,7 +228,19 @@ public abstract partial class CommandSet : Node
 		[CallerFilePath] string filePath = "",
 		[CallerLineNumber] int lineNumber = 0)
 	{
-		return new Command(signature, null, null, null, isCheat, action, new CustomStackTrace(filePath, lineNumber));
+		return new Command(signature, null, null, null, isCheat, false, action, new CustomStackTrace(filePath, lineNumber));
+	}
+	/// <summary>
+	/// Command hidden in release builds.
+	/// </summary>
+	static protected Command CommandHidden(
+		string signature,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)
+	{
+		return new Command(signature, null, null, null, isCheat, true, action, new CustomStackTrace(filePath, lineNumber));
 	}
 
 
@@ -249,6 +292,8 @@ public abstract partial class CommandSet : Node
 					break;
 				case RegisterExecutableResponseStatus.AlreadyExists:
 					PikeLogger.LogError(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
+					break;
+				case RegisterExecutableResponseStatus.Hidden:
 					break;
 				// Unexpected error.
 				default:
