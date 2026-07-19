@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Text;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
@@ -23,10 +24,31 @@ public partial class EnvironmentCommandSet : CommandSet
 
 	static string GetProjectAndVersion()
 	{
-		string n = ProjectSettings.GetSetting("application/config/name").AsString();
-		string v = ProjectSettings.GetSetting("application/config/version").AsString();
-		v = string.IsNullOrWhiteSpace(v) ? string.Empty : $"({v})";
-		return $"{(OS.IsDebugBuild() ? "[DEBUG] " : string.Empty)}{n} {v}";
+		string name = string.Empty;
+		string version = string.Empty;
+
+		// Anything that is not an editor is obv a release.
+		if (!OS.HasFeature("editor"))
+		{
+			try
+			{
+				var fileInfo = FileVersionInfo.GetVersionInfo(OS.GetExecutablePath());
+				name = fileInfo.ProductName;
+				version = fileInfo.ProductVersion;
+			}
+			catch { }
+		}
+
+		// Fallback to project settings
+		if (string.IsNullOrWhiteSpace(name))
+			name = ProjectSettings.GetSetting("application/config/name").AsString();
+
+		if (string.IsNullOrWhiteSpace(version))
+			version = ProjectSettings.GetSetting("application/config/version").AsString();
+
+		version = string.IsNullOrWhiteSpace(version) ? string.Empty : $"({version})";
+
+		return $"{(OS.IsDebugBuild() ? "[DEBUG] " : string.Empty)}{name} {version}".Trim();
 	}
 
 	protected override Command[] InstantiateCommands() => [
