@@ -12,24 +12,22 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 	[Export] LogDispatcher _dispatcher;
 	[Export] LogStyler _styler;
 
+	int _currentLines = 0;
+
 	public override void _EnterTree()
 	{
-		if (_dispatcher != null)
-			_dispatcher.DispatchLogBatch += OnLogBatchDispatched;
-		else
-		{
-			PikeLogger.LogError(LogTarget.Editor, $"Dispoatcher has not been through the editor in \"{Name}\".");
-			PikeConsoleStates.RuntimeConsoleEnabled.Value = false;
-			return;
-		}
-
+		_dispatcher.DispatchLogBatch += OnLogBatchDispatched;
 		PikeConsoleStates.ConsoleMaxLines.ValueInvalidated += ValidateLines;
 	}
 	public override void _ExitTree()
 	{
-		_dispatcher.DispatchLogBatch -= OnLogBatchDispatched;
 		PikeConsoleStates.ConsoleMaxLines.ValueInvalidated -= ValidateLines;
+		_dispatcher.DispatchLogBatch -= OnLogBatchDispatched;
 	}
+
+	// ----- ----- ----- -----
+	//	   INTERNAL API
+	// ----- ----- ----- -----
 
 	void OnLogBatchDispatched(LogEvent[] logEvents)
 	{
@@ -43,46 +41,46 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 		foreach (LogEvent logEvent in logEvents)
 			sb.Append(NormalizeLog(logEvent));
 
-		string incomingText = sb.ToString();
+		string finalText = sb.ToString();
 
-		incomingText = CutLinesFromEnd(incomingText, maxLines, out int lineCount);
+		finalText = CutLinesFromEnd(finalText, maxLines, out int lineCount);
 
 		if (lineCount >= maxLines)
 		{
 			Clear();
-			AppendText($"----- Response exceeded {PikeConsoleStates.ConsoleMaxLines.Value} lines! -----\n");
+			AppendText($"----- Response exceeded {maxLines} lines! -----\n");
+			_currentLines++;
 
-			int firstNewline = incomingText.IndexOf('\n');
-			if (firstNewline != -1 && firstNewline < incomingText.Length - 1)
-				incomingText = incomingText[(firstNewline + 1)..];
+			int firstNewline = finalText.IndexOf('\n');
+			if (firstNewline != -1 && firstNewline < finalText.Length - 1)
+				finalText = finalText[(firstNewline + 1)..];
 		}
 
-		AppendText(incomingText);
+		AppendText(finalText);
+		_currentLines += CountLines(finalText);
+
 		ValidateLines();
 	}
 
-	// ----- ----- ----- -----
-	//		  HELPERS
-	// ----- ----- ----- -----
-
+	// Helper method that counts the amount of newlines in some text and just trims it from the back
+	// So if we have more lines than allowed, we just return the max amount of lines from the end.
 	static string CutLinesFromEnd(string text, int maxLines, out int lineCount)
 	{
 		lineCount = 0;
 		if (string.IsNullOrEmpty(text) || maxLines <= 0)
 			return string.Empty;
 
-		// This is just to skip the last newline,
 		int startIndex = text.Length - 1;
 		if (text[startIndex] == '\n')
 			startIndex--;
 
-		// Basically, go through the text backwards and count the lines.
-		// If we exceed the maxlines, we can cut that part entirely so it isn't handle by the RichTextLabel (which was super slow)
 		for (int i = startIndex; i >= 0; i--)
 		{
 			if (text[i] == '\n')
 			{
 				lineCount++;
+
+				// This is, in effet something like: text[^maxlines..]
 				if (lineCount >= maxLines)
 					return text[(i + 1)..];
 			}
@@ -92,27 +90,32 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 		return text;
 	}
 
+	int CountLines(string s)
+	{
+		int count = 0;
+		for (int i = 0; i < s.Length; i++)
+			if (s[i] == '\n') count++;
+
+		return count;
+	}
+
 	void ValidateLines()
 	{
 		int maxLines = PikeConsoleStates.ConsoleMaxLines.Value;
-		int pgf = GetParagraphCount();
-		int allowedLines = maxLines + 1;
 
-		if (pgf <= allowedLines)
+		if (_currentLines <= maxLines)
 			return;
 
-		if (pgf > allowedLines * 2)
-		{
-			Clear();
-			AppendText($"\n----- Trimmed {pgf - maxLines} lines to save memory -----\n");
-			return;
-		}
+		int linesToRemove = _currentLines - maxLines;
 
-		while (pgf > maxLines)
-		{
-			RemoveParagraph(0, true);
-			pgf--;
-		}
+		// NOTE!!!
+		// We had a while loop here before that used GetParagraphCount.
+		// It choked hard on spam tests. Probably because this method can be called many times in one frame.
+		// That's why we use this manual cache of current lines.
+		for (int i = 0; i < linesToRemove; i++)
+			RemoveParagraph(0);
+
+		_currentLines -= linesToRemove;
 	}
 
 	string NormalizeLog(in LogEvent logEvent)
@@ -123,14 +126,22 @@ public partial class OutputController : RichTextLabel, IStartupLogConsumer
 	}
 
 	// ----- ----- ----- -----
-	//		     API
+	//		 PUBLIC API
 	// ----- ----- ----- -----
 	public void PushText(string text)
 	{
 		AppendText(text);
+		_currentLines += CountLines(text);
+
 		ValidateLines();
 	}
 
 	public void ConsumeStartupLogs(LogEvent[] logEvents) =>
 		OnLogBatchDispatched(logEvents);
+
+	public new void Clear()
+	{
+		base.Clear();
+		_currentLines = 0;
+	}
 }
