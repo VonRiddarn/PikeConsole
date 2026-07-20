@@ -168,7 +168,7 @@ The console does however hold at this level and retains its O(1) lookup capabili
 
 ### The numbers
 
-Those with a keen eye might've noticed that the estimated memory usage is above what is actually allocated.  
+The keene eyed might've noticed that the estimated memory usage is above what is actually allocated.  
 This is because the estimation is conservative and designed to overshoot rather than over-promise.  
 The actual footprint is often less than the estimation, as seen in the memory snapshots.
 
