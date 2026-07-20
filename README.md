@@ -14,10 +14,14 @@ The framework is built with **runtime optimization**, **extensibility** and **ea
 
 ## 🐇💨 Getting started
 
-If you want to start by toying around you can check out the **[⏳ QUICK START GUIDE](#)** which will have you running your first command in just **3 minutes**!
+If you want to start by toying around you can check out the ~~**[⏳ QUICK START GUIDE](#)**~~ which will have you running your first command in just **3 minutes**!
 For visual learners there is an official **[▶️ YOUTUBE PLAYLIST](#)** that goes through the consoles concepts in a video format.
 
-There is also a quite extensive **[📑 DOCUMENTATION](#)** where you can find anything from gudes and breakdowns, to a public API reference.
+There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from gudes and breakdowns, to a public API reference.
+
+NOTE:  
+The documentation and quick start guide is underway. To peek at the content, check out the `docs` folder in this repository, but be adviced that it is not fully realised.  
+If you just want to get started with PikeConsole right now, check out the YouTube playlist!
 
 ## 🔥 Features
 
