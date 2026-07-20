@@ -17,7 +17,7 @@ The framework is built with **runtime optimization**, **extensibility** and **ea
 If you want to start by toying around you can check out the ~~**[⏳ QUICK START GUIDE](#)**~~ which will have you running your first command in just **3 minutes**!
 For visual learners there is an official **[▶️ YOUTUBE PLAYLIST](#)** that goes through the consoles concepts in a video format.
 
-There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from gudes and breakdowns, to a public API reference.
+There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from guides and breakdowns, to a public API reference.
 
 NOTE:  
 The documentation and quick start guide is underway. To peek at the content, check out the `docs` folder in this repository, but be advised that it is not fully realised.  
@@ -32,7 +32,7 @@ If you just want to get started with PikeConsole right now, check out the YouTub
   The default UI that ships with PikeConsole comes with QOL features such as: Automatic command / alias suggestions, an alias system, diagnostic commands, runtime-documentation using the `help` command. All packed into a sleek, modern UI. You can just drag it in, play with the theme and just get going.
 - **Zero-alloc routed logging**  
   The `PikeLogger` utility shipped with PikeConsole is a direct replacement for `GD.Print`.  
-  It uses a interpolation manager to make logs truly no-op on non-targeted environments,
+  It uses an interpolation manager to make logs truly no-op on non-targeted environments,
   which means you can just leave debug logs in without tanking performance in release!
 - **AOT-safe compilation**  
   Everything in the system is built to be ahead-of-time compatible, which is a MUST if you're porting to console / mobile.
@@ -48,11 +48,11 @@ If you just want to get started with PikeConsole right now, check out the YouTub
 - **Preconfigured commands and settings**  
   PikeConsole comes pre-configured with commands and CVars for basic debugging, user config management and console configuration.
 - **Opt-in user config manager**  
-  Save user configurations and settings with custom `.ecfg` files. The active profile run automatically at startup and seamlessly saves all user (CVar) configurations on change. Use as a single source of truth, or alongside an already integrated save system.
+  Save user configurations and settings with custom `.ecfg` files. The active profile runs automatically at startup and seamlessly saves all user (CVar) configurations on change. Use as a single source of truth, or alongside an already integrated save system.
 - **Clickable logs**  
   Links in the editor output window that takes you to the caller when clicked!
 - **Automatic engine errors**  
-  Errors coming from the C++ side of the engine are automatically routed back and displayed in the console. This makes it easy for QA testers and players to make error reports This system also catches `GD.PushError` calls.
+  Errors coming from the C++ side of the engine are automatically routed back and displayed in the console. This makes it easy for QA testers and players to make error reports. This system also catches `GD.PushError` calls.
 - **Built for release**  
   The framework is intended to ship with the released version of the game. This means editor-related code is automatically stripped at compile time, and all active systems are optimized for minimal overhead. The system also comes with a full, 100% killswitch that no-ops both the logger and engine interop bridge.  
   _When the logger is disabled, the strings in calls to `PikeLogger` **will not build** meaning log calls scattered in the code draws no processing power._
@@ -146,10 +146,11 @@ Note that all footprints are measured from the console itself within a running g
 
 ### Indie
 
-<img src="/docs/_media/showcase-mem-500.png"/>
+<img src="/docs/_media/showcase-mem-1000.png"/>
 
 This example is based on Valve's Half-Life 1, which used about 800 combined commands and console variables.  
-For small teams or people not using an excessive amount of custom tooling, 500 is a very realistic upper benchmark.
+For small teams or people not using an excessive amount of custom tooling, 1000 is a generously high benchmark for most projects.  
+It is unlikely a smaller team reaches over ~300 total runtime executables.
 
 ### AA
 
@@ -163,7 +164,7 @@ Medium sized teams with deep engine knowledge could potentially reach this kind 
 <img src="/docs/_media/showcase-mem-10000.png"/>
 
 This example is based on Valve's Counter-Strike: Global offensive, which used about 8000+ combined commands and console variables.
-It is unlikely to reach these kinds of numbers without several large dedicated teams working on custom engine extentions and toolings.
+It is unlikely to reach these kinds of numbers without several large dedicated teams working on custom engine extensions and toolings.
 The console does however hold at this level and retains its O(1) lookup capabilities.
 
 ### The numbers
@@ -190,7 +191,7 @@ The actual footprint is often less than the estimation, as seen in the memory sn
 
 <p align="center">
 	<img src="/docs/_media/showcase-project-settings.png"/> <br/>
-	<i>(Typos has been fixed since the capture of this screenshot)</i>
+	<i>(Typos have been fixed since the capture of this screenshot)</i>
 </p>
 
 ## ⚠️ Privacy notice!
@@ -219,12 +220,6 @@ Go into `Project settings (General)` > `FractalPike` > `PikeConsole` and set `Pa
 
 Failing to do this will not break your project, but your log paths will **no longer be clickable**.
 
-## 🗣️ Credits and support
-
-**PikeConsole does not require you to give credits!**  
-You are free to use the framework however you'd like and never even mention it!  
-If you would like to support the project though, I'd love for you to leave a ⭐ if you found it useful!
-
 ## ⚖️ License & Copyright
 
 This project is released under the MIT open source license.  
@@ -239,3 +234,14 @@ All rights reserved.
 **_Please note:_**  
 _This disclaimer is just here to protect my company branding and mascot._  
 _If you use my logo just to give credit, and do not say or imply that we are affiliated: I truly, utterly, do not mind ❤️._
+
+## 🗣️ Credits and support ❤️
+
+**PikeConsole does not require you to give credits!**  
+You are free to use the framework however you'd like and never even mention it.  
+If you would like to support me and the project though, a GitHub ⭐ goes a long way in terms of discoverability!
+
+If you'd like to go the extra mile you can fuel my addiction and...
+<a href="https://ko-fi.com/vonriddarn" target="_blank" rel="noopener noreferrer">
+<img height="48" src="/docs/_media/kofi-button.png" alt="Buy me a bag of Djungelvrål @ Ko-fi" />
+</a>
