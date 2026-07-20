@@ -166,6 +166,12 @@ This example is based on Valve's Counter-Strike: Global offensive, which used ab
 It is unlikely to reach these kinds of numbers without several large dedicated teams working on custom engine extentions and toolings.
 The console does however hold at this level and retains its O(1) lookup capabilities.
 
+### The numbers
+
+Those with a keen eye might've noticed that the estimated memory usage is above what is actually allocated.  
+This is because the estimation is conservative and designed to overshoot rather than over-promise.  
+The actual footprint is often less than the estimation, as seen in the memory snapshots.
+
 ## 🖼️ Screenshots
 
 **Custom aliases with automatic recursion protection!**
