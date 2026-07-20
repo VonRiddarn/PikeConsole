@@ -195,7 +195,7 @@ The actual footprint is often less than the estimation, as seen in the memory sn
 
 ## ⚠️ Privacy notice!
 
-_For a video tutorial on how to edit the path map, check out the official **[▶️ YOUTUBE PLAYLIST](#)**_.
+_For a video tutorial on how to edit the path map, check out the official ~~**[▶️ THIS VIDEO](#)**~~_.
 
 This Logger uses compile-time directory baking to display certain paths in logs.  
 This results in super fast, interned strings - but it bakes your folder structure into the game!  
