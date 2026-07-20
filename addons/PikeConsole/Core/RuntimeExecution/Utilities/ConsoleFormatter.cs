@@ -2,6 +2,12 @@ using System.Runtime.CompilerServices;
 
 namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
+/*
+ * Note: This formatter is not necessarily agnoistic.
+ * It uses BBCode to ensure correcct indentation in the runtime console.
+ * To make the formatter agnostic, just remove all BBCode tags in the FormatHelp method.
+*/
+
 public static class ConsoleFormatter
 {
 	// Not super strict or anything, but this just trims the signature and turns spaces into underscores.
@@ -16,8 +22,8 @@ public static class ConsoleFormatter
 		var longDesc = string.IsNullOrWhiteSpace(rte.LongDesc) ? "No long description available." : rte.LongDesc;
 
 		if (rte is ICVar cvar)
-			return $"Signature: {cvar.Signature}\n\tType: {cvar.DisplayType.ToUpper()}\n\tIs cheat: {cvar.IsCheat}\n\tValue: \"{cvar.CurrentValueDisplay}\"\n\tDefault: \"{cvar.DefaultValueDisplay}\"\n\tBrief: {shortDesc}\n\tUsage:\n\t\t{string.Join("\n\t\t", usg)}\n\tDescription: {longDesc}";
+			return $"Signature: {cvar.Signature}\n[indent]Type: {cvar.DisplayType.ToUpper()}[/indent]\n[indent]Is cheat: {cvar.IsCheat}[/indent]\n[indent]Value: \"{cvar.CurrentValueDisplay}\"[/indent]\n[indent]Default: \"{cvar.DefaultValueDisplay}\"[/indent]\n[indent]Brief: {shortDesc}[/indent]\n[indent]Usage:\n[indent]{string.Join("\n", usg)}[/indent][/indent]\n[indent]Description: {longDesc}[/indent]";
 		else
-			return $"Signature: {rte.Signature}\n\tType: {rte.DisplayType.ToUpper()}\n\tIs cheat: {rte.IsCheat}\n\tBrief: {shortDesc}\n\tUsage:\n\t\t{string.Join("\n\t\t", usg)}\n\tDescription: {longDesc}";
+			return $"Signature: {rte.Signature}\n[indent]Type: {rte.DisplayType.ToUpper()}[/indent]\n[indent]Is cheat: {rte.IsCheat}[/indent]\n[indent]Brief: {shortDesc}[/indent]\n[indent]Usage:\n[indent]{string.Join("\n", usg)}[/indent][/indent]\n[indent]Description: {longDesc}[/indent]";
 	}
 }

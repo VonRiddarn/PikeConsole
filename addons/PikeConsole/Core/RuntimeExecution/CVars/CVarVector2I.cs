@@ -95,5 +95,5 @@ public partial class CVarVector2I : CVarBase<Vector2I>
 
 	public override string[] Usages => [$"{Signature} [x] [y]"];
 
-	protected override string DescriptionInternal => "\tVariables:\n\t\tx, y";
+	protected override string DescriptionInternal => "Variables:\n\tx, y";
 }
