@@ -59,16 +59,33 @@ There is also a quite extensive **[📑 DOCUMENTATION](#)** where you can find a
 	<img src="/docs/_media/showcase-animation.gif"/>
 </p>
 
-## 📊 Diagnostic tests
+## 📊 Memory footprint
 
-Coming soon!  
-Diagnostics will be made in a realistic TRUE STRESSTEST environment with all systems enabled.
+The memory footprint has been tested for 3 distinct levels of use.  
+These are given the arbitrary names "indie", "AA" and "AAA" based on real life examples.
+Note that all footprints are measured from the console itself within a running game instance, which automatically also measures the UI overhead.
 
-Levels:
+### Indie
 
-- Indie: 500 cvars, 500 commands (1000 total) REF: Half Life (~800 total)
-- AA: 2500 cvars, 2500 commands (5000 total) REF: Half Life 2 (~2500 total)
-- AAA: 5000 cvars, 5000 commands (10000 total) REF: CSGO (~8000 total)
+<img src="/docs/_media/showcase-mem-500.png"/>
+
+This example is based on Valve's Half-Life 1, whcih used about 800 combined commands and console variables.  
+For small teams or people not using an excessive amount of custom tooling, 500 is a very realistic upper benchmark.
+
+### AA
+
+<img src="/docs/_media/showcase-mem-5000.png"/>
+
+This example is based on Valve's Half-Life 2, whcih used about 3000 combined commands and console variables.  
+Medium sized teams with deep engine knowledge could potentially reach this kind of usage, and as the numbers suggest the framework is ready for it.
+
+### AAA
+
+<img src="/docs/_media/showcase-mem-10000.png"/>
+
+This example is based on Valve's Counter-Strike: Global offensive, whcih used about 8000+ combined commands and console variables.
+It is unlikely to reach these kinds of numbers without several large dedicated teams working on custom engine extentions and toolings.
+The console does however hold at this level and retains its O(1) lookup capabilities.
 
 ## 🖼️ Screenshots
 
