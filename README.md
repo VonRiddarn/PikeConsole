@@ -20,7 +20,7 @@ For visual learners there is an official **[▶️ YOUTUBE PLAYLIST](#)** that g
 There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from gudes and breakdowns, to a public API reference.
 
 NOTE:  
-The documentation and quick start guide is underway. To peek at the content, check out the `docs` folder in this repository, but be adviced that it is not fully realised.  
+The documentation and quick start guide is underway. To peek at the content, check out the `docs` folder in this repository, but be advised that it is not fully realised.  
 If you just want to get started with PikeConsole right now, check out the YouTube playlist!
 
 ## 🔥 Features
@@ -63,6 +63,81 @@ If you just want to get started with PikeConsole right now, check out the YouTub
 	<img src="/docs/_media/showcase-animation.gif"/>
 </p>
 
+## 😎 It REALLY is this easy...
+
+**Want to create a set of commands? Gotchu.**
+
+```csharp
+public partial class DiagnosticCommandSet : CommandSet
+{
+	protected override Command[] InstantiateCommands() => [
+		Command(
+			"echo",
+			isCheat: false,
+			static (args) => {
+				PikeLogger.Log(LogTarget.Runtime, $"{string.Join(' ', args)}", forceLog: true);
+				return new(ExecutionResponseStatus.Success, null);
+			}
+		),
+		// Add as many as you want..
+	];
+}
+
+```
+
+**You want to log stuff in debug builds without losing performance to string interpolation in release? Sure!**
+
+```csharp
+PikeLogger.Log(LogTarget.Debug, $"This won't even process in release!");
+PikeLogger.Log(LogTarget.Editor, $"This won't show up in the runtime console, and wont process in release!");
+PikeLogger.Log(LogTarget.Debug, $"It's literally free in a release builds. I can even call {SuperHeavyProcessing()} and not care!");
+```
+
+_Note that you **must** use string interpolation with PikeLogger even if you're not interpolating variables._  
+_This is because we are using a custom string interpolation handler. More on that can be found ~~**[📑 HERE](#)**~~._
+
+**You want to have globally accessible, decoupled variables? Say less.**
+
+_Create a CVar through the editor by right clicking, creating a resource and then consume it:_
+
+```csharp
+[Export] CVarVector2 Gravity;
+
+public override void _EnterTree() =>
+	Gravity.ValueChanged += OnGravityChanged;
+
+public override void _ExitTree() =>
+	Gravity.ValueChanged -= OnGravityChanged;
+
+void OnGravityChanged(Vector2 newValue) =>
+	ProjectSettings.SetSetting("physics/2d/default_gravity_vector", newValue);
+```
+
+**You can even share an execution method for more than one variable!**
+
+```csharp
+
+[Export] CVarInt CrosshairLengthCVar;
+[Export] CVarInt CrosshairThicknessCVar;
+[Export] CVarColor CrosshairColorCVar;
+
+public override void _EnterTree()
+{
+	CrosshairLengthCVar.ValueInvalidated += OnCrosshairChanged;
+	CrosshairThicknessCVar.ValueInvalidated += OnCrosshairChanged;
+	CrosshairColorCVar.ValueInvalidated += OnCrosshairChanged;
+}
+
+void OnCrosshairChanged()
+{
+	CrosshairManager.ReRender(
+		CrosshairLengthCVar.Value,
+		CrosshairThicknessCVar.Value,
+		CrosshairColorCVar.Value
+	);
+}
+```
+
 ## 📊 Memory footprint
 
 The memory footprint has been tested for 3 distinct levels of use.  
@@ -73,21 +148,21 @@ Note that all footprints are measured from the console itself within a running g
 
 <img src="/docs/_media/showcase-mem-500.png"/>
 
-This example is based on Valve's Half-Life 1, whcih used about 800 combined commands and console variables.  
+This example is based on Valve's Half-Life 1, which used about 800 combined commands and console variables.  
 For small teams or people not using an excessive amount of custom tooling, 500 is a very realistic upper benchmark.
 
 ### AA
 
 <img src="/docs/_media/showcase-mem-5000.png"/>
 
-This example is based on Valve's Half-Life 2, whcih used about 3000 combined commands and console variables.  
+This example is based on Valve's Half-Life 2, which used about 3000 combined commands and console variables.  
 Medium sized teams with deep engine knowledge could potentially reach this kind of usage, and as the numbers suggest the framework is ready for it.
 
 ### AAA
 
 <img src="/docs/_media/showcase-mem-10000.png"/>
 
-This example is based on Valve's Counter-Strike: Global offensive, whcih used about 8000+ combined commands and console variables.
+This example is based on Valve's Counter-Strike: Global offensive, which used about 8000+ combined commands and console variables.
 It is unlikely to reach these kinds of numbers without several large dedicated teams working on custom engine extentions and toolings.
 The console does however hold at this level and retains its O(1) lookup capabilities.
 
