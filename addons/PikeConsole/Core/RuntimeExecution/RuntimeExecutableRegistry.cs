@@ -90,7 +90,7 @@ public static class RuntimeExecutableRegistry
 	/// Used internally by the CommandSet class.
 	/// </summary>
 	/// <returns>An array of <c>Response&lt; RegisterExecutableResponseStatus &gt;[]</c></returns>
-	public static Response<RegisterExecutableResponseStatus>[] Register(IRuntimeExecutable[] executables)
+	public static Response<RegisterExecutableResponseStatus>[] Register(ReadOnlySpan<IRuntimeExecutable> executables)
 	{
 		var responses = new Response<RegisterExecutableResponseStatus>[executables.Length];
 
