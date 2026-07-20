@@ -101,13 +101,13 @@ _This is because we are using a custom string interpolation handler. More on tha
 _Create a CVar through the editor by right clicking, creating a resource and then consume it:_
 
 ```csharp
-[Export] CVarVector2 Gravity;
+[Export] CVarVector2 GravityCVar;
 
 public override void _EnterTree() =>
-	Gravity.ValueChanged += OnGravityChanged;
+	GravityCVar.ValueChanged += OnGravityChanged;
 
 public override void _ExitTree() =>
-	Gravity.ValueChanged -= OnGravityChanged;
+	GravityCVar.ValueChanged -= OnGravityChanged;
 
 void OnGravityChanged(Vector2 newValue) =>
 	ProjectSettings.SetSetting("physics/2d/default_gravity_vector", newValue);
