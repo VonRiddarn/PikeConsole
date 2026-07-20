@@ -242,6 +242,7 @@ You are free to use the framework however you'd like and never even mention it.
 If you would like to support me and the project though, a GitHub ⭐ goes a long way in terms of discoverability!
 
 If you'd like to go the extra mile you can fuel my addiction and...
+
 <a href="https://ko-fi.com/vonriddarn" target="_blank" rel="noopener noreferrer">
 <img height="48" src="/docs/_media/kofi-button.png" alt="Buy me a bag of Djungelvrål @ Ko-fi" />
 </a>
