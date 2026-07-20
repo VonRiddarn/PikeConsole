@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using FractalPike.PikeConsole.Config;
+using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
@@ -73,7 +75,13 @@ public static class RuntimeExecutableRegistry
 		}
 
 		_executables[signature] = executable;
-		return new(RegisterExecutableResponseStatus.Success, $"Registered command: \"{signature}\"");
+
+		// Just so we don't waste the memory when the logging is turned off.
+		// I was going to remove it, but it can be very useful to see when things register in certain cases.
+		if (IsDebugEnvironment && (PikeConsoleSettings.LogCvarOnRegister && type == "cvar" || PikeConsoleSettings.LogCommandOnRegister && type == "command"))
+			return new(RegisterExecutableResponseStatus.Success, $"Registered {type}: \"{signature}\"");
+
+		return new(RegisterExecutableResponseStatus.Success);
 	}
 
 

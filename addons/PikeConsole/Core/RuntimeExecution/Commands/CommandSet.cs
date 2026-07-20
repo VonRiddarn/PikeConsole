@@ -281,11 +281,7 @@ public abstract partial class CommandSet : Node
 			switch (response.Status)
 			{
 				case RegisterExecutableResponseStatus.Success:
-#if TOOLS
-					// Stripped in compiled build so we don't even have to make the conditional check.
-					if (PikeConsoleSettings.LogCommandOnRegister)
-						PikeLogger.Log(LogTarget.Debug, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
-#endif
+					PikeLogger.Log(LogTarget.Debug, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);
 					break;
 				case RegisterExecutableResponseStatus.ReplacedAlias:
 					PikeLogger.LogWarning(LogTarget.All, $"{response.Message}", forceLog: true, filePath: DerivedScriptPath, lineNumber: -1);

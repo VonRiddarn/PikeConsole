@@ -135,11 +135,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		switch (response.Status)
 		{
 			case RegisterExecutableResponseStatus.Success:
-#if TOOLS
-				// Stripped in compiled build so we don't even have to make the conditional check.
-				if (PikeConsoleSettings.LogCvarOnRegister)
-					PikeLogger.Log(LogTarget.Editor, $"{Signature} added to CVar registry!");
-#endif
+				PikeLogger.Log(LogTarget.Debug, $"{response.Message}");
 				break;
 			case RegisterExecutableResponseStatus.AlreadyExists:
 				PikeLogger.LogError(LogTarget.All, $"CVar {Signature} couldn't register as a command or CVar of this name already exists!", forceLog: true);
