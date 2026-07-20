@@ -52,7 +52,6 @@ public static class PikeLogger
 
 	static bool? _isDebugEnvironment = null;
 
-	// TODO: Centralize environment / system information later. Can also be used with the commands
 	/// <summary>
 	/// Debug environment flag cached after first call. 
 	/// Uses lazy initialization so that we only cross the interop bridge once per lifetime.

@@ -16,8 +16,6 @@ public partial class InputController : LineEdit
 
 	[ExportGroup("Settings")]
 	[Export] string _feedbackPrefix = "] ";
-	[Export] int _maxSuggestions = 5; // TODO: Make this a cvar later? 
-	[Export] int _suggestionsDebounceMs = 200;
 
 
 	// Suggestion box related
@@ -27,7 +25,7 @@ public partial class InputController : LineEdit
 	string _currentSearchTerm = string.Empty;
 
 	// Command history cache
-	List<string> _commandHistory = [];
+	readonly List<string> _commandHistory = [];
 	int _historyIndex = 0;
 	bool _isBrowsingHistory = false;
 	bool _isApplyingHistory = false;
@@ -164,7 +162,7 @@ public partial class InputController : LineEdit
 
 		try
 		{
-			await Task.Delay(_suggestionsDebounceMs, tempToken);
+			await Task.Delay(PikeConsoleStates.ConsoleSuggestionsDebounceMs.Value, tempToken);
 			HandleInputChanged(newText);
 		}
 		catch (Exception) { }
@@ -201,7 +199,7 @@ public partial class InputController : LineEdit
 			return;
 		}
 
-		int count = Mathf.Min(matches.Length, _maxSuggestions);
+		int count = Mathf.Min(matches.Length, PikeConsoleStates.ConsoleMaxSuggestions.Value);
 		for (int i = 0; i < count; i++)
 		{
 			_suggestionBox.AddItem(matches[i].ToLower());

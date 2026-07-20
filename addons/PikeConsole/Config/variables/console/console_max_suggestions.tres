@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://dhhchruaw30ot"]
+
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_hjj0s"]
+
+[resource]
+script = ExtResource("1_hjj0s")
+_defaultValue = 5
+_value = 5
+_useClampMin = true
+Persist = true
+Description = "Dictates how many suggestions may show up in the console when typing. Note that higher values may impact performance during console use."
+metadata/_custom_type_script = "uid://bblxtwt8mavck"

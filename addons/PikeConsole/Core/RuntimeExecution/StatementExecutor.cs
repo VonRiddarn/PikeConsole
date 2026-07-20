@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 using FractalPike.PikeConsole.Core.Utilities;
@@ -9,11 +10,6 @@ namespace FractalPike.PikeConsole.Core.RuntimeExecution;
 
 public static class StatementExecutor
 {
-	// New feature: Capped recursion depth prevents infinite loops even without exact signature matches
-	// <= 0 is infinite
-	// TODO: Turn this into a CVAr later! Could be cool! console_max_alias_execution_depth
-	const int MAX_ALIAS_DEPTH = 128;
-
 	/// <summary>
 	/// Try to execute a command or alias matching the signature with the passed arguments.
 	/// </summary>
@@ -61,9 +57,11 @@ public static class StatementExecutor
 	{
 		if (callStack != null)
 		{
-			if (MAX_ALIAS_DEPTH > 0 && callStack.Count >= MAX_ALIAS_DEPTH)
+			int maxDepth = PikeConsoleStates.ConsoleMaxAliasDepth.Value;
+
+			if (maxDepth > 0 && callStack.Count >= maxDepth)
 			{
-				PikeLogger.LogError(LogTarget.All, $"Alias max recursion depth reached ({MAX_ALIAS_DEPTH}). Aborting...", forceLog: true, includePath: false);
+				PikeLogger.LogError(LogTarget.All, $"Alias max stack depth reached ({maxDepth}). Aborting...", forceLog: true, includePath: false);
 				return;
 			}
 

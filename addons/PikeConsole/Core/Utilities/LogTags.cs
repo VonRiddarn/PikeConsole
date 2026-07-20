@@ -13,7 +13,4 @@ public static class LogTags
 
 	public const string NotFound = "pikeconsole_not_found";
 	public const string Conflict = "pikeconsole_conflict";
-
-	// TODO: Implement this - requires going through all exceptions in RTE.
-	//public const string Exception = "pikeconsole_exception";
 }

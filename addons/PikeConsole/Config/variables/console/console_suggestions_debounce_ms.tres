@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://cwxqkkql6v50o"]
+
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_ehqdn"]
+
+[resource]
+script = ExtResource("1_ehqdn")
+_defaultValue = 200
+_value = 200
+_useClampMin = true
+Persist = true
+Description = "The amount of time after each key input (in milliseconds) that the console waits before searching the registry for suggestions. A lower value may make the search feel more responsive, but can implact performance when typing."
+metadata/_custom_type_script = "uid://bblxtwt8mavck"

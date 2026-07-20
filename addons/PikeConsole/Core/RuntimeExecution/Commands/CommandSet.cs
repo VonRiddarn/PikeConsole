@@ -255,8 +255,6 @@ public abstract partial class CommandSet : Node
 	// This class is self-diagnostic by design. This ensures we fail fast and catch collisions early.
 	void InitializeCommandsInternal()
 	{
-		// TODO: Add scriptpath lazy init from godot and use it to say the CommandSet childs name before the response.
-		// This wil get around the filepath leading to the root CommandSet...
 		try
 		{
 			_commands = ImmutableArray.Create(InstantiateCommands() ?? []);

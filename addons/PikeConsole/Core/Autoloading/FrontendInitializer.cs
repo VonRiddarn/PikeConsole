@@ -65,7 +65,6 @@ public partial class FrontendInitializer : Node
 
 		// Disable dogfed CVars
 		PikeConsoleStates.RuntimeConsoleEnabled.SetRAM(false);
-		// TODO: When there is an interop logger CVAr, diasable it here.
 
 		// Log warning last so that it doesn't get burried by potential feedbacks
 		PikeLogger.LogWarning(LogTarget.Editor, $"{warningMessage} -- PikeConsole is running headless.", forceLog: true);

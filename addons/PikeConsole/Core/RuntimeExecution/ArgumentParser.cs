@@ -523,8 +523,6 @@ public static class ArgumentParser
 	public static bool TryParseManyEnum(ReadOnlySpan<string> args, string[] options, out int[] values, out string error) =>
 		TryParseManyInternal((string s, out int idx) => TryParseEnum(s.AsSpan(), options, out idx, out _), args, out values, out error);
 
-	// TODO: Add Godot related stuff like the Color, Vector2 and Vector3 here later...
-
 	// ----- ----- WRAPPERS ABOVE THIS LINE! ----- -----
 
 	/// <summary>

@@ -122,9 +122,6 @@ public static class RuntimeExecutableRegistry
 			Unregister(executable);
 	}
 
-	// TODO: TEST RUNTIME EXECUTABLE SEARCH : REMOVE THIS TODO WHEN TESTED!!!!
-
-
 	// Note: 
 	// The search methods are still kind of a mess since the Unity framework.
 	// It uses quite heavy allocation and O(N log N) lookup for commands + cvars.

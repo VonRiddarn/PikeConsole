@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://dyic6dyslqqkn"]
+
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_me621"]
+
+[resource]
+script = ExtResource("1_me621")
+_defaultValue = 128
+_value = 128
+Persist = true
+Description = "Controls how deep the alias callstack can go before aborting to save memory. This value has no effect on the  alias recursion protection. "
+metadata/_custom_type_script = "uid://bblxtwt8mavck"

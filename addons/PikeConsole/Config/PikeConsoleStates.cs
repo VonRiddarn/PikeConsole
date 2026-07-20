@@ -119,6 +119,57 @@ public static class PikeConsoleStates
 		}
 	}
 
+	static CVarInt? _consoleMaxAliasDepth;
+	/// <summary>
+	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
+	/// </summary>
+	public static CVarInt ConsoleMaxAliasDepth
+	{
+		get
+		{
+			if (_consoleMaxAliasDepth == null)
+			{
+				_consoleMaxAliasDepth = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_max_alias_depth");
+				_consoleMaxAliasDepth.Initialize();
+			}
+			return _consoleMaxAliasDepth;
+		}
+	}
+
+	static CVarInt? _consoleMaxSuggestions;
+	/// <summary>
+	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
+	/// </summary>
+	public static CVarInt ConsoleMaxSuggestions
+	{
+		get
+		{
+			if (_consoleMaxSuggestions == null)
+			{
+				_consoleMaxSuggestions = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_max_suggestions");
+				_consoleMaxSuggestions.Initialize();
+			}
+			return _consoleMaxSuggestions;
+		}
+	}
+
+	static CVarInt? _consoleSuggestionsDebounceMs;
+	/// <summary>
+	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
+	/// </summary>
+	public static CVarInt ConsoleSuggestionsDebounceMs
+	{
+		get
+		{
+			if (_consoleSuggestionsDebounceMs == null)
+			{
+				_consoleSuggestionsDebounceMs = CvarLoader.LoadInternalCVar<CVarInt>($"{INTERNAL_CVARS_PATH}/console", "console_suggestions_debounce_ms");
+				_consoleSuggestionsDebounceMs.Initialize();
+			}
+			return _consoleSuggestionsDebounceMs;
+		}
+	}
+
 	static CVarBool? _runtimeConsoleEnabled;
 	/// <summary>
 	/// Lazy initialized CVar. If it is not initialized at the point of contact, it initializes and caches the reference.
@@ -165,5 +216,8 @@ public static class PikeConsoleStates
 		_ = RuntimeConsoleEnabled;
 		_ = ConsoleUpdateRate;
 		_ = ConsoleHistorySize;
+		_ = ConsoleMaxAliasDepth;
+		_ = ConsoleMaxSuggestions;
+		_ = ConsoleSuggestionsDebounceMs;
 	}
 }
