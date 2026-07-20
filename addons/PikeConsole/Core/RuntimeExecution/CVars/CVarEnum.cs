@@ -84,4 +84,19 @@ public partial class CVarEnum : CVarBase<int>
 
 	public override string DisplayValue(int value) => $"{value} ({_options[value]})";
 
+	// ----- ----- ----- -----
+	//			API
+	// ----- ----- ----- -----
+	/// <summary>
+	/// Checks if the value's raw string is equal to the inputted string. Case-insensitive.
+	/// </summary>
+	public bool Is(string valueName) =>
+		ValueName.Equals(valueName, StringComparison.OrdinalIgnoreCase);
+
+	/// <summary>
+	/// The value name in its raw string format.
+	/// </summary>
+	public string ValueName =>
+		_options is not null and not [] && _value >= 0 && _value < _options.Length ? _options[_value] : string.Empty;
+
 }
