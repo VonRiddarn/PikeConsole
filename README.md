@@ -24,8 +24,8 @@ There is also a quite extensive **[📑 DOCUMENTATION](#)** where you can find a
 - **Drag and drop installation**  
   Install the framework by just dragging and dropping the addon folder into your project.  
   All project settings and features will connect automatically. (Some features requires you to build the project once)
-- **Stupid easy**  
-  The default UI that ships with PikeConsole comes with QOL features such as: Automatic command / alias suggestions, an alias system, diagnostic commands, runtime-documentation using the `help` command. All packed into a sleek, modern UI.
+- **Stupid easy (plug-and-play)**  
+  The default UI that ships with PikeConsole comes with QOL features such as: Automatic command / alias suggestions, an alias system, diagnostic commands, runtime-documentation using the `help` command. All packed into a sleek, modern UI. You can just drag it in, play with the theme and just get going.
 - **Zero-alloc routed logging**  
   The `PikeLogger` utility shipped with PikeConsole is a direct replacement for `GD.Print`.  
   It uses a interpolation manager to make logs truly no-op on non-targeted environments,
