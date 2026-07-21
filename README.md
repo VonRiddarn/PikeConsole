@@ -33,7 +33,9 @@ If you just want to get started with PikeConsole right now, check out the YouTub
 - **Zero-alloc routed logging**  
   The `PikeLogger` utility shipped with PikeConsole is a direct replacement for `GD.Print`.  
   It uses an interpolation manager to make logs truly no-op on non-targeted environments,
-  which means you can just leave debug logs in without tanking performance in release!
+  which means you can just leave debug logs in without tanking performance in release!  
+  ![Image showing PikeConsole as 96,88% (32x) faster than the godot interop](/docs/_media/showcase-log-performance.png)
+
 - **AOT-safe compilation**  
   Everything in the system is built to be ahead-of-time compatible, which is a MUST if you're porting to console / mobile.
 - **Thread safety out of the box**  
