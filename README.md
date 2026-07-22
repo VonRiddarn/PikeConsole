@@ -15,7 +15,7 @@ The framework is built with **runtime optimization**, **extensibility** and **ea
 ## 🐇💨 Getting started
 
 If you want to start by toying around you can check out the ~~**[⏳ QUICK START GUIDE](#)**~~ which will have you running your first command in just **3 minutes**!
-For visual learners there is an official **[▶️ YOUTUBE PLAYLIST](https://www.youtube.com/playlist?list=PLKutB_NI_SMo)** that goes through the consoles concepts in a video format.
+For visual learners there is an official **[▶️ YOUTUBE PLAYLIST](https://www.youtube.com/playlist?list=PLKutB_NI_SMo)** that goes through the consoles concepts in a video format. Note that the videos are made to be a mix of guides and explanations. They are not short-form content.
 
 There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from guides and breakdowns, to a public API reference.
 
