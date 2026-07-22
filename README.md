@@ -148,26 +148,22 @@ Note that all footprints are measured from the console itself within a running g
 
 ### Indie
 
-<img src="/docs/_media/showcase-mem-1000.png"/>
-
 This example is based on Valve's Half-Life 1, which used about 800 combined commands and console variables.  
 For small teams or people not using an excessive amount of custom tooling, 1000 is a generously high benchmark for most projects.  
 It is unlikely a smaller team reaches over ~300 total runtime executables.
 
 ### AA
 
-<img src="/docs/_media/showcase-mem-5000.png"/>
-
 This example is based on Valve's Half-Life 2, which used about 3000 combined commands and console variables.  
 Medium sized teams with deep engine knowledge could potentially reach this kind of usage, and as the numbers suggest the framework is ready for it.
 
 ### AAA
 
-<img src="/docs/_media/showcase-mem-10000.png"/>
-
 This example is based on Valve's Counter-Strike: Global offensive, which used about 8000+ combined commands and console variables.
 It is unlikely to reach these kinds of numbers without several large dedicated teams working on custom engine extensions and toolings.
 The console does however hold at this level and retains its O(1) lookup capabilities.
+
+<img src="/docs/_media/showcase-mem-side-by-side.png"/>
 
 ### The numbers
 
