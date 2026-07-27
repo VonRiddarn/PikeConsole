@@ -15,7 +15,6 @@ The framework is built with **runtime optimization**, **extensibility** and **ea
 ## 🐇💨 Getting started
 
 If you want to start by toying around you can check out the ~~**[⏳ QUICK START GUIDE](#)**~~ which will have you running your first command in just **3 minutes**!
-For visual learners there is an official **[▶️ YOUTUBE PLAYLIST](https://www.youtube.com/playlist?list=PLKutB_NI_SMo)** that goes through the consoles concepts in a video format. Note that the videos are made to be a mix of guides and explanations. They are not short-form content.
 
 There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from guides and breakdowns, to a public API reference.
 
@@ -194,7 +193,7 @@ The actual footprint is often less than the estimation, as seen in the memory sn
 
 ## ⚠️ Privacy notice!
 
-_For a video tutorial on how to edit the path map, check out **[▶️ THIS VIDEO](https://www.youtube.com/watch?v=UJfMTs4YC8Q&list=PLKutB_NI_SMo&index=3)**_.
+_For a more thorough tutorial on how to edit the path map, check out **[📑 THIS GUIDE](#)**_.
 
 This Logger uses compile-time directory baking to display certain paths in logs.  
 This results in super fast, interned strings - but it bakes your folder structure into the game!  
