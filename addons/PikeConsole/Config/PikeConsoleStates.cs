@@ -41,6 +41,15 @@ public static class PikeConsoleStates
 		}
 	}
 
+	static bool? _isDebugEnvironment = null;
+
+	/// <summary>
+	/// Debug environment flag cached after first call. 
+	/// Uses lazy initialization so that we only cross the interop bridge once per lifetime.
+	/// </summary>
+	/// <returns>True for debug environments, false for strictly runtime environments.</returns>
+	public static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
+
 	// ----- ----- ----- ----- -----
 	// 			 CVars
 	// ----- ----- ----- ----- -----

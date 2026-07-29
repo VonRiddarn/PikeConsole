@@ -1,5 +1,13 @@
 https://facelessuser.github.io/pymdown-extensions/extensions/blocks/plugins/admonition/
 
+
+Adding linenumbers to code blocks:
+
+```csharp {linenums="1"}
+// Numbered
+// Lines
+```
+
 As a shortcut, Admonitions registers a number of admonition blocks that attach common classes: 
 note, 
 attention, 

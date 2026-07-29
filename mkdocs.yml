@@ -52,6 +52,8 @@ nav:
                 - StatementParser: api/RuntimeExecution/StatementParser.md
                 - ParsedStatement: api/RuntimeExecution/ParsedStatement.md
                 - ArgumentParser: api/RuntimeExecution/ArgumentParser.md
+                - IRuntimeExecutable: api/RuntimeExecution/IRuntimeExecutable.md
+                - ICVar: api/RuntimeExecution/ICVar.md
                 - Response<T>: api/RuntimeExecution/Response_T.md
                 - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
                 - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
@@ -66,4 +68,9 @@ nav:
                 - CVarFloat: api/CVars/CVarFloat.md
                 - CVarInt: api/CVars/CVarInt.md
                 - CVarString: api/CVars/CVarString.md
+                - CVarColor: api/CVars/CVarColor.md
+                - CVarVector2: api/CVars/CVarVector2.md
+                - CVarVector2I: api/CVars/CVarVector2I.md
+                - CVarVector3: api/CVars/CVarVector3.md
+                - CVarVector3I: api/CVars/CVarVector3I.md
                 - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md

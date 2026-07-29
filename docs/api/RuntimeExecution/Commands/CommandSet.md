@@ -1,7 +1,7 @@
 # CommandSet
 `public abstract partial class CommandSet : Node`  
 
-**Inherits**: [Node (External link)](https://docs.godotengine.org/en/stable/classes/class_node.html#class-node)  
+**Inherits**: [`Node`](https://docs.godotengine.org/en/stable/classes/class_node.html#class-node)⿻  
 **Namespace**: `FractalPike.PikeConsole.Core.RuntimeExecution.Commands`  
 
 ## Description
@@ -10,7 +10,9 @@ Base class that automatically syncs the lifespan of registered commands to its o
 Internalizes all advanced setup and exposes a lightweight API that can be used by the end-developer.
 
 ## Properties  
-No public properties to showcase for this class.
+| Scope | Type | Name |
+|-------|--------|------|
+| `protected virtual` | `string` | [Prefix](#prefix) |
 
 ## Methods
 ### Protected
@@ -18,11 +20,37 @@ No public properties to showcase for this class.
 |-------|--------|------|
 | `protected` | `Command[]` | [InstantiateCommands](#initializecommands) |
 | `protected` | `Command[]` | [Command](#command) |
+| `protected` | `string` | [Signature](#signature) |
 | `protected` | `void` | [OnEnterTree](#onentertree) |
 | `protected` | `void` | [OnReady](#onready) |
 | `protected` | `void` | [OnExitTree](#onexittree) |
 | `protected` | `void` | [OnCheatModeChanged](#oncheatmodechanged) |
 
+
+## Property Descriptions  
+
+### Prefix
+**Signature**: `protected virtual string Prefix`
+
+**Description**:  
+Optional internal prefix shorthand. Used automatically by the [Signature](#signature) method to quickly apply a command-set wide prefix.
+
+**Example(s)**:  
+
+_Excerpt from `AliasCommandSet.cs`._
+```csharp
+protected override string Prefix => "alias";
+// . . .
+Command(
+	Signature("list"),
+	// . . .
+```
+
+```
+Results in: alias_list
+```
+
+---
 
 ## Method Descriptions  
 
@@ -33,7 +61,7 @@ No public properties to showcase for this class.
 Executes at the start of `_EnterTree` to hydrate the internal command list.
 
 **Example(s)**:
-```csharp {linenums="1"}
+```csharp
 protected override Command[] InstantiateCommands() => [
 	Command( /* Command stuff */),
 	Command( /* Command stuff */),
@@ -98,7 +126,7 @@ protected override Command[] InstantiateCommands() => [
 	///
 
 	**Example(s)**:
-	```csharp {linenums="1"}
+	```csharp
 	protected override Command[] InstantiateCommands() => [
 		Command(
 			"my_echo",
@@ -153,7 +181,7 @@ protected override Command[] InstantiateCommands() => [
 	///
 
 	**Example(s)**:
-	```csharp {linenums="1"}
+	```csharp
 	protected override Command[] InstantiateCommands() => [
 		Command(
 			"my_echo",
@@ -164,6 +192,55 @@ protected override Command[] InstantiateCommands() => [
 	];
 	```
 ---
+
+### Signature
+**Signature**: `protected string Signature(string signature)`
+
+**Description**:  
+Automatically applies the prefix to the signature, unless it already exists.  
+The method's full implementation reads as:  
+```csharp
+protected string Signature(string signature) 
+	=> (string.IsNullOrWhiteSpace(Prefix) || signature.StartsWith($"{Prefix}_")) ? signature : $"{Prefix}_{signature}";
+```
+
+/// details | Parameter details (Click to expand)  
+	`string` : `signature`
+	: The desired signature path after the prefix.
+///
+
+**Example(s)**:
+
+_Excerpt from `EnvironmentCommandSet.cs`._
+```csharp
+protected override string Prefix => "env";
+// . . . 
+protected override Command[] InstantiateCommands() => [
+	Command(
+		Signature("info"),
+		// . . .
+	),
+	Command(
+		Signature("mem"),
+		// . . .
+	),
+	Command(
+		Signature("gc"),
+		// . . .
+	),
+	Command(
+		Signature("time"),
+		// . . .
+	)
+];
+```
+```
+Results in the signatures:
+env_info
+env_mem
+env_gc
+env_time
+```
 
 ### OnEnterTree
 **Signature**: `protected virtual void OnEnterTree()`
@@ -180,7 +257,7 @@ They are however, not registered to the global RuntimeExecution registry.
 ///
 
 **Example(s)**:
-```csharp {linenums="1"}
+```csharp
 protected override void OnEnterTree()
 {
 	PikeLogger.Log(LogTarget.All, $"Tree entered!");
@@ -201,7 +278,7 @@ This method runs after the commands have been registered to the RuntimeExecution
 ///
 
 **Example(s)**:
-```csharp {linenums="1"}
+```csharp
 protected override void OnReady()
 {
 	PikeLogger.Log(LogTarget.All, $"Node ready!");
@@ -222,7 +299,7 @@ This method runs after the commands have been **un**registered to the RuntimeExe
 ///
 
 **Example(s)**:
-```csharp {linenums="1"}
+```csharp
 protected override void OnExitTree()
 {
 	PikeLogger.Log(LogTarget.All, $"Tree exited!");
@@ -238,7 +315,7 @@ Executes when `PikeConsoleConfig.CheatMode` is toggled.
 This is the recommended location to reset gamestate data when access to cheats is revoked. 
 
 **Example(s)**:
-```csharp {linenums="1"}
+```csharp
 protected override void OnCheatModeChanged(bool newState)
 {
 	if (newState == false)
@@ -247,3 +324,5 @@ protected override void OnCheatModeChanged(bool newState)
 	}
 }
 ```
+
+---

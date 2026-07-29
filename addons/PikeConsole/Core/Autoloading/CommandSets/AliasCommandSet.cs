@@ -50,7 +50,7 @@ public partial class AliasCommandSet : CommandSet
 				StringBuilder sb = new(header);
 
 				foreach (var alias in aliases)
-					sb.Append($"\n\n[Alias] {alias.Signature}\n]\t{alias.Statement}");
+					sb.Append($"\n\n[Alias] {alias.Signature}\n\t\"{alias.Statement}\"");
 
 				PikeLogger.Log(LogTarget.Runtime, $"{sb.ToString()}");
 

@@ -1,7 +1,7 @@
 # CVarBase&lt;T&gt;
 `public abstract partial class CVarBase<T> : Resource, ICVar`  
 
-**Inherits**: [Resource (External link)](https://docs.godotengine.org/en/stable/classes/class_resource.html#resource), `ICvar`  
+**Inherits**: [`Resource`](https://docs.godotengine.org/en/stable/classes/class_resource.html#resource)⿻, `ICvar`  
 **Namespace**: `FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Extensions`  
 
 ## Description
@@ -27,6 +27,8 @@ For a tutorial on how to create a custom CVar type, see [the cvar guide](../../.
 | `public` | `string` | [FormattedValue](#formattedvalue) |
 | `public` | `bool` | [Persist](#persist) |
 | `public` | `bool` | [IsCheat](#ischeat) |
+| `public` | `string` | [CurrentValueDisplay](#currentvaluedisplay) |
+| `public` | `string` | [DefaultValueDisplay](#defaultvaluedisplay) |
 | `public` | `string` | [Description](#description_1) |
 | `public` | `string` | [Signature](#signature) |
 | `public` | `string` | [ShortDesc](#shortdesc) |
@@ -140,6 +142,24 @@ CVars marked as cheats may only be
 edited by the system. Players are unable to edit them without entering cheatmode.  
 
 **See also**: [ExecutionSource](../../RuntimeExecution/ExecutionSource.md)
+
+---
+### CurrentValueDisplay
+Shorthand property for getting the user-facing (UI-friendly) format of the current value. Used by the `ConsoleFormatter` to structure help messages.  
+
+/// caution
+CurrentValueDisplay shoud never be overridden directly by CVar variants.  
+Instead, they override the [DisplayValue](#displayvalue) method provided by.
+///
+
+---
+### DefaultValueDisplay
+Shorthand property for getting the user-facing (UI-friendly) format of the current value. Used by the `ConsoleFormatter` to structure help messages.  
+
+/// caution
+DefaultValueDisplay shoud never be overridden directly by CVar variants.  
+Instead, they override the [DisplayValue](#displayvalue) method provided by.
+///
 
 ---
 
@@ -538,6 +558,17 @@ public override string DisplayValue(int value) =>
 This results in an output like: 
 ```
 1 (Medium)
+```
+
+_Excerpt from `CVarColor.cs`._
+```csharp
+public override string DisplayValue(Color value) 
+	=> $"({value.R8}, {value.G8}, {value.B8}, {value.A8}) | #{value.ToHtml()}";
+```
+
+For the color green, this results in an output like: 
+```
+(0, 255, 0, 255) | #00ff00ff
 ```
 
 ---

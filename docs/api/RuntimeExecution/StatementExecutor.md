@@ -61,7 +61,7 @@ No public properties to showcase for this class.
 	Thus, it is safe to pass wild, untamed data into this method.
 
 
-	**Examples**:
+	**Example(s)**:
 
 	_Execute based on user input._
 	```csharp
@@ -130,7 +130,7 @@ No public properties to showcase for this class.
 	Takes the signature of a command and passes arguments into its execution method.  
 	If the command returns a response, the response is logged before proceeding.
 
-	**Examples**:
+	**Example(s)**:
 
 	_Print back "Hello World!"_
 	```csharp
@@ -165,7 +165,7 @@ No public properties to showcase for this class.
 	: A list of pre-parsed statement objects.  
 	Usually returned from the [StatementParser](../RuntimeExecution/StatementParser.md) class.
 
-	: **Example**:  
+	: **Example(s)**:  
 	```csharp
 	{
 		Signature: "echo";

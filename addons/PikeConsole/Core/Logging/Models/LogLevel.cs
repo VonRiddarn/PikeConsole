@@ -2,10 +2,10 @@ namespace FractalPike.PikeConsole.Core.Logging;
 
 public enum LogLevel
 {
-	Info,
-	Success,
-	Warning,
-	Error,
-	Engine_Warning,
-	Engine_Error,
+	Info = 0,
+	Success = 1,
+	Warning = 2,
+	Error = 3,
+	Engine_Warning = 4,
+	Engine_Error = 5,
 }

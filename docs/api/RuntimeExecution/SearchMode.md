@@ -6,7 +6,7 @@
 
 ## Description
 
-Defines what search mode to use when searching for an `IRuntimeExecutable` or alias.
+Defines what search mode to use when searching for an `IRuntimeExecutable` or alias. Note that contains and startswith uses `O(N log N)` complexity when used with the [RegistryBrowser](./RegistryBrowser.md) due to how the registry is filtered. This is known, but not considered an issue at this time, as all current usecases are cold-path and shows decent speeds in test environments with 10 000 entries.
 
 /// note | Values  
 `Contains` : `0`
@@ -17,3 +17,6 @@ Defines what search mode to use when searching for an `IRuntimeExecutable` or al
 
 `Exact` : `2`
 : Checks if the signature exactly (case insensitive) matches the query string. This results in O(1) lookup when using the [RegistryBrowser](./RegistryBrowser.md)
+///
+
+---

@@ -25,12 +25,12 @@ namespace FractalPike.PikeConsole.Core.Logging;
 public enum LogTarget
 {
 	/// <summary>Blocked from RELEASE builds.</summary>
-	Debug = 1,
+	Debug = 1 << 0,
 	/// <summary>Shows in RELEASE and DEBUG builds.</summary>
 	/// <remarks>Anything you want to show the end-user is tagged with this!</remarks>
-	Runtime = 2,
+	Runtime = 1 << 1,
 	/// <summary>Only shows up in the editor output window.</summary>
 	/// <remarks>Blocked AND stripped from builds.</remarks>
-	Editor = 4,
+	Editor = 1 << 2,
 	All = Debug | Runtime | Editor
 };

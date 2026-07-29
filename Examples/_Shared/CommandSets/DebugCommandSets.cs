@@ -4,6 +4,9 @@ using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 using Godot;
 using System;
 
+
+namespace FractalPike.PikeConsole.Examples;
+
 public partial class DebugCommandSets : CommandSet
 {
 	protected override Command[] InstantiateCommands() =>

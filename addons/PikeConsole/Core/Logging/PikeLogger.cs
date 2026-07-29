@@ -50,15 +50,6 @@ public static class PikeLogger
 	/// </remarks>
 	public static event LogEventHandler LogEmitted;
 
-	static bool? _isDebugEnvironment = null;
-
-	/// <summary>
-	/// Debug environment flag cached after first call. 
-	/// Uses lazy initialization so that we only cross the interop bridge once per lifetime.
-	/// </summary>
-	/// <returns>True for debug environments, false for strictly runtime environments.</returns>
-	public static bool IsDebugEnvironment => _isDebugEnvironment ??= Godot.OS.IsDebugBuild();
-
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	static bool IsEditor()
 	{
@@ -77,7 +68,7 @@ public static class PikeLogger
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsTargetEnabled(LogTarget target)
 	{
-		bool debugActive = PikeConsoleStates.RuntimeConsoleEnabled.Value && (target & LogTarget.Debug) != 0 && IsDebugEnvironment;
+		bool debugActive = PikeConsoleStates.RuntimeConsoleEnabled.Value && (target & LogTarget.Debug) != 0 && PikeConsoleStates.IsDebugEnvironment;
 		bool runtimeActive = PikeConsoleStates.RuntimeConsoleEnabled.Value && (target & LogTarget.Runtime) != 0;
 		bool editorActive = (target & LogTarget.Editor) != 0 && IsEditor();
 		return debugActive || runtimeActive || editorActive;
@@ -114,7 +105,7 @@ public static class PikeLogger
 
 #if TOOLS
 			// ----- GODOT EDITOR -----
-			if ((logTarget & LogTarget.Editor) != 0 && IsDebugEnvironment)
+			if ((logTarget & LogTarget.Editor) != 0 && PikeConsoleStates.IsDebugEnvironment)
 			{
 
 				// Fix backslashes for windows systems.
