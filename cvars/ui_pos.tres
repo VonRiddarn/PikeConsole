@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="CVarVector2I" format=3 uid="uid://diyvqg104ep8l"]
-
-[ext_resource type="Script" uid="uid://c5typ1dqv0dfv" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarVector2I.cs" id="1_c0to6"]
-
-[resource]
-script = ExtResource("1_c0to6")
-_defaultValue = Vector2i(32, 64)
-Persist = true
-metadata/_custom_type_script = "uid://c5typ1dqv0dfv"

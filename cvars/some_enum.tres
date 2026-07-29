@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="CVarEnum" format=3 uid="uid://u1nua7jio2q8"]
-
-[ext_resource type="Script" uid="uid://c288qu3rap4mc" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarEnum.cs" id="1_y50tb"]
-
-[resource]
-script = ExtResource("1_y50tb")
-Options = PackedStringArray("Easy", "Medium", "Hard")
-Description = "Test setting that could represent a difficulty."
-metadata/_custom_type_script = "uid://c288qu3rap4mc"

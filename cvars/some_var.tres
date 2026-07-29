@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="CVarDouble" format=3 uid="uid://7fjttiv0xqnp"]
-
-[ext_resource type="Script" uid="uid://u5hwdmf3v5s7" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarDouble.cs" id="1_4crjl"]
-
-[resource]
-script = ExtResource("1_4crjl")
-Persist = true
-metadata/_custom_type_script = "uid://u5hwdmf3v5s7"

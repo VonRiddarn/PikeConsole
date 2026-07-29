@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CVarFloat" format=3 uid="uid://cwuvsw73yvqb4"]
+
+[ext_resource type="Script" uid="uid://ddmw5n8f8yun5" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarFloat.cs" id="1_sgv3x"]
+
+[resource]
+script = ExtResource("1_sgv3x")
+_defaultValue = 0.22
+_value = 0.22
+_useClampMin = true
+Persist = true
+metadata/_custom_type_script = "uid://ddmw5n8f8yun5"

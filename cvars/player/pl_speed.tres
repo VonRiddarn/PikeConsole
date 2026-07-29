@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CVarFloat" format=3 uid="uid://bfofwxeasyjh3"]
+
+[ext_resource type="Script" uid="uid://ddmw5n8f8yun5" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarFloat.cs" id="1_8ud36"]
+
+[resource]
+script = ExtResource("1_8ud36")
+_defaultValue = 5.0
+_value = 5.0
+IsCheat = true
+Description = "The movement speed of the player, both on ground and in air."
+metadata/_custom_type_script = "uid://ddmw5n8f8yun5"
