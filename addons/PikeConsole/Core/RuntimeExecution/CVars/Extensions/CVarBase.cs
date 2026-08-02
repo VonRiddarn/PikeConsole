@@ -128,7 +128,7 @@ public abstract partial class CVarBase<T> : Resource, ICVar
 		_resourceLocation = ResourcePath;
 
 		if (Persist)
-			PersistentCVarRegistry.Write(Signature, this);
+			PersistentCVarRegistry.Write(this);
 
 		var response = RuntimeExecutableRegistry.Register(this);
 
