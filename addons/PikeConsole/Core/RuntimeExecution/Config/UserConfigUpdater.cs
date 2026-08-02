@@ -25,7 +25,10 @@ public partial class UserConfigUpdater : Node
 		if (!PikeConsoleSettings.UserConfigsEnabled)
 			return;
 
-		UserConfigManager.SelectConfig(UserConfigManager.ActiveConfig.FileName);
+		var response = UserConfigManager.SelectConfig(UserConfigManager.ActiveConfig.FileName);
+
+		if (response.Status != ConfigResponseStatus.Success)
+			UserConfigManager.CreateAndSelectDefaultConfig();
 
 		PersistentCVarRegistry.ValueUpdated += OnCVarChanged;
 	}

@@ -18,6 +18,8 @@ public static class UserConfigManager
 	const string SECTION = "Boot";
 	const string KEY = "last_used_config";
 
+	const string DEFAULT_CONFIG_NAME = "default.ecfg";
+
 	static string GetPath(string profileName) =>
 		FileSystemHelper.UserDirectory.Globalized(PikeConsoleSettings.UserConfigsDirectory, ConfigRef.DisplayToFileName(profileName));
 
@@ -39,12 +41,10 @@ public static class UserConfigManager
 			// If the tracker file (users/active.cfg) is missing we just force create it and push the user into a default config
 			if (config.Load(TrackerPath) != Error.Ok || !config.HasSectionKey(SECTION, KEY))
 			{
-				_activeConfig = new ConfigRef(GetPath("default"));
+				_activeConfig = new ConfigRef(GetPath(DEFAULT_CONFIG_NAME));
 
-				if (!File.Exists(_activeConfig.FullPath))
-					ConfigIO.WriteToConfig([], _activeConfig.FullPath, false);
+				var response = CreateAndSelectDefaultConfig();
 
-				var response = SelectConfig("default");
 				if (response.Status != ConfigResponseStatus.Success)
 					PikeLogger.LogError(LogTarget.All, $"The config selection failed. Error: {response.Message}", tags: response.Tags);
 
@@ -56,6 +56,16 @@ public static class UserConfigManager
 			_activeConfig = new ConfigRef(GetPath(lastUsed));
 			return _activeConfig;
 		}
+	}
+
+	public static Response<ConfigResponseStatus> CreateAndSelectDefaultConfig()
+	{
+		var defaultConfig = new ConfigRef(GetPath(DEFAULT_CONFIG_NAME));
+
+		if (!File.Exists(defaultConfig.FullPath))
+			ConfigIO.WriteToConfig([], defaultConfig.FullPath, false);
+
+		return SelectConfig(DEFAULT_CONFIG_NAME);
 	}
 
 	// Methods are ordered in CRUD.
