@@ -58,6 +58,9 @@ public static class UserConfigManager
 		}
 	}
 
+	/// <summary>
+	/// Creates a file for the default config and selects the file within the current config tracker.
+	/// </summary>
 	public static Response<ConfigResponseStatus> CreateAndSelectDefaultConfig()
 	{
 		var defaultConfig = new ConfigRef(GetPath(DEFAULT_CONFIG_NAME));
