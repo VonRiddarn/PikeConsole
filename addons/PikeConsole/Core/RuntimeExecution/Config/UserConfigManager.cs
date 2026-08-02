@@ -62,8 +62,14 @@ public static class UserConfigManager
 	{
 		var defaultConfig = new ConfigRef(GetPath(DEFAULT_CONFIG_NAME));
 
+		string[] rows = [
+			"// ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ",
+			"// THIS FILE IS VOLATILE AND CHANGES / ADDITIONS MAY BE OVERWRITTEN!",
+			"// ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- "
+		];
+
 		if (!File.Exists(defaultConfig.FullPath))
-			ConfigIO.WriteToConfig([], defaultConfig.FullPath, false);
+			ConfigIO.WriteToConfig(rows, defaultConfig.FullPath, false);
 
 		return SelectConfig(DEFAULT_CONFIG_NAME);
 	}
