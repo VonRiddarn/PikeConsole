@@ -57,6 +57,11 @@ nav:
                 - Response<T>: api/RuntimeExecution/Response_T.md
                 - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
                 - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
+          - Executable Configs:
+                - UserConfigManager: api/RuntimeExecution/Configs/UserConfigManager.md
+                - ConfigIO: api/RuntimeExecution/Configs/ConfigIO.md
+                - ConfigRef: api/RuntimeExecution/Configs/ConfigRef.md
+                - ConfigResponseStatus: api/RuntimeExecution/Configs/ConfigResponseStatus.md
           - Commands:
                 - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
           - CVars:
