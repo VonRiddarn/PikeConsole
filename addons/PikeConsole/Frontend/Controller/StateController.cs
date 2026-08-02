@@ -9,6 +9,8 @@ public partial class StateController : Node
 	[Export] CanvasLayer _consoleUI;
 	[Export] InputController _inputController;
 
+	Input.MouseModeEnum _cachedMouseMode = 0;
+
 	public override void _EnterTree() =>
 		PikeConsoleStates.RuntimeConsoleEnabled.ValueChanged += OnEnabledChanged;
 
@@ -39,6 +41,9 @@ public partial class StateController : Node
 			// This prevents "§" (or tilde on american keyboards) from being added to the input field when we focus.
 			GetViewport().SetInputAsHandled();
 		}
+		// Jesus.
+		else if (e is InputEventKey keyEvent && PikeConsoleStates.ConsoleUIActive && keyEvent.Pressed && keyEvent.Keycode == Key.Escape)
+			CloseConsole();
 	}
 
 	void ToggleConsole()
@@ -51,6 +56,8 @@ public partial class StateController : Node
 
 	void OpenConsole()
 	{
+		_cachedMouseMode = Input.MouseMode;
+		Input.MouseMode = Input.MouseModeEnum.Visible;
 		PikeConsoleStates.ConsoleUIActive = true;
 		_consoleUI.Show();
 		_inputController.GrabFocus();
@@ -58,6 +65,7 @@ public partial class StateController : Node
 
 	void CloseConsole()
 	{
+		Input.MouseMode = _cachedMouseMode;
 		PikeConsoleStates.ConsoleUIActive = false;
 		_consoleUI.Hide();
 		// _inputController.Clear(); -- Might want this later. Not sure.

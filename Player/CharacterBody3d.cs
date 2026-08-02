@@ -81,9 +81,6 @@ public partial class CharacterBody3d : CharacterBody3D
 				CameraNode.Rotation = camRotation;
 			}
 		}
-
-		if (e.IsActionPressed("ui_cancel"))
-			Input.MouseMode = Input.MouseModeEnum.Visible;
 	}
 
 	public override void _PhysicsProcess(double delta)
