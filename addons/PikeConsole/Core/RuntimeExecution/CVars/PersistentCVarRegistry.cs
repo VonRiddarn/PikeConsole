@@ -16,7 +16,7 @@ public static class PersistentCVarRegistry
 	/// </summary>
 	/// <param name="signature">CVar signature (resource file name)</param>
 	/// <param name="cvar">ICVar interface object</param>
-	public static void Write(ICVar cvar) => _persistentCvars[cvar.Signature] = cvar;
+	public static void Register(ICVar cvar) => _persistentCvars[cvar.Signature] = cvar;
 
 	/// <summary>
 	/// Router to trigger the ValueUpdated event on the registry.
