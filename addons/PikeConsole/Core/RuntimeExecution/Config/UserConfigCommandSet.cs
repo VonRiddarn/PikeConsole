@@ -39,6 +39,22 @@ public partial class UserConfigCommandSet : CommandSet
 			}
 		),
 		Command(
+			Signature("remove"),
+			$"Remove a user config from {PikeConsoleSettings.UserConfigsDirectory}.",
+			null,
+			[$"{Signature("remove")} [config name]"],
+			false,
+			(args) => {
+				if(!ArgumentParser.ValidateCount(args, 1, out string error))
+					return new(ExecutionResponseStatus.InvalidArgs, error, [LogTags.InvalidArgs]);
+
+				var response = UserConfigManager.RemoveConfig(args[0]);
+
+				ExecutionResponseStatus s = response.Status == ConfigResponseStatus.Success ? ExecutionResponseStatus.Success : ExecutionResponseStatus.Failed;
+				return new(s, response.Message, response.Tags);
+			}
+		),
+		Command(
 			Signature("active"),
 			"Displays the or switches the active config.",
 			null,
