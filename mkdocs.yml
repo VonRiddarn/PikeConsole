@@ -45,6 +45,28 @@ nav:
                 - LogTarget: api/Logging/LogTarget.md
                 - PikeLogger: api/Logging/PikeLogger.md
           - Runtime Execution:
+                - Commands:
+                      - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
+                - CVars:
+                      - Extensions:
+                            - CVarBase<T>: api/CVars/Extensions/CVarBase_T.md
+                      - CVarBool: api/CVars/CVarBool.md
+                      - CVarDouble: api/CVars/CVarDouble.md
+                      - CVarEnum: api/CVars/CVarEnum.md
+                      - CVarFloat: api/CVars/CVarFloat.md
+                      - CVarInt: api/CVars/CVarInt.md
+                      - CVarString: api/CVars/CVarString.md
+                      - CVarColor: api/CVars/CVarColor.md
+                      - CVarVector2: api/CVars/CVarVector2.md
+                      - CVarVector2I: api/CVars/CVarVector2I.md
+                      - CVarVector3: api/CVars/CVarVector3.md
+                      - CVarVector3I: api/CVars/CVarVector3I.md
+                      - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
+                - Configs:
+                      - UserConfigManager: api/RuntimeExecution/Configs/UserConfigManager.md
+                      - ConfigIO: api/RuntimeExecution/Configs/ConfigIO.md
+                      - ConfigRef: api/RuntimeExecution/Configs/ConfigRef.md
+                      - ConfigResponseStatus: api/RuntimeExecution/Configs/ConfigResponseStatus.md
                 - RegistryBrowser: api/RuntimeExecution/RegistryBrowser.md
                 - SearchMode: api/RuntimeExecution/SearchMode.md
                 - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
@@ -57,25 +79,3 @@ nav:
                 - Response<T>: api/RuntimeExecution/Response_T.md
                 - ExecutionResponseStatus: api/RuntimeExecution/ExecutionResponseStatus.md
                 - CvarSetResponseStatus: api/RuntimeExecution/CvarSetResponseStatus.md
-          - Executable Configs:
-                - UserConfigManager: api/RuntimeExecution/Configs/UserConfigManager.md
-                - ConfigIO: api/RuntimeExecution/Configs/ConfigIO.md
-                - ConfigRef: api/RuntimeExecution/Configs/ConfigRef.md
-                - ConfigResponseStatus: api/RuntimeExecution/Configs/ConfigResponseStatus.md
-          - Commands:
-                - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
-          - CVars:
-                - Extensions:
-                      - CVarBase<T>: api/CVars/Extensions/CVarBase_T.md
-                - CVarBool: api/CVars/CVarBool.md
-                - CVarDouble: api/CVars/CVarDouble.md
-                - CVarEnum: api/CVars/CVarEnum.md
-                - CVarFloat: api/CVars/CVarFloat.md
-                - CVarInt: api/CVars/CVarInt.md
-                - CVarString: api/CVars/CVarString.md
-                - CVarColor: api/CVars/CVarColor.md
-                - CVarVector2: api/CVars/CVarVector2.md
-                - CVarVector2I: api/CVars/CVarVector2I.md
-                - CVarVector3: api/CVars/CVarVector3.md
-                - CVarVector3I: api/CVars/CVarVector3I.md
-                - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
