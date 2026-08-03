@@ -171,7 +171,6 @@ public static class ConfigIO
 	/// <summary>
 	/// Try getting all lines from a config file. Returned inside the responses payload.
 	/// </summary>
-	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
 	/// <param name="globalPath">The path, assuming the <c>user://{cfg}</c> directory as the root.</param>
 	/// <returns>A payloaded response.</returns>
 	public static Response<ConfigResponseStatus, string[]> ReadConfig(string globalPath)
