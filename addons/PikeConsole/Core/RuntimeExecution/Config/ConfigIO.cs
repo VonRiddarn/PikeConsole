@@ -148,7 +148,7 @@ public static class ConfigIO
 		var pathType = FileSystemHelper.GetPathType(path);
 
 		if (pathType == PathType.Resource) // Do not allow mutation (even in the editor build)
-			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogTags.Failed]);
+			return new(ConfigResponseStatus.Failed, "Config resources in the binary are immutable!", [LogTags.InvalidArgs]);
 		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
 			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
 
