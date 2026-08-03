@@ -122,9 +122,7 @@ public static class UserConfigManager
 		// If the active profile was renamed, select it again to get rid of the zomvbie state in active.cfg
 		// This will also trigger the event, which in turn could help update any UI elements
 		if (response.Status == ConfigResponseStatus.Success && isActiveProfile)
-		{
 			UpdateActiveConfigTracker(new ConfigRef(GetPath(newName)));
-		}
 
 		return response;
 	}
