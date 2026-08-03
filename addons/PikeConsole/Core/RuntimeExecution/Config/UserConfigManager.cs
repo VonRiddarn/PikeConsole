@@ -152,6 +152,14 @@ public static class UserConfigManager
 		return ConfigIO.WriteToConfig([.. rows], config.FullPath, overWrite: true);
 	}
 
+	/// <summary>
+	/// Resets all cvars in the persistent memory to default values.
+	/// </summary>
+	/// <remarks>
+	/// This will overwrite the current config, deleting all data.  
+	/// It is recommended to not call this method before prompting the player with a "are you sure" window, if triggerable in the GUI.
+	/// </remarks>
+	/// <returns></returns>
 	public static Response<ConfigResponseStatus> FullResetCurrentConfig()
 	{
 		try
@@ -192,7 +200,7 @@ public static class UserConfigManager
 	}
 
 	// ----- ----- DELETE ----- -----
-	public static Response<ConfigResponseStatus> RemoveUserConfig(string configName)
+	public static Response<ConfigResponseStatus> RemoveConfig(string configName)
 	{
 		ConfigRef target = new(GetPath(configName));
 
