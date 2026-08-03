@@ -61,12 +61,12 @@ nav:
                       - CVarVector2I: api/CVars/CVarVector2I.md
                       - CVarVector3: api/CVars/CVarVector3.md
                       - CVarVector3I: api/CVars/CVarVector3I.md
-                      - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
                 - Configs:
                       - UserConfigManager: api/RuntimeExecution/Configs/UserConfigManager.md
                       - ConfigIO: api/RuntimeExecution/Configs/ConfigIO.md
                       - ConfigRef: api/RuntimeExecution/Configs/ConfigRef.md
                       - ConfigResponseStatus: api/RuntimeExecution/Configs/ConfigResponseStatus.md
+                - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
                 - RegistryBrowser: api/RuntimeExecution/RegistryBrowser.md
                 - SearchMode: api/RuntimeExecution/SearchMode.md
                 - StatementExecutor: api/RuntimeExecution/StatementExecutor.md
