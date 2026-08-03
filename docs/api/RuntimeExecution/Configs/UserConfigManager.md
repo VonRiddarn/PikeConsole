@@ -28,7 +28,7 @@ Even if UI support is not added, PikeConsole ships with premade commands that al
 | `public` | `Action <`[`ConfigRef`](ConfigRef.md)`>` | [ActiveConfigChanged](#activeconfigchanged) |
 
 ## Properties  
-| Scope | Delegate | Name |
+| Scope | Type | Name |
 |-------|--------|------|
 | `public` | [`ConfigRef`](ConfigRef.md) | [ActiveConfig](#activeconfig) |
 
