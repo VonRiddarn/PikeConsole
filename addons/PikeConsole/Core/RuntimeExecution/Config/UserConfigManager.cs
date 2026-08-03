@@ -83,7 +83,7 @@ public static class UserConfigManager
 	{
 		ConfigRef newConfig = new(GetPath(configName));
 
-		var writeRes = ConfigIO.WriteToConfig([$"// {configName}"], newConfig.FullPath, overWrite: false);
+		var writeRes = ConfigIO.WriteToConfig([$"// {configName}"], newConfig.FullPath, overwrite: false);
 
 		if (writeRes.Status != ConfigResponseStatus.Success)
 			return writeRes;
@@ -149,7 +149,7 @@ public static class UserConfigManager
 				rows.Add($"{cvar.Signature} {cvar.FormattedValue} {FileSystemHelper.RAM_ONLY_FLAG}; // [{cvar.DisplayType}] {cvar.CurrentValueDisplay}");
 		}
 
-		return ConfigIO.WriteToConfig([.. rows], config.FullPath, overWrite: true);
+		return ConfigIO.WriteToConfig([.. rows], config.FullPath, overwrite: true);
 	}
 
 	/// <summary>

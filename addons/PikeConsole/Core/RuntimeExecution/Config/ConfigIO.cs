@@ -64,7 +64,7 @@ public static class ConfigIO
 	/// <param name="source">Execution source. Used to contextually prevent cheating.</param>
 	/// <param name="path">The path to the config. This can be a full or relative path.</param>
 	/// <returns></returns>
-	public static Response<ConfigResponseStatus> WriteToConfig(string[] rows, string path, bool overWrite = false)
+	public static Response<ConfigResponseStatus> WriteToConfig(string[] rows, string path, bool overwrite = false)
 	{
 		var pathType = FileSystemHelper.GetPathType(path);
 
@@ -82,7 +82,7 @@ public static class ConfigIO
 		{
 			FileSystemHelper.EnsureDirectory(Path.GetDirectoryName(path));
 
-			if (File.Exists(file) && !overWrite)
+			if (File.Exists(file) && !overwrite)
 				return new(ConfigResponseStatus.FileConflict, $"Cannot write to file {Path.GetFileName(path)}. The file already exists.", [LogTags.Conflict]);
 
 			// Make a temp file.
