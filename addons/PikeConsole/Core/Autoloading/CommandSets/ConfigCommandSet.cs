@@ -17,7 +17,7 @@ public partial class ConfigCommandSet : CommandSet
 			$"userdir [no args]",
 			false,
 			static (args) => {
-				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, PikeConsoleSettings.ConfigDirectory + "/" + args[0]);
+				var response = ConfigIO.ExecuteFromConfig(ExecutionSource.Standard, $"{PikeConsoleSettings.ConfigDirectory}/{args[0]}");
 
 				if(response.Status != ConfigResponseStatus.Success)
 					return new(ExecutionResponseStatus.Failed, response.Message, response.Tags);
