@@ -208,7 +208,12 @@ public static class UserConfigManager
 		if (target.FileName == ActiveConfig.FileName)
 			return new(ConfigResponseStatus.Failed, "Cannot delete the currently active profile.", [LogTags.Failed]);
 
-		return ConfigIO.RemoveConfig(target.FullPath);
+		var response = ConfigIO.RemoveConfig(target.FullPath);
+
+		if (response.Status == ConfigResponseStatus.Success)
+			return new(ConfigResponseStatus.Success, $"Removed profile \"{target.DisplayName}\".");
+
+		return response;
 	}
 
 
