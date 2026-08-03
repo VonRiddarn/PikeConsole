@@ -32,7 +32,7 @@ public class ConfigRef
 		return Path.ChangeExtension(displayName.Replace(' ', '_').Trim().ToLower(), ".ecfg");
 	}
 
-	static string FileToDisplayName(string fileName)
+	public static string FileToDisplayName(string fileName)
 	{
 		string name = Path.GetFileNameWithoutExtension(fileName);
 		return name.Replace('_', ' ').Trim().Capitalize();
