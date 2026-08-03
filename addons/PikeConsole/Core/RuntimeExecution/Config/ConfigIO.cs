@@ -171,26 +171,32 @@ public static class ConfigIO
 	/// <summary>
 	/// Try getting all lines from a config file. Returned inside the responses payload.
 	/// </summary>
-	/// <param name="globalPath">The path, assuming the <c>user://{cfg}</c> directory as the root.</param>
 	/// <returns>A payloaded response.</returns>
-	public static Response<ConfigResponseStatus, string[]> ReadConfig(string globalPath)
+	public static Response<ConfigResponseStatus, string[]> ReadConfig(string path)
 	{
-		if (string.IsNullOrWhiteSpace(globalPath))
+		if (string.IsNullOrWhiteSpace(path))
 			return new(ConfigResponseStatus.InvalidArgs, default, "Config path is empty.", [LogTags.InvalidArgs]);
 
-		globalPath = Path.ChangeExtension(globalPath, EXT);
+		var pathType = FileSystemHelper.GetPathType(path);
+
+		if (pathType == PathType.Resource) // Redirect to correct method
+			return ReadConfigResource(path);
+		else if (pathType == PathType.User) // Remove the "user://" previx and globalize the path
+			path = FileSystemHelper.UserDirectory.Globalized(path.Replace("user://", string.Empty));
+
+		path = Path.ChangeExtension(path, EXT);
 
 		try
 		{
-			string[] lines = File.ReadAllLines(globalPath);
+			string[] lines = File.ReadAllLines(path);
 			return new(ConfigResponseStatus.Success, lines, null);
 		}
 		catch (IOException e)
 		{
 			if (e is FileNotFoundException or DirectoryNotFoundException)
-				return new(ConfigResponseStatus.NotFound, default, $"Couldn't find config file at: \"{globalPath}\"", [LogTags.NotFound]);
+				return new(ConfigResponseStatus.NotFound, default, $"Couldn't find config file at: \"{path}\"", [LogTags.NotFound]);
 			else
-				return new(ConfigResponseStatus.Error, default, $"Failed to read config file \"{globalPath}\": {e.Message}");
+				return new(ConfigResponseStatus.Error, default, $"Failed to read config file \"{path}\": {e.Message}");
 		}
 	}
 
