@@ -124,7 +124,7 @@ Now you just need to open up the developer console and type in your new command!
 Hello world!
 ```
 
-Cheat protection is managed automatically. If we temporarily change IsCheat to `true`:  
+Cheat protection is managed automatically. If we temporarily change IsCheat parameter to `true`:  
 ```
 > my_echo Hello world!
 my_echo is cheat protected!
