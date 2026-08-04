@@ -56,7 +56,7 @@ public partial class UserConfigCommandSet : CommandSet
 		),
 		Command(
 			Signature("active"),
-			"Displays the or switches the active config.",
+			"Displays or switches the active config.",
 			null,
 			$"{Signature("active")} [config name?]",
 			false,
