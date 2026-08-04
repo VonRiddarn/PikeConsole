@@ -49,7 +49,11 @@ The `InstantiateCommands` is a declarative method that is automatically run by t
 Any commands returned by this method will be automatically added to the command registry.  
 
 To instantiate the command, we will use the `Command()` shorthand method that is provided by the `CommandSet`. 
-This shorthand automatically tags our commands with self-diagnostic metadata.
+This shorthand automatically tags our commands with self-diagnostic metadata.  
+
+///tip
+For commands that shouldn't be included in release builds of the game you can instead use the shorthand `HiddenCommand()`.
+///
 
 /// warning
 - Do not instantiate commands using the `new` keyword.  
