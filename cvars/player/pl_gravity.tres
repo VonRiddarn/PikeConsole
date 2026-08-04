@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_4nlv8")
-_defaultValue = 1.0
-_value = 1.0
+_defaultValue = 3.0
+_value = 3.0
 IsCheat = true
 Description = "The player's gravity modifier. Used to determine jump height and fall speed."
 metadata/_custom_type_script = "uid://ddmw5n8f8yun5"

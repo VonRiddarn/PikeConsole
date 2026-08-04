@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_jm5qx")
-_defaultValue = 4.5
-_value = 4.5
+_defaultValue = 8.5
+_value = 8.5
 IsCheat = true
 Description = "The force applied to the player's Y-velocity when jumping."
 metadata/_custom_type_script = "uid://ddmw5n8f8yun5"

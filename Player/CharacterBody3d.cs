@@ -23,12 +23,12 @@ public partial class CharacterBody3d : CharacterBody3D
 
 	// m_yaw = Left / Right
 	// m_pitch = Up / Down
-	// Default: 0.22
+	// Default: 0.022
 	[Export] CVarFloat MSensitivity;
 	[Export] CVarFloat MYaw;
-	float _mYawCache = 0.22f;
+	float _mYawCache = 0.022f;
 	[Export] CVarFloat MPitch;
-	float _mPitchCache = 0.22f;
+	float _mPitchCache = 0.022f;
 
 	[Export] public Node3D CameraNode { get; set; }
 
@@ -58,6 +58,7 @@ public partial class CharacterBody3d : CharacterBody3D
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
+		Input.UseAccumulatedInput = true;
 	}
 
 	public override void _UnhandledInput(InputEvent e)

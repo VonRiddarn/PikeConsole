@@ -4,8 +4,9 @@
 
 [resource]
 script = ExtResource("1_d5e8b")
-_defaultValue = 0.22
-_value = 0.22
+_defaultValue = 0.022
+_value = 0.022
 _useClampMin = true
 Persist = true
+Description = "Multiplier applied to the horizontal mouse movement."
 metadata/_custom_type_script = "uid://ddmw5n8f8yun5"
