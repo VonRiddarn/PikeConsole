@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CVarColor" format=3 uid="uid://dlt7xylvw4jkn"]
+
+[ext_resource type="Script" uid="uid://cj5w2mnf08q68" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarColor.cs" id="1_l777c"]
+
+[resource]
+script = ExtResource("1_l777c")
+_defaultValue = Color(0, 0, 0, 1)
+Persist = true
+Description = "Sets the color of the crosshair outline."
+metadata/_custom_type_script = "uid://cj5w2mnf08q68"

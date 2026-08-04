@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://dpho5b806ecds"]
+
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_4okb3"]
+
+[resource]
+script = ExtResource("1_4okb3")
+Persist = true
+Description = "Rounds the edges of the crosshair by any amount."
+metadata/_custom_type_script = "uid://bblxtwt8mavck"

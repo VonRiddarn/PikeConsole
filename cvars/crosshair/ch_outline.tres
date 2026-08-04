@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CVarBool" format=3 uid="uid://b2pldjuhx7tft"]
+
+[ext_resource type="Script" uid="uid://j1th6vqhii2n" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarBool.cs" id="1_k4qq3"]
+
+[resource]
+script = ExtResource("1_k4qq3")
+Persist = true
+Description = "Toggle for using a crosshair outline."
+metadata/_custom_type_script = "uid://j1th6vqhii2n"

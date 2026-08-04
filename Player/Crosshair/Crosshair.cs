@@ -10,14 +10,18 @@ public partial class Crosshair : Control
 	[Export] CVarInt _thicknessCvar;
 	[Export] CVarInt _gapCvar;
 	[Export] CVarColor _colorCvar;
+	[Export] CVarInt _roundnessCvar;
 	[Export] CVarBool _dotCvar;
+	[Export] CVarBool _outLineCvar;
+	[Export] CVarInt _outLineThicknessCvar;
+	[Export] CVarColor _outLineColorCvar;
 
 	[ExportGroup("Nodes")]
-	[Export] ColorRect _top;
-	[Export] ColorRect _bot;
-	[Export] ColorRect _left;
-	[Export] ColorRect _right;
-	[Export] ColorRect _dot;
+	[Export] Panel _top;
+	[Export] Panel _bot;
+	[Export] Panel _left;
+	[Export] Panel _right;
+	[Export] Panel _dot;
 
 	public override void _EnterTree()
 	{
@@ -25,9 +29,11 @@ public partial class Crosshair : Control
 		_thicknessCvar.ValueInvalidated += UpdateCrosshair;
 		_gapCvar.ValueInvalidated += UpdateCrosshair;
 		_colorCvar.ValueInvalidated += UpdateCrosshair;
+		_roundnessCvar.ValueInvalidated += UpdateCrosshair;
 		_dotCvar.ValueInvalidated += UpdateCrosshair;
-
-		UpdateCrosshair();
+		_outLineCvar.ValueInvalidated += UpdateCrosshair;
+		_outLineThicknessCvar.ValueInvalidated += UpdateCrosshair;
+		_outLineColorCvar.ValueInvalidated += UpdateCrosshair;
 	}
 
 	public override void _ExitTree()
@@ -36,12 +42,17 @@ public partial class Crosshair : Control
 		_thicknessCvar.ValueInvalidated -= UpdateCrosshair;
 		_gapCvar.ValueInvalidated -= UpdateCrosshair;
 		_colorCvar.ValueInvalidated -= UpdateCrosshair;
+		_roundnessCvar.ValueInvalidated -= UpdateCrosshair;
 		_dotCvar.ValueInvalidated -= UpdateCrosshair;
+		_outLineCvar.ValueInvalidated -= UpdateCrosshair;
+		_outLineThicknessCvar.ValueInvalidated -= UpdateCrosshair;
+		_outLineColorCvar.ValueInvalidated -= UpdateCrosshair;
 	}
+
+	public override void _Ready() => UpdateCrosshair();
 
 	void UpdateCrosshair()
 	{
-		Color color = _colorCvar.Value;
 		int thickness = _thicknessCvar.Value;
 		int length = _sizeCvar.Value;
 		int gap = _gapCvar.Value;
@@ -51,29 +62,51 @@ public partial class Crosshair : Control
 		Vector2 horizontalSize = new(length, thickness);
 
 		// TOP
-		_top.Color = color;
 		_top.Size = verticalSize;
 		_top.Position = new(-halfThickness, -gap - length);
 
 		// BOT
-		_bot.Color = color;
 		_bot.Size = verticalSize;
 		_bot.Position = new(-halfThickness, gap);
 
 		// LEFT
-		_left.Color = color;
 		_left.Size = horizontalSize;
 		_left.Position = new(-gap - length, -halfThickness);
 
 		// RIGHT
-		_right.Color = color;
 		_right.Size = horizontalSize;
 		_right.Position = new(gap, -halfThickness);
 
 		// DOT
 		_dot.Visible = _dotCvar.Value;
-		_dot.Color = color;
 		_dot.Size = new(thickness, thickness);
 		_dot.Position = new(-halfThickness, -halfThickness);
+
+		// STYLING (Color, outline etc)
+		int cornerRadius = _roundnessCvar.Value;
+		StyleBoxFlat crosshairStyling = new()
+		{
+			BgColor = _colorCvar.Value,
+			CornerRadiusTopLeft = cornerRadius,
+			CornerRadiusTopRight = cornerRadius,
+			CornerRadiusBottomLeft = cornerRadius,
+			CornerRadiusBottomRight = cornerRadius,
+		};
+
+
+		if (_outLineCvar.Value)
+		{
+			int outLineThickness = _outLineThicknessCvar.Value;
+
+			crosshairStyling.BorderColor = _outLineColorCvar.Value;
+			crosshairStyling.SetBorderWidthAll(outLineThickness);
+			crosshairStyling.SetExpandMarginAll(outLineThickness);
+		}
+
+		_top.AddThemeStyleboxOverride("panel", crosshairStyling);
+		_bot.AddThemeStyleboxOverride("panel", crosshairStyling);
+		_left.AddThemeStyleboxOverride("panel", crosshairStyling);
+		_right.AddThemeStyleboxOverride("panel", crosshairStyling);
+		_dot.AddThemeStyleboxOverride("panel", crosshairStyling);
 	}
 }

@@ -4,8 +4,12 @@
 [ext_resource type="Resource" uid="uid://lyehowjewujb" path="res://cvars/crosshair/ch_size.tres" id="2_txotm"]
 [ext_resource type="Resource" uid="uid://68clpaaww62e" path="res://cvars/crosshair/ch_thickness.tres" id="3_l42u3"]
 [ext_resource type="Resource" uid="uid://cff8r3egapt5r" path="res://cvars/crosshair/ch_gap.tres" id="4_h4qq1"]
+[ext_resource type="Resource" uid="uid://dpho5b806ecds" path="res://cvars/crosshair/ch_roundness.tres" id="5_l42u3"]
 [ext_resource type="Resource" uid="uid://dwueh1u075tqo" path="res://cvars/crosshair/ch_color.tres" id="5_vb40i"]
 [ext_resource type="Resource" uid="uid://djtgbgtp5yjnx" path="res://cvars/crosshair/ch_dot.tres" id="6_ni7e5"]
+[ext_resource type="Resource" uid="uid://b2pldjuhx7tft" path="res://cvars/crosshair/ch_outline.tres" id="8_ni7e5"]
+[ext_resource type="Resource" uid="uid://c8esjuoih3tyo" path="res://cvars/crosshair/ch_outline_thickness.tres" id="9_7t1ob"]
+[ext_resource type="Resource" uid="uid://dlt7xylvw4jkn" path="res://cvars/crosshair/ch_outline_color.tres" id="10_ldii3"]
 
 [node name="Crosshair" type="Control" unique_id=966214784 node_paths=PackedStringArray("_top", "_bot", "_left", "_right", "_dot")]
 layout_mode = 3
@@ -16,14 +20,18 @@ _sizeCvar = ExtResource("2_txotm")
 _thicknessCvar = ExtResource("3_l42u3")
 _gapCvar = ExtResource("4_h4qq1")
 _colorCvar = ExtResource("5_vb40i")
+_roundnessCvar = ExtResource("5_l42u3")
 _dotCvar = ExtResource("6_ni7e5")
+_outLineCvar = ExtResource("8_ni7e5")
+_outLineThicknessCvar = ExtResource("9_7t1ob")
+_outLineColorCvar = ExtResource("10_ldii3")
 _top = NodePath("Top_Bar")
 _bot = NodePath("Bottom_Bar")
 _left = NodePath("Left_Bar")
 _right = NodePath("Right_Bar")
 _dot = NodePath("Dot")
 
-[node name="Top_Bar" type="ColorRect" parent="." unique_id=1174785233]
+[node name="Top_Bar" type="Panel" parent="." unique_id=251614454]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -37,7 +45,7 @@ grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="Bottom_Bar" type="ColorRect" parent="." unique_id=1610092819]
+[node name="Bottom_Bar" type="Panel" parent="." unique_id=1604367202]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -48,7 +56,7 @@ offset_bottom = 6.0
 grow_horizontal = 2
 mouse_filter = 2
 
-[node name="Right_Bar" type="ColorRect" parent="." unique_id=1732388879]
+[node name="Right_Bar" type="Panel" parent="." unique_id=1487186838]
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
@@ -59,7 +67,7 @@ offset_bottom = 1.0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Left_Bar" type="ColorRect" parent="." unique_id=529075837]
+[node name="Left_Bar" type="Panel" parent="." unique_id=47501996]
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -73,7 +81,7 @@ grow_horizontal = 0
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Dot" type="ColorRect" parent="." unique_id=1630574597]
+[node name="Dot" type="Panel" parent="." unique_id=1305928456]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
