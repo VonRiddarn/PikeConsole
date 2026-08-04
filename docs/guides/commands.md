@@ -72,8 +72,8 @@ I have written the code for the echo command below...
 	{
 		protected override Command[] InstantiateCommands() => [
 			Command(
-				"my_echo",
-				false,
+				"my_echo", // Signature
+				false, // Is Cheat
 				(args) => 
 					new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
 			),
@@ -93,8 +93,8 @@ I have written the code for the echo command below...
 		{
 			return [
 				Command(
-					"my_echo",
-					false,
+					"my_echo", // Signature 
+					false, // Is Cheat
 					EchoCommand
 				),
 			];
@@ -124,7 +124,7 @@ Now you just need to open up the developer console and type in your new command!
 Hello world!
 ```
 
-Cheat protection is managed automatically. If we temporarily change IsCheat parameter to `true`:  
+Cheat protection is managed automatically. If we temporarily change `isCheat` parameter to `true`:  
 ```
 > my_echo Hello world!
 my_echo is cheat protected!
