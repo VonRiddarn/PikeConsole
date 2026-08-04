@@ -19,7 +19,8 @@ Internalizes all advanced setup and exposes a lightweight API that can be used b
 | Scope | Return | Name |
 |-------|--------|------|
 | `protected` | `Command[]` | [InstantiateCommands](#initializecommands) |
-| `protected` | `Command[]` | [Command](#command) |
+| `protected` | `Command` | [Command](#command) |
+| `protected` | `Command` | [CommandHidden](#commandhidden) |
 | `protected` | `string` | [Signature](#signature) |
 | `protected` | `void` | [OnEnterTree](#onentertree) |
 | `protected` | `void` | [OnReady](#onready) |
@@ -100,8 +101,8 @@ protected override Command[] InstantiateCommands() => [
 	`string?` : `LongDesc`
 	: An optional longer (multi-line) description of the command providing more context.  
 
-	`string` : `Usage`
-	: Usage instructions for the command.
+	`string` || `string[]` : `Usage`
+	: Usage instructions for the command. Can pass an array for varius usages.
 
 	: **Example**:  
 	`my_echo [args...]`  
@@ -156,6 +157,138 @@ protected override Command[] InstantiateCommands() => [
 	**Description**:  
 	Declarative shorthand method for creating a command with **without runtime documentation**.  
 	Using this method automatically attaches the current `CommandSet`'s filepath and linenumber, making any errors invoked from the command self-diagnostic.  
+
+	/// details | Parameter details (Click to expand)  
+	`string` : `Signature`
+	: The command signature used to call the command, eg: `my_echo`
+
+	`bool` : `IsCheat`
+	: Defines if `cheatmode` must be active to run this command **in the console**.  
+
+	: /// note | Internal systems can still run commands tagged with cheats
+	///
+
+	`Func<string[], Response<ExecutionResponseStatus>>` : `Action`
+	: A method that takes in a string array and returns a Response. 
+		
+	: /// note | All action methods **must** return a response.
+	///  
+	///
+
+	/// warning
+	Do not manually set the `filePath` or `lineNumber` properties!  
+	Doing so will break the self-diagnostic nature of the command 
+	and defeat the purpose of the shorthand.
+	///
+
+	**Example(s)**:
+	```csharp
+	protected override Command[] InstantiateCommands() => [
+		Command(
+			"my_echo",
+			false,
+			(args) =>
+				new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+		),
+	];
+	```
+---
+
+### CommandHidden
+**Overrides**
+=== "Documented"
+	**Signature**: `static protected Command CommandHidden(
+		string signature,
+		string shortDesc,
+		string longDesc,
+		string usage,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)`
+
+	**Description**:  
+	Declarative shorthand method for creating a command **with runtime documentation**.  
+	Using this method automatically attaches the current `CommandSet`'s filepath, 
+	making any errors invoked from the command self-diagnostic.  
+
+	///note
+	This command is hidden from release builds of the game, meaning only debug builds will have access to it.
+	///
+
+	/// details | Parameter details (Click to expand)   
+	`string` : `Signature`
+	: The command signature used to call the command, eg: `my_echo`
+
+	`string` : `ShortDesc`
+	: A summary description of the command, preferably a one-liner.  
+
+	: **Example**:  
+	`Joins and echoes the arguments back to the caller`  
+
+	`string?` : `LongDesc`
+	: An optional longer (multi-line) description of the command providing more context.  
+
+	`string` || `string[]` : `Usage`
+	: Usage instructions for the command. Can pass an array for varius usages.
+
+	: **Example**:  
+	`my_echo [args...]`  
+
+	`bool` : `IsCheat`
+	: Defines if `cheatmode` must be active to run this command **in the console**.  
+
+	: /// note | Internal systems can still run commands tagged with cheats
+	///
+
+	`Func<string[], Response<ExecutionResponseStatus>>` : `Action`
+	: A method that takes in a string array and returns a Response. 
+		
+	: /// note | All action methods **must** return a response.
+	///  
+	///
+		
+	/// warning
+	Do not manually set the `filePath` or `lineNumber` properties!  
+	Doing so will break the self-diagnostic nature of the command 
+	and defeat the purpose of the shorthand.
+	///
+
+	**Example(s)**:
+	```csharp
+	protected override Command[] InstantiateCommands() => [
+		CommandHidden(
+			"my_echo",
+			"Joins and echoes the arguments back to the caller",
+			null,
+			"my_echo [args...]",
+			false,
+			(args) =>
+				new(ExecutionResponseStatus.Success, $"{args.Join(" ")}")
+		),
+	];
+	```
+=== "Quick"
+	**Signature**: `static protected Command CommandHidden(
+		string signature,
+		bool isCheat,
+		Func<string[], Response<ExecutionResponseStatus>> action,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0)`
+
+	/// tip
+	The quick shorthand will generate warnings in debug mode (debug builds and the Editor playtest).  
+	To disable this warning go to: `Project Settings (General)` > `Fractal Pike` > `PikeConsole`  
+	And turn on: `Suppress Documentation Warnings`
+	///
+
+	**Description**:  
+	Declarative shorthand method for creating a command with **without runtime documentation**.  
+	Using this method automatically attaches the current `CommandSet`'s filepath and linenumber, making any errors invoked from the command self-diagnostic.  
+
+	///note
+	This command is hidden from release builds of the game, meaning only debug builds will have access to it.
+	///
 
 	/// details | Parameter details (Click to expand)  
 	`string` : `Signature`

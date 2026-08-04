@@ -2,7 +2,7 @@
 
 What makes both commands (_and CVars_) special in PikeConsole is that you actually do not initialize them yourself.  
   
-Instead we make use of a **special Node** called the [Command Set](../api/RuntimeExecution/Commands/CommandSet.md)  
+Instead we make use of a **special Node** called the [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md)  
 By inheriting from this Node, we can create a command in just a few seconds.  
   
 _Let's try it out by creating a simple echo command..._  
@@ -14,11 +14,11 @@ Create a Node using the root type `Node`.
 
 Name this Node anything you want. It is recommended to keep the names clear and suffix it with "CommandSet" for hierarchical clarity.  
 
-## 2️⃣ Inherit the `CommandSet` class on the Node.
+## 2️⃣ Inherit the [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) class on the Node.
 
-Add a script to the Node and have it inherit from the `CommandSet` class.  
+Add a script to the Node and have it inherit from the [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) class.  
 /// note
-The `CommandSet` should auto-complete in your IDE and automatically import the namespace.  
+The [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) should auto-complete in your IDE and automatically import the namespace.  
 If it doesn't, you need to manually import the the namespace at the top of the file:  
 ```csharp {linenums="1"}
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
@@ -45,14 +45,14 @@ public partial class MyCommandSet : CommandSet
 
 ## 3️⃣ Add the command to the Node  
 
-The `InstantiateCommands` is a declarative method that is automatically run by the `CommandSet` Node to initialize commands.
+The `InstantiateCommands` is a declarative method that is automatically run by the [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) Node to initialize commands.
 Any commands returned by this method will be automatically added to the command registry.  
 
-To instantiate the command, we will use the `Command()` shorthand method that is provided by the `CommandSet`. 
+To instantiate the command, we will use the [`Command()`](../api/RuntimeExecution/Commands/CommandSet.md#command) shorthand method that is provided by the [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md). 
 This shorthand automatically tags our commands with self-diagnostic metadata.  
 
 ///tip
-For commands that shouldn't be included in release builds of the game you can instead use the shorthand `HiddenCommand()`.
+For commands that shouldn't be included in release builds of the game you can instead use the shorthand [`CommandHidden()`](../api/RuntimeExecution/Commands/CommandSet.md#commandhidden).
 ///
 
 /// warning
@@ -136,7 +136,7 @@ Hello world!
 
 ## 🧩 The `Command` shorthand properties
 
-In the above example we used a custom shorthand provided by the `CommandSet` API.  
+In the above example we used a custom shorthand provided by the [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) API.  
 This shorthand comes in 2 flavors of parameters: **Documented** and **Quick**. 
 Out of the two, the framework will nudge you to use the documented version.  
 
@@ -205,10 +205,10 @@ By applying the information above, we can now document our echo command, like so
 Adding documentation to your commands may feel tedious, but it helps immensely 
 with QA testing, runtime experience and remembering what stuff does 6 months from now.
 
-## ℹ️ **Godot Lifecycle methods** inside a `CommandSet` Node  
+## ℹ️ **Godot Lifecycle methods** inside a [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) Node  
 
-The `CommandSet` Node uses `_EnterTree`, `_Ready` and `_ExitTree` for internal functioning, 
-thus if you need to access the lifecycle methods within a `CommandSet` you 
+The [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) Node uses `_EnterTree`, `_Ready` and `_ExitTree` for internal functioning, 
+thus if you need to access the lifecycle methods within a [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) you 
 override the API-provided wrapper methods instead:  
 
 - `OnEnterTree`  
