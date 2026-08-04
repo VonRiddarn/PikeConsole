@@ -4,4 +4,7 @@
 
 [resource]
 script = ExtResource("1_a83bt")
+_defaultValue = 3
+Persist = true
+Description = "The space between the center of the screen and the crosshair bars."
 metadata/_custom_type_script = "uid://bblxtwt8mavck"

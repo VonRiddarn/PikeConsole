@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_jyhrf")
-_defaultValue = Color(0, 0.75126946, 0.46336284, 1)
+_defaultValue = Color(1.2513996e-06, 0.88569295, 0.34529635, 1)
 Persist = true
+Description = "The color of the crosshair and crosshairdot."
 metadata/_custom_type_script = "uid://cj5w2mnf08q68"

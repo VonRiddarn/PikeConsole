@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_7ky1w")
+_defaultValue = true
 Persist = true
-Description = "Crosshair dot in the center."
+Description = "Toggle for using a crosshair dot in the center of the crosshair bars."
 metadata/_custom_type_script = "uid://j1th6vqhii2n"

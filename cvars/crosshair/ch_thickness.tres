@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_0sfbx")
-_defaultValue = 4
-_value = 4
+_defaultValue = 2
+_value = 2
+Persist = true
+Description = "The thickness of the crosshair bars."
 metadata/_custom_type_script = "uid://bblxtwt8mavck"
