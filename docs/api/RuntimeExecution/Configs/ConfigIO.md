@@ -30,12 +30,12 @@ All files in the compiled binary are immutable and thus read only.
 ## Methods
 | Scope | Return | Name |
 |-------|--------|------|
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [ExecuteFromConfig](#executefromconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [WriteToConfig](#writetoconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RenameConfig](#renameconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RemoveConfig](#removeconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md), `string[] >` | [ReadConfig](#readconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md), [`ConfigRef[]`](ConfigRef.md) `>` | [GetConfigs](#getconfigs) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [ExecuteFromConfig](#executefromconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [WriteToConfig](#writetoconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RenameConfig](#renameconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RemoveConfig](#removeconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md), `string[] >` | [ReadConfig](#readconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md), [`ConfigRef[]`](ConfigRef.md) `>` | [GetConfigs](#getconfigs) |
 
 ## Event Descriptions  
 

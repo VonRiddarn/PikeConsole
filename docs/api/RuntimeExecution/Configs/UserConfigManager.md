@@ -35,15 +35,15 @@ Even if UI support is not added, PikeConsole ships with premade commands that al
 ## Methods
 | Scope | Return | Name |
 |-------|--------|------|
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [CreateAndSelectDefaultConfig](#createandselectdefaultconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md)`>` | [CreateConfig](#createconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md), [`ConfigRef[]`](ConfigRef.md)`>` | [GetAvailableConfigs](#getavailableconfigs) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RenameConfig](#renameconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [SaveCurrentConfig](#savecurrentconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [SaveConfig](#saveconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [FullResetCurrentConfig](#fullresetcurrentconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [SelectConfig](#selectconfig) |
-| `public` | [`Response`](../../RuntimeExecution/Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RemoveConfig](#removeconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [CreateAndSelectDefaultConfig](#createandselectdefaultconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md)`>` | [CreateConfig](#createconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus`](ConfigResponseStatus.md), [`ConfigRef[]`](ConfigRef.md)`>` | [GetAvailableConfigs](#getavailableconfigs) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RenameConfig](#renameconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [SaveCurrentConfig](#savecurrentconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [SaveConfig](#saveconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [FullResetCurrentConfig](#fullresetcurrentconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [SelectConfig](#selectconfig) |
+| `public` | [`Response`](../Response_T.md) `<` [`ConfigResponseStatus>`](ConfigResponseStatus.md)`>` | [RemoveConfig](#removeconfig) |
 
 ## Event Descriptions  
 
@@ -296,7 +296,7 @@ _Note: This can be both a displayname or filename. The backend automatically man
 ///
 
 **Description**:  
-Iterates through all persistent CVars in the [`PersistentCVarRegistry`](../../CVars/PersistentCVarRegistry.md) and saves all changed values to the selected config.  
+Iterates through all persistent CVars in the [`PersistentCVarRegistry`](../PersistentCVarRegistry.md) and saves all changed values to the selected config.  
 
 **Example(s)**:  
 _Fictional scenario where the user presses "Save" after selecting settings in the UI._  
@@ -373,7 +373,7 @@ A [response status](ConfigResponseStatus.md) informing if the operation was succ
 ///
 
 **Description**:  
-Uses the [`PersistentCVarRegistry`](../../CVars/PersistentCVarRegistry.md) to reset all persistent CVars to their default state with `ramOnly` set to false. This will automatically trigger the save (debounced) when all variables are reset.  
+Uses the [`PersistentCVarRegistry`](../PersistentCVarRegistry.md) to reset all persistent CVars to their default state with `ramOnly` set to false. This will automatically trigger the save (debounced) when all variables are reset.  
 
 **Example(s)**:  
 _Fictional scenario where the user presses "Reset all" in the UI._  

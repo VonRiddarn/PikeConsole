@@ -49,24 +49,24 @@ nav:
                       - CommandSet: api/RuntimeExecution/Commands/CommandSet.md
                 - CVars:
                       - Extensions:
-                            - CVarBase<T>: api/CVars/Extensions/CVarBase_T.md
-                      - CVarBool: api/CVars/CVarBool.md
-                      - CVarDouble: api/CVars/CVarDouble.md
-                      - CVarEnum: api/CVars/CVarEnum.md
-                      - CVarFloat: api/CVars/CVarFloat.md
-                      - CVarInt: api/CVars/CVarInt.md
-                      - CVarString: api/CVars/CVarString.md
-                      - CVarColor: api/CVars/CVarColor.md
-                      - CVarVector2: api/CVars/CVarVector2.md
-                      - CVarVector2I: api/CVars/CVarVector2I.md
-                      - CVarVector3: api/CVars/CVarVector3.md
-                      - CVarVector3I: api/CVars/CVarVector3I.md
+                            - CVarBase<T>: api/RuntimeExecution/CVars/Extensions/CVarBase_T.md
+                      - CVarBool: api/RuntimeExecution/CVars/CVarBool.md
+                      - CVarDouble: api/RuntimeExecution/CVars/CVarDouble.md
+                      - CVarEnum: api/RuntimeExecution/CVars/CVarEnum.md
+                      - CVarFloat: api/RuntimeExecution/CVars/CVarFloat.md
+                      - CVarInt: api/RuntimeExecution/CVars/CVarInt.md
+                      - CVarString: api/RuntimeExecution/CVars/CVarString.md
+                      - CVarColor: api/RuntimeExecution/CVars/CVarColor.md
+                      - CVarVector2: api/RuntimeExecution/CVars/CVarVector2.md
+                      - CVarVector2I: api/RuntimeExecution/CVars/CVarVector2I.md
+                      - CVarVector3: api/RuntimeExecution/CVars/CVarVector3.md
+                      - CVarVector3I: api/RuntimeExecution/CVars/CVarVector3I.md
                 - Configs:
                       - UserConfigManager: api/RuntimeExecution/Configs/UserConfigManager.md
                       - ConfigIO: api/RuntimeExecution/Configs/ConfigIO.md
                       - ConfigRef: api/RuntimeExecution/Configs/ConfigRef.md
                       - ConfigResponseStatus: api/RuntimeExecution/Configs/ConfigResponseStatus.md
-                - PersistentCVarRegistry: api/CVars/PersistentCVarRegistry.md
+                - PersistentCVarRegistry: api/RuntimeExecution/PersistentCVarRegistry.md
                 - RegistryBrowser: api/RuntimeExecution/RegistryBrowser.md
                 - SearchMode: api/RuntimeExecution/SearchMode.md
                 - StatementExecutor: api/RuntimeExecution/StatementExecutor.md

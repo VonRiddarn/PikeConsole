@@ -129,7 +129,7 @@ It does so by utilizing the `virtual` method [DisplayValue](#displayvalue).
 This is a _Editor facing_ flag that decides whether or not the CVar 
 should **persist between sessions**.  
 
-By default this only allows the CVar to be saved in the [PersistentCVarRegistry](../PersistentCVarRegistry.md). 
+By default this only allows the CVar to be saved in the [PersistentCVarRegistry](../../PersistentCVarRegistry.md). 
 From there, one may opt-in for the built in userconfig `.cfg` system, 
 or build their own using the `PersistentCVarRegistry` api.
 
