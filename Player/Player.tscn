@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://btluvpbncd3gp"]
+
+[ext_resource type="Script" uid="uid://dao0d6rebtrj8" path="res://Player/CharacterBody3d.cs" id="1_dtqjt"]
+[ext_resource type="Resource" uid="uid://yfxfqbt0dy2u" path="res://cvars/player/pl_gravity.tres" id="2_5ncpa"]
+[ext_resource type="Resource" uid="uid://bfofwxeasyjh3" path="res://cvars/player/pl_speed.tres" id="3_wi0c6"]
+[ext_resource type="Resource" uid="uid://dflgddag4e8ef" path="res://cvars/player/pl_jump_force.tres" id="4_hp6x6"]
+[ext_resource type="Resource" uid="uid://bjl46cbletayp" path="res://cvars/Mouse/m_sensitivity.tres" id="5_3tkgg"]
+[ext_resource type="Resource" uid="uid://bsn72hd8ayrsw" path="res://cvars/Mouse/m_yaw.tres" id="6_l6ohk"]
+[ext_resource type="Resource" uid="uid://cwuvsw73yvqb4" path="res://cvars/Mouse/m_pitch.tres" id="7_oudfo"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nujn6"]
+
+[node name="Player" type="CharacterBody3D" unique_id=1870550150 node_paths=PackedStringArray("CameraNode")]
+script = ExtResource("1_dtqjt")
+PlayerGravity = ExtResource("2_5ncpa")
+PlayerSpeed = ExtResource("3_wi0c6")
+PlayerJumpForce = ExtResource("4_hp6x6")
+MSensitivity = ExtResource("5_3tkgg")
+MYaw = ExtResource("6_l6ohk")
+MPitch = ExtResource("7_oudfo")
+CameraNode = NodePath("Camera")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=192254130]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_nujn6")
+debug_color = Color(0.17947593, 1.1044075, 2.8979725e-06, 1)
+
+[node name="Camera" type="Camera3D" parent="." unique_id=847118832]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
