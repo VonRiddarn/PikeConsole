@@ -30,7 +30,6 @@ public partial class CharacterBody3d : CharacterBody3D
 	[Export] CVarFloat MPitch;
 	float _mPitchCache = 0.22f;
 
-	// Assign your Camera3D / Node3D in the Godot Inspector
 	[Export] public Node3D CameraNode { get; set; }
 
 	float _cameraPitch = 0.0f;
