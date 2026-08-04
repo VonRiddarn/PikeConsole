@@ -13,7 +13,7 @@ public partial class AliasCommandSet : CommandSet
 
 	protected override Command[] InstantiateCommands() => [
 		Command(
-			Prefix,
+			"alias",
 			"Add or replace an alias in the registry.",
 			null,
 			$"{Prefix} [alias signature] \"[alias statement]\"",

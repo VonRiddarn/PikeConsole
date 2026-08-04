@@ -30,7 +30,7 @@ public partial class DiscoveryCommandSet : CommandSet
 				return new(ExecutionResponseStatus.Failed, $"Could not find runtime executable with signature \"{signature}\".");
 			}
 		),
-		Command(
+		CommandHidden(
 			"whereis",
 			"Lists the source location of any runtime executables.",
 			null,
