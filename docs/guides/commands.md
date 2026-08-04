@@ -111,7 +111,7 @@ _There is **no real performative difference** between the two examples. Choose t
 
 /// warning | Make sure to avoid naming collisions
 The `echo` command is already occupied by the `GlobalCommandSet`.  
-Make sure to name your command something else, like "my_command"!
+Make sure to name your command something else, like `my_echo`!
 ///
 
 ## 4️⃣ Run the command!  
