@@ -58,7 +58,7 @@ public partial class CharacterBody3d : CharacterBody3D
 	public override void _Ready()
 	{
 		Input.MouseMode = Input.MouseModeEnum.Captured;
-		Input.UseAccumulatedInput = true;
+		Input.UseAccumulatedInput = false;
 	}
 
 	public override void _UnhandledInput(InputEvent e)

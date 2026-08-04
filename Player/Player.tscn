@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://bjl46cbletayp" path="res://cvars/Mouse/m_sensitivity.tres" id="5_3tkgg"]
 [ext_resource type="Resource" uid="uid://bsn72hd8ayrsw" path="res://cvars/Mouse/m_yaw.tres" id="6_l6ohk"]
 [ext_resource type="Resource" uid="uid://cwuvsw73yvqb4" path="res://cvars/Mouse/m_pitch.tres" id="7_oudfo"]
+[ext_resource type="PackedScene" uid="uid://cmih2hxeqd41x" path="res://Player/Crosshair/Crosshair.tscn" id="8_s1rgi"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nujn6"]
 
@@ -28,3 +29,15 @@ debug_color = Color(0.17947593, 1.1044075, 2.8979725e-06, 1)
 [node name="Camera" type="Camera3D" parent="." unique_id=847118832]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 fov = 73.7
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1239887217]
+
+[node name="Crosshair" parent="HUD" unique_id=966214784 instance=ExtResource("8_s1rgi")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2

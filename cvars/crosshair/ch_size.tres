@@ -4,6 +4,7 @@
 
 [resource]
 script = ExtResource("1_40k06")
-_defaultValue = 1
+_defaultValue = 6
+_value = 6
 Persist = true
 metadata/_custom_type_script = "uid://bblxtwt8mavck"

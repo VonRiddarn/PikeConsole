@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="CVarInt" format=3 uid="uid://68clpaaww62e"]
+
+[ext_resource type="Script" uid="uid://bblxtwt8mavck" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarInt.cs" id="1_0sfbx"]
+
+[resource]
+script = ExtResource("1_0sfbx")
+_defaultValue = 4
+_value = 4
+metadata/_custom_type_script = "uid://bblxtwt8mavck"

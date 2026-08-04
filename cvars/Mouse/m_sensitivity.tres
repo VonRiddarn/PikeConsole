@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_5mfn7")
-_defaultValue = 1.0
-_value = 1.0
+_defaultValue = 3.0
+_value = 3.0
 Persist = true
+Description = "Overall mouse sensitivity multiplier. This is used to change the look sensitivity."
 metadata/_custom_type_script = "uid://ddmw5n8f8yun5"
