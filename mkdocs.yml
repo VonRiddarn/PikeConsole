@@ -24,7 +24,6 @@ nav:
           - Getting Started: guides/getting_started.md
           - Logging: guides/logging.md
           - Commands: guides/commands.md
-          - Commands list: guides/default_commands.md
           - CVars: guides/cvars.md
           - Aliases: guides/aliases.md
           - Best Practices: guides/best_practices.md
