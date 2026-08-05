@@ -27,8 +27,8 @@ public partial class UserConfigCommandSet : CommandSet
 				bool select = true;
 				if(count == 2)
 				{
-					if(!ArgumentParser.TryParseBool(args[1], out bool wantSelect, out string _))
-						return new(ExecutionResponseStatus.Failed, "PARSE ERROR", [LogTags.Failed]);
+					if(!ArgumentParser.TryParseBool(args[1], out bool wantSelect, out error))
+						return new(ExecutionResponseStatus.Failed, error, [LogTags.Failed]);
 					select = wantSelect;
 				}
 
