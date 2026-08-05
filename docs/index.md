@@ -41,3 +41,8 @@ PikeConsole was created by me, [Timmy Öhman](https://www.linkedin.com/in/timmyo
 I used to spend more time hacking together random debug GUIs than actually making the games. Thus, I planned out and built a GoldSrc inspired CVar framework to easily manage my gamestates at runtime. The framework has improved and grown a lot over the years and is now a crucial part of the [Fractal Pike](https://www.fractalpike.com) ecosystem. 
 
 Now it is ported to Godot and made open source so that all can enjoy.
+
+/// warning | Please be adviced
+English is not my native language. Although I've done my best to correct spelling and grammar, some parts of the documentation will contain language based errors. 
+These are not a reflection on the quality of PikeConsole or its technical foundation. 
+///
