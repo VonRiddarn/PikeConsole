@@ -11,7 +11,7 @@ session persistance, cheat protection, registry indexing and formatting.
 
 It serves both as the entry point for anyone wanting to expand the API with more CVar types, and as a contract to ensure consistent interactions between CVars.  
 
-For a tutorial on how to create a custom CVar type, see [the cvar guide](../../../guides/cvars.md).
+For a tutorial on how to create a custom CVar type, see [the cvar guide](../../../../guides/cvars.md).
 
 ## Events  
 | Scope | Delegate | Name |
