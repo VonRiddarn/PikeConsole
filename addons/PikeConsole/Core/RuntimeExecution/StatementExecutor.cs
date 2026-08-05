@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
@@ -17,10 +18,16 @@ public static class StatementExecutor
 	/// <param name="signature">The command or alias to execute.</param>
 	/// <param name="args">Arguments to pass with to the command or alias.</param>
 	/// <param name="silent">Supress "success" logs.</param>
-	public static void Execute(ExecutionSource executionSource, string signature, string[] args, bool silent = false)
+	public static void Execute(
+		ExecutionSource executionSource,
+		string signature, string[] args,
+		bool silent = false,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
 		// We use a private internal method so recursion tracking is hidden from the public API
-		ExecuteInternal(executionSource, signature, args, silent, null);
+		ExecuteInternal(executionSource, signature, args, silent, null, filePath, lineNumber, memberName);
 	}
 
 	/// <summary>
@@ -30,12 +37,18 @@ public static class StatementExecutor
 	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
 	/// <param name="rawInput">A raw input line to parse and execute.</param>
 	/// <param name="silent">Supress "success" logs.</param>
-	public static void Execute(ExecutionSource source, string rawInput, bool silent = false)
+	public static void Execute(
+		ExecutionSource source,
+		string rawInput,
+		bool silent = false,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
 		ParsedStatement[] statements = StatementParser.ParseLine(rawInput);
 		foreach (var s in statements)
 		{
-			ExecuteInternal(source, s.Signature, s.Arguments, silent, null);
+			ExecuteInternal(source, s.Signature, s.Arguments, silent, null, filePath, lineNumber, memberName);
 		}
 	}
 
@@ -45,15 +58,29 @@ public static class StatementExecutor
 	/// <param name="source">The entitty that wants to execute the command (Player or System)</param>
 	/// <param name="parsedStatements">A list of pre-parsed statement structs.</param>
 	/// <param name="silent">Supress "success" logs.</param>
-	public static void Execute(ExecutionSource source, ParsedStatement[] parsedStatements, bool silent = false)
+	public static void Execute(
+		ExecutionSource source,
+		ParsedStatement[] parsedStatements,
+		bool silent = false,
+		[CallerFilePath] string filePath = "",
+		[CallerLineNumber] int lineNumber = 0,
+		[CallerMemberName] string memberName = "")
 	{
 		foreach (var s in parsedStatements)
 		{
-			ExecuteInternal(source, s.Signature, s.Arguments, silent, null);
+			ExecuteInternal(source, s.Signature, s.Arguments, silent, null, filePath, lineNumber, memberName);
 		}
 	}
 
-	static void ExecuteInternal(ExecutionSource executionSource, string signature, string[] args, bool silent, Stack<string> callStack)
+	static void ExecuteInternal(
+		ExecutionSource executionSource,
+		string signature,
+		string[] args,
+		bool silent,
+		Stack<string> callStack,
+		string filePath,
+		int lineNumber,
+		string memberName)
 	{
 		if (callStack != null)
 		{
@@ -132,7 +159,7 @@ public static class StatementExecutor
 					targetArgs = [.. targetArgs, .. args];
 				}
 
-				ExecuteInternal(executionSource, statements[i].Signature, targetArgs, silent, callStack);
+				ExecuteInternal(executionSource, statements[i].Signature, targetArgs, silent, callStack, filePath, lineNumber, memberName);
 			}
 
 			callStack.Pop();
@@ -141,7 +168,11 @@ public static class StatementExecutor
 		else // Once again, else is not needed, but if we ever accidentally remove a return we are safe.
 		{
 			// ----- ----- NOT FOUND ----- -----
-			PikeLogger.Log(LogTarget.Runtime, $"Unknown command: \"{signature}\"", forceLog: true);
+			if (executionSource != ExecutionSource.Standard)
+				PikeLogger.LogError(LogTarget.Runtime, $"Unknown command: \"{signature}\" in {filePath}:{lineNumber}:{memberName}\nCheck order of operations and make sure the signature is valid!", forceLog: true);
+			else
+				PikeLogger.Log(LogTarget.Runtime, $"Unknown command: \"{signature}\"", forceLog: true);
+
 			return;
 		}
 
