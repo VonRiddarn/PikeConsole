@@ -32,6 +32,7 @@ enabled=PackedStringArray("res://addons/PikeConsole/plugin.cfg")
 
 pike_console/config/use_user_configs=true
 pike_console/runtime/frontend_scene="uid://bejwps7jfkded"
+pike_console/pathmap="/FractalPike/PikeConsole"
 
 [input]
 
