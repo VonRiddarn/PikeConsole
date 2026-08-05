@@ -13,6 +13,9 @@ namespace FractalPike.PikeConsole.Examples;
  * I'm just keeping it because it contains the magic source values for yaw and pitch tbh.
  * 
  * TODO: Cleanup this script and make it look at least a little bit like what you'd see in a real game.
+ * 
+ * NOTE: The way the pause is implemented is very sub-optimal and prone to breaking.  
+ * That's because we're mixing concerns in order to keep the scrtipt simple.
 */
 
 public partial class CharacterBody3d : CharacterBody3D
@@ -103,7 +106,7 @@ public partial class CharacterBody3d : CharacterBody3D
 			velocity += new Vector3(g.X, g.Y * PlayerGravity.Value, g.Z) * (float)delta;
 		}
 
-		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
+		if (_isActive && Input.IsActionJustPressed("ui_accept") && IsOnFloor())
 			velocity.Y = PlayerJumpForce.Value;
 
 		Vector2 inputDir = _isActive ? Input.GetVector("move_left", "move_right", "move_forward", "move_back") : Vector2.Zero;
