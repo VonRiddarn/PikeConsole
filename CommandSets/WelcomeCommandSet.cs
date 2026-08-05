@@ -44,6 +44,8 @@ public partial class WelcomeCommandSet : CommandSet
 		welcomeSb.AppendLine("If you're familiar with the GoldSrc console, you should feel right at home.");
 		welcomeSb.AppendLine("If not, you're in luck. Because it's one of the easiest and intuitive frameworks to learn!");
 		welcomeSb.AppendLine();
+		welcomeSb.AppendLine("Use \"cheatmode 1\" or \"cheatmode true\" to enable cheat mode.");
+		welcomeSb.AppendLine();
 		welcomeSb.AppendLine("Use the command \"welcome\" to see this message again!");
 		welcomeSb.AppendLine("Good luck!");
 
