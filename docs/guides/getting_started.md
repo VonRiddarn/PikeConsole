@@ -82,19 +82,10 @@ You can do this through the file explorer or directly through your IDE if you're
 
 **2️⃣ Edit the `.csproj` file**  
 
-Once the file is open, you will see some XML code. It should look similar to this:  
-```xml
-<Project Sdk="Godot.NET.Sdk/4.7.0">
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net9.0</TargetFramework>
-    <EnableDynamicLoading>true</EnableDynamicLoading>
-  </PropertyGroup>
-</Project>
-```  
+Once the file is open, you will see some XML code.
 
 What we need to do is add a `<PathMap>` parameter inside the `<PropertyGroup>`.  
-You can copy and paste this code (DO NOT REMOVE THE SLASH):  
+You can copy and paste this code (**do not remove the slash before the directory name**):  
 ```xml
 <PathMap>$(MSBuildProjectDirectory)=/MyProjectName</PathMap>
 ```  
