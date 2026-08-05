@@ -7,7 +7,7 @@ using System;
 
 namespace FractalPike.PikeConsole.Examples;
 
-public partial class DebugCommandSets : CommandSet
+public partial class DebugCommandSet : CommandSet
 {
 	protected override Command[] InstantiateCommands() =>
 	[

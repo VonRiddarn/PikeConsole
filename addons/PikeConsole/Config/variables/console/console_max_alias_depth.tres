@@ -6,6 +6,7 @@
 script = ExtResource("1_me621")
 _defaultValue = 128
 _value = 128
+_useClampMin = true
 Persist = true
 Description = "Controls how deep the alias callstack can go before aborting to save memory. This value has no effect on the  alias recursion protection. "
 metadata/_custom_type_script = "uid://bblxtwt8mavck"

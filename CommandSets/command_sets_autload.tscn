@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://cin4pow3cbebf"]
-
-[ext_resource type="Script" uid="uid://e0ylcfic1snx" path="res://CommandSets/DebugCommandSets.cs" id="1_mpddm"]
-
-[node name="DebugCommandSets" type="Node" unique_id=208576637]
-script = ExtResource("1_mpddm")

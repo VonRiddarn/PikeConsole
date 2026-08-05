@@ -9,5 +9,5 @@ _value = 32
 _useClampMin = true
 _minClampValue = 1
 Persist = true
-Description = "The update rate of the console's UI logic. Increasing this value may make the console UI feel more responsive, though it would require more resources. Do not use this value to disable the console. use \"console_enabled 0\" instead as that truly turns off the console."
+Description = "The update rate of the console's UI logic. Increasing this value may make the console UI feel more responsive, though it will require more resources. Do not use this value to disable the console. use \"console_enabled 0\" instead as that truly turns off the console."
 metadata/_custom_type_script = "uid://bblxtwt8mavck"
