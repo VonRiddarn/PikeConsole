@@ -14,9 +14,9 @@ The framework is built with **runtime optimization**, **extensibility** and **ea
 
 ## 🐇💨 Getting started
 
-If you want to start by toying around you can check out the ~~**[⏳ QUICK START GUIDE](#)**~~ which will have you running your first command in just **3 minutes**!
+If you want to start by toying around you can check out the **[⏳ QUICK START GUIDE](https://vonriddarn.github.io/PikeConsole/guides/getting_started/)** which will have you running your first command in just **3 minutes**!
 
-There is also a quite extensive ~~**[📑 DOCUMENTATION](#)**~~ where you can find anything from guides and breakdowns, to a public API reference.
+There is also a quite extensive **[📑 DOCUMENTATION](https://vonriddarn.github.io/PikeConsole/)** where you can find anything from guides and breakdowns, to a public API reference.
 
 NOTE:  
 The documentation and quick start guide is underway. To peek at the content, check out the `docs` folder in this repository, but be advised that it is not fully realised.  
@@ -95,7 +95,7 @@ PikeLogger.Log(LogTarget.Debug, $"It's literally free in a release builds. I can
 ```
 
 _Note that you **must** use string interpolation with PikeLogger even if you're not interpolating variables._  
-_This is because we are using a custom string interpolation handler. More on that can be found ~~**[📑 HERE](#)**~~._
+_This is because we are using a custom string interpolation handler. More on that can be found **[📑 HERE](https://vonriddarn.github.io/PikeConsole/guides/logging/#why-interpolated-strings)**._
 
 **You want to have globally accessible, decoupled variables? Say less.**
 
@@ -193,7 +193,7 @@ The actual footprint is often less than the estimation, as seen in the memory sn
 
 ## ⚠️ Privacy notice!
 
-_For a more thorough tutorial on how to edit the path map, check out **[📑 THIS GUIDE](#)**_.
+_For a more thorough tutorial on how to edit the path map, check out **[📑 THIS GUIDE](https://vonriddarn.github.io/PikeConsole/guides/getting_started/#fix-your-privacy-settings)**_.
 
 This Logger uses compile-time directory baking to display certain paths in logs.  
 This results in super fast, interned strings - but it bakes your folder structure into the game!  
