@@ -220,7 +220,7 @@ This can be used to force-disable stuff like noclip.
 
 - `OnCheatModeChanged`
 
-/// note | Here is that code added to our previous example
+_Here is that code added to our previous example..._
 === "Inline"
 	```csharp {linenums="1"}
 	using FractalPike.PikeConsole.Core.Logging;
@@ -313,7 +313,6 @@ This can be used to force-disable stuff like noclip.
 		}
 	}
 	```
-///
 
 ## 📦 Execution responses
 
@@ -339,18 +338,4 @@ return new Response<ExecutionResponseStatus> (
 	);
 ```
 
-/// note | Available ExecutionResponseStatuses
-`Success`
-: The command executed expectedly.
-
-`InvalidArgs`
-: The command failed to execute because of invalid string parameters.
-
-`Failed`
-: The command failed expectedly. 
-_EG: Couldn't find an entity of a certain ID._
-
-`Error`
-: Failed unexpectedly.  
-_EG: By catching an exception._
-///
+To see available responses, check out [`ExecutionResponseStatus`](../api/RuntimeExecution/ExecutionResponseStatus.md).
