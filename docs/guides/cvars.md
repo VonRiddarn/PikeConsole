@@ -10,4 +10,10 @@ Or: Snowmap automatically sets the `cl_blur_intensity` and `pl_movement_max_spee
 **Settigns**  
 Talk about how the the audio manager slider can just point to a CVar and subscribe to it instead of having to check a massive config for specific settings.  
 Making a new slider is just douplicating it and switching the CVar resource reference.  
-If done this way it also marries well with the CFG system that can execute commands on startup, meaning the settings save system is already prepared!
+If done this way it also marries well with the CFG system that can execute commands on startup, meaning the settings save system is already prepared!  
+
+- CVars (Before commands, because they are easier!)
+-   - CVar folder
+-   - Right click creation flow
+-   - Consume the CVar from a subscriber
+-   - More info, like how to make your own CVar type (link to `docs/cvars.md`)
