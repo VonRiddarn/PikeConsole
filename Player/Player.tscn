@@ -17,15 +17,15 @@ albedo_color = Color(0.9626408, 0.6622624, 0.49378723, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j23h2"]
 albedo_color = Color(0.42806172, 0.20402053, 0.003483367, 1)
 
-[node name="Player" type="CharacterBody3D" unique_id=1870550150 node_paths=PackedStringArray("CameraNode")]
+[node name="Player" type="CharacterBody3D" unique_id=1870550150 node_paths=PackedStringArray("_cameraNode")]
 script = ExtResource("1_dtqjt")
-PlayerGravity = ExtResource("2_5ncpa")
-PlayerSpeed = ExtResource("3_wi0c6")
-PlayerJumpForce = ExtResource("4_hp6x6")
-MSensitivity = ExtResource("5_3tkgg")
-MYaw = ExtResource("6_l6ohk")
-MPitch = ExtResource("7_oudfo")
-CameraNode = NodePath("Camera")
+_gravity = ExtResource("2_5ncpa")
+_speed = ExtResource("3_wi0c6")
+_jumpForce = ExtResource("4_hp6x6")
+_mSensitivity = ExtResource("5_3tkgg")
+_mYaw = ExtResource("6_l6ohk")
+_mPitch = ExtResource("7_oudfo")
+_cameraNode = NodePath("Camera")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=192254130]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

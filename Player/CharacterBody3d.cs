@@ -1,11 +1,11 @@
 using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
 using Godot;
-using System;
 
 namespace FractalPike.PikeConsole.Examples;
 
 #pragma warning disable IDE0044
+#pragma warning disable IDE1006
 
 
 /*
@@ -21,20 +21,21 @@ namespace FractalPike.PikeConsole.Examples;
 public partial class CharacterBody3d : CharacterBody3D
 {
 
-	[Export] CVarFloat PlayerGravity;
-	[Export] CVarFloat PlayerSpeed;
-	[Export] CVarFloat PlayerJumpForce;
+	[Export] CVarFloat _gravity;
+	[Export] CVarFloat _speed;
+	[Export] CVarFloat _jumpForce;
+	[Export] float _runMultiplier = 1.33f;
 
 	// m_yaw = Left / Right
 	// m_pitch = Up / Down
 	// Default: 0.022
-	[Export] CVarFloat MSensitivity;
-	[Export] CVarFloat MYaw;
+	[Export] CVarFloat _mSensitivity;
+	[Export] CVarFloat _mYaw;
 	float _mYawCache = 0.022f;
-	[Export] CVarFloat MPitch;
+	[Export] CVarFloat _mPitch;
 	float _mPitchCache = 0.022f;
 
-	[Export] public Node3D CameraNode { get; set; }
+	[Export] Node3D _cameraNode { get; set; }
 
 	float _cameraPitch = 0.0f;
 
@@ -42,18 +43,18 @@ public partial class CharacterBody3d : CharacterBody3D
 
 	public override void _EnterTree()
 	{
-		_mYawCache = Mathf.DegToRad(MYaw.Value);
-		_mPitchCache = Mathf.DegToRad(MPitch.Value);
+		_mYawCache = Mathf.DegToRad(_mYaw.Value);
+		_mPitchCache = Mathf.DegToRad(_mPitch.Value);
 
-		MYaw.ValueChanged += OnMYawChanged;
-		MPitch.ValueChanged += OnMPitchChanged;
+		_mYaw.ValueChanged += OnMYawChanged;
+		_mPitch.ValueChanged += OnMPitchChanged;
 
 		PikeConsoleStates.ConsoleUIActiveChanged += OnConsoleUIChanged;
 	}
 	public override void _ExitTree()
 	{
-		MYaw.ValueChanged -= OnMYawChanged;
-		MPitch.ValueChanged -= OnMPitchChanged;
+		_mYaw.ValueChanged -= OnMYawChanged;
+		_mPitch.ValueChanged -= OnMPitchChanged;
 
 		PikeConsoleStates.ConsoleUIActiveChanged += OnConsoleUIChanged;
 	}
@@ -77,20 +78,20 @@ public partial class CharacterBody3d : CharacterBody3D
 	{
 		if (_isActive && e is InputEventMouseMotion mouseMotion)
 		{
-			float sens = MSensitivity.Value;
+			float sens = _mSensitivity.Value;
 			float yawInput = mouseMotion.Relative.X * _mYawCache * sens;
 			float pitchInput = mouseMotion.Relative.Y * _mPitchCache * sens;
 
 			RotateY(-yawInput);
 
-			if (CameraNode != null)
+			if (_cameraNode != null)
 			{
 				_cameraPitch -= pitchInput;
 				_cameraPitch = Mathf.Clamp(_cameraPitch, Mathf.DegToRad(-89f), Mathf.DegToRad(89f));
 
-				Vector3 camRotation = CameraNode.Rotation;
+				Vector3 camRotation = _cameraNode.Rotation;
 				camRotation.X = _cameraPitch;
-				CameraNode.Rotation = camRotation;
+				_cameraNode.Rotation = camRotation;
 			}
 		}
 	}
@@ -98,16 +99,19 @@ public partial class CharacterBody3d : CharacterBody3D
 	public override void _PhysicsProcess(double delta)
 	{
 		Vector3 velocity = Velocity;
-		float speed = PlayerSpeed.Value;
+		float speed = _speed.Value;
+
+		if (Input.IsActionPressed("run"))
+			speed *= _runMultiplier;
 
 		if (!IsOnFloor())
 		{
 			Vector3 g = GetGravity();
-			velocity += new Vector3(g.X, g.Y * PlayerGravity.Value, g.Z) * (float)delta;
+			velocity += new Vector3(g.X, g.Y * _gravity.Value, g.Z) * (float)delta;
 		}
 
 		if (_isActive && Input.IsActionJustPressed("ui_accept") && IsOnFloor())
-			velocity.Y = PlayerJumpForce.Value;
+			velocity.Y = _jumpForce.Value;
 
 		Vector2 inputDir = _isActive ? Input.GetVector("move_left", "move_right", "move_forward", "move_back") : Vector2.Zero;
 
