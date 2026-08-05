@@ -1,3 +1,4 @@
+using FractalPike.PikeConsole.Config;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Cvars;
 using Godot;
 using System;
@@ -34,6 +35,8 @@ public partial class CharacterBody3d : CharacterBody3D
 
 	float _cameraPitch = 0.0f;
 
+	bool _isActive = true;
+
 	public override void _EnterTree()
 	{
 		_mYawCache = Mathf.DegToRad(MYaw.Value);
@@ -41,12 +44,18 @@ public partial class CharacterBody3d : CharacterBody3D
 
 		MYaw.ValueChanged += OnMYawChanged;
 		MPitch.ValueChanged += OnMPitchChanged;
+
+		PikeConsoleStates.ConsoleUIActiveChanged += OnConsoleUIChanged;
 	}
 	public override void _ExitTree()
 	{
 		MYaw.ValueChanged -= OnMYawChanged;
 		MPitch.ValueChanged -= OnMPitchChanged;
+
+		PikeConsoleStates.ConsoleUIActiveChanged += OnConsoleUIChanged;
 	}
+
+	private void OnConsoleUIChanged(bool isActive) => _isActive = !isActive;
 
 	void OnMYawChanged(float value) =>
 		_mYawCache = Mathf.DegToRad(value);
@@ -63,7 +72,7 @@ public partial class CharacterBody3d : CharacterBody3D
 
 	public override void _UnhandledInput(InputEvent e)
 	{
-		if (e is InputEventMouseMotion mouseMotion)
+		if (_isActive && e is InputEventMouseMotion mouseMotion)
 		{
 			float sens = MSensitivity.Value;
 			float yawInput = mouseMotion.Relative.X * _mYawCache * sens;
@@ -97,7 +106,7 @@ public partial class CharacterBody3d : CharacterBody3D
 		if (Input.IsActionJustPressed("ui_accept") && IsOnFloor())
 			velocity.Y = PlayerJumpForce.Value;
 
-		Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_back");
+		Vector2 inputDir = _isActive ? Input.GetVector("move_left", "move_right", "move_forward", "move_back") : Vector2.Zero;
 
 		Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
