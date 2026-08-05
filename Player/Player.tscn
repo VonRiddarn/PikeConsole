@@ -11,6 +11,12 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nujn6"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s1rgi"]
+albedo_color = Color(0.9626408, 0.6622624, 0.49378723, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j23h2"]
+albedo_color = Color(0.42806172, 0.20402053, 0.003483367, 1)
+
 [node name="Player" type="CharacterBody3D" unique_id=1870550150 node_paths=PackedStringArray("CameraNode")]
 script = ExtResource("1_dtqjt")
 PlayerGravity = ExtResource("2_5ncpa")
@@ -30,6 +36,90 @@ debug_color = Color(0.17947593, 1.1044075, 2.8979725e-06, 1)
 physics_interpolation_mode = 2
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 fov = 73.7
+
+[node name="Hands" type="Node3D" parent="Camera" unique_id=1055997905]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="Camera/Hands" unique_id=371083407]
+process_mode = 4
+transform = Transform3D(0.96015656, -0.12449539, 0.25020054, 0.12858516, 0.99169844, -1.8626451e-09, -0.24812348, 0.03217208, 0.96819395, 0.5791968, -0.3823924, -0.22601315)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.115722656, 0.072265625, 0.80908203)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Camera/Hands" unique_id=913719102]
+process_mode = 4
+transform = Transform3D(0.96015656, -0.12449539, 0.25020054, 0.12858516, 0.99169844, -1.8626451e-09, -0.24812348, 0.03217208, 0.96819395, 0.4433013, -0.3836726, -0.724751)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.10192871, 0.12408447, 0.23284912)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Camera/Hands" unique_id=1141760123]
+process_mode = 4
+transform = Transform3D(0.9550545, -0.12449539, -0.26901993, 0.110977955, 0.99169844, -0.0649464, 0.27487206, 0.03217208, 0.9609424, 0.39954698, -0.35146838, -0.63393366)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.08203125, 0.029785156, 0.03125)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Camera/Hands" unique_id=557300506]
+process_mode = 4
+transform = Transform3D(0.6832304, -0.124495395, -0.7195118, 0.062168263, 0.9916985, -0.11255775, 0.7275516, 0.032172084, 0.6852982, 0.3561456, -0.35673073, -0.6596416)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.056152344, 0.029785156, 0.03125)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Camera/Hands" unique_id=1986128319]
+process_mode = 4
+transform = Transform3D(-0.50559825, -0.12449539, -0.8537395, -0.09130383, 0.99169844, -0.09054144, 0.8579242, 0.03217209, -0.51276803, 0.3546575, -0.37247932, -0.74026835)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.061645508, 0.029785156, 0.03125)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Camera/Hands" unique_id=846804937]
+process_mode = 4
+transform = Transform3D(-0.50559825, -0.12449539, -0.8537395, -0.09130383, 0.99169844, -0.09054144, 0.8579242, 0.03217209, -0.51276803, 0.35989857, -0.4142283, -0.74162275)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.061645508, 0.029785156, 0.03125)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Camera/Hands" unique_id=1090145851]
+process_mode = 4
+transform = Transform3D(-0.50559825, -0.12449539, -0.8537395, -0.09130383, 0.99169844, -0.09054144, 0.8579242, 0.03217209, -0.51276803, 0.3649352, -0.4543487, -0.74292433)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.061645508, 0.029785156, 0.03125)
+material = SubResource("StandardMaterial3D_s1rgi")
+
+[node name="Knife" type="Node3D" parent="Camera/Hands" unique_id=23591564]
+transform = Transform3D(0.99169844, -0.12858516, 0, 0.12858516, 0.99169844, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Camera/Hands/Knife" unique_id=796020402]
+process_mode = 4
+transform = Transform3D(0.96819466, 0, 0.25020054, -8.195639e-08, 1, 0, -0.25020054, 0, 0.968194, 0.3291946, -0.41182566, -0.6993928)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.06994629, 0.18515015, 0.0793457)
+material = SubResource("StandardMaterial3D_j23h2")
+
+[node name="CSGBox3D4" type="CSGPolygon3D" parent="Camera/Hands/Knife" unique_id=1493942929]
+process_mode = 4
+transform = Transform3D(0.28050554, 0, -0.021751989, -1.4156103e-07, 1, 0, 0.9598549, 0, 0.0063567604, 0.316192, -0.17557251, -0.69548917)
+gi_mode = 2
+calculate_tangents = false
+polygon = PackedVector2Array(-0.038548052, -0.13403249, 0.0075683594, 0.20680916, 0.05213046, 0.036155105, 0.03646165, -0.12510288)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Camera/Hands/Knife" unique_id=601007014]
+process_mode = 4
+transform = Transform3D(0.9681965, 0, 0.25020054, -1.4156103e-07, 1, 0, -0.25020054, 0, 0.968194, 0.33045477, -0.32105553, -0.69451755)
+gi_mode = 2
+calculate_tangents = false
+size = Vector3(0.06994629, 0.038963318, 0.1428833)
+material = SubResource("StandardMaterial3D_j23h2")
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1239887217]
 
