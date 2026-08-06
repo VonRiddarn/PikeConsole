@@ -1,9 +1,12 @@
 name: Deploy MkDocs to GitHub Pages
 
 on:
+    workflow_dispatch:
     push:
         branches:
             - main
+        tags:
+            - "*"
         paths:
             - "docs/**"
             - "mkdocs.yml"
