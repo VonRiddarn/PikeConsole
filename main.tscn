@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://e0ylcfic1snx" path="res://CommandSets/DebugCommandSet.cs" id="1_lquwl"]
 [ext_resource type="Material" uid="uid://b0wgbj40if3p7" path="res://materials/walls.tres" id="2_1bvp3"]
 [ext_resource type="Script" uid="uid://cn5x8qrh1nnpk" path="res://CommandSets/WelcomeCommandSet.cs" id="4_1bvp3"]
+[ext_resource type="Resource" uid="uid://bpse4i5ot105d" path="res://cvars/player/pl_run_multiplier.tres" id="6_7mycd"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -173,3 +174,4 @@ shadow_enabled = true
 
 [node name="Player" parent="." unique_id=1870550150 instance=ExtResource("1_ig7tw")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.0830228, 2.6332545, 0)
+_runMultiplier = ExtResource("6_7mycd")

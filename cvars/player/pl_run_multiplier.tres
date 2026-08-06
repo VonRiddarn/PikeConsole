@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="CVarFloat" format=3 uid="uid://bpse4i5ot105d"]
+
+[ext_resource type="Script" uid="uid://ddmw5n8f8yun5" path="res://addons/PikeConsole/Core/RuntimeExecution/CVars/CVarFloat.cs" id="1_lon1s"]
+
+[resource]
+script = ExtResource("1_lon1s")
+_defaultValue = 1.33
+_useClampMin = true
+_minClampValue = 1.0
+IsCheat = true
+Description = "The player movement speed is multiplied by this value when holding the run action. (Shift by default) "
+metadata/_custom_type_script = "uid://ddmw5n8f8yun5"

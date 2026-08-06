@@ -24,7 +24,7 @@ public partial class CharacterBody3d : CharacterBody3D
 	[Export] CVarFloat _gravity;
 	[Export] CVarFloat _speed;
 	[Export] CVarFloat _jumpForce;
-	[Export] float _runMultiplier = 1.33f;
+	[Export] CVarFloat _runMultiplier;
 
 	// m_yaw = Left / Right
 	// m_pitch = Up / Down
@@ -102,7 +102,7 @@ public partial class CharacterBody3d : CharacterBody3D
 		float speed = _speed.Value;
 
 		if (Input.IsActionPressed("run"))
-			speed *= _runMultiplier;
+			speed *= _runMultiplier.Value;
 
 		if (!IsOnFloor())
 		{
