@@ -1,9 +1,50 @@
 # Best Practices
 
--   - Best practices
--   -   - Do not place in hot path (even if the framework is very optimized; Guardrail, not free-card)
--   -   - Place killswitch as a setting in the settings menu under "enable console"
--   -   - Should replace GD.print all together
--   -   -   - Interop bridge (C# -> C++ interop overhead, PikeConsole is fully C# and non-alloc with)
--   -   -   - Use LogTarget.Debug for internal use that strips interop bridge in builds
--   -   -   - Hard set killswitch in config and do not add a setting to exclude from release builds. Not recommended.
+## CommandSets at top layer
+
+When adding a [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) to your scene, always make sure to add it to the top most instance in each system.  
+For example, if we have a [`CommandSet`](../api/RuntimeExecution/Commands/CommandSet.md) to kill, move or mutate enemies, **do not** place it on the enemy instance itself!  
+
+Instead place it on the `enemy manager` instance, which is less volatile.  
+This should come intuitively, but it is worth noting.  
+
+## Cvars are for tweaks  
+
+When using CVars, use them on values that are either mostly static, or used for tweaking gameplay / environment.  
+
+**Good** examples of CVars are:  
+
+- `player_speed`  
+- `player_jump_height`  
+- `world_daytime_speed`  
+- `monster_spawn_rate`    
+
+**Bad** examples of CVars are:  
+
+- `player_health`
+- `player_current_ammo`
+- `world_current_time`
+
+## Make the console killswitch available  
+
+PikeConsole comes with a built in killswitch.  
+Setting `PikeConsoleStates.RuntimeConsoleEnabled.Value` to `false` will effectively kill the runtime console.  
+In rare cases, such as if the game is spamming errors or the player is using exceptionally slow hardware, this can save on performance.  
+It is recommended to provide a toggle for this value in your settings menu, much like how Valve did in **Half-Life 2**.  
+
+## Stop using `GD.Print`
+
+[`PikeLogger`](../api/Logging/PikeLogger.md) is not a substitute for `GD.Print`, it's a replacement.  
+Use [`PikeLogger`](../api/Logging/PikeLogger.md) exlusively to benefit from the smart compiler flags, self diagnostic errors and zero allocation logging.  
+[`PikeLogger`](../api/Logging/PikeLogger.md) bypasses the interop bridge entirely and is an optimized .NET runtime class.  
+
+See [the logging guide](logging.md) for more info.
+
+## 📙 Other resources
+
+* [Getting Started](getting_started.md) (Recommended)
+* [Commands](logging.md)
+* [Aliases](aliases.md)
+* [User Configs](user_configs.md)
+
+* [API REF](../api/index.md)
