@@ -63,6 +63,8 @@ _At the time of writing this, there are no players 😂_
 You are free to use the framework however you'd like and never even mention it.  
 If you would like to support me and the project though, starring (⭐) the [Github repo](https://github.com/VonRiddarn/PikeConsole) goes a long way and helps me out a lot in terms of discoverability!
 
-If you'd like to go the extra mile you can fuel my addiction and...
+_If you'd like to go the extra mile you can fuel my addiction and..._  
 
+<a href="https://ko-fi.com/vonriddarn" target="_blank" rel="noopener noreferrer">
 <img style="height: 56px; width: auto;" src="_media/kofi-button.png" alt="Buy me a bag of Djungelvrål @ Ko-fi" />
+</a>
