@@ -183,7 +183,8 @@ The `help` and `whereis` commands are META commands that will automatically work
 
 * [Logging](logging.md) (Recommended)
 * [Best Practices](best_practices.md) (Recommended)
-* [Cvars](logging.md)
-* [Commands](logging.md)
+* [Cvars](cvars.md)
+* [Commands](commands.md)
 * [Aliases](aliases.md)
 * [User Configs](user_configs.md)
+* [Video Guides](video_guides.md)

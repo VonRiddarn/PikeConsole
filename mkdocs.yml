@@ -27,6 +27,7 @@ nav:
           - CVars: guides/cvars.md
           - Aliases: guides/aliases.md
           - Best Practices: guides/best_practices.md
+          - Video Guides: guides/video_guides.md
     - API Reference:
           - Overview: api/index.md
           - Logging:

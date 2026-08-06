@@ -338,4 +338,14 @@ return new Response<ExecutionResponseStatus> (
 	);
 ```
 
-To see available responses, check out [`ExecutionResponseStatus`](../api/RuntimeExecution/ExecutionResponseStatus.md).
+To see available responses, check out [`ExecutionResponseStatus`](../api/RuntimeExecution/ExecutionResponseStatus.md).  
+
+## 📙 Other resources
+
+* [Getting Started](getting_started.md) (Recommended)
+* [Logging](logging.md) (Recommended)
+* [Best Practices](best_practices.md) (Recommended)
+* [Cvars](cvars.md)
+* [Aliases](aliases.md)
+* [User Configs](user_configs.md)
+* [Video Guides](video_guides.md)

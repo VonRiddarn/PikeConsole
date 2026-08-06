@@ -42,4 +42,15 @@ alias A "echo A; B"; alias B "echo B; C"; alias C "echo C; A"
 
 Once all aliases are registered, try running any of them (`A`, `B` or `C`) and see what happens:  
 
-![IMAGE_2](../_media/guides/aliases/2.png)
+![IMAGE_2](../_media/guides/aliases/2.png)  
+
+## 📙 Other resources
+
+* [Getting Started](getting_started.md) (Recommended)
+* [Logging](logging.md) (Recommended)
+* [Best Practices](best_practices.md) (Recommended)
+* [Cvars](cvars.md)
+* [Commands](commands.md)
+* [Aliases](aliases.md)
+* [User Configs](user_configs.md)
+* [Video Guides](video_guides.md)

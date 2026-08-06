@@ -282,7 +282,8 @@ And because we're running from the editor, we get the added benefit of PikeLogge
 
 * [Getting Started](getting_started.md) (Recommended)
 * [Best Practices](best_practices.md) (Recommended)
-* [Cvars](logging.md)
-* [Commands](logging.md)
+* [Cvars](cvars.md)
+* [Commands](commands.md)
 * [Aliases](aliases.md)
 * [User Configs](user_configs.md)
+* [Video Guides](video_guides.md)

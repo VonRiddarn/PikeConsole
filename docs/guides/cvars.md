@@ -209,9 +209,11 @@ cheatmode 1
 ## 📙 Other resources
 
 * [Getting Started](getting_started.md) (Recommended)
+* [Logging](logging.md) (Recommended)
 * [Best Practices](best_practices.md) (Recommended)
-* [Commands](logging.md)
+* [Commands](commands.md)
 * [Aliases](aliases.md)
 * [User Configs](user_configs.md)
+* [Video Guides](video_guides.md)
 
 * [CVar API ref](../api/RuntimeExecution/CVars/Extensions/CVarBase_T.md) (Recommended)
