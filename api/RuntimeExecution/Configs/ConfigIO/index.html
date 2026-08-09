@@ -1,0 +1,2849 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../UserConfigManager/">
+      
+      
+        <link rel="next" href="../ConfigRef/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>ConfigIO - PikeConsole - Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#configio" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../.." title="PikeConsole - Documentation" class="md-header__button md-logo" aria-label="PikeConsole - Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PikeConsole - Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ConfigIO
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="PikeConsole - Documentation" class="md-nav__button md-logo" aria-label="PikeConsole - Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PikeConsole - Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/cvars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVars
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/aliases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aliases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../guides/best_practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Logging
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Logging/LogEvent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LogEvent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Logging/LogLevel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LogLevel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Logging/LogTarget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LogTarget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Logging/PikeLogger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PikeLogger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime Execution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Runtime Execution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Commands
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Commands/CommandSet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CommandSet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVars
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CVars
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2_1" id="__nav_3_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extensions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extensions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/Extensions/CVarBase_T/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarBase<T>
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarBool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarBool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarDouble/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarDouble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarEnum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarEnum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarFloat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarFloat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarInt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarInt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarString/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarString
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarColor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarColor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarVector2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarVector2I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector2I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarVector3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVars/CVarVector3I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector3I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_3" id="__nav_3_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../UserConfigManager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UserConfigManager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigIO
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activeconfigchanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActiveConfigChanged
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constant-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constant Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constant Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EXT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Method Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#executefromconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecuteFromConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writetoconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WriteToConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renameconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RenameConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RemoveConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReadConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getconfigs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GetConfigs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ConfigRef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigRef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ConfigResponseStatus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigResponseStatus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../PersistentCVarRegistry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersistentCVarRegistry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../RegistryBrowser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RegistryBrowser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../SearchMode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SearchMode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../StatementExecutor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatementExecutor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ExecutionSource/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ExecutionSource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../StatementParser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatementParser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ParsedStatement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ParsedStatement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ArgumentParser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ArgumentParser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../IRuntimeExecutable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IRuntimeExecutable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ICVar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ICVar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Response_T/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Response<T>
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ExecutionResponseStatus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ExecutionResponseStatus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CvarSetResponseStatus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CvarSetResponseStatus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#activeconfigchanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ActiveConfigChanged
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constant-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constant Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constant Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ext" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EXT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Method Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#executefromconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecuteFromConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#writetoconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WriteToConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#renameconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RenameConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#removeconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RemoveConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#readconfig" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReadConfig
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#getconfigs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GetConfigs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="configio">ConfigIO</h1>
+<p><code>public static class ConfigIO</code>  </p>
+<p><strong>Inherits</strong>: None<br />
+<strong>Namespace</strong>: <code>FractalPike.PikeConsole.Core.RuntimeExecution.Config</code>  </p>
+<h2 id="description">Description</h2>
+<p>Backend class for managing the executable config system.<br />
+Systems like the <a href="../UserConfigManager/"><code>UserConfigManager</code></a> rely heavily on this class.  </p>
+<div class="admonition tip">
+<p class="admonition-title">Make sure to include internal config files in the export!</p>
+<p>Godot strips unrecognized files from the exported version of the game.<br />
+Thus you must allow the files in the export settings: 
+<code>Project</code> &gt; <code>Export</code> &gt; <code>(Target Env)</code> &gt; <code>Resources</code>  </p>
+<p>In the text box for "<em>filters to export non-resource files/folders</em>" add: <code>*.ecfg</code></p>
+<p>NOTE:<br />
+All files in the compiled binary are immutable and thus read only.</p>
+</div>
+<h2 id="constants">Constants</h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Type</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public const</code></td>
+<td><code>string</code></td>
+<td><a href="#ext">EXT</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="methods">Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Return</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td><a href="../../Response_T/"><code>Response</code></a> <code>&lt;</code> <a href="../ConfigResponseStatus/"><code>ConfigResponseStatus&gt;</code></a><code>&gt;</code></td>
+<td><a href="#executefromconfig">ExecuteFromConfig</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><a href="../../Response_T/"><code>Response</code></a> <code>&lt;</code> <a href="../ConfigResponseStatus/"><code>ConfigResponseStatus&gt;</code></a><code>&gt;</code></td>
+<td><a href="#writetoconfig">WriteToConfig</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><a href="../../Response_T/"><code>Response</code></a> <code>&lt;</code> <a href="../ConfigResponseStatus/"><code>ConfigResponseStatus&gt;</code></a><code>&gt;</code></td>
+<td><a href="#renameconfig">RenameConfig</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><a href="../../Response_T/"><code>Response</code></a> <code>&lt;</code> <a href="../ConfigResponseStatus/"><code>ConfigResponseStatus&gt;</code></a><code>&gt;</code></td>
+<td><a href="#removeconfig">RemoveConfig</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><a href="../../Response_T/"><code>Response</code></a> <code>&lt;</code> <a href="../ConfigResponseStatus/"><code>ConfigResponseStatus</code></a>, <code>string[] &gt;</code></td>
+<td><a href="#readconfig">ReadConfig</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><a href="../../Response_T/"><code>Response</code></a> <code>&lt;</code> <a href="../ConfigResponseStatus/"><code>ConfigResponseStatus</code></a>, <a href="../ConfigRef/"><code>ConfigRef[]</code></a> <code>&gt;</code></td>
+<td><a href="#getconfigs">GetConfigs</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="event-descriptions">Event Descriptions</h2>
+<h3 id="activeconfigchanged">ActiveConfigChanged</h3>
+<p><strong>Signature</strong>: <code>public static ConfigRef ActiveConfig</code>  </p>
+<p><strong>Description</strong>:<br />
+Invoked when the <a href="#activeconfig"><code>ActiveConfig</code></a> is changed using <a href="#selectconfig"><code>SelectConfig</code></a>.<br />
+The new config is passed in the delegate as a <a href="../ConfigRef/"><code>ConfigRef</code></a>.</p>
+<h2 id="constant-descriptions">Constant Descriptions</h2>
+<h3 id="ext">EXT</h3>
+<p><strong>Signature</strong>: <code>public const string EXT</code><br />
+<strong>Value</strong>: <code>".ecfg"</code>  </p>
+<p><strong>Description</strong>:<br />
+The file extention to use for executable config files.  </p>
+<hr />
+<h2 id="method-descriptions">Method Descriptions</h2>
+<h3 id="executefromconfig">ExecuteFromConfig</h3>
+<p><strong>Signature</strong>: <code>public static Response&lt;ConfigResponseStatus&gt; ExecuteFromConfig(ExecutionSource source, string path, bool silent = false)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><a href="../../ExecutionSource/"><code>ExecutionSource</code></a> : <code>source</code></dt>
+<dd>Who is calling this config file.<br />
+<em>Note that public facing configs <code>user://</code> almost never should use anything but standard.</em><br />
+<em>Only invoke as system on files that come from the <code>res://</code> directory as that bypasses cheat detection.</em></dd>
+<dt><code>string</code> : <code>path</code></dt>
+<dd>Path to the config file. Accepts absolute and relative (<code>user://</code>/ <code>res://</code>). </dd>
+<dt><code>bool</code> : <code>silent</code></dt>
+<dd>If set to true, success messages will not print to the runtime console.<br />
+<em>Useful for when internal systems make changes or invokes events.</em> </dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+Executes the executable config file by running it line by line through the <a href="../../StatementExecutor/"><code>StatementExecutor</code></a>.</p>
+<p><strong>Example(s)</strong>:<br />
+<em>Excerpt from <code>ConfigCommandSet.cs</code>.</em>
+<div class="highlight"><pre><span></span><code><span class="n">Command</span><span class="p">(</span>
+<span class="w">    </span><span class="s">&quot;exec&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="c1">// . . .</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kt">var</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConfigIO</span><span class="p">.</span><span class="n">ExecuteFromConfig</span><span class="p">(</span><span class="n">ExecutionSource</span><span class="p">.</span><span class="n">Standard</span><span class="p">,</span><span class="w"> </span><span class="s">$&quot;{PikeConsoleSettings.ConfigDirectory}/{args[0]}&quot;</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Status</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ConfigResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span>
+<span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">ExecutionResponseStatus</span><span class="p">.</span><span class="n">Failed</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Tags</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">ExecutionResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Message</span><span class="p">,</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Tags</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">),</span>
+</code></pre></div></p>
+<p><strong>Returns</strong>:<br />
+A <a href="../ConfigResponseStatus/">response status</a> informing if the operation was successfull or not.</p>
+<hr />
+<h3 id="writetoconfig">WriteToConfig</h3>
+<p><strong>Signature</strong>: <code>public static Response&lt;ConfigResponseStatus&gt; WriteToConfig(string[] rows, string path, bool overwrite = false)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>string[]</code> : <code>rows</code></dt>
+<dd>An array of statements to write to the config file. Each statement will be one line. </dd>
+<dt><code>string</code> : <code>path</code></dt>
+<dd>Path to the config file. Accepts absolute and relative (<code>user://</code>). 
+<em>Note: <code>res://</code> will not work as it is immutable.</em></dd>
+<dt><code>bool</code> : <code>overwrite</code></dt>
+<dd>If set to true the method will ignore file conflicts and override the old file.</dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+Writes a set of statements to a file.</p>
+<p><strong>Example(s)</strong>:<br />
+<em>Excerpt from <code>UserConfigManager.cs</code>.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">ConfigResponseStatus</span><span class="o">&gt;</span><span class="w"> </span><span class="n">CreateAndSelectDefaultConfig</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">defaultConfig</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ConfigRef</span><span class="p">(</span><span class="n">GetPath</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_NAME</span><span class="p">));</span>
+
+<span class="w">    </span><span class="kt">string</span><span class="p">[]</span><span class="w"> </span><span class="n">rows</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s">&quot;// ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- &quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;// THIS FILE IS VOLATILE AND CHANGES / ADDITIONS MAY BE OVERWRITTEN!&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;// ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- ----- &quot;</span>
+<span class="w">    </span><span class="p">];</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">File</span><span class="p">.</span><span class="n">Exists</span><span class="p">(</span><span class="n">defaultConfig</span><span class="p">.</span><span class="n">FullPath</span><span class="p">))</span>
+<span class="w">        </span><span class="n">ConfigIO</span><span class="p">.</span><span class="n">WriteToConfig</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span><span class="w"> </span><span class="n">defaultConfig</span><span class="p">.</span><span class="n">FullPath</span><span class="p">,</span><span class="w"> </span><span class="k">false</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nf">SelectConfig</span><span class="p">(</span><span class="n">DEFAULT_CONFIG_NAME</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Returns</strong>:<br />
+A <a href="../ConfigResponseStatus/">response status</a> informing if the operation was successfull or not.</p>
+<hr />
+<h3 id="renameconfig">RenameConfig</h3>
+<p><strong>Signature</strong>: <code>public static Response&lt;ConfigResponseStatus&gt; RenameConfig(string newName, string path)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>string</code> : <code>newName</code></dt>
+<dd>The new desired name of the config. Must be a valid filename.</dd>
+<dt><code>string</code> : <code>path</code></dt>
+<dd>Path to the config file. Accepts absolute and relative (<code>user://</code>). 
+<em>Note: <code>res://</code> will not work as it is immutable.</em></dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+Renames a config file on disk.</p>
+<p><strong>Example(s)</strong>:<br />
+<em>Excerpt from <code>UserConfigManager.cs</code>.</em><br />
+<em>The method depicted is not the implementation of ConfigIO's RenameConfig. They simply share a name.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">ConfigResponseStatus</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RenameConfig</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">configName</span><span class="p">,</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">newName</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// . . .</span>
+
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConfigIO</span><span class="p">.</span><span class="n">RenameConfig</span><span class="p">(</span><span class="n">newName</span><span class="p">,</span><span class="w"> </span><span class="n">oldConfig</span><span class="p">.</span><span class="n">FullPath</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ConfigResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">isActiveProfile</span><span class="p">)</span>
+<span class="w">        </span><span class="n">UpdateActiveConfigTracker</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">ConfigRef</span><span class="p">(</span><span class="n">GetPath</span><span class="p">(</span><span class="n">newName</span><span class="p">)));</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">response</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Returns</strong>:<br />
+A <a href="../ConfigResponseStatus/">response status</a> informing if the operation was successfull or not.</p>
+<hr />
+<h3 id="removeconfig">RemoveConfig</h3>
+<p><strong>Signature</strong>: <code>public static Response&lt;ConfigResponseStatus&gt; RemoveConfig(string path)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>string</code> : <code>path</code></dt>
+<dd>Path to the config file. Accepts absolute and relative (<code>user://</code>). 
+<em>Note: <code>res://</code> will not work as it is immutable.</em></dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+Removes a config file from disk.</p>
+<p><strong>Example(s)</strong>:<br />
+<em>Excerpt from <code>UserConfigManager.cs</code>.</em><br />
+<em>The method depicted is not the implementation of ConfigIO's RemoveConfig. They simply share a name.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">ConfigResponseStatus</span><span class="o">&gt;</span><span class="w"> </span><span class="n">RemoveConfig</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">configName</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">ConfigRef</span><span class="w"> </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="n">GetPath</span><span class="p">(</span><span class="n">configName</span><span class="p">));</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">FileName</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ActiveConfig</span><span class="p">.</span><span class="n">FileName</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">ConfigResponseStatus</span><span class="p">.</span><span class="n">Failed</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Cannot delete the currently active profile.&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="n">LogTags</span><span class="p">.</span><span class="n">Failed</span><span class="p">]);</span>
+
+<span class="w">    </span><span class="kt">var</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ConfigIO</span><span class="p">.</span><span class="n">RemoveConfig</span><span class="p">(</span><span class="n">target</span><span class="p">.</span><span class="n">FullPath</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Status</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">ConfigResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">ConfigResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="p">,</span><span class="w"> </span><span class="s">$&quot;Removed profile \&quot;{target.DisplayName}\&quot;.&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">response</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Returns</strong>:<br />
+A <a href="../ConfigResponseStatus/">response status</a> informing if the operation was successfull or not.</p>
+<hr />
+<h3 id="readconfig">ReadConfig</h3>
+<p><strong>Signature</strong>: <code>public static Response&lt;ConfigResponseStatus, string[]&gt; ReadConfig(string path)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>string</code> : <code>path</code></dt>
+<dd>Path to the config file. Accepts absolute and relative (<code>user://</code> / <code>res://</code>).</dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+Reads all lines from a config and returns them as a Payload.<br />
+Useful for debugging executable config files at runtime.</p>
+<p><strong>Example(s)</strong>:<br />
+<em>Excerpt from <code>UserConfigCommandSet.cs</code>.</em><br />
+<div class="highlight"><pre><span></span><code><span class="n">Command</span><span class="p">(</span>
+<span class="w">    </span><span class="n">Signature</span><span class="p">(</span><span class="s">&quot;peek&quot;</span><span class="p">),</span>
+<span class="w">    </span><span class="c1">// . . .</span>
+<span class="w">    </span><span class="k">static</span><span class="w"> </span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">();</span>
+
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">args</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">            </span><span class="n">ReadAndAppendConfig</span><span class="p">(</span><span class="n">sb</span><span class="p">,</span><span class="w"> </span><span class="n">UserConfigManager</span><span class="p">.</span><span class="n">ActiveConfig</span><span class="p">);</span>
+<span class="w">        </span><span class="k">else</span>
+<span class="w">        </span><span class="p">{</span>
+<span class="w">            </span><span class="c1">// Using a HashSet so that we don&#39;t printthe same file twice. </span>
+<span class="w">            </span><span class="c1">// basically just a list with unique values.</span>
+<span class="w">            </span><span class="n">HashSet</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">processedPaths</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[];</span>
+
+<span class="w">            </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">term</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">            </span><span class="p">{</span>
+<span class="w">                </span><span class="kt">var</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">UserConfigManager</span><span class="p">.</span><span class="n">GetAvailableConfigs</span><span class="p">(</span><span class="n">term</span><span class="p">);</span>
+
+<span class="w">                </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">response</span><span class="p">.</span><span class="n">Status</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">ConfigResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Payload</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="k">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Payload</span><span class="p">.</span><span class="n">Length</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="n">sb</span><span class="p">.</span><span class="n">AppendLine</span><span class="p">(</span><span class="s">$&quot;----- {term} does not exist. -----&quot;</span><span class="p">);</span>
+<span class="w">                    </span><span class="k">continue</span><span class="p">;</span>
+<span class="w">                </span><span class="p">}</span>
+
+<span class="w">                </span><span class="k">foreach</span><span class="w"> </span><span class="p">(</span><span class="n">ConfigRef</span><span class="w"> </span><span class="n">cr</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">response</span><span class="p">.</span><span class="n">Payload</span><span class="p">)</span>
+<span class="w">                </span><span class="p">{</span>
+<span class="w">                    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">processedPaths</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">cr</span><span class="p">.</span><span class="n">FullPath</span><span class="p">))</span>
+<span class="w">                        </span><span class="n">ReadAndAppendConfig</span><span class="p">(</span><span class="n">sb</span><span class="p">,</span><span class="w"> </span><span class="n">cr</span><span class="p">);</span>
+<span class="w">                </span><span class="p">}</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">}</span>
+
+<span class="w">        </span><span class="n">PikeLogger</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">LogTarget</span><span class="p">.</span><span class="n">Runtime</span><span class="p">,</span><span class="w"> </span><span class="s">$&quot;{sb.ToString().Trim()}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">forceLog</span><span class="p">:</span><span class="w"> </span><span class="k">true</span><span class="p">);</span>
+
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">ExecutionResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">),</span>
+</code></pre></div></p>
+<p><strong>Returns</strong>:<br />
+A <a href="../ConfigResponseStatus/">response status</a> informing if the operation was successfull or not and a <a href="../../Response_T/">payload</a> containing the rows as <code>string[]</code>.</p>
+<hr />
+<h3 id="getconfigs">GetConfigs</h3>
+<p><strong>Signature</strong>: <code>public static Response&lt;ConfigResponseStatus, ConfigRef[]&gt; GetConfigs(string searchPattern)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>string</code> : <code>searchPattern</code></dt>
+<dd>The search pattern to use when searching the config files. Uses default <a href="https://learn.microsoft.com/en-us/dotnet/api/system.io.directory.getfiles?view=net-10.0#remarks">.NET search patterns</a>.</dd>
+</dl>
+<table>
+<thead>
+<tr>
+<th>Example term</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*</code></td>
+<td>All</td>
+</tr>
+<tr>
+<td><code>*son</code></td>
+<td>All ending with "<em>son</em>"</td>
+</tr>
+<tr>
+<td><code>*test*</code></td>
+<td>All containing "<em>test</em>" anywhere in the string</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p><strong>Description</strong>:<br />
+Search for config files at certain directories.<br />
+Accepts absolute and relative (<code>user://</code> / <code>res://</code>) paths for the pattern.  </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The <code>res://</code> folder does not index unknown resources, such as the <code>.ecfg</code> files.<br />
+Thus you can only dynamically search for these when running the game from the Godot editor. In runtime builds no results will be returned.</p>
+</div>
+<p><strong>Example(s)</strong>:<br />
+<em>Excerpt from <code>UserConfigManager.cs</code>.</em><br />
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">ConfigResponseStatus</span><span class="p">,</span><span class="w"> </span><span class="n">ConfigRef</span><span class="p">[]</span><span class="o">&gt;</span><span class="w"> </span><span class="n">GetAvailableConfigs</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">term</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;*&quot;</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// &quot;*&quot; becomes something like c:/.../users/*.ecfg</span>
+<span class="w">    </span><span class="c1">// &quot;Tompa Tjompa&quot; becomes something like: c:/.../users/tompa_tjompa.ecfg</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">ConfigIO</span><span class="p">.</span><span class="n">GetConfigs</span><span class="p">(</span><span class="n">GetPath</span><span class="p">(</span><span class="n">term</span><span class="p">));</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<p><strong>Returns</strong>:<br />
+A <a href="../ConfigResponseStatus/">response status</a> informing if the operation was successfull or not and a <a href="../../Response_T/">payload</a> containing the found configs as <a href="../ConfigRef/"><code>ConfigRef[]</code></a>.</p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../..", "features": ["content.code.copy", "navigation.tabs", "navigation.indexes"], "search": "../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

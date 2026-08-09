@@ -1,0 +1,3467 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../../../Commands/CommandSet/">
+      
+      
+        <link rel="next" href="../../CVarBool/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>CVarBase - PikeConsole - Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cvarbaset" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../../../.." title="PikeConsole - Documentation" class="md-header__button md-logo" aria-label="PikeConsole - Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            PikeConsole - Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CVarBase<T>
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../../guides/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Guides
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../../.." title="PikeConsole - Documentation" class="md-nav__button md-logo" aria-label="PikeConsole - Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    PikeConsole - Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../../guides/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_2" id="__nav_2_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guides/getting_started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guides/logging/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guides/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guides/cvars/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVars
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guides/aliases/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Aliases
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../../guides/best_practices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best Practices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Logging
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Logging
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Logging/LogEvent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LogEvent
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Logging/LogLevel/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LogLevel
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Logging/LogTarget/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LogTarget
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../Logging/PikeLogger/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PikeLogger
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Runtime Execution
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Runtime Execution
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_1" id="__nav_3_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Commands
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Commands
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Commands/CommandSet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CommandSet
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2" id="__nav_3_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVars
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CVars
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_2_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_2_1" id="__nav_3_3_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extensions
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_3_3_2_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_3_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Extensions
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarBase<T>
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarBase<T>
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#valuechanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValueChanged
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valueinvalidated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValueInvalidated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Property Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ismodified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IsModified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formattedvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FormattedValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ischeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IsCheat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#currentvaluedisplay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CurrentValueDisplay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defaultvaluedisplay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DefaultValueDisplay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shortdesc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ShortDesc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#longdesc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LongDesc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#displaytype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DisplayType
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_defaultvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _defaultValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descriptioninternal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DescriptionInternal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Method Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initialize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initializeinternal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InitializeInternal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resetvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResetValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execute
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SetValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gethelp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GetHelp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#displayvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DisplayValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarBool/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarBool
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarDouble/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarDouble
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarEnum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarEnum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarFloat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarFloat
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarInt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarInt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarString/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarString
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarColor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarColor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarVector2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarVector2I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector2I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarVector3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../CVarVector3I/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CVarVector3I
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3_3" id="__nav_3_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configs
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Configs
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Configs/UserConfigManager/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UserConfigManager
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Configs/ConfigIO/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigIO
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Configs/ConfigRef/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigRef
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Configs/ConfigResponseStatus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ConfigResponseStatus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../PersistentCVarRegistry/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PersistentCVarRegistry
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../RegistryBrowser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    RegistryBrowser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../SearchMode/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SearchMode
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../StatementExecutor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatementExecutor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ExecutionSource/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ExecutionSource
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../StatementParser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    StatementParser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ParsedStatement/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ParsedStatement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ArgumentParser/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ArgumentParser
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../IRuntimeExecutable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    IRuntimeExecutable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ICVar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ICVar
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Response_T/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Response<T>
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ExecutionResponseStatus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ExecutionResponseStatus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CvarSetResponseStatus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CvarSetResponseStatus
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#description" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#events" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Events
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#properties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Properties
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Methods
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#event-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Event Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Event Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#valuechanged" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValueChanged
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#valueinvalidated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValueInvalidated
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#property-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Property Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Property Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ismodified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IsModified
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#formattedvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FormattedValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#persist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Persist
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ischeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IsCheat
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#currentvaluedisplay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CurrentValueDisplay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#defaultvaluedisplay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DefaultValueDisplay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#description_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Description
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Signature
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#shortdesc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ShortDesc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#longdesc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        LongDesc
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#displaytype" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DisplayType
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_defaultvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _defaultValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_value" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        _value
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#descriptioninternal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DescriptionInternal
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#method-descriptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Method Descriptions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Method Descriptions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#initialize" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Initialize
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#initializeinternal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        InitializeInternal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resetvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResetValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Execute
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#setvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SetValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gethelp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GetHelp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#displayvalue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DisplayValue
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="cvarbaset">CVarBase&lt;T&gt;</h1>
+<p><code>public abstract partial class CVarBase&lt;T&gt; : Resource, ICVar</code>  </p>
+<p><strong>Inherits</strong>: <a href="https://docs.godotengine.org/en/stable/classes/class_resource.html#resource"><code>Resource</code></a>⿻, <code>ICvar</code><br />
+<strong>Namespace</strong>: <code>FractalPike.PikeConsole.Core.RuntimeExecution.Cvars.Extensions</code>  </p>
+<h2 id="description">Description</h2>
+<p>Root class for <strong>ALL</strong> CVars that manages initialization, execution, 
+session persistance, cheat protection, registry indexing and formatting.  </p>
+<p>It serves both as the entry point for anyone wanting to expand the API with more CVar types, and as a contract to ensure consistent interactions between CVars.  </p>
+<p>For a tutorial on how to create a custom CVar type, see <a href="../../../../../guides/cvars/">the cvar guide</a>.</p>
+<h2 id="events">Events</h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Delegate</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td><code>Action&lt;T&gt;?</code></td>
+<td><a href="#valuechanged">ValueChanged</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>Action?</code></td>
+<td><a href="#valueinvalidated">ValueInvalidated</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="properties">Properties</h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Return</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td><code>T</code></td>
+<td><a href="#value">Value</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>bool</code></td>
+<td><a href="#ismodified">IsModified</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#formattedvalue">FormattedValue</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>bool</code></td>
+<td><a href="#persist">Persist</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>bool</code></td>
+<td><a href="#ischeat">IsCheat</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#currentvaluedisplay">CurrentValueDisplay</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#defaultvaluedisplay">DefaultValueDisplay</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#description_1">Description</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#signature">Signature</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#shortdesc">ShortDesc</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#longdesc">LongDesc</a></td>
+</tr>
+<tr>
+<td><code>public abstract</code></td>
+<td><code>string</code></td>
+<td><a href="#displaytype">DisplayType</a></td>
+</tr>
+<tr>
+<td><code>public virtual</code></td>
+<td><code>string</code></td>
+<td><a href="#usage">Usage</a></td>
+</tr>
+<tr>
+<td><code>protected abstract</code></td>
+<td><code>T</code></td>
+<td><a href="#_defaultvalue">_defaultValue</a></td>
+</tr>
+<tr>
+<td><code>protected abstract</code></td>
+<td><code>T</code></td>
+<td><a href="#_value">_value</a></td>
+</tr>
+<tr>
+<td><code>protected virtual</code></td>
+<td><code>string</code></td>
+<td><a href="#descriptioninternal">DescriptionInternal</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="methods">Methods</h2>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Return</th>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>public</code></td>
+<td><code>void</code></td>
+<td><a href="#initialize">Initialize</a></td>
+</tr>
+<tr>
+<td><code>protected virtual</code></td>
+<td><code>void</code></td>
+<td><a href="#initializeinternal">InitializeInternal</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>void</code></td>
+<td><a href="#resetvalue">ResetValue</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>Response&lt;ExecutionResponseStatus&gt;</code></td>
+<td><a href="#execute">Execute</a></td>
+</tr>
+<tr>
+<td><code>protected abstract</code></td>
+<td><code>Response&lt;CvarSetResponseStatus&gt;</code></td>
+<td><a href="#setvalue">SetValue</a></td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td><code>string</code></td>
+<td><a href="#gethelp">GetHelp</a></td>
+</tr>
+<tr>
+<td><code>public virtual</code></td>
+<td><code>string</code></td>
+<td><a href="#displayvalue">DisplayValue</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="event-descriptions">Event Descriptions</h2>
+<h3 id="valuechanged">ValueChanged</h3>
+<p>Called when the value has been changed.<br />
+Passes the new value as an argument to the consumer method.</p>
+<p><em>This is useful for updating information using the observer pattern.</em>  </p>
+<p><strong>Example(s)</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">DifficultyCVar</span><span class="p">.</span><span class="n">ValueChanged</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnDifficultyChanged</span><span class="p">;</span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">OnDifficultyChanged</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">newDifficulty</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">GameManager</span><span class="p">.</span><span class="n">Difficulty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">newDifficulty</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h3 id="valueinvalidated">ValueInvalidated</h3>
+<p>Called when the value has been changed.<br />
+Does NOT pass a value to the consumer method.  </p>
+<p><em>This is useful when several CVars share execution method.</em> </p>
+<p><strong>Example(s)</strong>:
+<div class="highlight"><pre><span></span><code><span class="n">CrosshairLengthCVar</span><span class="p">.</span><span class="n">ValueInvalidated</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnCrosshairChanged</span><span class="p">;</span>
+<span class="n">CrosshairThicknessCVar</span><span class="p">.</span><span class="n">ValueInvalidated</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnCrosshairChanged</span><span class="p">;</span>
+<span class="n">CrosshairColorCVar</span><span class="p">.</span><span class="n">ValueInvalidated</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">OnCrosshairChanged</span><span class="p">;</span>
+
+<span class="k">void</span><span class="w"> </span><span class="nf">OnCrosshairChanged</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">CrosshairManager</span><span class="p">.</span><span class="n">ReRender</span><span class="p">(</span>
+<span class="w">        </span><span class="n">CrosshairLengthCVar</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>
+<span class="w">        </span><span class="n">CrosshairThicknessCVar</span><span class="p">.</span><span class="n">Value</span><span class="p">,</span>
+<span class="w">        </span><span class="n">CrosshairColorCVar</span><span class="p">.</span><span class="n">Value</span>
+<span class="w">    </span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<h2 id="property-descriptions">Property Descriptions</h2>
+<h3 id="value">Value</h3>
+<p>The current value.<br />
+Automatically handles value comparison and event triggering.<br />
+<a href="#valuechanged">ValueChanged</a> and <a href="#valueinvalidated">ValueInvalidated</a> are only 
+called if the new value is not equal to the old value.  </p>
+<p>This saves performance on event invokation overhead.</p>
+<hr />
+<h3 id="ismodified">IsModified</h3>
+<p>A shorthand for checking if the current value is not the original, expected value.<br />
+This can be used by saving systems to occlude default CVars, which 
+allows for delta-configurations (only save what has been changed).</p>
+<p><em>Behind the scenes, this is the full signature.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="kt">bool</span><span class="w"> </span><span class="n">IsModified</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="o">!</span><span class="n">EqualityComparer</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">.</span><span class="n">Default</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="n">_value</span><span class="p">,</span><span class="w"> </span><span class="n">_defaultValue</span><span class="p">);</span>
+</code></pre></div></p>
+<hr />
+<h3 id="formattedvalue">FormattedValue</h3>
+<p>Shorthand that displays the formatted value of a CVar.<br />
+It does so by utilizing the <code>virtual</code> method <a href="#displayvalue">DisplayValue</a>.  </p>
+<hr />
+<h3 id="persist">Persist</h3>
+<p>This is a <em>Editor facing</em> flag that decides whether or not the CVar 
+should <strong>persist between sessions</strong>.  </p>
+<p>By default this only allows the CVar to be saved in the <a href="../../../PersistentCVarRegistry/">PersistentCVarRegistry</a>. 
+From there, one may opt-in for the built in userconfig <code>.cfg</code> system, 
+or build their own using the <code>PersistentCVarRegistry</code> api.</p>
+<hr />
+<h3 id="ischeat">IsCheat</h3>
+<p>This is a <em>Editor facing</em> flag that decides whether or not the CVar <strong>is considered a cheat</strong>.  </p>
+<p>CVars marked as cheats may only be 
+edited by the system. Players are unable to edit them without entering cheatmode.  </p>
+<p><strong>See also</strong>: <a href="../../RuntimeExecution/ExecutionSource.md">ExecutionSource</a></p>
+<hr />
+<h3 id="currentvaluedisplay">CurrentValueDisplay</h3>
+<p>Shorthand property for getting the user-facing (UI-friendly) format of the current value. Used by the <code>ConsoleFormatter</code> to structure help messages.  </p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>CurrentValueDisplay shoud never be overridden directly by CVar variants.<br />
+Instead, they override the <a href="#displayvalue">DisplayValue</a> method provided by.</p>
+</div>
+<hr />
+<h3 id="defaultvaluedisplay">DefaultValueDisplay</h3>
+<p>Shorthand property for getting the user-facing (UI-friendly) format of the current value. Used by the <code>ConsoleFormatter</code> to structure help messages.  </p>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>DefaultValueDisplay shoud never be overridden directly by CVar variants.<br />
+Instead, they override the <a href="#displayvalue">DisplayValue</a> method provided by.</p>
+</div>
+<hr />
+<h3 id="description_1">Description</h3>
+<p>This is a <em>Editor facing</em> flag that <strong>sets the description</strong> of the CVar.  </p>
+<p>This description is used by the <a href="#longdesc">LongDesc</a> prefaces the <a href="#descriptioninternal">DescriptionInternal</a>.<br />
+It can be arbitrarily long or short and serves as a description for the specific <strong>CVar resource</strong>, rather than the <em>CVar type</em>.  </p>
+<p><strong>Example(s)</strong>:
+<div class="highlight"><pre><span></span><code>Crosshair length variable. 
+Used by the CrosshairManager when rendering the crosshair on screen.
+</code></pre></div></p>
+<hr />
+<h3 id="signature">Signature</h3>
+<p>Fully automatic <em>"command"</em> signature for the CVar.<br />
+Each CVar automatically registers themselves to the <code>RuntimeExecutableRegistry</code> as an executable with the resource filename as the signature.  </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Signatures are automatically parsed at runtime to ensure no spaces or trailing whitespaces exists.<br />
+Trailing whitespaces are trimmed, and spaces are replaced with underscores.</p>
+</div>
+<hr />
+<h3 id="shortdesc">ShortDesc</h3>
+<p>Handled automatically by the root class (this).<br />
+<code>ShortDesc</code> is a required property for all <code>IRuntimeExecutable</code>s and 
+is used by help formatters and executable lists.  </p>
+<p><em>Behind the scenes, this is the full signature.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">ShortDesc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">$&quot;View or set the value of {Signature}&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Not having <code>ShortDesc</code> being virtually scoped is intentional.<br />
+When showing help for the executable signature it should be 
+explicitly clear that it is a CVar shortcut, and that the command 
+only serves and invokes the CVars <code>Execute</code> method. </p>
+<p>Details about what the command does comes from the help formatter and <a href="#longdesc">long description</a>.</p>
+</div>
+<hr />
+<h3 id="longdesc">LongDesc</h3>
+<p>Handled automatically by the root class (this).<br />
+<code>LongDesc</code> is the canonical long description of any executable and 
+is hardwired for CVars to return both the <a href="#description_1">resource description</a> and 
+the <a href="#descriptioninternal">internal description</a>.  </p>
+<p><em>Behind the scenes, this is the full signature.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">LongDesc</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">$&quot;{Description}\n{DescriptionInternal}&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<hr />
+<h3 id="displaytype">DisplayType</h3>
+<p>This is the UI-friendly name of the type and is used to display the resource type in the console and logs. It is not designed to be parseable. However, all default CVars included in PikeConsole follow the strict naming pattern: <code>CVar_Type</code></p>
+<p><strong>Example(s)</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// Excerpt from CVarEnum.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">DisplayType</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;CVar_Enum&quot;</span><span class="p">;</span>
+
+<span class="c1">// Excerpt from CVarBool.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">DisplayType</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;CVar_Bool&quot;</span><span class="p">;</span>
+
+<span class="c1">// Excerpt from CVarInt.cs</span>
+<span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">DisplayType</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">&quot;CVar_Int&quot;</span><span class="p">;</span>
+
+<span class="c1">// . . .</span>
+</code></pre></div></p>
+<hr />
+<h3 id="usage">Usage</h3>
+<p>This is the UI-friendly, human readable usage instructions for the CVar.<br />
+Ideally it is kept short and concise for better parsing with the help command, but there is no arbitrary length limit.  </p>
+<p>By default it's formatted as <code>$"{Signature} [new value]"</code> for all CVars, but is overrideable for advanced extentions.</p>
+<p><em>Behind the scenes, this is the full signature.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">virtual</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">Usage</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">$&quot;{Signature} [new value]&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<hr />
+<h3 id="_defaultvalue">_defaultValue</h3>
+<p>The de-facto default value of the CVar resource instance.<br />
+This is set in the Godot editor by the designer.  </p>
+<p>CVar resources are automatically set to their default value when initialized or reset using the <a href="#resetvalue">ResetValue</a> method.  </p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you are using the user configuration system the values are first set to their default values, <em>and then</em> overridden by the user profile initializer at startup.</p>
+</div>
+<hr />
+<h3 id="_value">_value</h3>
+<p>The de-facto current value of the CVar resource instance.<br />
+Unless the <a href="#persist">Persist</a> flag is set (and the user configuration system is active), this value is per-session scoped. Closing and opening the runtime will reset the value to its default automatically.</p>
+<hr />
+<h3 id="descriptioninternal">DescriptionInternal</h3>
+<p>The META description for the CVar type.<br />
+The structure of this is fully arbitrary and just serves as an entry point for advanced extentions to list critical typ information.  </p>
+<p><strong>Example(s)</strong>:  </p>
+<p><em>excerpt from <code>CVarEnum.cs</code>.</em></p>
+<div class="highlight"><pre><span></span><code><span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">DescriptionInternal</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">_cachedHelpLst</span><span class="p">;</span>
+
+<span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InitializeInternal</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// . . .</span>
+<span class="w">    </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="s">&quot;OPTIONS:\n&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">_options</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">sb</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="s">$&quot;\t{i} = {_options[i]}\n&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">_cachedHelpLst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sb</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h2 id="method-descriptions">Method Descriptions</h2>
+<h3 id="initialize">Initialize</h3>
+<p><strong>Signature</strong>: <code>public void Initialize()</code></p>
+<div class="admonition note">
+<p class="admonition-title">Takes no parameters</p>
+</div>
+<p><strong>Description</strong>:<br />
+Method used to add the CVar into the <code>RuntimeExecutableRegistry</code> and <code>PersistentCVarRegistry</code>. This is called automatically by the <code>CVarCrawler</code> inside the addons autoloader.  </p>
+<p>This method cannot be overridden. To extend the initializsation logic, see <a href="#initializeinternal">InitializeInternal</a>.   </p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If CVars are used as intended, this method never has to be called by any user of this framework. It is called autoamtically by the <code>CVarCrawler</code> for all CVar resources in the designated CVar directory and all of its child directories.  </p>
+<p>The only exception is for internal system initializations where CVars are defined outside of the designated CVar folder, as is the case with PikeConsoles cheatmode CVar and others located at <code>addons/PikeConsole/Config/variables</code>.</p>
+</div>
+<p><strong>Example</strong>:</p>
+<p><em>Excerpt from <code>CVarCrawler.cs</code>.</em>
+<div class="highlight"><pre><span></span><code><span class="c1">// . . .</span>
+<span class="n">Resource</span><span class="w"> </span><span class="n">loadedResource</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ResourceLoader</span><span class="p">.</span><span class="n">Load</span><span class="p">(</span><span class="n">fullPath</span><span class="p">);</span>
+
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">loadedResource</span><span class="w"> </span><span class="k">is</span><span class="w"> </span><span class="n">ICVar</span><span class="w"> </span><span class="n">cvar</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">cvar</span><span class="p">.</span><span class="n">Initialize</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="initializeinternal">InitializeInternal</h3>
+<p><strong>Signature</strong>: <code>protected virtual void InitializeInternal()</code></p>
+<div class="admonition note">
+<p class="admonition-title">Takes no parameters</p>
+</div>
+<p><strong>Description</strong>:<br />
+Method used to extend initialization logic and apply things like internal caching or fetching. This is called automatically at the end of <a href="#initialize">Initialize</a>, which itself is automatically called by the <code>CVarCrawler</code>autoload at runtime initialization. </p>
+<p><strong>Example</strong>:</p>
+<p><em>Excerpt from <code>CVarEnum.cs</code>.</em>
+<div class="highlight"><pre><span></span><code><span class="c1">// At CVar initialization, pre-cache all options to </span>
+<span class="c1">// improve runtime performance and text processing speed</span>
+<span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">InitializeInternal</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="c1">// . . .</span>
+<span class="w">    </span><span class="n">StringBuilder</span><span class="w"> </span><span class="n">sb</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="p">(</span><span class="s">&quot;OPTIONS:\n&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">_options</span><span class="p">.</span><span class="n">Length</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span>
+<span class="w">        </span><span class="n">sb</span><span class="p">.</span><span class="n">Append</span><span class="p">(</span><span class="s">$&quot;\t{i} = {_options[i]}\n&quot;</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">_cachedHelpLst</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sb</span><span class="p">.</span><span class="n">ToString</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="resetvalue">ResetValue</h3>
+<p><strong>Signature</strong>: <code>public void ResetValue()</code></p>
+<div class="admonition note">
+<p class="admonition-title">Takes no parameters</p>
+</div>
+<p><strong>Description</strong>:<br />
+Resets the <a href="#_value">value</a> of the CVar back to its <a href="#_defaultvalue">default value</a>.<br />
+If the value is a persistent value and the new value is not equal to the old, 
+the <code>PersistentCVarRegistry</code> sends an update event that is consumed by the user configuration storage (if it's enabled). </p>
+<p><strong>Example</strong>:</p>
+<p><em>Hypothetical method that resets all user settings in a GUI within an optional scope.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">ResetAllSettings</span><span class="p">(</span><span class="kt">string</span><span class="w"> </span><span class="n">scope</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kt">string</span><span class="p">.</span><span class="n">Empty</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">foreach</span><span class="p">(</span><span class="n">ICVar</span><span class="w"> </span><span class="n">setting</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">allSettings</span><span class="p">)</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">        </span><span class="k">if</span><span class="p">(</span><span class="kt">string</span><span class="p">.</span><span class="n">IsNullOrWhitespace</span><span class="p">(</span><span class="n">scope</span><span class="p">))</span>
+<span class="w">            </span><span class="n">setting</span><span class="p">.</span><span class="n">ResetValue</span><span class="p">();</span>
+<span class="w">        </span><span class="k">else</span><span class="w"> </span><span class="nf">if</span><span class="p">(</span><span class="n">setting</span><span class="p">.</span><span class="n">Signature</span><span class="p">.</span><span class="n">StartsWith</span><span class="p">(</span><span class="n">scope</span><span class="p">))</span>
+<span class="w">            </span><span class="n">setting</span><span class="p">.</span><span class="n">ResetValue</span><span class="p">();</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="execute">Execute</h3>
+<p><strong>Signature</strong>: <code>public Response&lt;ExecutionResponseStatus&gt; Execute(ExecutionSource executionSource, string[] args)</code></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>CVars should not be set through code using the execution method unless it is necessary and used with intention. This method is used to map the CVar value to the <code>RuntimeExecutionSystem</code> and is mainly invoked through the means of a console or config file.  </p>
+<p>To set a CVar from code you should always manage the <a href="#value">Value</a> property directly. </p>
+<p>When making a custom runtime console <a href="../../RuntimeExecution/StatementExecutor.md">StatementExecutor</a> should be used as the definitive entry point!</p>
+<p><strong>Example</strong>:<br />
+<div class="highlight"><pre><span></span><code><span class="c1">// This automatically runs like a system user and runs potential persistance events.</span>
+<span class="n">_gravityModifierCVar</span><span class="p">.</span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">800f</span><span class="p">;</span>
+</code></pre></div></p>
+</div>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><a href="../../RuntimeExecution/ExecutionSource.md">ExecutionSource</a> : <code>executionSource</code></dt>
+<dd>The definite caller of this execution. Could be a player through the console / player config file, or the game itself through internal systems. 
+<strong>Example</strong>: <code>ExecutionSource.Player</code></dd>
+<dt><code>string[]</code> : <code>args</code></dt>
+<dd>The unparsed arguments passed to the CVar. If they end with the ram only flag, the flag is read and stripped before passing the arguments into the <a href="#setvalue">SetValue</a> method.</dd>
+<dd><strong>Example</strong>:<br />
+<code>["800", "ram_only"]</code>
+<em>In this example SetValue will be called using: <code>SetValue(["800"])</code>.</em><br />
+<em>Since <code>ram_only</code> was used the value will not persist.</em></dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+API entry point that makes CVars agnostically executable from outside systems.<br />
+This is mainly used by the <a href="../../RuntimeExecution/StatementExecutor.md">StatementExecutor</a> and should not be regularly used by users of this framework. </p>
+<p><strong>Example</strong>:</p>
+<p><em>Excerpt from <code>StatementExecutor.cs</code>.</em><br />
+<div class="highlight"><pre><span></span><code><span class="c1">// . . .</span>
+<span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">RuntimeExecutableRegistry</span><span class="p">.</span><span class="n">TryGetExecutable</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">IRuntimeExecutable</span><span class="w"> </span><span class="n">executable</span><span class="p">))</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">ExecutionResponseStatus</span><span class="o">&gt;</span><span class="w"> </span><span class="n">response</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">executable</span><span class="p">.</span><span class="n">Execute</span><span class="p">(</span><span class="n">executionSource</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">);</span>
+<span class="w">    </span><span class="c1">// . . . </span>
+<span class="p">}</span>
+</code></pre></div></p>
+<hr />
+<h3 id="setvalue">SetValue</h3>
+<p><strong>Signature</strong>: <code>protected abstract Response&lt;CvarSetResponseStatus&gt; SetValue(ReadOnlySpan&lt;string&gt; args);</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>ReadOnlySpan&lt;string&gt;</code> : <code>args</code></dt>
+<dd>The argument string array. Passed as <code>ReadOnlySpan&lt;string&gt;</code> for performance and mutability safety.  </dd>
+</dl>
+<p><strong>Example</strong>: <code>["800"]</code></p>
+</details>
+<p><strong>Description</strong>:<br />
+This method handles the actual parsing and setting of data when calling the <a href="#execute">Execute</a> method.<br />
+It is overridden within each CVar resource type and serves as the definite ruleset for what arguments are parsable.  </p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>This method is best combined with the <a href="../../RuntimeExecution/ArgumentParser.md">ArgumentParser</a> for 
+the best results and developer experience.</p>
+</div>
+<p><strong>Example(s)</strong>:</p>
+<p><em>Excerpt from <code>CVarEnum.cs</code>.</em><br />
+<em>Note that the value is set using the <a href="#value">Value</a> property. The value MUST be set within the method.</em></p>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="n">Response</span><span class="o">&lt;</span><span class="n">CvarSetResponseStatus</span><span class="o">&gt;</span><span class="w"> </span><span class="n">SetValue</span><span class="p">(</span><span class="n">ReadOnlySpan</span><span class="o">&lt;</span><span class="kt">string</span><span class="o">&gt;</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ArgumentParser</span><span class="p">.</span><span class="n">ValidateCount</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="n">error</span><span class="p">))</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">CvarSetResponseStatus</span><span class="p">.</span><span class="n">InvalidArgs</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">ArgumentParser</span><span class="p">.</span><span class="n">TryParseEnum</span><span class="p">(</span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="w"> </span><span class="n">_options</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="k">out</span><span class="w"> </span><span class="n">error</span><span class="p">))</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">CvarSetResponseStatus</span><span class="p">.</span><span class="n">Failed</span><span class="p">,</span><span class="w"> </span><span class="n">error</span><span class="p">);</span>
+
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">Value</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">index</span><span class="p">)</span>
+<span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">CvarSetResponseStatus</span><span class="p">.</span><span class="n">NoChange</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+
+<span class="w">    </span><span class="n">Value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">index</span><span class="p">;</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nf">new</span><span class="p">(</span><span class="n">CvarSetResponseStatus</span><span class="p">.</span><span class="n">Success</span><span class="p">,</span><span class="w"> </span><span class="k">null</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<hr />
+<h3 id="gethelp">GetHelp</h3>
+<p><strong>Signature</strong>: <code>public string GetHelp()</code></p>
+<div class="admonition note">
+<p class="admonition-title">Takes no parameters</p>
+</div>
+<p><strong>Description</strong>:<br />
+Returns a human readable string with any help regarding the command by 
+automatically interpolating all information about the <code>IRuntimeExecutable</code>.  </p>
+<p>The primary consumer of this method is the <a href="../../../guides/default_commands.md#help">default command <code>help</code></a>, which prints information about runtime executables into the runtime console.</p>
+<details class="tip">
+<summary>Extended knowledge</summary>
+<p>All <code>IRuntimeExecutables</code> get their help formatted from the <code>ConsoleFormatter</code>, like so:<br />
+<div class="highlight"><pre><span></span><code><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">GetHelp</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">ConsoleFormatter</span><span class="p">.</span><span class="n">FormatHelp</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+</code></pre></div></p>
+<p>This is an agressively inlined method that standarizes the text and outputs it the same no matter the caller.<br />
+Behind the scenes, this is the actual method being called:  </p>
+<div class="highlight"><pre><span></span><code><span class="na">[MethodImpl(MethodImplOptions.AggressiveInlining)]</span>
+<span class="k">public</span><span class="w"> </span><span class="k">static</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">FormatHelp</span><span class="p">(</span><span class="n">IRuntimeExecutable</span><span class="w"> </span><span class="n">rte</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="s">$&quot;Signature: {rte.Signature}\nIs cheat: {rte.IsCheat}\nDescription: {rte.ShortDesc}\nType: {rte.DisplayType.ToUpper()}\nUsage: {rte.Usage}\n{rte.LongDesc}&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+</details>
+<p><strong>Example(s)</strong>:</p>
+<p><em>Usage within a CVar.</em>
+<div class="highlight"><pre><span></span><code><span class="na">[Export]</span><span class="w"> </span><span class="n">CVarFloat</span><span class="w"> </span><span class="n">_gravityModifierCVar</span><span class="p">;</span>
+
+<span class="k">protected</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="k">void</span><span class="w"> </span><span class="nf">_EnterTree</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="n">PikeConsole</span><span class="p">.</span><span class="n">Log</span><span class="p">(</span><span class="n">LogTarget</span><span class="p">.</span><span class="n">All</span><span class="p">,</span><span class="w"> </span><span class="s">$&quot;{_gravityModifierCVar.GetHelp()}&quot;</span><span class="p">);</span>
+</code></pre></div></p>
+<hr />
+<h3 id="displayvalue">DisplayValue</h3>
+<p><strong>Signature</strong>: <code>public virtual string DisplayValue(T value)</code></p>
+<details>
+<summary>Parameter details (Click to expand)</summary>
+<dl>
+<dt><code>T</code> : <code>value</code></dt>
+<dd>Any value of type T (the same as this CVar resource instance).<br />
+<strong>Example</strong>: <code>["400"]</code></dd>
+</dl>
+</details>
+<p><strong>Description</strong>:<br />
+Takes any value of type <code>T</code> and returns a human readable / UI friendly representation for that value.  </p>
+<p>This method is used to parse othervise complex or unreadable data into something that would make sense when reading the value back. Such as the case with enums or vectors.</p>
+<p><strong>Example(s)</strong>:</p>
+<p><em>Excerpt from <code>CVarEnum.cs</code>.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">DisplayValue</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span>
+<span class="w">    </span><span class="s">$&quot;{value} ({_options[value]})&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<p>This results in an output like: 
+<div class="highlight"><pre><span></span><code>1 (Medium)
+</code></pre></div></p>
+<p><em>Excerpt from <code>CVarColor.cs</code>.</em>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">override</span><span class="w"> </span><span class="kt">string</span><span class="w"> </span><span class="nf">DisplayValue</span><span class="p">(</span><span class="n">Color</span><span class="w"> </span><span class="k">value</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="o">=&gt;</span><span class="w"> </span><span class="s">$&quot;({value.R8}, {value.G8}, {value.B8}, {value.A8}) | #{value.ToHtml()}&quot;</span><span class="p">;</span>
+</code></pre></div></p>
+<p>For the color green, this results in an output like: 
+<div class="highlight"><pre><span></span><code>(0, 255, 0, 255) | #00ff00ff
+</code></pre></div></p>
+<hr />
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../../../..", "features": ["content.code.copy", "navigation.tabs", "navigation.indexes"], "search": "../../../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
