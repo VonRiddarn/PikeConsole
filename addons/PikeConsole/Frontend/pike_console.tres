@@ -3,41 +3,38 @@
 [ext_resource type="FontFile" uid="uid://3mhap30n0nys" path="res://addons/PikeConsole/Frontend/FONT/Inconsolata-SemiBold.ttf" id="1_if0br"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y7fok"]
-bg_color = Color(0.12156863, 0.16470589, 0.21960784, 1)
+bg_color = Color(0, 0, 0, 1)
 border_width_top = 1
-border_color = Color(0.2886116, 0.36724472, 0.4674124, 0.78431374)
-border_blend = true
+border_color = Color(1, 1, 1, 1)
 corner_detail = 1
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_if0br"]
 content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
-bg_color = Color(0.12156863, 0.16470589, 0.21960784, 1)
-border_width_top = 4
-border_width_right = 2
-border_color = Color(0.2901961, 0.36862746, 0.46666667, 0.9098039)
-border_blend = true
+bg_color = Color(0, 0, 0, 1)
+border_width_top = 1
+border_width_right = 1
+border_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0rdgg"]
-bg_color = Color(0.12941177, 0.2, 0.28235295, 1)
-corner_detail = 1
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bistg"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5byw"]
-content_margin_left = 8.0
-content_margin_right = 8.0
-bg_color = Color(0.12941177, 0.2, 0.28235295, 1)
-border_width_left = 3
-border_width_top = 3
-border_color = Color(0.06666667, 0.078431375, 0.08627451, 1)
-border_blend = true
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+content_margin_left = 4.0
+content_margin_right = 4.0
+bg_color = Color(0, 0, 0, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1u64f"]
-bg_color = Color(0.06666667, 0.078431375, 0.08627451, 0.78431374)
+bg_color = Color(0, 0, 0, 0.88235295)
 
 [resource]
 default_font = ExtResource("1_if0br")
@@ -49,7 +46,7 @@ ItemList/constants/v_separation = 8
 ItemList/font_sizes/font_size = 18
 ItemList/fonts/font = ExtResource("1_if0br")
 ItemList/styles/panel = SubResource("StyleBoxFlat_if0br")
-ItemList/styles/selected = SubResource("StyleBoxFlat_0rdgg")
+ItemList/styles/selected = SubResource("StyleBoxFlat_bistg")
 LineEdit/colors/caret_color = Color(0.6632608, 0.6632608, 0.6632608, 1)
 LineEdit/colors/font_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
 LineEdit/colors/selection_color = Color(0.42745098, 0.56078434, 0.7254902, 0.5882353)
@@ -60,5 +57,6 @@ RichTextLabel/colors/default_color = Color(0.9019608, 0.9019608, 0.9019608, 1)
 RichTextLabel/colors/selection_color = Color(0.42745098, 0.56078434, 0.7254902, 0.5882353)
 RichTextLabel/constants/line_separation = -1
 RichTextLabel/constants/paragraph_separation = 0
+RichTextLabel/fonts/normal_font = ExtResource("1_if0br")
 RootBG/base_type = &"Panel"
 RootBG/styles/panel = SubResource("StyleBoxFlat_1u64f")
