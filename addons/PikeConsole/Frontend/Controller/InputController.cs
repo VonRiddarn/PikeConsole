@@ -150,6 +150,7 @@ public partial class InputController : LineEdit
 		// This is because we don't want the debounce make the input feel "laggy" when removing all text.
 		if (string.IsNullOrWhiteSpace(newText) || _suggestionBox == null)
 		{
+			_debounceCts?.Cancel();
 			_suggestionBox?.Hide();
 			return;
 		}
