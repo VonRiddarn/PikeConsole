@@ -22,7 +22,7 @@ public static class ConsoleFormatter
 		var longDesc = string.IsNullOrWhiteSpace(rte.LongDesc) ? "No long description available." : rte.LongDesc;
 
 		if (rte is ICVar cvar)
-			return $"Signature: {cvar.Signature}\n[indent]Type: {cvar.DisplayType.ToUpper()}[/indent]\n[indent]Is cheat: {cvar.IsCheat}[/indent]\n[indent]Value: \"{cvar.CurrentValueDisplay}\"[/indent]\n[indent]Default: \"{cvar.DefaultValueDisplay}\"[/indent]\n[indent]Brief: {shortDesc}[/indent]\n[indent]Usage:\n[indent]{string.Join("\n", usg)}[/indent][/indent]\n[indent]Description:\n[indent]{longDesc.Trim()}[/indent][/indent]";
+			return $"Signature: {cvar.Signature}\n[indent]Type: {cvar.DisplayType.ToUpper()}[/indent]\n[indent]Persist: {cvar.Persist}[/indent]\n[indent]Is cheat: {cvar.IsCheat}[/indent]\n[indent]Value: \"{cvar.CurrentValueDisplay}\"[/indent]\n[indent]Default: \"{cvar.DefaultValueDisplay}\"[/indent]\n[indent]Brief: {shortDesc}[/indent]\n[indent]Usage:\n[indent]{string.Join("\n", usg)}[/indent][/indent]\n[indent]Description:\n[indent]{longDesc.Trim()}[/indent][/indent]";
 		else
 			return $"Signature: {rte.Signature}\n[indent]Type: {rte.DisplayType.ToUpper()}[/indent]\n[indent]Is cheat: {rte.IsCheat}[/indent]\n[indent]Brief: {shortDesc}[/indent]\n[indent]Usage:\n[indent]{string.Join("\n", usg)}[/indent][/indent]\n[indent]Description:\n[indent]{longDesc.Trim()}[/indent][/indent]";
 	}
