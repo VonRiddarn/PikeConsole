@@ -47,7 +47,7 @@ public partial class WelcomeCommandSet : CommandSet
 		welcomeSb.AppendLine("Use \"cheatmode 1\" or \"cheatmode true\" to enable cheat mode.");
 		welcomeSb.AppendLine();
 		welcomeSb.AppendLine("Use the command \"welcome\" to see this message again!");
-		welcomeSb.AppendLine("Good luck!");
+		welcomeSb.Append("Good luck!");
 
 		StatementExecutor.Execute(ExecutionSource.System, "clear", [], silent: true);
 		PikeLogger.Log(LogTarget.Runtime, $"{welcomeSb.ToString()}");
