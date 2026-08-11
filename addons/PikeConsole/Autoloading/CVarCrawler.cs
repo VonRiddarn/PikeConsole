@@ -3,7 +3,7 @@ using FractalPike.PikeConsole.Core.Logging;
 using FractalPike.PikeConsole.Core.RuntimeExecution;
 using Godot;
 
-namespace FractalPike.PikeConsole.Core.Autoloading;
+namespace FractalPike.PikeConsole.Autoloading;
 
 /*
     AUTHORS NOTE:

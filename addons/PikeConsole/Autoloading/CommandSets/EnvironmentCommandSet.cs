@@ -6,7 +6,7 @@ using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 using Godot;
 
-namespace FractalPike.PikeConsole.Core.Autoloading;
+namespace FractalPike.PikeConsole.Autoloading;
 
 /*
  * Post optimization clarity (NOTE TO SELF):

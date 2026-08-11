@@ -4,7 +4,7 @@ using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 using FractalPike.PikeConsole.Core.Utilities;
 using System.Text;
 
-namespace FractalPike.PikeConsole.Core.Autoloading;
+namespace FractalPike.PikeConsole.Autoloading;
 
 public partial class DiscoveryCommandSet : CommandSet
 {

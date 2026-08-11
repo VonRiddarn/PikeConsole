@@ -4,7 +4,7 @@ using FractalPike.PikeConsole.Core.RuntimeExecution;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Aliases;
 using FractalPike.PikeConsole.Core.RuntimeExecution.Commands;
 
-namespace FractalPike.PikeConsole.Core.Autoloading;
+namespace FractalPike.PikeConsole.Autoloading;
 
 public partial class AliasCommandSet : CommandSet
 {

@@ -5,7 +5,7 @@ using FractalPike.PikeConsole.Core.RuntimeExecution.Config;
 using FractalPike.PikeConsole.Core.Utilities;
 using Godot;
 
-namespace FractalPike.PikeConsole.Core.Autoloading;
+namespace FractalPike.PikeConsole.Autoloading;
 
 public partial class ConfigCommandSet : CommandSet
 {
