@@ -123,6 +123,7 @@ theme = ExtResource("2_y7fok")
 allow_search = false
 auto_width = true
 auto_height = true
+same_column_width = true
 
 [node name="Label" type="RichTextLabel" parent="CanvasLayer" unique_id=60379493]
 process_mode = 4
